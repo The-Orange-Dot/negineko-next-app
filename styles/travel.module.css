@@ -1,0 +1,32 @@
+.travelPageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.locationsContainer {
+  max-width: 80%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.locationCardContainer {
+  width: 45%;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2%;
+}
+
+.homepageButton {
+  background-color: #b2deef;
+  border: 1px solid #b2deef;
+  padding: 5px 10px;
+  border-radius: 2rem;
+  color: white;
+  margin: 0 2%;
+}
