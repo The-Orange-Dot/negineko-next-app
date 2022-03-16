@@ -1,0 +1,8 @@
+.secret {
+  width: 2px;
+  height: 2px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+}

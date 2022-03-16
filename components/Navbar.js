@@ -6,8 +6,10 @@ const Navbar = () => {
   return (
     <div className={styles.navBarPageContainer}>
       <div className={styles.navBarContainer}>
-        <div>
-          <h3>NegiNeko_Tokyo</h3>
+        <div className={styles.logo}>
+          <Link href="/dashboard" passHref={true}>
+            <h3>NegiNeko_Tokyo</h3>
+          </Link>
         </div>
         <div className={styles.pageSelector}>
           <h4>

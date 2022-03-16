@@ -10,9 +10,9 @@ const Travel = () => {
     setPageLoaded(false);
     fetch("/api/locations")
       .then((r) => r.json())
-      .then((locations) => {
-        setLocations(locations);
-        setPageLoaded(true);
+      .then(async (locations) => {
+        await setLocations(locations);
+        await setPageLoaded(true);
       });
   }, []);
 

@@ -1,6 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const About = () => {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    //CHANGE THE CLIENT_ID AND SECRET_ID ASAP!!
+    fetch("/api/userInfo")
+      .then((r) => r.json())
+      .then((client) => {
+        fetch(
+          `https://id.twitch.tv/oauth2/token?client_id=${client.clientId}&client_secret=${client.secretKey}&grant_type=client_credentials`,
+          {
+            method: "POST",
+          }
+        )
+          .then((r) => r.json())
+          .then((data) =>
+            fetch(
+              "https://api.twitch.tv/helix/channels?broadcaster_id=517372804",
+              {
+                headers: {
+                  Authorization: `Bearer ${data.access_token}`,
+                  "Client-Id": "05rkef9kwzbr5jdi4ahjbuj3uc83ov",
+                },
+              }
+            )
+              .then((r) => r.json())
+              .then((data) => setUser(data))
+          );
+      });
+  }, []);
+
+  console.log(user);
   return (
     <div>
       <div>

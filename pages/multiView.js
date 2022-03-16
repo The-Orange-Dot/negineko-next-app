@@ -76,7 +76,7 @@ const MultiView = () => {
           onChange={(e) => setUserInput(e.target.value)}
           placeholder="Streamer name"
         />
-        <input type="submit" />
+        <input type="submit" className="submit" />
       </form>
       <div className={styles.videoContainer}>{videoFeed}</div>
     </div>

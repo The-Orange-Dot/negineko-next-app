@@ -1,13 +1,15 @@
 .incomePageContainer {
   width: 100%;
-  height: 200vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .incomeContainer {
   width: 80%;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -15,8 +17,18 @@
 .calculationsContainer {
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 .calculationsContainer div {
   margin: 0 2%;
+  text-align: center;
+}
+
+.topQuickLook {
+  display: flex;
+}
+
+.filterform {
+  margin: 5%;
 }
