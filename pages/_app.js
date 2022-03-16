@@ -7,9 +7,6 @@ function MyApp({ Component, pageProps }) {
     <>
       <Navbar />
       <Component {...pageProps} />
-      <span className="contact-button">
-        <Contact />
-      </span>
     </>
   );
 }

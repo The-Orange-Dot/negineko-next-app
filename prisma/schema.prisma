@@ -22,5 +22,7 @@ model Location {
   website String @default("")
   twitter String @default("")
   instagram String @default("")
+  twitchClip String @default("")
+  twitchVideo String @default("")
   createdAt DateTime @default(now())
 }

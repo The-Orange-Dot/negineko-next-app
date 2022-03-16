@@ -57,9 +57,20 @@
   justify-content: center;
 }
 
+.descriptionList {
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
 .map {
   width: 100%;
   position: fixed;
   bottom: 0;
   text-align: center;
+}
+
+.clipFrame {
+  border: 0;
 }

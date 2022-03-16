@@ -24,23 +24,38 @@ const TravelId = () => {
       <h3>{location.caption}</h3>
       <div className={styles.locationInfoContainer}>
         <div>
-          <iframe
-            src="https://player.twitch.tv/?video=v40464143&parent=streamernews.example.com&autoplay=false"
-            height="360"
-            width="640"
-            allowFullScreen={true}
-          ></iframe>
+          {location.twitchVideo ? (
+            <iframe
+              src={`https://player.twitch.tv/?video=${location.twitchVideo}&parent=localhost&autoplay=true&mute=true`}
+              height="360"
+              width="640"
+              allowFullScreen={true}
+              className={styles.clipFrame}
+            ></iframe>
+          ) : (
+            <iframe
+              src={`https://clips.twitch.tv/embed?clip=${location.twitchClip}&parent=localhost&autoplay=true&mute=true`}
+              allowFullScreen="true"
+              scrolling="no"
+              height="360"
+              width="640"
+              className={styles.clipFrame}
+            ></iframe>
+          )}
         </div>
         <div>
-          <ul>
+          <ul className={styles.descriptionList}>
             {descriptions.map((description) => {
-              return <li key={description.length}>{description}</li>;
+              return (
+                <li key={description.length} className={styles.descriptionItem}>
+                  {description}
+                </li>
+              );
             })}
           </ul>
         </div>
       </div>
       <div className={styles.map}>
-        <p>Address: {location.address}</p>
         <iframe
           src={location.map}
           width="100%"

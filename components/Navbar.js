@@ -19,9 +19,9 @@ const Navbar = () => {
           <h4>
             <Link href="/travel"> Travel-Log </Link>
           </h4>
-          <h4>
+          {/* <h4>
             <Link href="/merch"> Merch </Link>
-          </h4>
+          </h4> */}
           <h4>
             <Link href="/multiView"> Multi-view </Link>
           </h4>

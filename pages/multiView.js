@@ -27,16 +27,15 @@ const MultiView = () => {
           </div>
           <iframe
             src={`https://player.twitch.tv/?channel=${streamer}&parent=localhost&muted=true`}
-            height="405"
-            width="720"
-            allowFullScreen="true"
-            border="0"
+            height="380"
+            width="675"
+            allowFullScreen={true}
             className={styles.iframe}
           ></iframe>
           <iframe
             src={`https://www.twitch.tv/embed/${streamer}/chat?parent=localhost`}
             height="400"
-            width="720"
+            width="675"
             className={styles.iframe}
           ></iframe>
         </div>
@@ -46,8 +45,15 @@ const MultiView = () => {
 
   const addVideoFeed = (e) => {
     e.preventDefault();
-    setStreamers([...streamers, userInput]);
-    setUserInput("");
+    if (streamers.includes(userInput)) {
+      console.log("You're already watching this streamer");
+    } else if (userInput === "") {
+      console.log("You need to have a username");
+    } else if (streamers.length > 4) {
+      console.log("Exceeded the maximum number of streamers");
+    } else {
+      setStreamers([...streamers, userInput]);
+    }
   };
 
   const closeFeed = (e) => {
@@ -59,7 +65,12 @@ const MultiView = () => {
 
   return (
     <div className={styles.twitchContainer}>
-      <form action="" onSubmit={(e) => addVideoFeed(e)}>
+      <form
+        action=""
+        onSubmit={(e) => {
+          addVideoFeed(e);
+        }}
+      >
         <input
           type="text"
           onChange={(e) => setUserInput(e.target.value)}
