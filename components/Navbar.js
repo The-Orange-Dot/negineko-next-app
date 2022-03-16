@@ -23,7 +23,7 @@ const Navbar = () => {
             <Link href="/merch"> Merch </Link>
           </h4>
           <h4>
-            <Link href="/community"> Community </Link>
+            <Link href="/multiView"> Multi-view </Link>
           </h4>
         </div>
         <div className={styles.signInButton}>

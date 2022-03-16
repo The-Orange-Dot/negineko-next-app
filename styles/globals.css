@@ -14,3 +14,16 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.contact-button {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  border-radius: 100rem;
+}

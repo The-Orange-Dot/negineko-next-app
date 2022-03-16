@@ -22,6 +22,11 @@
   margin: 2%;
 }
 
+.locationCardContainer > div > h3 {
+  margin: 0;
+  cursor: pointer;
+}
+
 .homepageButton {
   background-color: #b2deef;
   border: 1px solid #b2deef;
@@ -29,4 +34,32 @@
   border-radius: 2rem;
   color: white;
   margin: 0 2%;
+  cursor: pointer;
+}
+
+/* ==========Individual Location Page============== */
+
+.locationPageContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.locationPageContainer > h1 {
+  line-height: 0;
+}
+
+.locationInfoContainer {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
 }

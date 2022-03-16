@@ -1,0 +1,43 @@
+.twitchContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.streamerContainer {
+  display: flex;
+}
+
+.videoContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.videoFeed {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.streamHeader {
+  line-height: 0;
+}
+
+.streamHeader > p {
+  margin-left: 10px;
+}
+
+.videoFeed div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iframe {
+  border: 0;
+}
+
+.closeButton {
+  cursor: pointer;
+}
