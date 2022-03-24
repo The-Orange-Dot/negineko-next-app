@@ -25,11 +25,11 @@ const Navbar = () => {
   return (
     <div
       className={
-        isMobile ? styles.navBarMobileContainer : styles.navBarPageContainer
+        isMobile ? styles.navBarPageContainer : styles.navBarMobileContainer
       }
     >
       <div
-        className={isMobile ? styles.navBarMobileContent : styles.navBarContent}
+        className={isMobile ? styles.navBarContent : styles.navBarMobileContent}
       >
         <div className={styles.logo}>
           <Link href="/" passHref={true}>
