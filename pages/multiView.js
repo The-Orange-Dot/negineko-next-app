@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/multiView.module.css";
+import Script from "next/script";
+import { TwitchChat, TwitchEmbed } from "react-twitch-embed";
 // import ReactTwitchEmbedVideo from "react-twitch-embed-video";
 
 const MultiView = () => {
   const [streamers, setStreamers] = useState(["negineko_tokyo"]);
   const [userInput, setUserInput] = useState("");
   const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   const videoFeed = streamers.map((streamer) => {
     return (
@@ -25,19 +31,41 @@ const MultiView = () => {
               </p>
             </div>
           </div>
-          <iframe
-            src={`https://player.twitch.tv/?channel=${streamer}&parent=negineko-site.herokuapp.com&muted=true&embed=true`}
+          {loaded ? (
+            <span className={styles.videoPlayer}>
+              <TwitchEmbed
+                channel={streamer}
+                id={streamer}
+                theme="dark"
+                withChat={false}
+                muted
+                width={`100%`}
+                height="70%"
+              />
+              <TwitchChat
+                channel={streamer}
+                width="100%"
+                theme="dark"
+                height="650px"
+              />
+            </span>
+          ) : (
+            <h1>Loading Player...</h1>
+          )}
+
+          {/* <iframe
+            src={`https://player.twitch.tv/?channel=${streamer}&parent=negineko-site.herokuapp.com&muted=true&parent=localhost&embed=true`}
             height="380"
             width="675"
             allowFullScreen={true}
             className={styles.iframe}
           ></iframe>
           <iframe
-            src={`https://www.twitch.tv/embed/${streamer}/chat?parent=negineko-site.herokuapp.com&embed=true`}
+            src={`https://www.twitch.tv/embed/${streamer}/chat?parent=negineko-site.herokuapp.com&parent=localhost&embed=true`}
             height="400"
             width="675"
             className={styles.iframe}
-          ></iframe>
+          ></iframe> */}
         </div>
       </div>
     );
