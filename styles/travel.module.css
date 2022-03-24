@@ -86,8 +86,8 @@
   width: 100%;
 }
 
-.mobileLocationContainer {
-}
+/* .mobileLocationContainer {
+} */
 
 .mobileLocationCardContainer {
   width: 100%;
@@ -96,4 +96,8 @@
   align-items: center;
   justify-content: space-between;
   margin: 2%;
+}
+
+.underConstructionContainer {
+  width: 50%;
 }

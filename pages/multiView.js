@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/multiView.module.css";
 import Script from "next/script";
 import { TwitchChat, TwitchEmbed } from "react-twitch-embed";
-// import ReactTwitchEmbedVideo from "react-twitch-embed-video";
+import MediaQuery from "react-responsive";
 
 const MultiView = () => {
   const [streamers, setStreamers] = useState(["negineko_tokyo"]);
@@ -127,22 +127,31 @@ const MultiView = () => {
   };
 
   return (
-    <div className={styles.twitchContainer}>
-      <form
-        action=""
-        onSubmit={(e) => {
-          addVideoFeed(e);
-        }}
-      >
-        <input
-          type="text"
-          onChange={(e) => setUserInput(e.target.value)}
-          placeholder="Streamer name"
-        />
-        <input type="submit" className="submit" />
-      </form>
-      <div className={styles.videoContainer}>{videoFeed}</div>
-    </div>
+    <>
+      <MediaQuery minWidth={901}>
+        <div className={styles.twitchContainer}>
+          <form
+            action=""
+            onSubmit={(e) => {
+              addVideoFeed(e);
+            }}
+          >
+            <input
+              type="text"
+              onChange={(e) => setUserInput(e.target.value)}
+              placeholder="Streamer name"
+            />
+            <input type="submit" className="submit" />
+          </form>
+          <div className={styles.videoContainer}>{videoFeed}</div>
+        </div>
+      </MediaQuery>
+      <MediaQuery maxWidth={900}>
+        <div className={styles.underConstructionContainer}>
+          <p>Multi-view isn&apos;t available for mobile...yet</p>
+        </div>
+      </MediaQuery>
+    </>
   );
 };
 

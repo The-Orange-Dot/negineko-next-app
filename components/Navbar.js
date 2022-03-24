@@ -2,9 +2,7 @@ import Link from "next/link";
 import React from "react";
 import styles from "../styles/navbar.module.css";
 import MediaQuery, { useMediaQuery } from "react-responsive";
-import { useState } from "react";
 import gsap from "gsap";
-import { useEffect } from "react";
 
 const Navbar = () => {
   const isMobile = useMediaQuery({ maxWidth: 900 });
@@ -25,11 +23,11 @@ const Navbar = () => {
   return (
     <div
       className={
-        isMobile ? styles.navBarPageContainer : styles.navBarMobileContainer
+        isMobile ? styles.navBarMobileContainer : styles.navBarPageContainer
       }
     >
       <div
-        className={isMobile ? styles.navBarContent : styles.navBarMobileContent}
+        className={isMobile ? styles.navBarMobileContent : styles.navBarContent}
       >
         <div className={styles.logo}>
           <Link href="/" passHref={true}>
