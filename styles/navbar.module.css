@@ -40,20 +40,21 @@
   width: 100%;
   height: 100px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 
 .navBarMobileContent {
-  height: 100px;
+  height: 70px;
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 
 .mobileHeader {
   text-align: center;
+  line-height: 0;
 }
 
 .barContainer {
@@ -62,7 +63,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 30px;
+  height: 25px;
 }
 
 .bar {
