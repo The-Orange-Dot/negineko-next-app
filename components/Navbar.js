@@ -6,6 +6,9 @@ import gsap from "gsap";
 import dynamic from "next/dynamic";
 
 const Navbar = () => {
+  /**
+   * This fixed "Expected server HTML to contain a matching <div> in <div>"
+   */
   const MediaQuery = dynamic(
     () => {
       return import("react-responsive");
