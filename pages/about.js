@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styles from "../styles/about.module.css";
 
 const About = () => {
   const [user, setUser] = useState({});
@@ -31,9 +32,8 @@ const About = () => {
       });
   }, []);
 
-  console.log(user);
   return (
-    <div>
+    <div className={styles.aboutPageContainer}>
       <p>Also under construction</p>
       <div>
         <h2>NegiNeko Team</h2>
@@ -44,7 +44,7 @@ const About = () => {
           <h3>Orange</h3>
         </div>
       </div>
-      <div>
+      <div className={styles.redCrossCanada}>
         <h3>Charity Event - Canadian Red Cross</h3>
         <p>Ukrainain Humanitarian Crisis Appeal</p>
         <p>Raised CA$2,371 to provide humanitarian relief in Ukraine</p>
