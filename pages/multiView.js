@@ -15,7 +15,14 @@ const MultiView = () => {
 
   const videoFeed = streamers.map((streamer) => {
     return (
-      <div key={streamer} className={styles.streamerContainer}>
+      <div
+        key={streamer}
+        className={
+          streamers.length > 1
+            ? styles.streamerContainer
+            : styles.oneStreamerContainer
+        }
+      >
         <div className={styles.videoFeed}>
           <div>
             <div className={styles.streamHeader}>
@@ -32,22 +39,50 @@ const MultiView = () => {
             </div>
           </div>
           {loaded ? (
-            <span className={styles.videoPlayer}>
-              <TwitchEmbed
-                channel={streamer}
-                id={streamer}
-                theme="dark"
-                withChat={false}
-                muted
-                width={`100%`}
-                height="70%"
-              />
-              <TwitchChat
-                channel={streamer}
-                width="100%"
-                theme="dark"
-                height="650px"
-              />
+            <span
+              className={
+                streamers.length > 1
+                  ? styles.videoPlayer
+                  : styles.oneVideoPlayer
+              }
+            >
+              {streamers.length > 1 ? (
+                <>
+                  <TwitchEmbed
+                    channel={streamer}
+                    id={streamer}
+                    theme="dark"
+                    withChat={false}
+                    muted
+                    width={`100%`}
+                    height="70%"
+                  />
+                  <TwitchChat
+                    channel={streamer}
+                    width="100%"
+                    theme="dark"
+                    height="650px"
+                  />
+                </>
+              ) : (
+                <>
+                  <TwitchEmbed
+                    channel={streamer}
+                    id={streamer}
+                    theme="dark"
+                    withChat={false}
+                    muted
+                    width={`100%`}
+                    height="100%"
+                  />
+                  <TwitchChat
+                    channel={streamer}
+                    width="50%"
+                    theme="dark"
+                    height="650px"
+                  />
+                </>
+              )}
             </span>
           ) : (
             <h1>Loading Player...</h1>

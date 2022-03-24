@@ -55,3 +55,20 @@
   align-items: center;
   flex-direction: column;
 }
+
+.oneStreamerContainer {
+  display: flex;
+  flex-direction: row;
+  min-width: 30%;
+  width: 90%;
+  height: 80%;
+  margin: 0 5px;
+}
+
+.oneVideoPlayer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
