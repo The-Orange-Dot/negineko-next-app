@@ -1,10 +1,12 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/travel.module.css";
+import MediaQuery, { useMediaQuery } from "react-responsive";
 
 const Travel = () => {
   const [locations, setLocations] = useState([]);
   const [pageLoaded, setPageLoaded] = useState(false);
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
 
   useEffect(() => {
     setPageLoaded(false);
@@ -17,7 +19,14 @@ const Travel = () => {
   }, []);
 
   const travelLocations = locations.map((location) => (
-    <div key={location.id} className={styles.locationCardContainer}>
+    <div
+      key={location.id}
+      className={
+        isMobile
+          ? styles.mobileLocationCardContainer
+          : styles.locationCardContainer
+      }
+    >
       <div>
         <Link href={`/travel/${location.id}`} passHref={true}>
           <h3>{location.name}</h3>
@@ -71,8 +80,18 @@ const Travel = () => {
   ));
 
   return (
-    <div className={styles.travelPageContainer}>
-      <div className={styles.locationsContainer}>{travelLocations}</div>
+    <div
+      className={
+        isMobile ? styles.mobileTravelContainer : styles.travelPageContainer
+      }
+    >
+      <div
+        className={
+          isMobile ? styles.mobileLocationContainer : styles.locationsContainer
+        }
+      >
+        {travelLocations}
+      </div>
     </div>
   );
 };

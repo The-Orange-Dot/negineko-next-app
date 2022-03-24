@@ -8,8 +8,6 @@ import { useEffect } from "react";
 
 const Navbar = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
-  // const [openNavBar, setOpenNavBar] = useState(false);
-
   const navBarHandler = (value) => {
     value === "open"
       ? gsap.fromTo(

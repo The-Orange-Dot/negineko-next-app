@@ -79,3 +79,21 @@
   display: flex;
   justify-content: space-around;
 }
+
+/* ========MOBILE============ */
+
+.mobileTravelPageContainer {
+  width: 100%;
+}
+
+.mobileLocationContainer {
+}
+
+.mobileLocationCardContainer {
+  width: 100%;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2%;
+}
