@@ -26,7 +26,7 @@ const MultiView = () => {
             </div>
           </div>
           <iframe
-            src={`https://player.twitch.tv/?channel=${streamer}&parent=localhost&parent=negineko-site.herokuapp.com/multiView&muted=true`}
+            src={`https://player.twitch.tv/embed?channel=${streamer}&parent=localhost&parent=negineko-site.herokuapp.com/multiView&muted=true`}
             height="380"
             width="675"
             allowFullScreen={true}
