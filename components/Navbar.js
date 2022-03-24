@@ -3,8 +3,15 @@ import React from "react";
 import styles from "../styles/navbar.module.css";
 import MediaQuery, { useMediaQuery } from "react-responsive";
 import gsap from "gsap";
+import dynamic from "next/dynamic";
 
 const Navbar = () => {
+  const MediaQuery = dynamic(
+    () => {
+      return import("react-responsive");
+    },
+    { ssr: false }
+  );
   const isMobile = useMediaQuery({ maxWidth: 900 });
   const navBarHandler = (value) => {
     value === "open"
