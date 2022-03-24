@@ -31,14 +31,12 @@ const Navbar = () => {
       <div
         className={isMobile ? styles.navBarMobileContent : styles.navBarContent}
       >
-        <div className={styles.logo}>
-          <Link href="/" passHref={true}>
-            <h3 className={isMobile ? styles.mobileHeader : ""}>
-              NegiNeko_Tokyo
-            </h3>
-          </Link>
-        </div>
         <MediaQuery minWidth={901}>
+          <div className={styles.logo}>
+            <Link href="/" passHref={true}>
+              <h3>NegiNeko_Tokyo</h3>
+            </Link>
+          </div>
           <div className={styles.pageSelector}>
             <h4>
               <Link href="/"> Home </Link>
@@ -58,6 +56,11 @@ const Navbar = () => {
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={900}>
+          <div className={styles.logo}>
+            <Link href="/" passHref={true}>
+              <h3 className={styles.mobileHeader}>NegiNeko_Tokyo</h3>
+            </Link>
+          </div>
           <div
             className={styles.barContainer}
             onClick={() => {
