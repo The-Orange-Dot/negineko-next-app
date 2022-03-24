@@ -26,7 +26,7 @@ const TravelId = () => {
         <div>
           {location.twitchVideo ? (
             <iframe
-              src={`https://player.twitch.tv/?video=${location.twitchVideo}&parent=localhost&negineko-site.herokuapp.com&autoplay=true&mute=true`}
+              src={`https://player.twitch.tv/?video=${location.twitchVideo}&parent=localhost&parent=negineko-site.herokuapp.com&autoplay=true&mute=true`}
               height="360"
               width="640"
               allowFullScreen={true}
@@ -34,7 +34,7 @@ const TravelId = () => {
             ></iframe>
           ) : (
             <iframe
-              src={`https://clips.twitch.tv/embed?clip=${location.twitchClip}&parent=localhost&negineko-site.herokuapp.com&autoplay=true&mute=true`}
+              src={`https://clips.twitch.tv/embed?clip=${location.twitchClip}&parent=localhost&parent=negineko-site.herokuapp.com&autoplay=true&mute=true`}
               allowFullScreen="true"
               scrolling="no"
               height="360"

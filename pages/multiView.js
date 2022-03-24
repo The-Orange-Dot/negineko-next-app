@@ -26,14 +26,14 @@ const MultiView = () => {
             </div>
           </div>
           <iframe
-            src={`https://player.twitch.tv/?channel=${streamer}&parent=localhost&negineko-site.herokuapp.com&muted=true`}
+            src={`https://player.twitch.tv/?channel=${streamer}&parent=localhost&parent=negineko-site.herokuapp.com&muted=true`}
             height="380"
             width="675"
             allowFullScreen={true}
             className={styles.iframe}
           ></iframe>
           <iframe
-            src={`https://www.twitch.tv/embed/${streamer}/chat?parent=localhost&negineko-site.herokuapp.com`}
+            src={`https://www.twitch.tv/embed/${streamer}/chat?parent=localhost&parent=negineko-site.herokuapp.com`}
             height="400"
             width="675"
             className={styles.iframe}
