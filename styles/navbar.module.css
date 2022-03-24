@@ -38,9 +38,10 @@
 
 .navBarMobileContainer {
   width: 100%;
-  height: 100px;
+  height: 80px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .navBarMobileContent {
@@ -50,6 +51,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: nowrap;
 }
 
 .mobileHeader {
@@ -76,6 +78,7 @@
   display: none;
   opacity: 0;
   position: absolute;
+  top: 0;
   left: 0;
   right: 0;
   margin-left: auto;
@@ -93,6 +96,7 @@
   display: none;
   opacity: 0;
   position: absolute;
+  top: 0;
   left: 0;
   width: 100%;
   height: 150vh;
@@ -100,10 +104,3 @@
   background-color: rgba(0, 0, 0, 0);
   backdrop-filter: blur(1px);
 }
-
-/* .navBarContent {
-  height: 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
