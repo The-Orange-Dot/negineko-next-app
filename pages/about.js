@@ -34,6 +34,7 @@ const About = () => {
   console.log(user);
   return (
     <div>
+      <p>Also under construction</p>
       <div>
         <h2>NegiNeko Team</h2>
         <div>

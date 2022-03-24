@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../../styles/travel.module.css";
 import Link from "next/link";
+import { TwitchPlayer, TwitchClip } from "react-twitch-embed";
 
 const TravelId = () => {
   const [location, setLocation] = useState({});
@@ -28,26 +29,27 @@ const TravelId = () => {
       <h1>{location.name}</h1>
       <h3>{location.caption}</h3>
       <div className={styles.locationInfoContainer}>
-        <div>
-          {location.twitchVideo ? (
-            <iframe
-              src={`https://player.twitch.tv/?video=${location.twitchVideo}&parent=localhost&parent=negineko-site.herokuapp.com&autoplay=true&mute=true`}
-              height="360"
-              width="640"
-              allowFullScreen={true}
-              className={styles.clipFrame}
-            ></iframe>
-          ) : (
-            <iframe
-              src={`https://clips.twitch.tv/embed?clip=${location.twitchClip}&parent=localhost&parent=negineko-site.herokuapp.com&autoplay=true&mute=true`}
-              allowFullScreen="true"
-              scrolling="no"
-              height="360"
-              width="640"
-              className={styles.clipFrame}
-            ></iframe>
-          )}
-        </div>
+        {pageLoaded ? (
+          <div>
+            {location.twitchVideo ? (
+              <TwitchPlayer
+                video={location.twitchVideo}
+                className={styles.clipFrame}
+                width="640px"
+                height="360px"
+                mute={true}
+              />
+            ) : (
+              <TwitchClip
+                clip={location.twitchClip}
+                width="640px"
+                height="360px"
+                mute={true}
+                parent={["negineko-site.herokuapp.com"]}
+              />
+            )}
+          </div>
+        ) : null}
         <div>
           <ul className={styles.descriptionList}>
             {descriptions.map((description) => {
