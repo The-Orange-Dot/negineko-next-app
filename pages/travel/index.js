@@ -2,8 +2,15 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/travel.module.css";
 import MediaQuery, { useMediaQuery } from "react-responsive";
+import dynamic from "next/dynamic";
 
 const Travel = () => {
+  const MediaQuery = dynamic(
+    () => {
+      return import("react-responsive");
+    },
+    { ssr: false }
+  );
   const [locations, setLocations] = useState([]);
   const [pageLoaded, setPageLoaded] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
