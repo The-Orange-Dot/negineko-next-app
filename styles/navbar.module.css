@@ -24,6 +24,10 @@
   font-size: 1rem;
 }
 
+.selector {
+  width: 100%;
+}
+
 .signInButton {
   height: 100%;
   display: flex;

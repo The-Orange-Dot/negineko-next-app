@@ -23,21 +23,11 @@ const Navbar = () => {
   return (
     <>
       <MediaQuery minWidth={901}>
-        <div
-          className={
-            isMobile ? styles.navBarMobileContainer : styles.navBarPageContainer
-          }
-        >
-          <div
-            className={
-              isMobile ? styles.navBarMobileContent : styles.navBarContent
-            }
-          >
+        <div className={styles.navBarPageContainer}>
+          <div className={styles.navBarContent}>
             <div className={styles.logo}>
               <Link href="/" passHref={true}>
-                <h3 className={isMobile ? styles.mobileHeader : ""}>
-                  NegiNeko_Tokyo
-                </h3>
+                <h3>NegiNeko_Tokyo</h3>
               </Link>
             </div>
             <div className={styles.pageSelector}>
@@ -61,21 +51,11 @@ const Navbar = () => {
         </div>
       </MediaQuery>
       <MediaQuery maxWidth={900}>
-        <div
-          className={
-            isMobile ? styles.navBarMobileContainer : styles.navBarPageContainer
-          }
-        >
-          <div
-            className={
-              isMobile ? styles.navBarMobileContent : styles.navBarContent
-            }
-          >
+        <div className={styles.navBarMobileContainer}>
+          <div className={styles.navBarMobileContent}>
             <div className={styles.logo}>
               <Link href="/" passHref={true}>
-                <h3 className={isMobile ? styles.mobileHeader : ""}>
-                  NegiNeko_Tokyo
-                </h3>
+                <h3 className={styles.mobileHeader}>NegiNeko_Tokyo</h3>
               </Link>
             </div>
             <div
@@ -88,12 +68,14 @@ const Navbar = () => {
               <div className={styles.bar} />
               <div className={styles.bar} />
             </div>
-            <div
-              className={`${styles.blurOverlay} openNavBar`}
-              onClick={() => {
-                navBarHandler("close");
-              }}
-            />
+            {isMobile && (
+              <div
+                className={`${styles.blurOverlay} openNavBar`}
+                onClick={() => {
+                  navBarHandler("close");
+                }}
+              />
+            )}
             <div className={`${styles.mobileNavBarSelector} openNavBar`}>
               <p
                 onClick={() => {
