@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../../styles/travel.module.css";
+import Link from "next/link";
 
 const TravelId = () => {
   const [location, setLocation] = useState({});
   const router = useRouter();
+  const [pageLoaded, setPageLoaded] = useState(false);
 
   useEffect(() => {
     fetch(`../api/locations/${router.query.travelId}`)
       .then((r) => r.json())
-      .then((data) => setLocation(data));
+      .then((data) => {
+        setLocation(data);
+        setPageLoaded(true);
+      });
   }, [router.query.travelId]);
 
   //Parses the description into a clean array
@@ -53,8 +58,43 @@ const TravelId = () => {
               );
             })}
           </ul>
+          <div className={styles.links}>
+            {pageLoaded ? (
+              <div>
+                {/*Website Check*/}
+                {location.website ? (
+                  <Link href={location.website} passHref={true}>
+                    <button>Homepage</button>
+                  </Link>
+                ) : null}
+
+                {/*Twitter Check*/}
+                {location.twitter ? (
+                  <Link
+                    href={`https://twitter.com/${location.twitter}`}
+                    passHref={true}
+                  >
+                    <button>Twitter</button>
+                  </Link>
+                ) : null}
+
+                {/*Instagram Check*/}
+                {location.instagram ? (
+                  <Link
+                    href={`https://www.instagram.com/${location.instagram}/`}
+                    passHref={true}
+                  >
+                    <button>Instagram</button>
+                  </Link>
+                ) : null}
+              </div>
+            ) : (
+              <div>Loading...</div>
+            )}
+          </div>
         </div>
       </div>
+
       <div className={styles.map}>
         <iframe
           src={location.map}

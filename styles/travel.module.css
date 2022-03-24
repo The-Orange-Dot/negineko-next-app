@@ -74,3 +74,8 @@
 .clipFrame {
   border: 0;
 }
+
+.links {
+  display: flex;
+  justify-content: space-around;
+}
