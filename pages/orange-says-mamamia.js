@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { numberWithCommas } from "../components/NumberWithCommas";
 import twitch from "./twitch-income.json";
 import styles from "../styles/Income.module.css";
+import Link from "next/link";
 
 const Income = () => {
   const [streamers, setStreamers] = useState(twitch);
@@ -58,15 +59,21 @@ const Income = () => {
     const income = numberWithCommas(streamerArray[3]);
 
     return (
-      <span key={rank}>
-        <p>Rank: {numberWithCommas(rank)}</p>
-        <p>
-          Username: <strong>{username}</strong>
-        </p>
-        {/* <p>Streamer Id: {streamerId}</p> */}
-        <p>Income: ${income}</p>
-        <p>==========================</p>
-      </span>
+      <Link
+        href={`https://twitchtracker.com/${username}`}
+        passHref={true}
+        key={rank}
+      >
+        <span className={styles.streamerCard}>
+          <p>Rank: {numberWithCommas(rank)}</p>
+          <p>
+            Username: <strong>{username}</strong>
+          </p>
+          {/* <p>Streamer Id: {streamerId}</p> */}
+          <p>Income: ${income}</p>
+          <p>=======================</p>
+        </span>
+      </Link>
     );
   });
 

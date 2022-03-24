@@ -34,6 +34,7 @@ button {
   color: white;
   padding: 5px 10px;
   border-radius: 2rem;
+  margin: 2px 5px;
 }
 
 .submit {

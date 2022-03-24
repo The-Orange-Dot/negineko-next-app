@@ -32,3 +32,7 @@
 .filterform {
   margin: 5%;
 }
+
+.streamerCard {
+  cursor: pointer;
+}

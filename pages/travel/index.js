@@ -29,7 +29,7 @@ const Travel = () => {
             {/*Website Check*/}
             {location.website ? (
               <Link href={location.website} passHref={true}>
-                <button className={styles.homepageButton}>Homepage</button>
+                <button>Homepage</button>
               </Link>
             ) : null}
 
@@ -39,7 +39,7 @@ const Travel = () => {
                 href={`https://twitter.com/${location.twitter}`}
                 passHref={true}
               >
-                <button className={styles.homepageButton}>Twitter</button>
+                <button>Twitter</button>
               </Link>
             ) : null}
 
@@ -49,7 +49,7 @@ const Travel = () => {
                 href={`https://www.instagram.com/${location.instagram}/`}
                 passHref={true}
               >
-                <button className={styles.homepageButton}>Instagram</button>
+                <button>Instagram</button>
               </Link>
             ) : null}
           </div>

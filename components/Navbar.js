@@ -7,13 +7,13 @@ const Navbar = () => {
     <div className={styles.navBarPageContainer}>
       <div className={styles.navBarContainer}>
         <div className={styles.logo}>
-          <Link href="/dashboard" passHref={true}>
+          <Link href="/" passHref={true}>
             <h3>NegiNeko_Tokyo</h3>
           </Link>
         </div>
         <div className={styles.pageSelector}>
           <h4>
-            <Link href="/dashboard"> Home </Link>
+            <Link href="/"> Home </Link>
           </h4>
           <h4>
             <Link href="/about"> About </Link>
