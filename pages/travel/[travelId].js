@@ -37,7 +37,7 @@ const TravelId = () => {
   }, [router.query.travelId, isMobile]);
 
   //Parses the description into a clean array
-  const descriptions = [];
+  let descriptions = [];
   location.description
     ? (descriptions = location.description.split("|"))
     : null;
@@ -154,7 +154,7 @@ const TravelId = () => {
         </div>
       </div>
 
-      {/* {mobile ? null : (
+      {mobile ? null : (
         <div className={styles.map}>
           <iframe
             src={location.map}
@@ -164,7 +164,7 @@ const TravelId = () => {
             loading="lazy"
           ></iframe>
         </div>
-      )} */}
+      )}
     </div>
   );
 };
