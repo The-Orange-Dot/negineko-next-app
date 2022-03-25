@@ -6,8 +6,8 @@ const ContentSecurityPolicy = `
   child-src example.com;
   style-src 'self' example.com;
   font-src 'self';  
-  frame-ancestors 'none';
-  frame-ancestors 'self' https://player.twitch.tv; 
+  frame-ancestors 'self' twitch.tv; 
+  frame-ancestors 'self' player.twitch.tv; 
 `;
 
 const nextConfig = {
