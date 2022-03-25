@@ -22,8 +22,8 @@ const Travel = () => {
     fetch("/api/locations")
       .then((r) => r.json())
       .then(async (locations) => {
-        await setLocations(locations);
-        await setPageLoaded(true);
+        setLocations(locations);
+        setPageLoaded(true);
       });
   }, [isMobile]);
 

@@ -7,6 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import dynamic from "next/dynamic";
 
 const TravelId = () => {
+  const router = useRouter();
   const MediaQuery = dynamic(
     () => {
       return import("react-responsive");
@@ -14,15 +15,18 @@ const TravelId = () => {
     { ssr: false }
   );
   const [location, setLocation] = useState({
+    name: "",
+    id: router.query.travelId,
     twitchClip: "",
   });
-  const router = useRouter();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 900 });
 
   useEffect(() => {
-    fetch(`../api/locations/${router.query.travelId}`)
+    localStorage.setItem("travelId", router.query.travelId);
+
+    fetch(`../api/locations/${localStorage.getItem("travelId")}`)
       .then((r) => r.json())
       .then((data) => {
         setLocation(data);
@@ -78,7 +82,7 @@ const TravelId = () => {
                 )}
               </div>
             </MediaQuery>
-            {/* <MediaQuery maxWidth={900}>
+            <MediaQuery maxWidth={900}>
               {pageLoaded ? (
                 <div>
                   {location.twitchVideo ? (
@@ -100,7 +104,7 @@ const TravelId = () => {
                   )}
                 </div>
               ) : null}
-            </MediaQuery> */}
+            </MediaQuery>
           </>
         ) : null}
         <div>
@@ -150,7 +154,7 @@ const TravelId = () => {
         </div>
       </div>
 
-      {mobile ? null : (
+      {/* {mobile ? null : (
         <div className={styles.map}>
           <iframe
             src={location.map}
@@ -160,7 +164,7 @@ const TravelId = () => {
             loading="lazy"
           ></iframe>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
