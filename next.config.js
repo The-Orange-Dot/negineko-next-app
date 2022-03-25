@@ -19,7 +19,7 @@ const nextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: "frame-ancestors 'none'",
+            value: `frame-ancestors 'self'`,
           },
         ],
       },

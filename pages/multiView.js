@@ -3,8 +3,15 @@ import styles from "../styles/multiView.module.css";
 import Script from "next/script";
 import { TwitchChat, TwitchEmbed } from "react-twitch-embed";
 import MediaQuery from "react-responsive";
+import dynamic from "next/dynamic";
 
 const MultiView = () => {
+  const MediaQuery = dynamic(
+    () => {
+      return import("react-responsive");
+    },
+    { ssr: false }
+  );
   const [streamers, setStreamers] = useState(["negineko_tokyo"]);
   const [userInput, setUserInput] = useState("");
   const [loaded, setLoaded] = useState(false);
