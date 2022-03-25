@@ -1,6 +1,5 @@
 .aboutPageContainer {
   width: 100%;
-  height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,4 +10,23 @@
 .redCrossCanada {
   width: 50%;
   text-align: center;
+}
+
+.aboutContainer {
+  width: 60%;
+  max-width: 900px;
+  text-align: center;
+}
+
+.teamPhoto {
+  overflow: hidden;
+  height: 300px;
+  width: 300px;
+  /* border-radius: 100rem; */
+}
+
+.teamContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }

@@ -5,12 +5,6 @@ import MediaQuery, { useMediaQuery } from "react-responsive";
 import dynamic from "next/dynamic";
 
 const Travel = () => {
-  const MediaQuery = dynamic(
-    () => {
-      return import("react-responsive");
-    },
-    { ssr: false }
-  );
   const [locations, setLocations] = useState([]);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
@@ -90,7 +84,7 @@ const Travel = () => {
 
   return (
     <>
-      <MediaQuery minWidth={901}>
+      {mobile ? (
         <div
           className={
             mobile ? styles.mobileTravelContainer : styles.travelPageContainer
@@ -106,8 +100,7 @@ const Travel = () => {
             {travelLocations}
           </div>
         </div>
-      </MediaQuery>
-      <MediaQuery maxWidth={900}>
+      ) : (
         <div
           className={
             mobile ? styles.mobileTravelContainer : styles.travelPageContainer
@@ -123,7 +116,7 @@ const Travel = () => {
             {travelLocations}
           </div>
         </div>
-      </MediaQuery>
+      )}
     </>
   );
 };

@@ -5,6 +5,10 @@ const ContentSecurityPolicy = `
 `;
 
 const nextConfig = {
+  images: {
+    domains: ["static-cdn.jtvnw.net"],
+  },
+
   async headers() {
     return [
       {

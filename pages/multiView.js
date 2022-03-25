@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/multiView.module.css";
-import Script from "next/script";
 import { TwitchChat, TwitchEmbed } from "react-twitch-embed";
-import MediaQuery from "react-responsive";
-import dynamic from "next/dynamic";
+import { useMediaQuery } from "react-responsive";
 
 const MultiView = () => {
-  const MediaQuery = dynamic(
-    () => {
-      return import("react-responsive");
-    },
-    { ssr: false }
-  );
+  const isMobile = useMediaQuery({ maxWidth: 900 });
+  const [mobile, setMobile] = useState(false);
   const [streamers, setStreamers] = useState(["negineko_tokyo"]);
   const [userInput, setUserInput] = useState("");
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     setLoaded(true);
-  }, []);
+
+    isMobile ? setMobile(true) : setMobile(false);
+  }, [isMobile]);
 
   const videoFeed = streamers.map((streamer) => {
     return (
@@ -94,25 +90,12 @@ const MultiView = () => {
           ) : (
             <h1>Loading Player...</h1>
           )}
-
-          {/* <iframe
-            src={`https://player.twitch.tv/?channel=${streamer}&parent=negineko-site.herokuapp.com&muted=true&parent=localhost&embed=true`}
-            height="380"
-            width="675"
-            allowFullScreen={true}
-            className={styles.iframe}
-          ></iframe>
-          <iframe
-            src={`https://www.twitch.tv/embed/${streamer}/chat?parent=negineko-site.herokuapp.com&parent=localhost&embed=true`}
-            height="400"
-            width="675"
-            className={styles.iframe}
-          ></iframe> */}
         </div>
       </div>
     );
   });
 
+  //when submit button is pressed
   const addVideoFeed = (e) => {
     e.preventDefault();
     if (streamers.includes(userInput)) {
@@ -126,6 +109,7 @@ const MultiView = () => {
     }
   };
 
+  //Closes streamer channel feed
   const closeFeed = (e) => {
     const filtered = streamers.filter((streamer) => {
       return streamer !== e;
@@ -135,7 +119,11 @@ const MultiView = () => {
 
   return (
     <>
-      <MediaQuery minWidth={901}>
+      {mobile ? (
+        <div className={styles.underConstructionContainer}>
+          <p>Multi-view isn&apos;t available for mobile...yet</p>
+        </div>
+      ) : (
         <div className={styles.twitchContainer}>
           <form
             action=""
@@ -152,12 +140,7 @@ const MultiView = () => {
           </form>
           <div className={styles.videoContainer}>{videoFeed}</div>
         </div>
-      </MediaQuery>
-      <MediaQuery maxWidth={900}>
-        <div className={styles.underConstructionContainer}>
-          <p>Multi-view isn&apos;t available for mobile...yet</p>
-        </div>
-      </MediaQuery>
+      )}
     </>
   );
 };
