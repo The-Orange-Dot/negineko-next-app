@@ -78,7 +78,7 @@ const TravelId = () => {
                 )}
               </div>
             </MediaQuery>
-            <MediaQuery maxWidth={900}>
+            {/* <MediaQuery maxWidth={900}>
               {pageLoaded ? (
                 <div>
                   {location.twitchVideo ? (
@@ -100,7 +100,7 @@ const TravelId = () => {
                   )}
                 </div>
               ) : null}
-            </MediaQuery>
+            </MediaQuery> */}
           </>
         ) : null}
         <div>
