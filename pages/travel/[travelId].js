@@ -159,7 +159,7 @@ const TravelId = () => {
           <iframe
             src={location.map}
             width="100%"
-            height="300"
+            height="100%"
             style={{ border: 0 }}
             loading="lazy"
           ></iframe>

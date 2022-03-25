@@ -41,6 +41,7 @@
 
 .locationPageContainer {
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,9 +66,9 @@
 }
 
 .map {
+  height: 40%;
   width: 100%;
-  position: fixed;
-  bottom: 0;
+  margin-top: 5%;
   text-align: center;
 }
 
