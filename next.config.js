@@ -6,8 +6,7 @@ const ContentSecurityPolicy = `
   child-src example.com;
   style-src 'self' example.com;
   font-src 'self';  
-  frame-ancestors 'self' twitch.tv; 
-  frame-ancestors 'self' player.twitch.tv; 
+  frame-ancestors twitch.tv player.twitch.tv negineko-site.herokuapp.com; 
 `;
 
 const nextConfig = {
