@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+
+const ContentSecurityPolicy = `
+  frame-ancestors 'self'; 
+`;
+
 const nextConfig = {
   async headers() {
     return [
@@ -19,7 +24,7 @@ const nextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: `frame-ancestors 'self'`,
+            value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
           },
         ],
       },
