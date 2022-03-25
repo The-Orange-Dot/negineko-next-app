@@ -16,6 +16,7 @@ const TravelId = () => {
   const [location, setLocation] = useState({});
   const router = useRouter();
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [mobile, setMobile] = useState(true);
   const isMobile = useMediaQuery({ maxWidth: 900 });
   const isDesktop = useMediaQuery({ minWidth: 901 });
 
@@ -25,6 +26,7 @@ const TravelId = () => {
       .then((data) => {
         setLocation(data);
         setPageLoaded(true);
+        isMobile ? setMobile(true) : setMobile(false);
       });
   }, [router.query.travelId]);
 
@@ -37,7 +39,7 @@ const TravelId = () => {
   return (
     <div
       className={
-        isMobile
+        mobile
           ? styles.mobileLocationPageContainer
           : styles.locationPageContainer
       }
@@ -46,7 +48,7 @@ const TravelId = () => {
       <h3>{location.caption}</h3>
       <div
         className={
-          isMobile
+          mobile
             ? styles.mobileLocationInfoContainer
             : styles.locationInfoContainer
         }
@@ -144,7 +146,7 @@ const TravelId = () => {
         </div>
       </div>
 
-      {isDesktop && (
+      {mobile ? null : (
         <div className={styles.map}>
           <iframe
             src={location.map}

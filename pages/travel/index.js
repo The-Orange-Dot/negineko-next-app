@@ -13,9 +13,11 @@ const Travel = () => {
   );
   const [locations, setLocations] = useState([]);
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
 
   useEffect(() => {
+    isMobile ? setMobile(true) : setMobile(false);
     setPageLoaded(false);
     fetch("/api/locations")
       .then((r) => r.json())
@@ -23,13 +25,13 @@ const Travel = () => {
         await setLocations(locations);
         await setPageLoaded(true);
       });
-  }, []);
+  }, [isMobile]);
 
   const travelLocations = locations.map((location) => (
     <div
       key={location.id}
       className={
-        isMobile
+        mobile
           ? styles.mobileLocationCardContainer
           : styles.locationCardContainer
       }
@@ -87,19 +89,42 @@ const Travel = () => {
   ));
 
   return (
-    <div
-      className={
-        isMobile ? styles.mobileTravelContainer : styles.travelPageContainer
-      }
-    >
-      <div
-        className={
-          isMobile ? styles.mobileLocationContainer : styles.locationsContainer
-        }
-      >
-        {travelLocations}
-      </div>
-    </div>
+    <>
+      <MediaQuery minWidth={901}>
+        <div
+          className={
+            mobile ? styles.mobileTravelContainer : styles.travelPageContainer
+          }
+        >
+          <div
+            className={
+              mobile
+                ? styles.mobileLocationContainer
+                : styles.locationsContainer
+            }
+          >
+            {travelLocations}
+          </div>
+        </div>
+      </MediaQuery>
+      <MediaQuery maxWidth={900}>
+        <div
+          className={
+            mobile ? styles.mobileTravelContainer : styles.travelPageContainer
+          }
+        >
+          <div
+            className={
+              mobile
+                ? styles.mobileLocationContainer
+                : styles.locationsContainer
+            }
+          >
+            {travelLocations}
+          </div>
+        </div>
+      </MediaQuery>
+    </>
   );
 };
 
