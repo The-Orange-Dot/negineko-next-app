@@ -32,6 +32,8 @@ const About = () => {
       });
   }, []);
 
+  console.log(user);
+
   return (
     <div className={styles.aboutPageContainer}>
       <p>Also under construction</p>

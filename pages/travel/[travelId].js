@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styles from "../../styles/travel.module.css";
 import Link from "next/link";
 import { TwitchPlayer, TwitchClip } from "react-twitch-embed";
-import MediaQuery, { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 import dynamic from "next/dynamic";
 
 const TravelId = () => {
@@ -13,12 +13,13 @@ const TravelId = () => {
     },
     { ssr: false }
   );
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState({
+    twitchClip: "",
+  });
   const router = useRouter();
   const [pageLoaded, setPageLoaded] = useState(false);
-  const [mobile, setMobile] = useState(true);
+  const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 900 });
-  const isDesktop = useMediaQuery({ minWidth: 901 });
 
   useEffect(() => {
     fetch(`../api/locations/${router.query.travelId}`)
@@ -26,9 +27,10 @@ const TravelId = () => {
       .then((data) => {
         setLocation(data);
         setPageLoaded(true);
-        isMobile ? setMobile(true) : setMobile(false);
       });
-  }, [router.query.travelId]);
+    isMobile ? setMobile(true) : setMobile(false);
+    console.log("loaded");
+  }, [router.query.travelId, isMobile]);
 
   //Parses the description into a clean array
   const descriptions = [];
@@ -77,25 +79,27 @@ const TravelId = () => {
               </div>
             </MediaQuery>
             <MediaQuery maxWidth={900}>
-              <div>
-                {location.twitchVideo ? (
-                  <TwitchPlayer
-                    video={location.twitchVideo}
-                    className={styles.mobileClipFrame}
-                    width="100%"
-                    height="200px"
-                    mute="true"
-                  />
-                ) : (
-                  <TwitchClip
-                    clip={location.twitchClip}
-                    width="100%"
-                    height="200px"
-                    mute="true"
-                    parent={["negineko-site.herokuapp.com"]}
-                  />
-                )}
-              </div>
+              {pageLoaded ? (
+                <div>
+                  {location.twitchVideo ? (
+                    <TwitchPlayer
+                      video={location.twitchVideo}
+                      className={styles.mobileClipFrame}
+                      width="100%"
+                      height="200px"
+                      mute="true"
+                    />
+                  ) : (
+                    <TwitchClip
+                      clip={location.twitchClip}
+                      width="100%"
+                      height="200px"
+                      mute="true"
+                      parent={["negineko-site.herokuapp.com"]}
+                    />
+                  )}
+                </div>
+              ) : null}
             </MediaQuery>
           </>
         ) : null}
