@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const ContentSecurityPolicy = `
-  frame-ancestors 'self'; 
+  frame-ancestors 'self' negineko-site.herokuapp.com; 
 `;
 
 const nextConfig = {
