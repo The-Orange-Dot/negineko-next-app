@@ -62,7 +62,7 @@ const About = () => {
 
   return (
     <div className={styles.aboutPageContainer}>
-      {/* <p>Also under construction</p> */}
+      <p>Also under construction</p>
       <div className={styles.aboutContainer}>
         {streamOnline ? (
           <div>

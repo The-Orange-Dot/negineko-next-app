@@ -1,13 +1,8 @@
 /** @type {import('next').NextConfig} */
 
 const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self';
-  child-src example.com;
-  style-src 'self' example.com;
-  font-src 'self';  
   frame-ancestors 'self';
-  frame-ancestors 'https://player.twitch.tv' 'https://twitch.tv'; 
+  frame-ancestors 'https://player.twitch.tv' 'https://twitch.tv' 'https://usher.ttvnw.net; 
 `;
 
 const nextConfig = {
