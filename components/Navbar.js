@@ -53,6 +53,9 @@ const Navbar = () => {
               <h4>
                 <Link href="/multiView"> Multi-view </Link>
               </h4>
+              <h4>
+                <Link href="/giveaway"> Giveaway-tool </Link>
+              </h4>
             </div>
             <div className={styles.signInButton}>
               <button>Sign In</button>
@@ -114,6 +117,13 @@ const Navbar = () => {
                 }}
               >
                 <Link href="/multiView"> Multi-view </Link>
+              </p>
+              <p
+                onClick={() => {
+                  navBarHandler("close");
+                }}
+              >
+                <Link href="/giveaway"> Giveaway-tool </Link>
               </p>
             </div>
           </div>

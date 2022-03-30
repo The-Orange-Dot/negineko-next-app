@@ -13,10 +13,9 @@
 }
 
 .controlsContainer {
-  width: 50%;
+  width: 80%;
   position: absolute;
   bottom: 0;
-  right: 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,14 +30,40 @@
 .inputContainer {
   display: flex;
   flex-direction: column;
+  width: 400px;
 }
 
 .controls {
   width: 20%;
   height: 100px;
+  display: flex;
+  justify-content: center;
 }
 
 .controls button {
   width: 100%;
   height: 50px;
+}
+
+.keyButtons {
+  width: 400px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.keyButton {
+  width: 100px;
+  height: 40px;
+}
+
+.screenDisplay {
+  text-align: center;
+  z-index: 1;
+  min-height: 250px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
 }
