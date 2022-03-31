@@ -1,8 +1,8 @@
-import Head from "next/head";
 import Image from "next/image";
 import styles from "../../styles/giveaway.module.css";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import ShuffleHandler from "../../components/giveaway/ShuffleHandler";
+import AddButtons from "../../components/giveaway/AddButtons";
 
 export default function Home() {
   const [itemNameInput, setItemNameInput] = useState("");
@@ -16,6 +16,7 @@ export default function Home() {
   const [keyButtons, setKeyButtons] = useState();
   const [arrays, setArrays] = useState({});
   const [descriptor, setDescriptor] = useState({});
+  const [timer, setTimer] = useState([400, 100, 50, 20]);
 
   useEffect(() => {
     setKeyButtons(
@@ -43,22 +44,6 @@ export default function Home() {
         setDescriptorSelector(descriptor[key]);
       }
     }
-  };
-
-  const router = useRouter();
-
-  const addNewItem = (users, description) => {
-    setArrays({ ...arrays, ...users });
-    setDescriptor({ ...descriptor, ...description });
-  };
-
-  function delay(time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
-
-  const shuffleHandler = (i) => {
-    const result = selector[Math.floor(Math.random() * selector.length)];
-    i === "reset" ? setShuffle([]) : setShuffle(result);
   };
 
   return (
@@ -113,6 +98,7 @@ export default function Home() {
         </div>
 
         <div className={styles.controlsContainer}>
+          {/* CATEGORY BUTTONS */}
           {Object.keys(arrays).length ? (
             <div className={styles.keyButtons}>{keyButtons}</div>
           ) : (
@@ -121,98 +107,48 @@ export default function Home() {
               <p>(9 buttons max)</p>
             </div>
           )}
+
+          {/* OPTIONS SELECTORS */}
+          <div className={styles.optionsContainer}>
+            <p>options</p>
+            <label>Mocchan</label>
+            <input type="checkbox" name="mocchan" />
+          </div>
+
+          {/* SHUFFLE AND RESET BUTTONS */}
           <div className={styles.controls}>
             <div style={{ margin: "10%" }}>
-              <button
-                onClick={async () => {
-                  if (Object.keys(arrays).length && selector) {
-                    setVideoHidden(false);
-                    for (let i = 0; i <= 400; i++) {
-                      shuffleHandler(i);
-                      await delay(10);
-                    }
-                    for (let i = 0; i <= 100; i++) {
-                      shuffleHandler(i);
-                      await delay(50);
-                    }
-                    for (let i = 0; i <= 50; i++) {
-                      shuffleHandler(i);
-                      await delay(100);
-                    }
-                    for (let i = 0; i <= 20; i++) {
-                      shuffleHandler(i);
-                      await delay(500);
-                    }
-                    setWinner(true);
-                    setTimeout(() => {
-                      setVideoHidden(true);
-                    }, 18000);
-                  }
-                }}
-              >
-                Shuffle
-              </button>
-              <button
-                onClick={() => {
-                  // router.reload(window.location.pathname);
-                  setDescriptorSelector("");
-                  shuffleHandler("reset");
-                  setWinner(false);
-                  setVideoHidden(true);
-                }}
-              >
-                Reset
-              </button>
+              <ShuffleHandler
+                arrays={arrays}
+                selector={selector}
+                setShuffle={setShuffle}
+                setVideoHidden={setVideoHidden}
+                setDescriptorSelector={setDescriptorSelector}
+                setWinner={setWinner}
+                timer={timer}
+              />
             </div>
           </div>
-          <div>
-            <div className={styles.inputContainer}>
-              <input
-                type="text"
-                name="name"
-                placeholder="Button Name"
-                onChange={(e) => {
-                  setItemNameInput(e.target.value);
-                }}
-                maxLength="10"
-                required
-              />
-              <input
-                type="text"
-                name="description"
-                placeholder='Title (ex: "Gaming mouse Giveaway")'
-                onChange={(e) => {
-                  setDescriptionInput(e.target.value);
-                }}
-                maxLength="100"
-                required
-              />
-              <textarea
-                type="text"
-                name="users"
-                placeholder='Users - Seperate users with a space (ex: "mocchan nacchan debuneko draculabot")'
-                onChange={(e) => {
-                  setUserInput(e.target.value);
-                }}
-                rows="8"
-                cols="50"
-                required
-              />
-            </div>
-            <div className={styles.submitButton}>
-              <button
-                onClick={() => {
-                  Object.keys(arrays).length < 9
-                    ? addNewItem(
-                        { [`${itemNameInput}`]: userInput.split(" ") },
-                        { [`${itemNameInput}`]: descriptionInput }
-                      )
-                    : null;
-                }}
-              >
-                Submit
-              </button>
-            </div>
+
+          {/* TIMER BUTTONS */}
+          <div className={styles.timerContainer}>
+            <p>timers</p>
+          </div>
+
+          {/* ADD USERNAMES CONTAINER */}
+          <div className={styles.formContainer}>
+            <AddButtons
+              setItemNameInput={setItemNameInput}
+              setDescriptionInput={setDescriptionInput}
+              setUserInput={setUserInput}
+              itemNameInput={itemNameInput}
+              userInput={userInput}
+              descriptionInput={descriptionInput}
+              arrays={arrays}
+              descriptor={descriptor}
+              setArrays={setArrays}
+              setDescriptor={setDescriptor}
+            />
           </div>
         </div>
       </main>

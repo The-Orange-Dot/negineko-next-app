@@ -13,11 +13,15 @@
 }
 
 .controlsContainer {
-  width: 80%;
+  width: 100%;
+  padding: 0 10%;
+  margin: 0 5%;
   position: absolute;
   bottom: 0;
+  left: 50%;
+  margin-left: -50%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -30,12 +34,12 @@
 .inputContainer {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 100%;
 }
 
 .controls {
   width: 20%;
-  height: 100px;
+  height: 100%;
   display: flex;
   justify-content: center;
 }
@@ -46,7 +50,7 @@
 }
 
 .keyButtons {
-  width: 400px;
+  width: 25%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -66,4 +70,19 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+}
+
+.formContainer {
+  width: 25%;
+  height: 100%;
+}
+
+.optionsContainer {
+  width: 15%;
+  height: 100%;
+}
+
+.timerContainer {
+  width: 15%;
+  height: 100%;
 }
