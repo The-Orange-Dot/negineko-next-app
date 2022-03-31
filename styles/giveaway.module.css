@@ -62,6 +62,12 @@
   height: 40px;
 }
 
+.selectedKeyButton {
+  width: 100px;
+  height: 40px;
+  opacity: 70%;
+}
+
 .screenDisplay {
   text-align: center;
   z-index: 1;
@@ -73,16 +79,28 @@
 }
 
 .formContainer {
-  width: 25%;
+  width: 20%;
   height: 100%;
 }
 
 .optionsContainer {
   width: 15%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .timerContainer {
-  width: 15%;
+  width: 20%;
   height: 100%;
+}
+
+.selectedTimer {
+  opacity: 70%;
+  width: 45%;
+}
+
+.button {
+  width: 45%;
 }
