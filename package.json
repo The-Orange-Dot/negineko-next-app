@@ -11,7 +11,7 @@
   "dependencies": {
     "@prisma/client": "^3.10.0",
     "convert-excel-to-json": "^1.7.0",
-    "gsap": "npm:@gsap/member@^3.9.1",
+    "gsap": "npm:@gsap/member@^3.10.2",
     "next": "12.1.0",
     "papaparse": "^5.3.2",
     "pg": "^8.7.3",

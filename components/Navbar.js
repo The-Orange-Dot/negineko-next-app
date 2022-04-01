@@ -1,9 +1,11 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/navbar.module.css";
-import MediaQuery, { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 import gsap from "gsap";
 import dynamic from "next/dynamic";
+import TextPlugin from "gsap/dist/TextPlugin";
+import { mouseIn, mouseOut } from "./NavBarAnimation";
 
 const Navbar = () => {
   /**
@@ -15,6 +17,13 @@ const Navbar = () => {
     },
     { ssr: false }
   );
+  gsap.registerPlugin(TextPlugin);
+  const ref = useRef();
+  const [homeTween, setHomeTween] = useState("");
+  const [aboutTween, setAboutTween] = useState("");
+  const [travelLogTween, setTravelLogTween] = useState("");
+  const [multiViewTween, setMultiViewTween] = useState("");
+  const [giveawayTween, setGiveawayTween] = useState("");
   const isMobile = useMediaQuery({ maxWidth: 900 });
   const navBarHandler = (value) => {
     value === "open"
@@ -41,24 +50,90 @@ const Navbar = () => {
               </Link>
             </div>
             <div className={styles.pageSelector}>
-              <h4 className={styles.link}>
-                <Link href="/"> Home </Link>
-              </h4>
-              <h4 className={styles.link}>
-                <Link href="/about"> About </Link>
-              </h4>
-              <h4 className={styles.link}>
-                <Link href="/travel"> Travel-Log </Link>
-              </h4>
-              <h4 className={styles.link}>
-                <Link href="/multiView"> Multi-view </Link>
-              </h4>
-              <h4 className={styles.link}>
-                <Link href="/giveaway"> Giveaway-tool </Link>
-              </h4>
+              <Link href="/" passHref={true}>
+                <h4
+                  className={styles.link}
+                  onMouseEnter={() => {
+                    mouseIn("home", "ホーム");
+                  }}
+                  onMouseLeave={() => {
+                    mouseOut("home", "Home");
+                  }}
+                  id="home"
+                  ref={ref}
+                >
+                  Home
+                </h4>
+              </Link>
+
+              <Link href="/about" passHref={true}>
+                <h4
+                  className={styles.link}
+                  onMouseEnter={() => {
+                    mouseIn("about", "アバウト");
+                  }}
+                  onMouseLeave={() => {
+                    mouseOut("about", "About");
+                  }}
+                  ref={ref}
+                  id="about"
+                >
+                  About
+                </h4>
+              </Link>
+
+              <Link href="/travel" passHref={true}>
+                <h4
+                  className={styles.link}
+                  onMouseEnter={() => {
+                    mouseIn("travel", "いいスポット");
+                  }}
+                  onMouseLeave={() => {
+                    mouseOut("travel", "Travel");
+                  }}
+                  ref={ref}
+                  id="travel"
+                >
+                  Travel-Log
+                </h4>
+              </Link>
+
+              <Link href="/multiView" passHref={true}>
+                <h4
+                  className={styles.link}
+                  onMouseEnter={() => {
+                    mouseIn("multi", "ムルチービーウ");
+                  }}
+                  onMouseLeave={() => {
+                    mouseOut("multi", "Multi-viewer");
+                  }}
+                  ref={ref}
+                  id="multi"
+                >
+                  Multi-viewer
+                </h4>
+              </Link>
+
+              <Link href="/giveaway" passHref={true}>
+                <h4
+                  className={styles.link}
+                  onMouseEnter={() => {
+                    mouseIn("giveaway", "ギブアウェイツール");
+                  }}
+                  onMouseLeave={() => {
+                    mouseOut("giveaway", "Giveaway-tool");
+                  }}
+                  ref={ref}
+                  id="giveaway"
+                >
+                  Giveaway-tool
+                </h4>
+              </Link>
             </div>
             <div className={styles.signInButton}>
-              <button>Sign In</button>
+              <Link href="/login" passHref={true}>
+                <button>Sign In</button>
+              </Link>
             </div>
           </div>
         </div>
