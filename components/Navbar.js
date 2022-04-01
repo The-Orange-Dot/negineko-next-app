@@ -89,7 +89,7 @@ const Navbar = () => {
                     mouseIn("travel", "いいスポット");
                   }}
                   onMouseLeave={() => {
-                    mouseOut("travel", "Travel");
+                    mouseOut("travel", "Travel-Log");
                   }}
                   ref={ref}
                   id="travel"

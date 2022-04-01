@@ -39,7 +39,7 @@ export const getStaticProps = async () => {
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/about.module.css";
-import gsap from "gsap";
+import { mouseIn, mouseOut } from "../components/about/PictureMouseAnimation";
 
 const About = ({ user, stream }) => {
   const [negi, setNegi] = useState(user.data[0]);
@@ -74,25 +74,59 @@ const About = ({ user, stream }) => {
             <>
               <div>
                 <h3>{negi.display_name.slice(0, 4)}</h3>
-                <Image
-                  src={negi.profile_image_url}
-                  alt="negi"
-                  width={300}
-                  height={310}
-                  className={styles.teamPhoto}
-                  priority
-                />
+                <div
+                  style={{
+                    width: 300,
+                    height: 310,
+                    backgroundImage: "url(images/test.jpeg)",
+                    objectFit: "cover",
+                    borderRadius: "100rem",
+                  }}
+                  onMouseEnter={() => {
+                    mouseIn("negi");
+                  }}
+                  onMouseLeave={() => {
+                    mouseOut("negi");
+                  }}
+                >
+                  <Image
+                    src={negi.profile_image_url}
+                    alt="negi"
+                    width={300}
+                    height={310}
+                    className={styles.teamPhoto}
+                    id="negi"
+                    priority
+                  />
+                </div>
               </div>
               <div>
                 <h3>{orange.display_name.slice(4, 10)}</h3>
-                <Image
-                  src={orange.profile_image_url}
-                  alt="negi"
-                  width={300}
-                  height={310}
-                  className={styles.teamPhoto}
-                  priority
-                />
+                <div
+                  style={{
+                    width: 300,
+                    height: 310,
+                    backgroundImage: "url(images/orange.jpeg)",
+                    objectFit: "cover",
+                    borderRadius: "100rem",
+                  }}
+                  onMouseEnter={() => {
+                    mouseIn("orange");
+                  }}
+                  onMouseLeave={() => {
+                    mouseOut("orange");
+                  }}
+                >
+                  <Image
+                    src={orange.profile_image_url}
+                    alt="negi"
+                    width={300}
+                    height={310}
+                    className={styles.teamPhoto}
+                    id="orange"
+                    priority
+                  />
+                </div>
               </div>
             </>
           ) : null}

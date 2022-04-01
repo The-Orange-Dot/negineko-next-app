@@ -119,6 +119,10 @@ const MultiView = () => {
 
   return (
     <>
+      <p style={{ width: "100%", textAlign: "center" }}>
+        Watch more than one Twitch stream! Just type the streamer username
+        below.
+      </p>
       {mobile ? (
         <div className={styles.underConstructionContainer}>
           <p>Multi-view isn&apos;t available for mobile...yet</p>
