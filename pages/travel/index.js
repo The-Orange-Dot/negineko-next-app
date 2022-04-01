@@ -1,24 +1,30 @@
+//This will pre-render the locations server-side from the API fetch for faster loading
+import { server } from "../../config/index";
+
+export const getStaticProps = async () => {
+  const res = await fetch(`${server}/api/locations`);
+  const data = await res.json();
+
+  return {
+    props: { locations: data },
+  };
+};
+
+//Everything below this is CSR on browser
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/travel.module.css";
-import MediaQuery, { useMediaQuery } from "react-responsive";
-import dynamic from "next/dynamic";
+import { useMediaQuery } from "react-responsive";
 
-const Travel = () => {
-  const [locations, setLocations] = useState([]);
+const Travel = ({ locations }) => {
+  // const [locations, setLocations] = useState([]);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
-    setPageLoaded(false);
-    fetch("/api/locations")
-      .then((r) => r.json())
-      .then(async (locations) => {
-        setLocations(locations);
-        setPageLoaded(true);
-      });
+    setPageLoaded(true);
   }, [isMobile]);
 
   const travelLocations = locations.map((location) => (

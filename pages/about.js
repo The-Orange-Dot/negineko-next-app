@@ -1,70 +1,71 @@
+//This will pre-render the locations server-side from the API fetch for faster loading
+import { server } from "../config/index";
+
+export const getStaticProps = async () => {
+  //Gets OAuth token from Twitch
+  const token = await fetch(
+    `https://id.twitch.tv/oauth2/token?client_id=05rkef9kwzbr5jdi4ahjbuj3uc83ov&client_secret=6a189h8gvw8pjxlsh8l7vdy1rp46jn&grant_type=client_credentials&scope=viewing_activity_read`,
+    {
+      method: "POST",
+    }
+  );
+  const tokenParsed = await token.json();
+  //Fetches Negi and Orange's data from Twitch
+  const res = await fetch(
+    "https://api.twitch.tv/helix/users?login=negineko_tokyo&login=the_orange_dot",
+    {
+      headers: {
+        Authorization: `Bearer ${tokenParsed.access_token}`,
+        "Client-Id": "05rkef9kwzbr5jdi4ahjbuj3uc83ov",
+      },
+    }
+  );
+  const data = await res.json();
+  //Fetches Negi's stream to see if she's online
+  const fetchStream = await fetch(
+    "https://api.twitch.tv/helix/streams?user_login=negineko_tokyo",
+    {
+      headers: {
+        Authorization: `Bearer ${tokenParsed.access_token}`,
+        "Client-Id": "05rkef9kwzbr5jdi4ahjbuj3uc83ov",
+      },
+    }
+  );
+
+  const stream = await fetchStream.json();
+
+  return {
+    props: { user: data, stream: stream },
+  };
+};
+
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/about.module.css";
 import gsap from "gsap";
 
-const About = () => {
-  const [user, setUser] = useState({
-    data: [],
-  });
+const About = ({ user, stream }) => {
+  const [negi, setNegi] = useState(user.data[0]);
+  const [orange, setOrange] = useState(user.data[1]);
   const [pageLoaded, setPageLoaded] = useState(false);
-  const [streamOnline, setStreamOnline] = useState([]);
+  const streamOnline = stream.data;
 
   useEffect(() => {
-    fetch("/api/userInfo")
-      .then((r) => r.json())
-      .then((client) => {
-        //Fetches Authorization for app to use twitch API
-        fetch(
-          `https://id.twitch.tv/oauth2/token?client_id=${client.clientId}&client_secret=${client.secretKey}&grant_type=client_credentials&scope=viewing_activity_read`,
-          {
-            method: "POST",
-          }
-        )
-          .then((r) => r.json())
-          .then((data) => {
-            //Gets Negi's stream info if we're online or not
-            fetch(
-              "https://api.twitch.tv/helix/streams?user_login=negineko_tokyo",
-              {
-                headers: {
-                  Authorization: `Bearer ${data.access_token}`,
-                  "Client-Id": "05rkef9kwzbr5jdi4ahjbuj3uc83ov",
-                },
-              }
-            )
-              .then((r) => r.json())
-              .then((stream) => {
-                setStreamOnline(stream.data[0]);
-              });
-
-            //Gets Negi's user info
-            fetch(
-              "https://api.twitch.tv/helix/users?login=negineko_tokyo&login=the_orange_dot",
-              {
-                headers: {
-                  Authorization: `Bearer ${data.access_token}`,
-                  "Client-Id": "05rkef9kwzbr5jdi4ahjbuj3uc83ov",
-                },
-              }
-            )
-              .then((r) => r.json())
-              .then((data) => {
-                setUser(data);
-                setPageLoaded(true);
-              });
-          });
-      });
-  }, []);
-
-  const negi = user?.data[0];
-  const orange = user?.data[1];
+    //Sorts the users alphabetically
+    const sorted = user.data.sort((a, b) =>
+      a.login > b.login ? 1 : b.login > a.login ? -1 : 0
+    );
+    setNegi(sorted[0]);
+    setOrange(sorted[1]);
+    setPageLoaded(true);
+    console.log("Page Loaded");
+  }, [user.data]);
 
   return (
     <div className={styles.aboutPageContainer}>
       <p>Also under construction</p>
       <div className={styles.aboutContainer}>
-        {streamOnline ? (
+        {streamOnline.length ? (
           <div>
             <p>Negi is Online!</p>
           </div>
