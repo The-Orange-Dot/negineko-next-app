@@ -111,7 +111,7 @@ const Navbar = () => {
               >
                 <Link href="/travel"> Travel-log </Link>
               </p>
-              <p
+              {/* <p
                 onClick={() => {
                   navBarHandler("close");
                 }}
@@ -124,7 +124,7 @@ const Navbar = () => {
                 }}
               >
                 <Link href="/giveaway"> Giveaway-tool </Link>
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
