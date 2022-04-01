@@ -6,6 +6,7 @@
 }
 
 .navBarContent {
+  z-index: 2;
   width: 80%;
   display: flex;
   flex-direction: row;
@@ -20,9 +21,15 @@
   cursor: pointer;
 }
 
-.pageSelector Link {
+.link {
   cursor: pointer;
   font-size: 1rem;
+  z-index: 5;
+}
+
+.link:hover {
+  opacity: 50%;
+  cursor: pointer;
 }
 
 .selector {

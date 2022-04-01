@@ -41,19 +41,19 @@ const Navbar = () => {
               </Link>
             </div>
             <div className={styles.pageSelector}>
-              <h4>
+              <h4 className={styles.link}>
                 <Link href="/"> Home </Link>
               </h4>
-              <h4>
+              <h4 className={styles.link}>
                 <Link href="/about"> About </Link>
               </h4>
-              <h4>
+              <h4 className={styles.link}>
                 <Link href="/travel"> Travel-Log </Link>
               </h4>
-              <h4>
+              <h4 className={styles.link}>
                 <Link href="/multiView"> Multi-view </Link>
               </h4>
-              <h4>
+              <h4 className={styles.link}>
                 <Link href="/giveaway"> Giveaway-tool </Link>
               </h4>
             </div>

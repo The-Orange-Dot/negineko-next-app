@@ -1,6 +1,3 @@
-//This will pre-render the locations server-side from the API fetch for faster loading
-import { server } from "../config/index";
-
 export const getStaticProps = async () => {
   //Gets OAuth token from Twitch
   const token = await fetch(
@@ -63,7 +60,7 @@ const About = ({ user, stream }) => {
 
   return (
     <div className={styles.aboutPageContainer}>
-      <p>Also under construction</p>
+      <p>Under construction</p>
       <div className={styles.aboutContainer}>
         {streamOnline.length ? (
           <div>

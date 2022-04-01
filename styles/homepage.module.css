@@ -1,5 +1,5 @@
 .homePageContainer {
-  width: 100%;
+  width: 100vw;
   height: 90vh;
   display: flex;
   flex-direction: column;
@@ -33,6 +33,7 @@
 
 .backgroundCircle {
   position: absolute;
+  overflow: hidden;
   top: -200px;
   right: -200px;
   z-index: -1;
@@ -44,11 +45,11 @@
 
 .mobileBackgroundCircle {
   position: absolute;
-  top: 0px;
-  right: -0px;
+  top: -100px;
+  left: -250px;
   z-index: -1;
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   border-radius: 100rem;
   background-color: #b2deef;
 }
@@ -59,4 +60,24 @@
 
 .link {
   cursor: pointer;
+  color: blue;
+}
+
+.nacchan {
+  position: absolute;
+  bottom: -10px;
+  right: 30%;
+  transform: scaleX(-1);
+}
+
+.mocchan {
+  position: absolute;
+  bottom: -5px;
+  left: 0%;
+  transform: scaleX(-1);
+}
+
+.map {
+  z-index: -2;
+  opacity: 7%;
 }
