@@ -5,6 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
 import gsap from "gsap";
 import TextPlugin from "gsap/dist/TextPlugin";
+import { mouseIn, mouseOut } from "../components/homepage/NegiMouseAnimation";
 
 const Home = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
@@ -35,8 +36,8 @@ const Home = () => {
         3
       )
       .fromTo(
-        "#mocchan",
-        { left: 550 },
+        "#negi",
+        { left: -1550 },
         { left: 0, ease: "Power4.easeOut", duration: 1 },
         2.5
       );
@@ -95,25 +96,41 @@ const Home = () => {
           <div className={styles.backgroundCircle} id="circle">
             <div className={styles.nacchan}>
               <Image
-                src="/images/Nacchan.png"
+                src="/images/nacchan.png"
                 alt="nacchan"
-                width={430}
-                height={430}
+                width={450}
+                height={450}
                 id="nacchan"
               />
             </div>
           </div>
-          <div className={styles.mocchan}>
+
+          <div className={styles.negi}>
             <Image
-              src="/images/Mocchan.png"
-              alt="mocchan"
-              width={470}
-              height={470}
-              id="mocchan"
+              src="/images/test3.png"
+              alt="negi"
+              width={700}
+              height={700}
+              id="negi"
             />
           </div>
         </div>
       )}
+      <div
+        style={{
+          backgroundImage: "url(/images/map_tokyo.png)",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "100%",
+          zIndex: -5,
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          left: 0,
+          top: 0,
+          opacity: "5%",
+        }}
+        id="background"
+      ></div>
     </div>
   );
 };

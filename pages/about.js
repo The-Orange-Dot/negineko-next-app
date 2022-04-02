@@ -40,23 +40,27 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/about.module.css";
 import { mouseIn, mouseOut } from "../components/about/PictureMouseAnimation";
+import { useMediaQuery } from "react-responsive";
 
 const About = ({ user, stream }) => {
   const [negi, setNegi] = useState(user.data[0]);
   const [orange, setOrange] = useState(user.data[1]);
   const [pageLoaded, setPageLoaded] = useState(false);
   const streamOnline = stream.data;
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
+  const [mobile, setMobile] = useState(false);
 
   useEffect(() => {
     //Sorts the users alphabetically
     const sorted = user.data.sort((a, b) =>
       a.login > b.login ? 1 : b.login > a.login ? -1 : 0
     );
+    isMobile ? setMobile(true) : setMobile(false);
     setNegi(sorted[0]);
     setOrange(sorted[1]);
     setPageLoaded(true);
     console.log("Page Loaded");
-  }, [user.data]);
+  }, [user.data, isMobile]);
 
   return (
     <div className={styles.aboutPageContainer}>
@@ -72,61 +76,66 @@ const About = ({ user, stream }) => {
         <div className={styles.teamContainer}>
           {pageLoaded ? (
             <>
-              <div>
+              <div className={mobile ? styles.mobileContainer : styles.none}>
                 <h3>{negi.display_name.slice(0, 4)}</h3>
-                <div
-                  style={{
-                    width: 300,
-                    height: 310,
-                    backgroundImage: "url(images/test.jpeg)",
-                    objectFit: "cover",
-                    borderRadius: "100rem",
-                  }}
-                  onMouseEnter={() => {
-                    mouseIn("negi");
-                  }}
-                  onMouseLeave={() => {
-                    mouseOut("negi");
-                  }}
-                >
-                  <Image
-                    src={negi.profile_image_url}
-                    alt="negi"
-                    width={300}
-                    height={310}
-                    className={styles.teamPhoto}
-                    id="negi"
-                    priority
-                  />
-                </div>
+                {negi.profile_image_url ? (
+                  <div
+                    style={{
+                      width: 300,
+                      height: 310,
+                      backgroundImage: "url(images/negi2.png)",
+                      objectFit: "contain",
+                      borderRadius: "100rem",
+                      backgroundSize: "100%",
+                    }}
+                    onMouseEnter={() => {
+                      mouseIn("negi");
+                    }}
+                    onMouseLeave={() => {
+                      mouseOut("negi");
+                    }}
+                  >
+                    <Image
+                      src="/images/negi.png"
+                      alt="negi"
+                      width={300}
+                      height={310}
+                      className={styles.teamPhoto}
+                      id="negi"
+                      priority
+                    />
+                  </div>
+                ) : null}
               </div>
-              <div>
+              <div className={mobile ? styles.mobileContainer : styles.none}>
                 <h3>{orange.display_name.slice(4, 10)}</h3>
-                <div
-                  style={{
-                    width: 300,
-                    height: 310,
-                    backgroundImage: "url(images/orange.jpeg)",
-                    objectFit: "cover",
-                    borderRadius: "100rem",
-                  }}
-                  onMouseEnter={() => {
-                    mouseIn("orange");
-                  }}
-                  onMouseLeave={() => {
-                    mouseOut("orange");
-                  }}
-                >
-                  <Image
-                    src={orange.profile_image_url}
-                    alt="negi"
-                    width={300}
-                    height={310}
-                    className={styles.teamPhoto}
-                    id="orange"
-                    priority
-                  />
-                </div>
+                {orange.profile_image_url ? (
+                  <div
+                    style={{
+                      width: 300,
+                      height: 310,
+                      backgroundImage: "url(images/orange.jpeg)",
+                      objectFit: "cover",
+                      borderRadius: "100rem",
+                    }}
+                    onMouseEnter={() => {
+                      mouseIn("orange");
+                    }}
+                    onMouseLeave={() => {
+                      mouseOut("orange");
+                    }}
+                  >
+                    <Image
+                      src={orange.profile_image_url}
+                      alt="negi"
+                      width={300}
+                      height={310}
+                      className={styles.teamPhoto}
+                      id="orange"
+                      priority
+                    />
+                  </div>
+                ) : null}
               </div>
             </>
           ) : null}

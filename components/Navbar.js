@@ -70,7 +70,7 @@ const Navbar = () => {
                 <h4
                   className={styles.link}
                   onMouseEnter={() => {
-                    mouseIn("about", "アバウト");
+                    mouseIn("about", "自己紹介");
                   }}
                   onMouseLeave={() => {
                     mouseOut("about", "About");
@@ -86,15 +86,15 @@ const Navbar = () => {
                 <h4
                   className={styles.link}
                   onMouseEnter={() => {
-                    mouseIn("travel", "いいスポット");
+                    mouseIn("travel", "旅ログ");
                   }}
                   onMouseLeave={() => {
-                    mouseOut("travel", "Travel-Log");
+                    mouseOut("travel", "Travels");
                   }}
                   ref={ref}
                   id="travel"
                 >
-                  Travel-Log
+                  Travels
                 </h4>
               </Link>
 
@@ -102,7 +102,7 @@ const Navbar = () => {
                 <h4
                   className={styles.link}
                   onMouseEnter={() => {
-                    mouseIn("multi", "ムルチービーウ");
+                    mouseIn("multi", "マルチビュー");
                   }}
                   onMouseLeave={() => {
                     mouseOut("multi", "Multi-viewer");
@@ -118,15 +118,15 @@ const Navbar = () => {
                 <h4
                   className={styles.link}
                   onMouseEnter={() => {
-                    mouseIn("giveaway", "ギブアウェイツール");
+                    mouseIn("giveaway", "抽選機能");
                   }}
                   onMouseLeave={() => {
-                    mouseOut("giveaway", "Giveaway-tool");
+                    mouseOut("giveaway", "Raffle-tool");
                   }}
                   ref={ref}
                   id="giveaway"
                 >
-                  Giveaway-tool
+                  Raffle-tool
                 </h4>
               </Link>
             </div>
