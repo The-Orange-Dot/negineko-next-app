@@ -83,7 +83,7 @@ const About = ({ user, stream }) => {
                     style={{
                       width: 300,
                       height: 310,
-                      backgroundImage: "url(images/negi2.png)",
+                      backgroundImage: "url(images/negi.png)",
                       objectFit: "contain",
                       borderRadius: "100rem",
                       backgroundSize: "100%",
@@ -96,7 +96,7 @@ const About = ({ user, stream }) => {
                     }}
                   >
                     <Image
-                      src="/images/negi.png"
+                      src="/images/negi3.png"
                       alt="negi"
                       width={300}
                       height={310}
