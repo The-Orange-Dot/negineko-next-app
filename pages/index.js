@@ -48,7 +48,7 @@ const Home = ({ stream }) => {
 
     //Starting animation
     const tl = gsap
-      .timeline()
+      .timeline({ paused: true })
       .fromTo(
         "#title",
         { opacity: 0, y: -50 },
