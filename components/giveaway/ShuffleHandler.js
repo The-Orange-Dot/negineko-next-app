@@ -9,9 +9,9 @@ const ShuffleHandler = ({
   arrays,
   timer,
 }) => {
-  function delay(time) {
+  const delay = (time) => {
     return new Promise((resolve) => setTimeout(resolve, time));
-  }
+  };
 
   const shuffleHandler = (i) => {
     const result = selector[Math.floor(Math.random() * selector.length)];

@@ -45,6 +45,8 @@ import Negi from "../../components/about/info/Negi";
 import Mocchan from "../../components/about/info/Mocchan";
 import Nacchan from "../../components/about/info/Nacchan";
 import Orange from "../../components/about/info/Orange";
+import Events from "../../components/about/accomplishments/events";
+import gsap from "gsap";
 
 const About = ({ user, stream }) => {
   const [negi, setNegi] = useState(user.data[0]);
@@ -55,6 +57,7 @@ const About = ({ user, stream }) => {
   const [mobile, setMobile] = useState(false);
   const [teamSelector, setTeamSelector] = useState("negi");
   const [teamView, setTeamView] = useState(<Negi />);
+  const [memberAnim, setMemberAnim] = useState();
 
   useEffect(() => {
     //Sorts the users alphabetically
@@ -66,7 +69,7 @@ const About = ({ user, stream }) => {
     setOrange(sorted[1]);
     setPageLoaded(true);
     console.log("Page Loaded");
-  }, [user.data, isMobile]);
+  }, [user.data, isMobile, teamView]);
 
   const teamSelectorHandler = (member) => {
     switch (member) {
@@ -84,13 +87,12 @@ const About = ({ user, stream }) => {
         break;
       default:
         setTeamSelector("negi");
-        setTeamView(<Negi />);
+        setTeamView(<Negi memberAnim={memberAnim} />);
     }
   };
 
   return (
     <div className={styles.aboutPageContainer}>
-      <p>Under construction</p>
       <h1>Who we are</h1>
       <div className={styles.aboutContainer}>
         {streamOnline.length ? (
@@ -159,7 +161,6 @@ const About = ({ user, stream }) => {
           </span>
         </div>
         <div className={styles.teamContainer}>
-          {/* NEGI */}
           {pageLoaded ? (
             <>
               <div
@@ -173,13 +174,17 @@ const About = ({ user, stream }) => {
           ) : null}
         </div>
       </div>
-      <div className={styles.event}>
-        <h3>Charity Event - Canadian Red Cross</h3>
-        <p>April 27, 2022 - March 6, 2022</p>
-        <p>Ukrainain Humanitarian Crisis Appeal</p>
-        <p>Raised CA$2,371 to provide humanitarian relief in Ukraine</p>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <h1>Event History</h1>
+        <Events />
       </div>
-      <div></div>
     </div>
   );
 };

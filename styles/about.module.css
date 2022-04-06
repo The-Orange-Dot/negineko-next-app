@@ -10,6 +10,9 @@
 .event {
   width: 50%;
   text-align: center;
+  background-color: #b2deef;
+  margin: 1%;
+  border-radius: 2rem;
 }
 
 .aboutContainer {
@@ -47,6 +50,7 @@
 }
 
 .infoContainer {
+  opacity: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -62,43 +66,11 @@
   width: 100%;
 }
 
-.layeredImageNegi {
+.layeredImage {
   width: 50%;
-  background: linear-gradient(to left, transparent 80%, white),
-    url("../public/images/test.png");
+  height: 100%;
   display: inherit;
   align-self: flex-end;
-  margin: 2% 0;
-  background-repeat: no-repeat;
-}
-
-.layeredImageMocchan {
-  width: 50%;
-  background: linear-gradient(to left, transparent 80%, white),
-    url("../public/images/mocchan1.png");
-  display: inherit;
-  align-self: flex-end;
-  margin: 2% 0;
-  background-repeat: no-repeat;
-}
-
-.layeredImageNacchan {
-  width: 50%;
-  background: linear-gradient(to left, transparent 80%, white),
-    url("../public/images/nacchan1.png");
-  display: inherit;
-  align-self: flex-end;
-  margin: 2% 0;
-  background-repeat: no-repeat;
-}
-
-.layeredImageOrange {
-  width: 50%;
-  background: linear-gradient(to left, transparent 80%, white),
-    url("../public/images/orange1.png");
-  display: inherit;
-  align-self: flex-end;
-  margin: 2% 0;
   background-repeat: no-repeat;
 }
 
