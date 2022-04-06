@@ -71,6 +71,11 @@
   transform: scaleX(-1);
 }
 
+.liveText {
+  transform: scaleX(-1);
+  font-size: 3rem;
+}
+
 .negi {
   position: absolute;
   bottom: -25px;

@@ -83,10 +83,15 @@
   cursor: pointer;
   text-decoration: underline;
   font-weight: bold;
+  opacity: 50%;
 }
 
 .memberNotSelected {
   cursor: pointer;
+}
+
+.memberNotSelected:hover {
+  opacity: 50%;
 }
 
 .infoList {

@@ -1,3 +1,31 @@
+export const getStaticProps = async () => {
+  //Gets OAuth token from Twitch
+  const token = await fetch(
+    `https://id.twitch.tv/oauth2/token?client_id=05rkef9kwzbr5jdi4ahjbuj3uc83ov&client_secret=6a189h8gvw8pjxlsh8l7vdy1rp46jn&grant_type=client_credentials&scope=viewing_activity_read`,
+    {
+      method: "POST",
+    }
+  );
+  const tokenParsed = await token.json();
+
+  //Fetches Negi's stream to see if she's online
+  const fetchStream = await fetch(
+    "https://api.twitch.tv/helix/streams?user_login=negineko_tokyo",
+    {
+      headers: {
+        Authorization: `Bearer ${tokenParsed.access_token}`,
+        "Client-Id": "05rkef9kwzbr5jdi4ahjbuj3uc83ov",
+      },
+    }
+  );
+
+  const stream = await fetchStream.json();
+
+  return {
+    props: { stream: stream },
+  };
+};
+
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import styles from "../styles/homepage.module.css";
@@ -6,9 +34,10 @@ import Image from "next/image";
 import gsap from "gsap";
 import TextPlugin from "gsap/dist/TextPlugin";
 
-const Home = () => {
+const Home = ({ stream }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
+  const fetchStream = stream.data;
   const [subtitleTween, setSubtitleTween] = useState("");
   const [tween, setTween] = useState();
   gsap.registerPlugin(TextPlugin);
@@ -40,7 +69,8 @@ const Home = () => {
         { left: -1550 },
         { left: 0, ease: "Power4.easeOut", duration: 1 },
         2.5
-      );
+      )
+      .fromTo("#live-text", { opacity: 0, y: 50 }, { opacity: 1, y: 80 });
 
     setTween(tl);
 
@@ -91,6 +121,11 @@ const Home = () => {
         <div>
           <div className={styles.backgroundCircle} id="circle">
             <div className={styles.nacchan}>
+              {fetchStream.length ? (
+                <h1 className={styles.liveText} id="live-text">
+                  We&apos;re live now!
+                </h1>
+              ) : null}
               <Image
                 src="/images/Nacchan.png"
                 alt="nacchan"

@@ -18,21 +18,8 @@ export const getStaticProps = async () => {
     }
   );
   const data = await res.json();
-  //Fetches Negi's stream to see if she's online
-  const fetchStream = await fetch(
-    "https://api.twitch.tv/helix/streams?user_login=negineko_tokyo",
-    {
-      headers: {
-        Authorization: `Bearer ${tokenParsed.access_token}`,
-        "Client-Id": "05rkef9kwzbr5jdi4ahjbuj3uc83ov",
-      },
-    }
-  );
-
-  const stream = await fetchStream.json();
-
   return {
-    props: { user: data, stream: stream },
+    props: { user: data },
   };
 };
 
@@ -48,11 +35,10 @@ import Orange from "../../components/about/info/Orange";
 import Events from "../../components/about/accomplishments/events";
 import gsap from "gsap";
 
-const About = ({ user, stream }) => {
+const About = ({ user }) => {
   const [negi, setNegi] = useState(user.data[0]);
   const [orange, setOrange] = useState(user.data[1]);
   const [pageLoaded, setPageLoaded] = useState(false);
-  const streamOnline = stream.data;
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
   const [teamSelector, setTeamSelector] = useState("negi");
@@ -95,11 +81,6 @@ const About = ({ user, stream }) => {
     <div className={styles.aboutPageContainer}>
       <h1>Who we are</h1>
       <div className={styles.aboutContainer}>
-        {streamOnline.length ? (
-          <div>
-            <p>Negi is Online!</p>
-          </div>
-        ) : null}
         <p>{negi?.description}</p>
         <h2>The NegiNeko Team</h2>
         <div
