@@ -11,6 +11,7 @@ const Home = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
   const [subtitleTween, setSubtitleTween] = useState("");
+  const [tween, setTween] = useState();
   gsap.registerPlugin(TextPlugin);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const Home = () => {
     console.log("Page Loaded");
 
     //Starting animation
-    gsap
+    const tl = gsap
       .timeline()
       .fromTo(
         "#title",
@@ -41,6 +42,8 @@ const Home = () => {
         { left: 0, ease: "Power4.easeOut", duration: 1 },
         2.5
       );
+
+    setTween(tl);
 
     //Subtitle text animation Timeline and tween
     const subtitleTween = gsap.timeline({ paused: "true" });
@@ -87,12 +90,6 @@ const Home = () => {
         <div className={styles.mobileBackgroundCircle}></div>
       ) : (
         <div>
-          {/* <Image
-            src="/images/map_tokyo.png"
-            alt="map"
-            layout="fill"
-            className={styles.map}
-          /> */}
           <div className={styles.backgroundCircle} id="circle">
             <div className={styles.nacchan}>
               <Image
@@ -112,6 +109,10 @@ const Home = () => {
               width={700}
               height={700}
               id="negi"
+              placeholder="empty"
+              onLoadingComplete={() => {
+                tween.play(0);
+              }}
             />
           </div>
         </div>
