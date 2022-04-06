@@ -7,28 +7,36 @@
   text-align: center;
 }
 
-.redCrossCanada {
+.event {
   width: 50%;
   text-align: center;
 }
 
 .aboutContainer {
-  width: 60%;
-  max-width: 900px;
+  max-width: 70%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.negiTeamSelector {
+  width: 80%;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .teamPhoto {
   overflow: hidden;
   height: 300px;
   width: 300px;
-  border-radius: 100rem;
 }
 
 .teamContainer {
+  width: 30%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
 }
 
 .mobileContainer {
@@ -36,4 +44,70 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 30%;
+  height: 100%;
+  padding: 10% 2%;
+}
+
+.teamContainer {
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+  width: 100%;
+}
+
+.layeredImageNegi {
+  width: 50%;
+  background: linear-gradient(to left, transparent 80%, white),
+    url("../public/images/test.png");
+  display: inherit;
+  align-self: flex-end;
+  margin: 2% 0;
+  background-repeat: no-repeat;
+}
+
+.layeredImageMocchan {
+  width: 50%;
+  background: linear-gradient(to left, transparent 80%, white),
+    url("../public/images/mocchan1.png");
+  display: inherit;
+  align-self: flex-end;
+  margin: 2% 0;
+  background-repeat: no-repeat;
+}
+
+.layeredImageNacchan {
+  width: 50%;
+  background: linear-gradient(to left, transparent 80%, white),
+    url("../public/images/nacchan1.png");
+  display: inherit;
+  align-self: flex-end;
+  margin: 2% 0;
+  background-repeat: no-repeat;
+}
+
+.layeredImageOrange {
+  width: 50%;
+  background: linear-gradient(to left, transparent 80%, white),
+    url("../public/images/orange1.png");
+  display: inherit;
+  align-self: flex-end;
+  margin: 2% 0;
+  background-repeat: no-repeat;
+}
+
+.memberSelected {
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.memberNotSelected {
+  cursor: pointer;
 }

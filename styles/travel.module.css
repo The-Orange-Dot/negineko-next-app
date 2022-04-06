@@ -27,6 +27,10 @@
   cursor: pointer;
 }
 
+.locationCardContainer > div > h3:hover {
+  opacity: 50%;
+}
+
 .homepageButton {
   background-color: #b2deef;
   border: 1px solid #b2deef;
