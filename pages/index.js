@@ -70,7 +70,7 @@ const Home = ({ stream }) => {
         { left: 0, ease: "Power4.easeOut", duration: 1 },
         2.5
       )
-      .fromTo("#live-text", { opacity: 0, y: 50 }, { opacity: 1, y: 80 });
+      .fromTo("#live-text", { opacity: 0, y: 110 }, { opacity: 1, y: 80 });
 
     setTween(tl);
 

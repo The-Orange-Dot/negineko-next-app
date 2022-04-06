@@ -59,6 +59,10 @@
   padding: 10% 0;
 }
 
+.infoContainer > p {
+  text-align: start;
+}
+
 .teamContainer {
   display: flex;
   align-items: flex-start;
@@ -97,7 +101,6 @@
 .infoList {
   list-style: none;
   text-align: start;
-  width: 100%;
 }
 
 .eventsContainer {

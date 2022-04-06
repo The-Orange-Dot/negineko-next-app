@@ -49,8 +49,8 @@ const Orange = () => {
         {mobile ? null : <h1>Orange</h1>}
         <p>
           The NegiNeko_Tokyo channel&apos;s admin, mod, and primary orange. He
-          is responsible for managing the hardware, designing the software, and
-          fixing anything Negi break.
+          is responsible for managing the hardware and software, carrying the
+          camera rig, and fixing anything Negi break.
         </p>
         <ul className={styles.infoList}>
           <li>Hobbies: Tech</li>
