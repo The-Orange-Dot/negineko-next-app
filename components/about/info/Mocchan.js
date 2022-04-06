@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "../../../styles/about.module.css";
 import gsap from "gsap";
 import Image from "next/image";
+import { useMediaQuery } from "react-responsive";
 
 const Mocchan = () => {
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
+  const [mobile, setMobile] = useState(false);
   const [tween, setTween] = useState();
   const images = [
     "/images/mocchan1.png",
@@ -11,6 +14,8 @@ const Mocchan = () => {
     "/images/mocchan3.png",
   ];
   useEffect(() => {
+    isMobile ? setMobile(true) : setMobile(false);
+
     const tl = gsap
       .timeline({ paused: true })
       .fromTo(
@@ -36,68 +41,120 @@ const Mocchan = () => {
       );
 
     setTween(tl);
-  }, []);
+  }, [isMobile]);
 
   return (
     <>
-      <div className={`${styles.infoContainer} mocchan-text-anim`}>
-        <h1>Mocchan</h1>
+      <div
+        className={`${
+          mobile ? styles.mobileInfoContainer : styles.infoContainer
+        } mocchan-text-anim`}
+      >
+        {mobile ? null : <h1>Mocchan</h1>}
         <p>
           The official mascot of the NegiNeko_Tokyo channel. Mocchan is a
           Netherland Dwarf rabbit with perfect mascara. She does what she wants,
           wherever she wants, whenever she wants.
         </p>
-        <ul>
+        <ul className={styles.infoList}>
           <li>Hobbies: Binkies</li>
           <li>Favorite food: Pellets (Power of Timothy)</li>
         </ul>
       </div>
 
-      <div
-        className={`${styles.layeredImageContainer} mocchan-pic-anim`}
-        style={{
-          position: "relative",
-          left: 0,
-          opacity: 0,
-          width: 800,
-          height: 640,
-        }}
-        rel="preload"
-      >
-        <div className={`${styles.layeredImage} mocchan-pic-anim`}>
-          <Image
-            src={images[2]}
-            alt="test"
-            width={800}
-            height={640}
-            priority={true}
-            placeholder="empty"
-          />
+      {mobile ? (
+        <div
+          className={`${styles.mobileLayeredImageContainer} mocchan-pic-anim`}
+          style={{
+            position: "relative",
+            left: 0,
+            opacity: 0,
+            width: 400,
+            height: 320,
+          }}
+          rel="preload"
+        >
+          <div className={`${styles.layeredImage} mocchan-pic-anim`}>
+            <Image
+              src={images[2]}
+              alt="test"
+              width={400}
+              height={320}
+              priority={true}
+              placeholder="empty"
+            />
+          </div>
+          <div className={`${styles.layeredImage} mocchan-pic-anim2`}>
+            <Image
+              src={images[1]}
+              alt="test"
+              width={400}
+              height={320}
+              priority={true}
+              placeholder="empty"
+            />
+          </div>
+          <div className={`${styles.layeredImage} mocchan-pic-anim3`}>
+            <Image
+              src={images[0]}
+              alt="test"
+              width={400}
+              height={320}
+              priority={true}
+              placeholder="empty"
+              onLoadingComplete={() => {
+                tween.play(0);
+              }}
+            />
+          </div>
         </div>
-        <div className={`${styles.layeredImage} mocchan-pic-anim2`}>
-          <Image
-            src={images[1]}
-            alt="test"
-            width={800}
-            height={640}
-            priority={true}
-            placeholder="empty"
-          />
+      ) : (
+        <div
+          className={`${styles.layeredImageContainer} mocchan-pic-anim`}
+          style={{
+            position: "relative",
+            left: 0,
+            opacity: 0,
+            width: 800,
+            height: 640,
+          }}
+          rel="preload"
+        >
+          <div className={`${styles.layeredImage} mocchan-pic-anim`}>
+            <Image
+              src={images[2]}
+              alt="test"
+              width={800}
+              height={640}
+              priority={true}
+              placeholder="empty"
+            />
+          </div>
+          <div className={`${styles.layeredImage} mocchan-pic-anim2`}>
+            <Image
+              src={images[1]}
+              alt="test"
+              width={800}
+              height={640}
+              priority={true}
+              placeholder="empty"
+            />
+          </div>
+          <div className={`${styles.layeredImage} mocchan-pic-anim3`}>
+            <Image
+              src={images[0]}
+              alt="test"
+              width={800}
+              height={640}
+              priority={true}
+              placeholder="empty"
+              onLoadingComplete={() => {
+                tween.play(0);
+              }}
+            />
+          </div>
         </div>
-        <div className={`${styles.layeredImage} mocchan-pic-anim3`}>
-          <Image
-            src={images[0]}
-            alt="test"
-            width={800}
-            height={640}
-            priority={true}
-            placeholder="empty"
-            onLoadingComplete={() => {
-              tween.play(0);
-            }}
-          />
-        </div>
-      </div>
+      )}
     </>
   );
 };

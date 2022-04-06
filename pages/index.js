@@ -5,7 +5,6 @@ import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
 import gsap from "gsap";
 import TextPlugin from "gsap/dist/TextPlugin";
-import { mouseIn, mouseOut } from "../components/homepage/NegiMouseAnimation";
 
 const Home = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });

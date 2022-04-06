@@ -102,7 +102,11 @@ const About = ({ user, stream }) => {
         ) : null}
         <p>{negi?.description}</p>
         <h2>The NegiNeko Team</h2>
-        <div className={styles.negiTeamSelector}>
+        <div
+          className={
+            mobile ? styles.mobileTeamSelector : styles.negiTeamSelector
+          }
+        >
           <span>
             <h3
               onClick={() => {
@@ -183,7 +187,13 @@ const About = ({ user, stream }) => {
         }}
       >
         <h1>Event History</h1>
-        <Events />
+        <div
+          className={
+            mobile ? styles.mobileEventsContainer : styles.eventsContainer
+          }
+        >
+          <Events />
+        </div>
       </div>
     </div>
   );
