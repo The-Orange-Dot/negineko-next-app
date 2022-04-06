@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../../styles/about.module.css";
 import gsap from "gsap";
 import Image from "next/image";
 
 const Nacchan = () => {
+  const [tween, setTween] = useState();
   const images = [
     "/images/nacchan1.png",
     "/images/nacchan2.png",
@@ -34,8 +35,7 @@ const Nacchan = () => {
         { opacity: 0, x: -30 },
         { opacity: 1, x: 0, duration: 0.3 }
       );
-
-    tl.play(0);
+    setTween(tl);
   }, []);
 
   return (
@@ -71,6 +71,7 @@ const Nacchan = () => {
             width={800}
             height={640}
             priority={true}
+            placeholder="empty"
           />
         </div>
         <div className={`${styles.layeredImage} nacchan-pic-anim2`}>
@@ -80,6 +81,7 @@ const Nacchan = () => {
             width={800}
             height={640}
             priority={true}
+            placeholder="empty"
           />
         </div>
         <div className={`${styles.layeredImage} nacchan-pic-anim3`}>
@@ -89,6 +91,10 @@ const Nacchan = () => {
             width={800}
             height={640}
             priority={true}
+            placeholder="empty"
+            onLoadingComplete={() => {
+              tween.play(0);
+            }}
           />
         </div>
       </div>

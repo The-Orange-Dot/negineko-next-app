@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../../styles/about.module.css";
 import gsap from "gsap";
 import Image from "next/image";
 
 const Negi = () => {
+  const [tween, setTween] = useState();
   const images = ["/images/negi.png", "/images/negi2.png", "/images/negi3.png"];
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const Negi = () => {
       )
       .fromTo(".negi-pic-anim3", { opacity: 0, x: -30 }, { opacity: 1, x: 0 });
 
-    tl.play(0);
+    setTween(tl);
   }, []);
 
   return (
@@ -60,6 +61,7 @@ const Negi = () => {
             width={800}
             height={640}
             priority={true}
+            placeholder="empty"
           />
         </div>
         <div className={`${styles.layeredImage} negi-pic-anim2`}>
@@ -69,6 +71,7 @@ const Negi = () => {
             width={800}
             height={640}
             priority={true}
+            placeholder="empty"
           />
         </div>
         <div className={`${styles.layeredImage} negi-pic-anim3`}>
@@ -78,6 +81,10 @@ const Negi = () => {
             width={800}
             height={640}
             priority={true}
+            placeholder="empty"
+            onLoadingComplete={() => {
+              tween.play(0);
+            }}
           />
         </div>
       </div>

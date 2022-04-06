@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../../styles/about.module.css";
 import gsap from "gsap";
 import Image from "next/image";
 
 const Orange = () => {
+  const [tween, setTween] = useState();
   const images = [
     "/images/orange1.png",
     "/images/orange2.png",
@@ -31,7 +32,7 @@ const Orange = () => {
         { opacity: 1, x: 0, duration: 0.3 }
       );
 
-    tl.play(0);
+    setTween(tl);
   }, []);
 
   return (
@@ -67,6 +68,7 @@ const Orange = () => {
             width={800}
             height={640}
             priority={true}
+            placeholder="empty"
           />
         </div>
         <div className={`${styles.layeredImage} orange-pic-anim2`}>
@@ -76,6 +78,7 @@ const Orange = () => {
             width={800}
             height={640}
             priority={true}
+            placeholder="empty"
           />
         </div>
         <div className={`${styles.layeredImage} orange-pic-anim3`}>
@@ -85,6 +88,10 @@ const Orange = () => {
             width={800}
             height={640}
             priority={true}
+            placeholder="empty"
+            onLoadingComplete={() => {
+              tween.play(0);
+            }}
           />
         </div>
       </div>
