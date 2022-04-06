@@ -40,10 +40,14 @@ const Nacchan = () => {
     <>
       <div className={`${styles.infoContainer} nacchan-text-anim`}>
         <h1>Nacchan</h1>
-        <p></p>
+        <p>
+          Mocchan&apos;s little sister; she is a Hollad Lop with an endless
+          amount of energy. She&apos;s curious and adventurous and nothing can
+          hold her back from exploring new locations
+        </p>
         <ul>
-          <li>Hobbies: Good food</li>
-          <li>Favorite food: Negi (Leek)</li>
+          <li>Hobbies: Clothes, bothering Mocchan</li>
+          <li>Favorite food: Pakuchi</li>
         </ul>
       </div>
 

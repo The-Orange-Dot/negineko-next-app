@@ -43,8 +43,8 @@ const Orange = () => {
           fixing anything Negi break.
         </p>
         <ul>
-          <li>Hobbies: Good food</li>
-          <li>Favorite food: Negi (Leek)</li>
+          <li>Hobbies: Tech</li>
+          <li>Favorite food: Food</li>
         </ul>
       </div>
       <div

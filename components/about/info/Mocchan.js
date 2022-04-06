@@ -40,10 +40,14 @@ const Mocchan = () => {
     <>
       <div className={`${styles.infoContainer} mocchan-text-anim`}>
         <h1>Mocchan</h1>
-        <p></p>
+        <p>
+          The official mascot of the NegiNeko_Tokyo channel. Mocchan is a
+          Netherland Dwarf rabbit with perfect mascara. She does what she wants,
+          wherever she wants, whenever she wants.
+        </p>
         <ul>
-          <li>Hobbies: Good food</li>
-          <li>Favorite food: Negi (Leek)</li>
+          <li>Hobbies: Binkies</li>
+          <li>Favorite food: Pellets (Power of Timothy)</li>
         </ul>
       </div>
 
