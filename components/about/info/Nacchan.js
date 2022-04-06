@@ -132,7 +132,7 @@ const Nacchan = () => {
           </div>
           <div className={`${styles.layeredImage} nacchan-pic-anim2`}>
             <Image
-              src={images[1]}
+              src={images[2]}
               alt="test"
               width={800}
               height={640}
