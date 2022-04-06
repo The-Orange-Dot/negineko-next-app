@@ -107,7 +107,7 @@ const Home = () => {
 
           <div className={styles.negi}>
             <Image
-              src="/images/test3.png"
+              src="/images/negi-homepage.png"
               alt="negi"
               width={700}
               height={700}

@@ -3,7 +3,7 @@ import styles from "../../../styles/about.module.css";
 import gsap from "gsap";
 
 const Negi = () => {
-  const images = ["/images/test.png", "/images/test2.png", "/images/test3.png"];
+  const images = ["/images/negi.png", "/images/negi2.png", "/images/negi3.png"];
 
   useEffect(() => {
     const tl = gsap
