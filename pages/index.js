@@ -96,7 +96,7 @@ const Home = () => {
           <div className={styles.backgroundCircle} id="circle">
             <div className={styles.nacchan}>
               <Image
-                src="/images/nacchan.png"
+                src="/images/Nacchan.png"
                 alt="nacchan"
                 width={450}
                 height={450}

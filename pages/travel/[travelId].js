@@ -92,7 +92,7 @@ const TravelId = () => {
                 ) : (
                   <TwitchClip
                     clip={location.twitchClip}
-                    width="100%"
+                    width="640px"
                     height="360px"
                     mute="true"
                     parent={["negineko-site.herokuapp.com"]}
