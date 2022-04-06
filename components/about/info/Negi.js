@@ -53,6 +53,7 @@ const Negi = () => {
           margin: "2% 0",
           backgroundImage: `linear-gradient(to left, transparent 80%, white), url(${images[2]})`,
         }}
+        rel="preload"
       >
         <div
           className={`${styles.layeredImage} negi-pic-anim2`}
