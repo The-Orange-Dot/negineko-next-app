@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import styles from "../../../styles/about.module.css";
 import gsap from "gsap";
+import Image from "next/image";
+import { abort } from "process";
 
 const Negi = () => {
   const images = ["/images/negi.png", "/images/negi2.png", "/images/negi3.png"];
@@ -30,7 +32,7 @@ const Negi = () => {
       <div className={`${styles.infoContainer} negi-text-anim`}>
         <h1>Negi</h1>
         <p>
-          Negi is the Host and face of the stream, born in Tokyo, she moved to
+          Negi is the host and face of the stream, born in Tokyo, she moved to
           Korea when she was 2 years old, and moved back to Tokyo when she was
           8. She speaks fluent English and Japanese, and knows just enough
           Korean to survive (maybe).
@@ -42,39 +44,24 @@ const Negi = () => {
       </div>
 
       <div
-        className={`${styles.layeredImage} negi-pic-anim`}
+        className={`${styles.layeredImageContainer} negi-pic-anim`}
         style={{
+          position: "relative",
+          left: 0,
           opacity: 0,
           width: 800,
           height: 640,
-          objectFit: "cover",
-          backgroundSize: "100%",
-          overflow: "hidden",
-          margin: "2% 0",
-          backgroundImage: `linear-gradient(to left, transparent 80%, white), url(${images[2]})`,
         }}
         rel="preload"
       >
-        <div
-          className={`${styles.layeredImage} negi-pic-anim2`}
-          style={{
-            opacity: 0,
-            width: 800,
-            height: 640,
-            backgroundSize: "100%",
-            backgroundImage: `linear-gradient(to left, transparent 80%, white), url(${images[1]})`,
-          }}
-        >
-          <div
-            className={`${styles.layeredImage} negi-pic-anim3`}
-            style={{
-              opacity: 0,
-              width: 800,
-              height: 640,
-              backgroundSize: "100%",
-              backgroundImage: `linear-gradient(to left, transparent 80%, white), url(${images[0]})`,
-            }}
-          ></div>
+        <div className={`${styles.layeredImage} negi-pic-anim`}>
+          <Image src={images[2]} alt="test" width={800} height={640} priority />
+        </div>
+        <div className={`${styles.layeredImage} negi-pic-anim2`}>
+          <Image src={images[1]} alt="test" width={800} height={640} priority />
+        </div>
+        <div className={`${styles.layeredImage} negi-pic-anim3`}>
+          <Image src={images[0]} alt="test" width={800} height={640} priority />
         </div>
       </div>
     </>

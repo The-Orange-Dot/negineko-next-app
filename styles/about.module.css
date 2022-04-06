@@ -66,12 +66,17 @@
   width: 100%;
 }
 
-.layeredImage {
-  width: 50%;
+.layeredImageContainer {
+  width: 100%;
   height: 100%;
   display: inherit;
   align-self: flex-end;
-  background-repeat: no-repeat;
+}
+
+.layeredImage {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .memberSelected {

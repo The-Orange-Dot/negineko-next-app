@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "../../../styles/about.module.css";
 import gsap from "gsap";
+import Image from "next/image";
 
 const Mocchan = () => {
   const images = [
@@ -52,42 +53,24 @@ const Mocchan = () => {
       </div>
 
       <div
-        className={`${styles.layeredImage} mocchan-pic-anim`}
+        className={`${styles.layeredImageContainer} mocchan-pic-anim`}
         style={{
+          position: "relative",
+          left: 0,
           opacity: 0,
           width: 800,
           height: 640,
-          objectFit: "cover",
-          backgroundSize: "100%",
-          overflow: "hidden",
-          margin: "2% 0",
-          backgroundImage: `linear-gradient(to left, transparent 80%, white), url(${images[2]})`,
         }}
+        rel="preload"
       >
-        <div
-          className={`${styles.layeredImage} mocchan-pic-anim2`}
-          style={{
-            opacity: 0,
-            width: 800,
-            height: 640,
-            objectFit: "cover",
-            backgroundSize: "100%",
-            overflow: "hidden",
-            backgroundImage: `linear-gradient(to left, transparent 80%, white), url(${images[1]})`,
-          }}
-        >
-          <div
-            className={`${styles.layeredImage} mocchan-pic-anim3`}
-            style={{
-              opacity: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              backgroundSize: "100%",
-              overflow: "hidden",
-              backgroundImage: `linear-gradient(to left, transparent 80%, white), url(${images[0]})`,
-            }}
-          ></div>
+        <div className={`${styles.layeredImage} mocchan-pic-anim`}>
+          <Image src={images[2]} alt="test" width={800} height={640} priority />
+        </div>
+        <div className={`${styles.layeredImage} mocchan-pic-anim2`}>
+          <Image src={images[1]} alt="test" width={800} height={640} priority />
+        </div>
+        <div className={`${styles.layeredImage} mocchan-pic-anim3`}>
+          <Image src={images[0]} alt="test" width={800} height={640} priority />
         </div>
       </div>
     </>
