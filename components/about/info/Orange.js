@@ -61,13 +61,31 @@ const Orange = () => {
         rel="preload"
       >
         <div className={`${styles.layeredImage} orange-pic-anim`}>
-          <Image src={images[2]} alt="test" width={800} height={640} priority />
+          <Image
+            src={images[2]}
+            alt="test"
+            width={800}
+            height={640}
+            priority={true}
+          />
         </div>
         <div className={`${styles.layeredImage} orange-pic-anim2`}>
-          <Image src={images[1]} alt="test" width={800} height={640} priority />
+          <Image
+            src={images[1]}
+            alt="test"
+            width={800}
+            height={640}
+            priority={true}
+          />
         </div>
         <div className={`${styles.layeredImage} orange-pic-anim3`}>
-          <Image src={images[0]} alt="test" width={800} height={640} priority />
+          <Image
+            src={images[0]}
+            alt="test"
+            width={800}
+            height={640}
+            priority={true}
+          />
         </div>
       </div>
     </>

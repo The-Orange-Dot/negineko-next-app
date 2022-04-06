@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styles from "../../../styles/about.module.css";
 import gsap from "gsap";
 import Image from "next/image";
-import { abort } from "process";
 
 const Negi = () => {
   const images = ["/images/negi.png", "/images/negi2.png", "/images/negi3.png"];
@@ -55,13 +54,31 @@ const Negi = () => {
         rel="preload"
       >
         <div className={`${styles.layeredImage} negi-pic-anim`}>
-          <Image src={images[2]} alt="test" width={800} height={640} priority />
+          <Image
+            src={images[2]}
+            alt="test"
+            width={800}
+            height={640}
+            priority={true}
+          />
         </div>
         <div className={`${styles.layeredImage} negi-pic-anim2`}>
-          <Image src={images[1]} alt="test" width={800} height={640} priority />
+          <Image
+            src={images[1]}
+            alt="test"
+            width={800}
+            height={640}
+            priority={true}
+          />
         </div>
         <div className={`${styles.layeredImage} negi-pic-anim3`}>
-          <Image src={images[0]} alt="test" width={800} height={640} priority />
+          <Image
+            src={images[0]}
+            alt="test"
+            width={800}
+            height={640}
+            priority={true}
+          />
         </div>
       </div>
     </>
