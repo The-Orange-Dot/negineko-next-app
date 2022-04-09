@@ -84,13 +84,15 @@ const Home = ({ stream }) => {
     setSubtitleTween(subtitleTween);
   }, [isMobile]);
 
-  if (mobile) {
-    tween.play();
-    setTimeout(() => {
-      subtitleTween?.play(0);
-      setJP(false);
-    }, 3500);
-  }
+  const mobileLoadHandler = () => {
+    if (mobile) {
+      tween.play();
+      setTimeout(() => {
+        subtitleTween?.play(0);
+        setJP(false);
+      }, 3500);
+    }
+  };
 
   return (
     <div
@@ -113,17 +115,6 @@ const Home = ({ stream }) => {
           onMouseLeave={() => {
             if (!mobile) {
               subtitleTween.reverse(0);
-            }
-          }}
-          onClick={() => {
-            if (mobile) {
-              if (JP) {
-                subtitleTween.resume(0);
-                setJP(false);
-              } else {
-                subtitleTween.reverse(0);
-                setJP(true);
-              }
             }
           }}
         >
@@ -176,6 +167,9 @@ const Home = ({ stream }) => {
               height={450}
               id="negi"
               placeholder="empty"
+              onLoadingComplete={() => {
+                mobileLoadHandler();
+              }}
             />
           </div>
         ) : (
