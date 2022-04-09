@@ -40,6 +40,7 @@ const Home = ({ stream }) => {
   const fetchStream = stream.data;
   const [subtitleTween, setSubtitleTween] = useState("");
   const [tween, setTween] = useState();
+  const [JP, setJP] = useState(true);
   gsap.registerPlugin(TextPlugin);
 
   useEffect(() => {
@@ -73,7 +74,6 @@ const Home = ({ stream }) => {
       .fromTo("#live-text", { opacity: 0, y: 110 }, { opacity: 1, y: 80 });
 
     setTween(tl);
-    tl.play();
 
     //Subtitle text animation Timeline and tween
     const subtitleTween = gsap.timeline({ paused: "true" });
@@ -83,6 +83,14 @@ const Home = ({ stream }) => {
     });
     setSubtitleTween(subtitleTween);
   }, [isMobile]);
+
+  if (mobile) {
+    tween.play();
+    setTimeout(() => {
+      subtitleTween?.play(0);
+      setJP(false);
+    }, 3500);
+  }
 
   return (
     <div
@@ -94,13 +102,29 @@ const Home = ({ stream }) => {
         <h1 className={mobile ? styles.mobileNegiTitle : styles.negiTitle}>
           NEGINEKO_TOKYO
         </h1>
+
         <div
           className={styles.subtitleContainer}
           onMouseEnter={() => {
-            subtitleTween.play(0);
+            if (!mobile) {
+              subtitleTween.play(0);
+            }
           }}
           onMouseLeave={() => {
-            subtitleTween.reverse(0);
+            if (!mobile) {
+              subtitleTween.reverse(0);
+            }
+          }}
+          onClick={() => {
+            if (mobile) {
+              if (JP) {
+                subtitleTween.resume(0);
+                setJP(false);
+              } else {
+                subtitleTween.reverse(0);
+                setJP(true);
+              }
+            }
           }}
         >
           <h1
@@ -120,7 +144,7 @@ const Home = ({ stream }) => {
       <div>
         <div
           className={
-            mobile ? styles.mobilebackgroundCircle : styles.backgroundCircle
+            mobile ? styles.mobileBackgroundCircle : styles.backgroundCircle
           }
           id="circle"
         >
@@ -130,14 +154,16 @@ const Home = ({ stream }) => {
                 We&apos;re live now!
               </h1>
             ) : null}
-            <Image
-              src="/images/Nacchan.png"
-              alt="nacchan"
-              width={mobile ? 200 : 450}
-              height={mobile ? 200 : 450}
-              id="nacchan"
-              priority={true}
-            />
+            {mobile ? null : (
+              <Image
+                src="/images/Nacchan.png"
+                alt="nacchan"
+                width={mobile ? 200 : 450}
+                height={mobile ? 200 : 450}
+                id="nacchan"
+                priority={true}
+              />
+            )}
           </div>
         </div>
 
@@ -175,9 +201,9 @@ const Home = ({ stream }) => {
           backgroundRepeat: "no-repeat",
           backgroundSize: "100%",
           zIndex: -5,
-          width: "100%",
-          height: "100%",
-          position: "absolute",
+          width: mobile ? "500%" : "100%",
+          height: mobile ? "500%" : "100%",
+          position: mobile ? "fixed" : "absolute",
           left: 0,
           top: 0,
           opacity: "5%",
