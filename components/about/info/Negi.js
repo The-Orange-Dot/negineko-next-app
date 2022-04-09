@@ -73,6 +73,7 @@ const Negi = () => {
               width={400}
               height={320}
               placeholder="empty"
+              priority={true}
             />
           </div>
           <div className={`${styles.layeredImage} negi-pic-anim2`}>
@@ -82,6 +83,7 @@ const Negi = () => {
               width={400}
               height={320}
               placeholder="empty"
+              priority={true}
             />
           </div>
           <div className={`${styles.layeredImage} negi-pic-anim3`}>
@@ -91,6 +93,7 @@ const Negi = () => {
               width={400}
               height={320}
               placeholder="empty"
+              priority={true}
               onLoadingComplete={() => {
                 loadAnimationHandler();
               }}

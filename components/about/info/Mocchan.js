@@ -82,6 +82,7 @@ const Mocchan = () => {
               width={400}
               height={320}
               placeholder="empty"
+              priority={true}
             />
           </div>
           <div className={`${styles.layeredImage} mocchan-pic-anim2`}>
@@ -91,6 +92,7 @@ const Mocchan = () => {
               width={400}
               height={320}
               placeholder="empty"
+              priority={true}
             />
           </div>
           <div className={`${styles.layeredImage} mocchan-pic-anim3`}>
@@ -100,6 +102,7 @@ const Mocchan = () => {
               width={400}
               height={320}
               placeholder="empty"
+              priority={true}
               onLoadingComplete={() => {
                 loadAnimationHandler();
               }}

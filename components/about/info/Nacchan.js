@@ -83,6 +83,7 @@ const Nacchan = () => {
               width={400}
               height={320}
               placeholder="empty"
+              priority={true}
             />
           </div>
           <div className={`${styles.layeredImage} nacchan-pic-anim2`}>
@@ -92,6 +93,7 @@ const Nacchan = () => {
               width={400}
               height={320}
               placeholder="empty"
+              priority={true}
             />
           </div>
           <div className={`${styles.layeredImage} nacchan-pic-anim3`}>
@@ -101,6 +103,7 @@ const Nacchan = () => {
               width={400}
               height={320}
               placeholder="empty"
+              priority={true}
               onLoadingComplete={() => {
                 loadAnimationHandler();
               }}
