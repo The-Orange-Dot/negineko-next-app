@@ -73,6 +73,7 @@ const Home = ({ stream }) => {
       .fromTo("#live-text", { opacity: 0, y: 110 }, { opacity: 1, y: 80 });
 
     setTween(tl);
+    tl.play();
 
     //Subtitle text animation Timeline and tween
     const subtitleTween = gsap.timeline({ paused: "true" });
@@ -115,27 +116,43 @@ const Home = ({ stream }) => {
           </h3>
         </Link>
       </div>
-      {mobile ? (
-        <div className={styles.mobileBackgroundCircle}></div>
-      ) : (
-        <div>
-          <div className={styles.backgroundCircle} id="circle">
-            <div className={styles.nacchan}>
-              {fetchStream.length ? (
-                <h1 className={styles.liveText} id="live-text">
-                  We&apos;re live now!
-                </h1>
-              ) : null}
-              <Image
-                src="/images/Nacchan.png"
-                alt="nacchan"
-                width={450}
-                height={450}
-                id="nacchan"
-              />
-            </div>
-          </div>
 
+      <div>
+        <div
+          className={
+            mobile ? styles.mobilebackgroundCircle : styles.backgroundCircle
+          }
+          id="circle"
+        >
+          <div className={styles.nacchan}>
+            {fetchStream.length ? (
+              <h1 className={styles.liveText} id="live-text">
+                We&apos;re live now!
+              </h1>
+            ) : null}
+            <Image
+              src="/images/Nacchan.png"
+              alt="nacchan"
+              width={mobile ? 200 : 450}
+              height={mobile ? 200 : 450}
+              id="nacchan"
+              priority={true}
+            />
+          </div>
+        </div>
+
+        {mobile ? (
+          <div className={styles.negi}>
+            <Image
+              src="/images/negi-homepage.png"
+              alt="negi"
+              width={450}
+              height={450}
+              id="negi"
+              placeholder="empty"
+            />
+          </div>
+        ) : (
           <div className={styles.negi}>
             <Image
               src="/images/negi-homepage.png"
@@ -149,8 +166,9 @@ const Home = ({ stream }) => {
               }}
             />
           </div>
-        </div>
-      )}
+        )}
+      </div>
+
       <div
         style={{
           backgroundImage: "url(/images/map_tokyo.png)",
