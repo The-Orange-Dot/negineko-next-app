@@ -36,7 +36,7 @@ import TextPlugin from "gsap/dist/TextPlugin";
 
 const Home = ({ stream }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
-  const [mobile, setMobile] = useState(false);
+  const [mobile, setMobile] = useState(true);
   const fetchStream = stream.data;
   const [subtitleTween, setSubtitleTween] = useState("");
   const [tween, setTween] = useState();
@@ -82,7 +82,7 @@ const Home = ({ stream }) => {
       ease: "Power2.easeInOut",
     });
     setSubtitleTween(subtitleTween);
-  }, [isMobile]);
+  }, [isMobile, mobile]);
 
   const mobileLoadHandler = () => {
     if (mobile) {
