@@ -7,7 +7,7 @@ import { useMediaQuery } from "react-responsive";
 const Nacchan = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
-  const [tween, setTween] = useState();
+  const [tween, setTween] = useState(gsap.timeline({ paused: true }));
   const images = [
     "/images/nacchan1.png",
     "/images/nacchan2.png",
@@ -17,8 +17,7 @@ const Nacchan = () => {
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
 
-    const tl = gsap
-      .timeline({ paused: true })
+    tween
       .fromTo(
         ".nacchan-text-anim",
         { opacity: 0, x: -30 },
@@ -40,8 +39,11 @@ const Nacchan = () => {
         { opacity: 0, x: -30 },
         { opacity: 1, x: 0, duration: 0.3 }
       );
-    setTween(tl);
-  }, [isMobile]);
+  }, [isMobile, tween]);
+
+  const loadAnimationHandler = () => {
+    tween.play(0);
+  };
 
   return (
     <>
@@ -80,7 +82,6 @@ const Nacchan = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
             />
           </div>
@@ -90,7 +91,6 @@ const Nacchan = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
             />
           </div>
@@ -100,10 +100,9 @@ const Nacchan = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
               onLoadingComplete={() => {
-                tween.play(0);
+                loadAnimationHandler();
               }}
             />
           </div>

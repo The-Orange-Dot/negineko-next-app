@@ -73,7 +73,7 @@ const About = ({ user }) => {
         break;
       default:
         setTeamSelector("negi");
-        setTeamView(<Negi memberAnim={memberAnim} />);
+        setTeamView(<Negi />);
     }
   };
 

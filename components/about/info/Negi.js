@@ -7,14 +7,13 @@ import { useMediaQuery } from "react-responsive";
 const Negi = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
-  const [tween, setTween] = useState();
+  const [tween, setTween] = useState(gsap.timeline({ paused: true }));
   const images = ["/images/negi.png", "/images/negi2.png", "/images/negi3.png"];
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
 
-    const tl = gsap
-      .timeline({ paused: true })
+    tween
       .fromTo(".negi-text-anim", { opacity: 0, x: -30 }, { opacity: 1, x: 0 })
       .fromTo(
         ".negi-pic-anim",
@@ -28,9 +27,11 @@ const Negi = () => {
         { opacity: 1, x: 0, duration: 0.3 }
       )
       .fromTo(".negi-pic-anim3", { opacity: 0, x: -30 }, { opacity: 1, x: 0 });
+  }, [isMobile, tween]);
 
-    setTween(tl);
-  }, [isMobile]);
+  const loadAnimationHandler = () => {
+    tween.play(0);
+  };
 
   return (
     <>
@@ -71,7 +72,6 @@ const Negi = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
             />
           </div>
@@ -81,7 +81,6 @@ const Negi = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
             />
           </div>
@@ -91,10 +90,9 @@ const Negi = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
               onLoadingComplete={() => {
-                tween.play(0);
+                loadAnimationHandler();
               }}
             />
           </div>

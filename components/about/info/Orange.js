@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
 
 const Orange = () => {
-  const [tween, setTween] = useState();
+  const [tween, setTween] = useState(gsap.timeline({ paused: true }));
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
   const images = [
@@ -16,8 +16,8 @@ const Orange = () => {
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
-    const tl = gsap
-      .timeline({ paused: true })
+
+    tween
       .fromTo(".orange-text-anim", { opacity: 0, x: -30 }, { opacity: 1, x: 0 })
       .fromTo(
         ".orange-pic-anim",
@@ -35,9 +35,11 @@ const Orange = () => {
         { opacity: 0, x: -30 },
         { opacity: 1, x: 0, duration: 0.3 }
       );
+  }, [isMobile, mobile, tween]);
 
-    setTween(tl);
-  }, [isMobile]);
+  const loadAnimationHandler = () => {
+    tween.play(0);
+  };
 
   return (
     <>
@@ -76,7 +78,6 @@ const Orange = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
             />
           </div>
@@ -86,7 +87,6 @@ const Orange = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
             />
           </div>
@@ -96,10 +96,9 @@ const Orange = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
               onLoadingComplete={() => {
-                tween.play(0);
+                loadAnimationHandler();
               }}
             />
           </div>

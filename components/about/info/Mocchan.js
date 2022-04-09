@@ -7,7 +7,7 @@ import { useMediaQuery } from "react-responsive";
 const Mocchan = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
-  const [tween, setTween] = useState();
+  const [tween, setTween] = useState(gsap.timeline({ paused: true }));
   const images = [
     "/images/mocchan1.png",
     "/images/mocchan2.png",
@@ -16,8 +16,7 @@ const Mocchan = () => {
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
 
-    const tl = gsap
-      .timeline({ paused: true })
+    tween
       .fromTo(
         ".mocchan-text-anim",
         { opacity: 0, x: -30 },
@@ -39,9 +38,11 @@ const Mocchan = () => {
         { opacity: 0, x: -30 },
         { opacity: 1, x: 0, duration: 0.3 }
       );
+  }, [isMobile, tween]);
 
-    setTween(tl);
-  }, [isMobile]);
+  const loadAnimationHandler = () => {
+    tween.play(0);
+  };
 
   return (
     <>
@@ -80,7 +81,6 @@ const Mocchan = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
             />
           </div>
@@ -90,7 +90,6 @@ const Mocchan = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
             />
           </div>
@@ -100,10 +99,9 @@ const Mocchan = () => {
               alt="test"
               width={400}
               height={320}
-              priority={true}
               placeholder="empty"
               onLoadingComplete={() => {
-                tween.play(0);
+                loadAnimationHandler();
               }}
             />
           </div>
