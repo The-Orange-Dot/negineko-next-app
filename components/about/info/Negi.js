@@ -41,14 +41,15 @@ const Negi = () => {
       >
         {mobile ? null : <h1>Negi</h1>}
         <p>
-          Negi is the host and face of the stream, born in Tokyo, she moved to
-          Korea when she was 2 years old, and moved back to Tokyo when she was
-          8. She speaks fluent English and Japanese, and knows just enough
-          Korean to survive (maybe).
+          Negi is the host and face of the stream; she was born in Tokyo but
+          moved to Korea when she was 2 years old, and moved back to Tokyo when
+          she was 8. She speaks fluent English and Japanese, and knows just
+          enough Korean to survive (maybe).
         </p>
         <ul className={styles.infoList}>
           <li>Hobbies: Good food</li>
           <li>Favorite food: Negi (Leek)</li>
+          <li>Nationality: Japanese</li>
         </ul>
       </div>
 
