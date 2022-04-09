@@ -36,7 +36,7 @@ import TextPlugin from "gsap/dist/TextPlugin";
 
 const Home = ({ stream }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
-  const [mobile, setMobile] = useState(true);
+  const [mobile, setMobile] = useState(false);
   const fetchStream = stream.data;
   const [subtitleTween, setSubtitleTween] = useState("");
   const [tween, setTween] = useState();
