@@ -6,7 +6,9 @@ export const giveawayItemSlice = createSlice({
     items: {},
   },
   reducers: {
-    addItem: (state) => {},
+    addItem: (state, action) => {
+      items = { ...state, ...action };
+    },
     deleteItem: (state) => {},
   },
 });

@@ -55,6 +55,7 @@
   position: absolute;
   bottom: -25px;
   left: -5%;
+  z-index: -1;
   /* transform: scaleX(-1); */
 }
 
@@ -72,6 +73,7 @@
   min-height: 10%;
   max-height: 10%;
   min-width: 400px;
+  z-index: 10;
 }
 
 /* =========MOBILE============ */
