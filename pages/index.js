@@ -45,7 +45,6 @@ const Home = ({ stream }) => {
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
-    console.log("Page Loaded");
 
     //Starting animation
     const tl = gsap
@@ -56,9 +55,13 @@ const Home = ({ stream }) => {
         { opacity: 1, y: 0, ease: "Power1.easeOut", duration: 0.7 },
         0.5
       )
-      .from("#subtitle", { opacity: 0 })
-      .from("#twitchLink", { opacity: 0 }, 1.5)
-      .from("#circle", { y: -1000, ease: "Power4.easeOut", duration: 1.5 })
+      .fromTo("#subtitle", { opacity: 0 }, { opacity: 1 })
+      .fromTo("#twitchLink", { opacity: 0 }, { opacity: 1 }, 1.5)
+      .fromTo(
+        "#circle",
+        { y: -1000, ease: "Power4.easeOut", duration: 1.5 },
+        { y: 0 }
+      )
       .fromTo(
         "#nacchan",
         { bottom: -850 },
@@ -82,11 +85,12 @@ const Home = ({ stream }) => {
       ease: "Power2.easeInOut",
     });
     setSubtitleTween(subtitleTween);
+    console.log("Page Loaded");
   }, [isMobile, mobile]);
 
   const mobileLoadHandler = () => {
     if (mobile) {
-      tween.play();
+      tween.play(0);
       setTimeout(() => {
         subtitleTween?.play(0);
         setJP(false);
@@ -134,9 +138,9 @@ const Home = ({ stream }) => {
 
       <div>
         <div
-          className={
+          className={`circle ${
             mobile ? styles.mobileBackgroundCircle : styles.backgroundCircle
-          }
+          }`}
           id="circle"
         >
           <div className={styles.nacchan}>
@@ -149,8 +153,8 @@ const Home = ({ stream }) => {
               <Image
                 src="/images/Nacchan.png"
                 alt="nacchan"
-                width={mobile ? 200 : 450}
-                height={mobile ? 200 : 450}
+                width={mobile ? 100 : 450}
+                height={mobile ? 100 : 450}
                 id="nacchan"
                 priority={true}
               />

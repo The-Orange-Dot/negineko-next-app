@@ -95,6 +95,7 @@
   height: 600px;
   border-radius: 100rem;
   background-color: #b2deef;
+  overflow: hidden;
 }
 
 .mobileNegiTitle {
