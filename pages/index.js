@@ -42,6 +42,7 @@ const Home = ({ stream }) => {
   const [tween, setTween] = useState();
   const [JP, setJP] = useState(true);
   gsap.registerPlugin(TextPlugin);
+  const [pageLoaded, setPageLoaded] = useState(false);
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
@@ -57,22 +58,24 @@ const Home = ({ stream }) => {
       )
       .fromTo("#subtitle", { opacity: 0 }, { opacity: 1 })
       .fromTo("#twitchLink", { opacity: 0 }, { opacity: 1 }, 1.5)
+      .to("#circle", { opacity: 1 }, 2)
       .fromTo(
         "#circle",
         { y: -1000, ease: "Power4.easeOut", duration: 1.5 },
-        { y: 0 }
+        { y: 0 },
+        2
       )
       .fromTo(
         "#nacchan",
         { bottom: -850 },
         { bottom: 0, ease: "Power4.easeOut", duration: 1 },
-        3
+        2.5
       )
       .fromTo(
         "#negi",
         { left: -1550 },
         { left: 0, ease: "Power4.easeOut", duration: 1 },
-        2.5
+        2.8
       )
       .fromTo("#live-text", { opacity: 0, y: 110 }, { opacity: 1, y: 80 });
 
@@ -85,8 +88,9 @@ const Home = ({ stream }) => {
       ease: "Power2.easeInOut",
     });
     setSubtitleTween(subtitleTween);
+    setPageLoaded(true);
     console.log("Page Loaded");
-  }, [isMobile, mobile]);
+  }, [isMobile, mobile, pageLoaded]);
 
   const mobileLoadHandler = () => {
     if (mobile) {

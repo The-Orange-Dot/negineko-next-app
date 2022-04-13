@@ -24,6 +24,7 @@
 }
 
 .backgroundCircle {
+  opacity: 0;
   position: absolute;
   overflow: hidden;
   top: -200px;
