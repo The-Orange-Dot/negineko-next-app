@@ -186,7 +186,7 @@ const Home = ({ stream }) => {
               id="negi"
               placeholder="empty"
               onLoadingComplete={() => {
-                tween.play();
+                tween.play(0);
               }}
             />
           </div>

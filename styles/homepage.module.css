@@ -1,5 +1,6 @@
 .homePageContainer {
   width: 100vw;
+  max-width: 1500px;
   height: 90vh;
   display: flex;
   flex-direction: column;
@@ -54,7 +55,7 @@
 .negi {
   position: absolute;
   bottom: -25px;
-  left: -5%;
+  left: 0%;
   z-index: -1;
   /* transform: scaleX(-1); */
 }

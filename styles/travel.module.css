@@ -1,5 +1,6 @@
 .travelPageContainer {
   width: 100%;
+  max-width: 1500px;
   display: flex;
   justify-content: center;
   flex-direction: column;

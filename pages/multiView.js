@@ -57,14 +57,16 @@ const MultiView = () => {
                     theme="dark"
                     withChat={false}
                     muted
-                    width={`100%`}
-                    height="70%"
+                    width={700}
+                    height="78.5%"
+                    className={styles.multiEmbed}
                   />
                   <TwitchChat
                     channel={streamer}
-                    width="100%"
+                    width={700}
                     theme="dark"
                     height="650px"
+                    className={styles.multiEmbed}
                   />
                 </>
               ) : (
@@ -75,12 +77,12 @@ const MultiView = () => {
                     theme="dark"
                     withChat={false}
                     muted
-                    width={`100%`}
+                    width={1000}
                     height="100%"
                   />
                   <TwitchChat
                     channel={streamer}
-                    width="50%"
+                    width={400}
                     theme="dark"
                     height="650px"
                   />
