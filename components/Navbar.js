@@ -1,13 +1,15 @@
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import styles from "../styles/navbar.module.css";
 import { useMediaQuery } from "react-responsive";
 import gsap from "gsap";
 import dynamic from "next/dynamic";
 import TextPlugin from "gsap/dist/TextPlugin";
-import { mouseIn, mouseOut } from "./NavBarAnimation";
+import { mouseIn, mouseOut } from "./NavBarAnimation.ts";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session } = useSession();
   /**
    * This fixed "Expected server HTML to contain a matching <div> in <div>"
    */
@@ -19,11 +21,6 @@ const Navbar = () => {
   );
   gsap.registerPlugin(TextPlugin);
   const ref = useRef();
-  const [homeTween, setHomeTween] = useState("");
-  const [aboutTween, setAboutTween] = useState("");
-  const [travelLogTween, setTravelLogTween] = useState("");
-  const [multiViewTween, setMultiViewTween] = useState("");
-  const [giveawayTween, setGiveawayTween] = useState("");
   const isMobile = useMediaQuery({ maxWidth: 900 });
   const navBarHandler = (value) => {
     value === "open"
@@ -131,9 +128,14 @@ const Navbar = () => {
               </Link>
             </div>
             <div className={styles.signInButton}>
-              <Link href="/account/login" passHref={true}>
+              {/* <Link href="/account/login" passHref={true}>
                 <button>Sign In</button>
-              </Link>
+              </Link> */}
+              {session ? (
+                <button onClick={() => signOut()}>Sign Out</button>
+              ) : (
+                <button onClick={() => signIn()}>Sign In</button>
+              )}
             </div>
           </div>
         </div>

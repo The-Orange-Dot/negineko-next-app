@@ -49,7 +49,7 @@ const Home = ({ stream }) => {
 
     //Starting animation
     const tl = gsap
-      .timeline({ paused: true })
+      .timeline()
       .fromTo(
         "#title",
         { opacity: 0, y: -50 },
@@ -189,9 +189,7 @@ const Home = ({ stream }) => {
               height={700}
               id="negi"
               placeholder="empty"
-              onLoadingComplete={() => {
-                tween.play(0);
-              }}
+              onLoadingComplete={() => {}}
             />
           </div>
         )}
