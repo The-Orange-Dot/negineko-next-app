@@ -38,6 +38,15 @@ export default function Home() {
   };
 
   useEffect(() => {
+    const selectorHandler = (e) => {
+      for (let key in arrays) {
+        if (e === key) {
+          setSelector(arrays[key]);
+          setDescriptorSelector(descriptor[key]);
+        }
+      }
+    };
+
     setKeyButtons(
       Object.keys(arrays).map((key) => {
         return (
@@ -57,16 +66,7 @@ export default function Home() {
       })
     );
     console.log("Page Loaded");
-  }, [arrays, selectedKey]);
-
-  const selectorHandler = (e) => {
-    for (let key in arrays) {
-      if (e === key) {
-        setSelector(arrays[key]);
-        setDescriptorSelector(descriptor[key]);
-      }
-    }
-  };
+  }, [arrays, selectedKey, descriptor]);
 
   return (
     <div className={styles.container}>
