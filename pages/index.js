@@ -33,6 +33,7 @@ import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
 import gsap from "gsap";
 import TextPlugin from "gsap/dist/TextPlugin";
+import { useSession } from "next-auth/react";
 
 const Home = ({ stream }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
@@ -43,6 +44,7 @@ const Home = ({ stream }) => {
   const [JP, setJP] = useState(true);
   gsap.registerPlugin(TextPlugin);
   const [pageLoaded, setPageLoaded] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
@@ -108,6 +110,9 @@ const Home = ({ stream }) => {
         mobile ? styles.mobileHomePageContainer : styles.homePageContainer
       }
     >
+      <div>
+        {session && !mobile ? <h2>Welcome, {session.user.name}</h2> : null}
+      </div>
       <div className={styles.homePageContent} id="title">
         <h1 className={mobile ? styles.mobileNegiTitle : styles.negiTitle}>
           NEGINEKO_TOKYO
@@ -148,7 +153,7 @@ const Home = ({ stream }) => {
           id="circle"
         >
           <div className={styles.nacchan}>
-            {fetchStream.length ? (
+            {fetchStream?.length ? (
               <h1 className={styles.liveText} id="live-text">
                 We&apos;re live now!
               </h1>
