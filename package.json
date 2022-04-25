@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^4.4.2",
     "@next-auth/prisma-adapter": "^1.0.3",
     "@prisma/client": "^3.10.0",
     "@reduxjs/toolkit": "^1.8.1",
