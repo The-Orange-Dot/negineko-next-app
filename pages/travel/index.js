@@ -27,7 +27,7 @@ const Travel = ({ locations }) => {
     setPageLoaded(true);
   }, [isMobile]);
 
-  const travelLocations = locations.map((location) => (
+  const travelLocations = locations?.map((location) => (
     <div
       key={location.id}
       className={
