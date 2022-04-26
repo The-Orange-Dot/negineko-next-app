@@ -5,16 +5,6 @@ import ShuffleHandler from "../../components/giveaway/ShuffleHandler";
 import AddButtons from "../../components/giveaway/AddButtons";
 import TimerButtons from "../../components/giveaway/TimerButtons";
 import Options from "../../components/giveaway/Options";
-import { server } from "../../config/index";
-
-export const getStaticProps = async () => {
-  const res = await fetch(`${server}/api/locations`);
-  const data = await res.json();
-
-  return {
-    props: { locations: data },
-  };
-};
 
 export default function Home() {
   const [itemNameInput, setItemNameInput] = useState("");

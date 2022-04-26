@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "../../styles/login.module.css";
-import { getServerSession } from "next-auth";
 
 const Login = () => {
   return (
