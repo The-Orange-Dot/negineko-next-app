@@ -111,7 +111,7 @@ const Home = ({ stream }) => {
       }
     >
       <div>
-        {session && !mobile ? <h2>Welcome, {session.user.name}</h2> : null}
+        {session && !mobile ? <h2>Welcome, {session.user.name}!</h2> : null}
       </div>
       <div className={styles.homePageContent} id="title">
         <h1 className={mobile ? styles.mobileNegiTitle : styles.negiTitle}>

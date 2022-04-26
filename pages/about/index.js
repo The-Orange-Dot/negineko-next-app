@@ -1,7 +1,7 @@
 export const getStaticProps = async () => {
   //Gets OAuth token from Twitch
   const token = await fetch(
-    `https://id.twitch.tv/oauth2/token?client_id=05rkef9kwzbr5jdi4ahjbuj3uc83ov&client_secret=6a189h8gvw8pjxlsh8l7vdy1rp46jn&grant_type=client_credentials&scope=viewing_activity_read`,
+    `https://id.twitch.tv/oauth2/token?client_id=05rkef9kwzbr5jdi4ahjbuj3uc83ov&client_secret=1bit1lnms0h8i8ad0spnougksclgjh&grant_type=client_credentials&scope=viewing_activity_read`,
     {
       method: "POST",
     }
@@ -37,7 +37,7 @@ import gsap from "gsap";
 
 const About = ({ user }) => {
   const [negi, setNegi] = useState(user.data[0]);
-  const [orange, setOrange] = useState(user.data[1]);
+  const [orange, setOrange] = useState(user?.data[1]);
   const [pageLoaded, setPageLoaded] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
@@ -51,8 +51,8 @@ const About = ({ user }) => {
       a.login > b.login ? 1 : b.login > a.login ? -1 : 0
     );
     isMobile ? setMobile(true) : setMobile(false);
-    setNegi(sorted[0]);
-    setOrange(sorted[1]);
+    // setNegi(sorted[0]);
+    // setOrange(sorted[1]);
     setPageLoaded(true);
     console.log("Page Loaded");
   }, [user.data, isMobile, teamView]);
