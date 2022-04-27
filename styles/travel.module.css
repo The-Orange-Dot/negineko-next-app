@@ -8,7 +8,7 @@
 }
 
 .locationsContainer {
-  max-width: 80%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -145,4 +145,14 @@
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.searchButton {
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 2rem;
+  margin: 2px 1px;
+  cursor: pointer;
 }

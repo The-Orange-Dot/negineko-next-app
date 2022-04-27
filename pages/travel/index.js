@@ -30,7 +30,7 @@ const Travel = ({ data }) => {
 
   const travelLocations =
     locations.length === 0 ? (
-      <div>
+      <div style={{ width: "100%", textAlign: "center" }}>
         <h1>No matches found</h1>
       </div>
     ) : (
