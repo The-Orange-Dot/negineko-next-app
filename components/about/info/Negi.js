@@ -14,12 +14,12 @@ const Negi = () => {
     isMobile ? setMobile(true) : setMobile(false);
 
     tween
+      .to(".loading-anim", { opacity: 0, duration: 0.2 })
       .fromTo(".negi-text-anim", { opacity: 0, x: -30 }, { opacity: 1, x: 0 })
       .fromTo(
         ".negi-pic-anim",
         { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 0.3 },
-        0.3
+        { opacity: 1, x: 0, duration: 0.3 }
       )
       .fromTo(
         ".negi-pic-anim2",
@@ -52,6 +52,9 @@ const Negi = () => {
           <li>Favorite food: Negi (Leek)</li>
           <li>Nationality: Japanese</li>
         </ul>
+      </div>
+      <div>
+        <h1 className={`${styles.loadingText} loading-anim`}>Loading...</h1>
       </div>
 
       {mobile ? (

@@ -17,6 +17,7 @@ const Mocchan = () => {
     isMobile ? setMobile(true) : setMobile(false);
 
     tween
+      .to(".loading-anim", { opacity: 0, duration: 0.2 })
       .fromTo(
         ".mocchan-text-anim",
         { opacity: 0, x: -30 },
@@ -61,6 +62,9 @@ const Mocchan = () => {
           <li>Hobbies: Binkies</li>
           <li>Favorite food: Pellets (Power of Timothy)</li>
         </ul>
+      </div>
+      <div>
+        <h1 className={`${styles.loadingText} loading-anim`}>Loading...</h1>
       </div>
 
       {mobile ? (

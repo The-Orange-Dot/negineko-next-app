@@ -18,6 +18,7 @@ const Orange = () => {
     isMobile ? setMobile(true) : setMobile(false);
 
     tween
+      .to(".loading-anim", { opacity: 0, duration: 0.2 })
       .fromTo(".orange-text-anim", { opacity: 0, x: -30 }, { opacity: 1, x: 0 })
       .fromTo(
         ".orange-pic-anim",
@@ -58,6 +59,9 @@ const Orange = () => {
           <li>Hobbies: Tech</li>
           <li>Favorite food: Food</li>
         </ul>
+      </div>
+      <div>
+        <h1 className={`${styles.loadingText} loading-anim`}>Loading...</h1>
       </div>
 
       {mobile ? (

@@ -159,3 +159,9 @@
   padding: 10%;
   border-radius: 2rem;
 }
+
+.loadingText {
+  position: absolute;
+  top: 60%;
+  z-index: 5;
+}
