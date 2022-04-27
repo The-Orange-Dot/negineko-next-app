@@ -6,7 +6,7 @@ export const getStaticProps = async () => {
   const data = await res.json();
 
   return {
-    props: { locations: data },
+    props: { data },
   };
 };
 
@@ -15,19 +15,21 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/travel.module.css";
 import { useMediaQuery } from "react-responsive";
+import SearchBar from "../../components/locations/SearchBar";
 
-const Travel = ({ locations }) => {
-  // const [locations, setLocations] = useState([]);
+const Travel = ({ data }) => {
+  const [locations, setLocations] = useState([]);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
 
   useEffect(() => {
+    setLocations(data);
     isMobile ? setMobile(true) : setMobile(false);
     setPageLoaded(true);
-  }, [isMobile]);
+  }, [isMobile, data]);
 
-  const travelLocations = locations.map((location) => (
+  const travelLocations = locations?.map((location) => (
     <div
       key={location.id}
       className={
@@ -112,6 +114,7 @@ const Travel = ({ locations }) => {
             mobile ? styles.mobileTravelContainer : styles.travelPageContainer
           }
         >
+          {!mobile ? <SearchBar /> : null}
           <div
             className={
               mobile
