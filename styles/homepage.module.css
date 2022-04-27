@@ -14,7 +14,7 @@
   line-height: 0;
 }
 
-#title,
+.title,
 #twitchLink,
 #subtitle {
   opacity: 0;

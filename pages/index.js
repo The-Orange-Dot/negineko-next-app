@@ -53,7 +53,7 @@ const Home = ({ stream }) => {
     const tl = gsap
       .timeline()
       .fromTo(
-        "#title",
+        ".title",
         { opacity: 0, y: -50 },
         { opacity: 1, y: 0, ease: "Power1.easeOut", duration: 0.7 },
         0.5
@@ -113,7 +113,7 @@ const Home = ({ stream }) => {
       <div>
         {session && !mobile ? <h2>Welcome, {session.user.name}!</h2> : null}
       </div>
-      <div className={styles.homePageContent} id="title">
+      <div className={`${styles.homePageContent} title`} id="title">
         <h1 className={mobile ? styles.mobileNegiTitle : styles.negiTitle}>
           NEGINEKO_TOKYO
         </h1>
