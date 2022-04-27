@@ -52,8 +52,9 @@ const Home = ({ stream }) => {
     //Starting animation
     const tl = gsap
       .timeline()
+      .to(".page-container", { opacity: 1 })
       .fromTo(
-        ".title",
+        "#title",
         { opacity: 0, y: -50 },
         { opacity: 1, y: 0, ease: "Power1.easeOut", duration: 0.7 },
         0.5
@@ -107,13 +108,15 @@ const Home = ({ stream }) => {
   return (
     <div
       className={
-        mobile ? styles.mobileHomePageContainer : styles.homePageContainer
+        mobile
+          ? styles.mobileHomePageContainer
+          : `${styles.homePageContainer} page-container`
       }
     >
       <div>
         {session && !mobile ? <h2>Welcome, {session.user.name}!</h2> : null}
       </div>
-      <div className={`${styles.homePageContent} title`} id="title">
+      <div className={styles.homePageContent} id="title">
         <h1 className={mobile ? styles.mobileNegiTitle : styles.negiTitle}>
           NEGINEKO_TOKYO
         </h1>
