@@ -15,7 +15,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/travel.module.css";
 import { useMediaQuery } from "react-responsive";
-import SearchBar from "../../components/locations/SearchBar.js";
+import SearchBar from "../../components/locations/searchBar";
 
 const Travel = ({ data }) => {
   const [locations, setLocations] = useState([]);
