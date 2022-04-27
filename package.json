@@ -26,6 +26,7 @@
     "react-file-reader": "^1.1.4",
     "react-redux": "^7.2.8",
     "react-responsive": "^9.0.0-beta.6",
+    "react-twitch-embed": "^2.1.0",
     "react-twitch-embed-video": "^3.0.2",
     "xlsx": "^0.18.3"
   },
