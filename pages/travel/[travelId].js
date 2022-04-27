@@ -4,7 +4,6 @@ import styles from "../../styles/travel.module.css";
 import Link from "next/link";
 import { TwitchPlayer, TwitchClip } from "react-twitch-embed";
 import { useMediaQuery } from "react-responsive";
-import dynamic from "next/dynamic";
 
 const TravelId = () => {
   const router = useRouter();

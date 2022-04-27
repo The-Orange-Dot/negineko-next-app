@@ -2,11 +2,30 @@
 import { server } from "../../config/index";
 
 export const getStaticProps = async () => {
-  const res = await fetch(`${server}/api/locations`);
-  const data = await res.json();
+  let data = [];
+
+  await fetch(`${server}/api/locations`, {
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+      Accept: "application/json; charset=UTF-8",
+    },
+    responseType: "text",
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      data = res;
+    });
+
+  // const res = await fetch(`${server}/api/locations`);
+
+  // return {
+  //   props: { data: await res.json() },
+  // };
 
   return {
-    props: { locations: data },
+    props: { data },
   };
 };
 
@@ -16,16 +35,17 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/travel.module.css";
 import { useMediaQuery } from "react-responsive";
 
-const Travel = ({ locations }) => {
-  // const [locations, setLocations] = useState([]);
+const Travel = ({ data }) => {
+  const [locations, setLocations] = useState();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
 
   useEffect(() => {
+    setLocations(data);
     isMobile ? setMobile(true) : setMobile(false);
     setPageLoaded(true);
-  }, [isMobile]);
+  }, [isMobile, data]);
 
   const travelLocations = locations?.map((location) => (
     <div
