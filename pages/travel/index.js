@@ -36,6 +36,7 @@ import styles from "../../styles/travel.module.css";
 import { useMediaQuery } from "react-responsive";
 
 const Travel = ({ data }) => {
+  console.log(data);
   const [locations, setLocations] = useState();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
