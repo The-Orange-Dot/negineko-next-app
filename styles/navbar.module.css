@@ -8,6 +8,7 @@
 
 .navBarContent {
   z-index: 2;
+  min-width: 1200px;
   width: 80%;
   display: flex;
   flex-direction: row;
