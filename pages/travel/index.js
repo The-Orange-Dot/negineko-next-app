@@ -16,17 +16,31 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/travel.module.css";
 import { useMediaQuery } from "react-responsive";
 import SearchBar from "../../components/locations/searchBar";
+import CategoryFilter from "../../components/locations/categoryFilter";
 
 const Travel = ({ data }) => {
   const [locations, setLocations] = useState([]);
+  const [filteredLocations, setFilteredLocations] = useState(locations);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
+  const [categorySelected, setCategorySelected] = useState("");
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
     setPageLoaded(true);
-  }, [isMobile, data, locations]);
+    let filtered;
+    if (categorySelected !== "") {
+      filtered = locations.filter((location) => {
+        return location.category === categorySelected;
+      });
+      setFilteredLocations(filtered);
+    } else {
+      setFilteredLocations(locations);
+    }
+  }, [isMobile, locations, categorySelected]);
+
+  console.log(data);
 
   const travelLocations =
     locations.length === 0 ? (
@@ -34,7 +48,7 @@ const Travel = ({ data }) => {
         <h1>No matches found</h1>
       </div>
     ) : (
-      locations.map((location) => (
+      filteredLocations.map((location) => (
         <div
           key={location.item ? location.item.id : location.id}
           className={
@@ -150,7 +164,17 @@ const Travel = ({ data }) => {
           }
         >
           {!mobile ? (
-            <SearchBar data={data} setLocations={setLocations} />
+            <div className={styles.filterContainer}>
+              <SearchBar
+                data={data}
+                setLocations={setLocations}
+                categorySelected={categorySelected}
+              />
+              <CategoryFilter
+                categorySelected={categorySelected}
+                setCategorySelected={setCategorySelected}
+              />
+            </div>
           ) : null}
           <div
             className={

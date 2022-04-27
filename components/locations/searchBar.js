@@ -10,7 +10,6 @@ const SearchBar = ({ data, setLocations }) => {
       { name: "name", weight: 0.7 },
       { name: "address", weight: 0.6 },
       { name: "caption", weight: 0.4 },
-      { name: "category", weight: 0.4 },
       { name: "description", weight: 0.1 },
     ],
     shouldSort: true,

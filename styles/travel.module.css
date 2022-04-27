@@ -9,6 +9,7 @@
 
 .locationsContainer {
   width: 80%;
+  min-width: 1200px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -88,6 +89,18 @@
   justify-content: space-around;
 }
 
+.filterContainer {
+  width: 80%;
+  height: 15vh;
+  min-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid black;
+  padding: 1%;
+}
+
 /* ========MOBILE============ */
 
 .mobileTravelPageContainer {
@@ -155,4 +168,42 @@
   border-radius: 2rem;
   margin: 2px 1px;
   cursor: pointer;
+}
+
+/* ==========CATEGORY SELECTOR========= */
+.categoryContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.categorySelector {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.categoryButton {
+  height: 50%;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.categoryButton:hover {
+  background-color: black;
+  color: white;
+}
+
+.categoryButtonSelected {
+  background-color: black;
+  color: white;
+  height: 50%;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
