@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "../../styles/giveaway.module.css";
 import { useEffect, useState } from "react";
 import ShuffleHandler from "../../components/giveaway/ShuffleHandler";
