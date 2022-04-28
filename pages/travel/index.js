@@ -51,7 +51,6 @@ const Travel = ({ data }) => {
         let locationName;
         locationName = location.item ? location.item.name : location.name;
         const locationNameSplit = locationName.split("(");
-        console.log(locationName.split("("));
 
         return (
           <div

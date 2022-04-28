@@ -1,7 +1,7 @@
 export const getStaticProps = async () => {
   //Gets OAuth token from Twitch
   const token = await fetch(
-    `https://id.twitch.tv/oauth2/token?client_id=05rkef9kwzbr5jdi4ahjbuj3uc83ov&client_secret=6a189h8gvw8pjxlsh8l7vdy1rp46jn&grant_type=client_credentials&scope=viewing_activity_read`,
+    `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_CLIENT_ID}&client_secret=${process.env.TWITCH_CLIENT_SECRET}&grant_type=client_credentials&scope=viewing_activity_read`,
     {
       method: "POST",
     }
@@ -14,7 +14,7 @@ export const getStaticProps = async () => {
     {
       headers: {
         Authorization: `Bearer ${tokenParsed.access_token}`,
-        "Client-Id": "05rkef9kwzbr5jdi4ahjbuj3uc83ov",
+        "Client-Id": process.env.TWITCH_CLIENT_ID,
       },
     }
   );

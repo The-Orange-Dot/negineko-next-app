@@ -36,6 +36,10 @@ const TravelId = () => {
     ? (descriptions = location.description.split("|"))
     : null;
 
+  descriptions.length
+    ? descriptions.unshift(`Address: ${location.address}`)
+    : null;
+
   return (
     <div
       className={
