@@ -91,7 +91,7 @@ const Navbar = () => {
                   ref={ref}
                   id="travel"
                 >
-                  Travels
+                  Travel
                 </h4>
               </Link>
 
