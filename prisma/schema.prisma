@@ -17,7 +17,7 @@ model Location {
   category String @default("")
   address String @unique
   map String @unique
-  sns String @default("")
+  thumbnail String @default("https://icon-library.com/images/no-image-icon/no-image-icon-1.jpg")
   description String
   website String @default("")
   twitter String @default("")

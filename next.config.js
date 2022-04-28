@@ -7,7 +7,7 @@ const ContentSecurityPolicy = `
 
 const nextConfig = {
   images: {
-    domains: ["static-cdn.jtvnw.net"],
+    domains: ["static-cdn.jtvnw.net", "res.cloudinary.com"],
   },
   future: { webpack5: true },
 

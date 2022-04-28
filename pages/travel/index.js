@@ -17,6 +17,7 @@ import styles from "../../styles/travel.module.css";
 import { useMediaQuery } from "react-responsive";
 import SearchBar from "../../components/locations/searchBar";
 import CategoryFilter from "../../components/locations/categoryFilter";
+import Image from "next/image";
 
 const Travel = ({ data }) => {
   const [locations, setLocations] = useState([]);
@@ -124,14 +125,19 @@ const Travel = ({ data }) => {
             )}
           </div>
 
-          <div>
-            <iframe
-              src={location.item ? location.item.map : location.map}
-              width="120"
-              height="120"
+          <div className={styles.thumbnailContainer}>
+            <Image
+              className={styles.thumbnails}
+              src={
+                location.item
+                  ? `https://res.cloudinary.com/demo/image/fetch/${location.item.thumbnail}`
+                  : `https://res.cloudinary.com/demo/image/fetch/${location.thumbnail}`
+              }
+              alt={location.item ? location.item.name : location.name}
+              width={300}
+              height={300}
               style={{ border: 0 }}
-              loading="lazy"
-            ></iframe>
+            />
           </div>
         </div>
       ))
