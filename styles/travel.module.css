@@ -11,25 +11,27 @@
   width: 80%;
   min-width: 1200px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 
 .locationCardContainer {
-  width: 45%;
+  width: 49%;
   min-height: 150px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 2%;
+  margin: 0.5%;
+  padding: 1% 2%;
+  border: 1px solid black;
 }
 
-.locationCardContainer > div > h3 {
+.locationCardContainer h3 {
   margin: 0;
   cursor: pointer;
 }
 
-.locationCardContainer > div > h3:hover {
+.locationCardContainer span:hover > h3 {
   opacity: 50%;
 }
 
@@ -97,6 +99,11 @@
   object-fit: cover;
   width: 100%;
   height: 100%;
+}
+
+.thumbnails:hover {
+  opacity: 50%;
+  cursor: pointer;
 }
 
 .links {

@@ -41,109 +41,122 @@ const Travel = ({ data }) => {
     }
   }, [isMobile, locations, categorySelected]);
 
-  console.log(data);
-
   const travelLocations =
     locations.length === 0 ? (
       <div style={{ width: "100%", textAlign: "center" }}>
         <h1>No matches found</h1>
       </div>
     ) : (
-      filteredLocations.map((location) => (
-        <div
-          key={location.item ? location.item.id : location.id}
-          className={
-            mobile
-              ? styles.mobileLocationCardContainer
-              : styles.locationCardContainer
-          }
-        >
-          <div>
-            <Link
-              href={`/travel/${location.item ? location.item.id : location.id}`}
-              passHref={true}
-            >
-              <h3>{location.item ? location.item.name : location.name}</h3>
-            </Link>
-            <p>{location.item ? location.item.caption : location.caption}</p>
-            <p>{location.item ? location.item.address : location.address}</p>
-            {pageLoaded ? (
-              <div>
-                {/*Website Check*/}
-                {location.item ? (
-                  location.item.website ? (
-                    <Link href={location.item.website} passHref={true}>
+      filteredLocations.map((location) => {
+        let locationName;
+        locationName = location.item ? location.item.name : location.name;
+        const locationNameSplit = locationName.split("(");
+        console.log(locationName.split("("));
+
+        return (
+          <div
+            key={location.item ? location.item.id : location.id}
+            className={
+              mobile
+                ? styles.mobileLocationCardContainer
+                : styles.locationCardContainer
+            }
+          >
+            <div>
+              <Link
+                href={`/travel/${
+                  location.item ? location.item.id : location.id
+                }`}
+                passHref={true}
+              >
+                <span>
+                  <h3>{locationNameSplit[0]}</h3>
+                  <h3>{locationNameSplit[1]?.slice(0, -1)}</h3>
+                </span>
+              </Link>
+
+              <p>{location.item ? location.item.caption : location.caption}</p>
+              <p>{location.item ? location.item.address : location.address}</p>
+              {pageLoaded ? (
+                <div>
+                  {/*Website Check*/}
+                  {location.item ? (
+                    location.item.website ? (
+                      <Link href={location.item.website} passHref={true}>
+                        <button>Homepage</button>
+                      </Link>
+                    ) : null
+                  ) : location.website ? (
+                    <Link href={location.website} passHref={true}>
                       <button>Homepage</button>
                     </Link>
-                  ) : null
-                ) : location.website ? (
-                  <Link href={location.website} passHref={true}>
-                    <button>Homepage</button>
-                  </Link>
-                ) : null}
+                  ) : null}
 
-                {/*Twitter Check*/}
-                {location.item ? (
-                  location.item.twitter ? (
+                  {/*Twitter Check*/}
+                  {location.item ? (
+                    location.item.twitter ? (
+                      <Link
+                        href={`https://twitter.com/${location.item.twitter}`}
+                        passHref={true}
+                      >
+                        <button>Twitter</button>
+                      </Link>
+                    ) : null
+                  ) : location.twitter ? (
                     <Link
-                      href={`https://twitter.com/${location.item.twitter}`}
+                      href={`https://twitter.com/${location.twitter}`}
                       passHref={true}
                     >
                       <button>Twitter</button>
                     </Link>
-                  ) : null
-                ) : location.twitter ? (
-                  <Link
-                    href={`https://twitter.com/${location.twitter}`}
-                    passHref={true}
-                  >
-                    <button>Twitter</button>
-                  </Link>
-                ) : null}
+                  ) : null}
 
-                {/*Instagram Check*/}
-                {location.item ? (
-                  location.item.instagram ? (
+                  {/*Instagram Check*/}
+                  {location.item ? (
+                    location.item.instagram ? (
+                      <Link
+                        href={`https://www.instagram.com/${location.item.instagram}/`}
+                        passHref={true}
+                      >
+                        <button>Instagram</button>
+                      </Link>
+                    ) : null
+                  ) : location.instagram ? (
                     <Link
-                      href={`https://www.instagram.com/${location.item.instagram}/`}
+                      href={`https://www.instagram.com/${location.instagram}/`}
                       passHref={true}
                     >
                       <button>Instagram</button>
                     </Link>
-                  ) : null
-                ) : location.instagram ? (
-                  <Link
-                    href={`https://www.instagram.com/${location.instagram}/`}
-                    passHref={true}
-                  >
-                    <button>Instagram</button>
-                  </Link>
-                ) : null}
+                  ) : null}
+                </div>
+              ) : (
+                <div>Loading...</div>
+              )}
+            </div>
+
+            <Link
+              href={`/travel/${location.item ? location.item.id : location.id}`}
+              passHref={true}
+            >
+              <div className={styles.thumbnailContainer}>
+                <Image
+                  className={styles.thumbnails}
+                  src={
+                    location.item
+                      ? `https://res.cloudinary.com/demo/image/fetch/${location.item.thumbnail}`
+                      : `https://res.cloudinary.com/demo/image/fetch/${location.thumbnail}`
+                  }
+                  alt={location.item ? location.item.name : location.name}
+                  width={300}
+                  height={300}
+                />
               </div>
-            ) : (
-              <div>Loading...</div>
-            )}
+            </Link>
           </div>
-
-          <div className={styles.thumbnailContainer}>
-            <Image
-              className={styles.thumbnails}
-              src={
-                location.item
-                  ? `https://res.cloudinary.com/demo/image/fetch/${location.item.thumbnail}`
-                  : `https://res.cloudinary.com/demo/image/fetch/${location.thumbnail}`
-              }
-              alt={location.item ? location.item.name : location.name}
-              width={300}
-              height={300}
-              style={{ border: 0 }}
-            />
-          </div>
-        </div>
-      ))
+        );
+      })
     );
-
-  console.log(locations);
 
   return (
     <>
