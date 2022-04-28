@@ -1,49 +1,45 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native"]
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "postgresql"
   url      = "postgres://espmmtgwoesfgi:76d3974d9e396f577c6b4139f258c75d5a8cda346397ebb35687be6d607684c8@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d682h0q44a3rij?schema=public"
 }
 
 model Location {
-  id Int @id @default(autoincrement())
-  name String @unique
-  caption String @default("")
-  category String @default("")
-  address String @unique
-  map String @unique
-  thumbnail String @default("https://icon-library.com/images/no-image-icon/no-image-icon-1.jpg")
-  sns String @default("")
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  category    String   @default("")
+  address     String   @unique
+  map         String   @unique
   description String
-  website String @default("")
-  twitter String @default("")
-  instagram String @default("")
-  twitchClip String @default("")
-  twitchVideo String @default("")
-  createdAt DateTime @default(now())
+  website     String   @default("")
+  twitter     String   @default("")
+  instagram   String   @default("")
+  createdAt   DateTime @default(now())
+  caption     String   @default("")
+  twitchClip  String   @default("")
+  twitchVideo String   @default("")
+  thumbnail   String   @default("")
+  sns         String   @default("")
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
