@@ -11,6 +11,6 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
-
+  site: process.env.NEXTAUTH_URL,
   session: { strategy: "jwt" },
 });
