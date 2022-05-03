@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "../styles/navbar.module.css";
 import { useMediaQuery } from "react-responsive";
 import gsap from "gsap";
@@ -7,8 +7,11 @@ import dynamic from "next/dynamic";
 import TextPlugin from "gsap/dist/TextPlugin";
 import { mouseIn, mouseOut } from "./NavBarAnimation.ts";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useSelector, useDispatch } from "react-redux";
+import { loginUser } from "../redux/actions/userLoginSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const { data: session } = useSession();
   /**
    * This fixed "Expected server HTML to contain a matching <div> in <div>"
@@ -35,6 +38,11 @@ const Navbar = () => {
           { display: "none", opacity: 0, y: -100 }
         );
   };
+  useEffect(() => {
+    if (session) {
+      dispatch(loginUser(session));
+    }
+  }, [session, dispatch]);
 
   return (
     <>

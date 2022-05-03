@@ -1,5 +1,3 @@
-import { useSelector, useDispatch } from "react-redux";
-
 export const getStaticProps = async () => {
   //Gets OAuth token from Twitch
   const token = await fetch(
@@ -24,7 +22,7 @@ export const getStaticProps = async () => {
   const stream = await fetchStream.json();
 
   return {
-    props: { stream: stream },
+    props: { stream: stream, accessToken: tokenParsed },
   };
 };
 
@@ -36,8 +34,10 @@ import Image from "next/image";
 import gsap from "gsap";
 import TextPlugin from "gsap/dist/TextPlugin";
 import { useSession } from "next-auth/react";
+import { useSelector, useDispatch } from "react-redux";
+import { addToken } from "../redux/actions/tokenSlice";
 
-const Home = ({ stream }) => {
+const Home = ({ stream, accessToken }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
   const fetchStream = stream.data;
@@ -47,8 +47,13 @@ const Home = ({ stream }) => {
   gsap.registerPlugin(TextPlugin);
   const [pageLoaded, setPageLoaded] = useState(false);
   const { data: session } = useSession();
+  const token = useSelector((state) => state.token.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(token);
+    dispatch(addToken(accessToken));
+
     isMobile ? setMobile(true) : setMobile(false);
 
     //Starting animation
