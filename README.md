@@ -40,3 +40,4 @@ https://user-images.githubusercontent.com/92559518/166092386-06b388c7-f6af-4d67-
 - Travel-log style updated, and map replaced with thumbnails
 - Trave-log searchbar and category selector created and works!
 - Next-auth added for Twitch sign-in (omg, took forever)
+- Added redux store

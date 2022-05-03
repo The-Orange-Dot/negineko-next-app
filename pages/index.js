@@ -51,7 +51,6 @@ const Home = ({ stream, accessToken }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(token);
     dispatch(addToken(accessToken));
 
     isMobile ? setMobile(true) : setMobile(false);

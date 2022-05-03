@@ -29,7 +29,6 @@ const Travel = ({ data }) => {
   const [categorySelected, setCategorySelected] = useState("");
   const { data: session } = useSession();
 
-  console.log(session);
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
     setPageLoaded(true);

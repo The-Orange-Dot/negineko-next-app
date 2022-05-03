@@ -17,7 +17,6 @@ const CommentsPage = () => {
       body: JSON.stringify({ comment: userInput }),
     });
     const data = await response.json();
-    console.log(data);
     fetchComments();
   };
 
@@ -26,7 +25,6 @@ const CommentsPage = () => {
       method: "DELETE",
     });
     const data = await response.json();
-    console.log(data);
     fetchComments();
   };
 
