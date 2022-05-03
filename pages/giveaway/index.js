@@ -37,6 +37,8 @@ export default function Home() {
   };
 
   useEffect(() => {
+    console.log(arrays);
+
     const selectorHandler = (e) => {
       for (let key in arrays) {
         if (e === key) {

@@ -18,6 +18,7 @@ import { useMediaQuery } from "react-responsive";
 import SearchBar from "../../components/locations/searchBar";
 import CategoryFilter from "../../components/locations/categoryFilter";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const Travel = ({ data }) => {
   const [locations, setLocations] = useState([]);
@@ -26,7 +27,9 @@ const Travel = ({ data }) => {
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [categorySelected, setCategorySelected] = useState("");
+  const { data: session } = useSession();
 
+  console.log(session);
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
     setPageLoaded(true);

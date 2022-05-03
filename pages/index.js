@@ -1,3 +1,5 @@
+import { useSelector, useDispatch } from "react-redux";
+
 export const getStaticProps = async () => {
   //Gets OAuth token from Twitch
   const token = await fetch(
