@@ -145,8 +145,8 @@ const Travel = ({ data }) => {
                   className={styles.thumbnails}
                   src={
                     location.item
-                      ? `https://res.cloudinary.com/demo/image/fetch/${location.item.thumbnails}`
-                      : `https://res.cloudinary.com/demo/image/fetch/${location.thumbnails}`
+                      ? `https://res.cloudinary.com/demo/image/fetch/${location.item.thumbnail}`
+                      : `https://res.cloudinary.com/demo/image/fetch/${location.thumbnail}`
                   }
                   alt={location.item ? location.item.name : location.name}
                   width={300}
