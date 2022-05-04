@@ -86,7 +86,8 @@ const Home = ({ stream, accessToken }) => {
         { left: 0, ease: "Power4.easeOut", duration: 1 },
         2.8
       )
-      .fromTo("#live-text", { opacity: 0, y: 110 }, { opacity: 1, y: 80 });
+      .fromTo("#live-text", { opacity: 0, y: 110 }, { opacity: 1, y: 80 })
+      .fromTo(".user-display", { opacity: 0, y: -30 }, { opacity: 1, y: 0 });
 
     setTween(tl);
 
@@ -119,7 +120,7 @@ const Home = ({ stream, accessToken }) => {
           : `${styles.homePageContainer} page-container`
       }
     >
-      <div>
+      <div className={`user-display`}>
         {session && !mobile ? <h2>Welcome, {session.user.name}!</h2> : null}
       </div>
       <div className={styles.homePageContent} id="title">
