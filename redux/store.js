@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { applyMiddleware } from "@reduxjs/toolkit";
 import giveawaySlice from "./actions/giveawaySlice";
 import loginSlice from "./actions/userLoginSlice";
 import tokenSlice from "./actions/tokenSlice";
 import locationSlice from "./actions/locationSlice";
+import counterReducer from "./actions/likeSlice";
 
 export default configureStore({
   reducer: {
@@ -10,5 +12,6 @@ export default configureStore({
     user: loginSlice,
     token: tokenSlice,
     location: locationSlice,
+    counter: counterReducer,
   },
 });

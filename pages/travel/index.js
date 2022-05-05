@@ -1,15 +1,3 @@
-//This will pre-render the locations server-side from the API fetch for faster loading
-import { server } from "../../config/index";
-
-export const getStaticProps = async () => {
-  const res = await fetch(`${server}/api/locations`);
-  const data = await res.json();
-
-  return {
-    props: { data },
-  };
-};
-
 //Everything below this is CSR on browser
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -19,17 +7,41 @@ import SearchBar from "../../components/locations/searchBar";
 import CategoryFilter from "../../components/locations/categoryFilter";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import LikesCounter from "../../components/locations/likesCounter";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectAllLocations,
+  fetchLocations,
+  getLocationsError,
+  getLocationsStatus,
+  loadLocations,
+} from "../../redux/actions/locationSlice";
 
 const Travel = ({ data }) => {
+  let content;
+
   const [locations, setLocations] = useState([]);
-  const [filteredLocations, setFilteredLocations] = useState(locations);
+  const [filteredLocations, setFilteredLocations] = useState(content);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [categorySelected, setCategorySelected] = useState("");
   const { data: session } = useSession();
 
+  const dispatch = useDispatch();
+  const locationTest = useSelector(selectAllLocations);
+  const locationsStatus = useSelector(getLocationsStatus);
+  const locationsError = useSelector(getLocationsError);
+
+  if (locationsStatus === "succeeded") {
+    content = locationTest;
+  }
+
   useEffect(() => {
+    if (locationsStatus === "idle") {
+      dispatch(fetchLocations());
+    }
+
     isMobile ? setMobile(true) : setMobile(false);
     setPageLoaded(true);
     let filtered;
@@ -41,15 +53,15 @@ const Travel = ({ data }) => {
     } else {
       setFilteredLocations(locations);
     }
-  }, [isMobile, locations, categorySelected]);
+  }, [isMobile, locations, categorySelected, locationsStatus, dispatch]);
 
   const travelLocations =
-    locations.length === 0 ? (
+    content?.length === 0 ? (
       <div style={{ width: "100%", textAlign: "center" }}>
         <h1>No matches found</h1>
       </div>
     ) : (
-      filteredLocations.map((location) => {
+      filteredLocations?.map((location) => {
         let locationName;
         locationName = location.item ? location.item.name : location.name;
         const locationNameSplit = locationName.split("(");
@@ -64,17 +76,23 @@ const Travel = ({ data }) => {
             }
           >
             <div>
-              <Link
-                href={`/travel/${
-                  location.item ? location.item.id : location.id
-                }`}
-                passHref={true}
-              >
-                <span>
-                  <h3>{locationNameSplit[0]}</h3>
-                  <h3>{locationNameSplit[1]?.slice(0, -1)}</h3>
-                </span>
-              </Link>
+              <div>
+                <Link
+                  href={`/travel/${
+                    location.item ? location.item.id : location.id
+                  }`}
+                  passHref={true}
+                >
+                  <span>
+                    <h3>{locationNameSplit[0]}</h3>
+                    <h3>{locationNameSplit[1]?.slice(0, -1)}</h3>
+                  </span>
+                </Link>
+                <LikesCounter
+                  id={location.item ? location.item.id : location.id}
+                  likes={location.item ? location.item.likes : location.likes}
+                />
+              </div>
 
               <p>{location.item ? location.item.caption : location.caption}</p>
               <p>{location.item ? location.item.address : location.address}</p>
@@ -187,7 +205,7 @@ const Travel = ({ data }) => {
           {!mobile ? (
             <div className={styles.filterContainer}>
               <SearchBar
-                data={data}
+                data={content}
                 setLocations={setLocations}
                 categorySelected={categorySelected}
               />

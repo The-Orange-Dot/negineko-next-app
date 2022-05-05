@@ -229,3 +229,18 @@
   justify-content: center;
   align-items: center;
 }
+
+/* ===========Likes Function============ */
+
+.likesContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 120px;
+  height: 20px;
+  margin: 5px 0px 0px 0px;
+}
+
+.likesContainer > button {
+  margin: 0px 0px 0px 0px;
+}
