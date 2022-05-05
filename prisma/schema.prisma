@@ -22,6 +22,7 @@ model Location {
   caption     String   @default("")
   twitchClip  String   @default("")
   twitchVideo String   @default("")
+  sns         String   @default("")
   thumbnail   String   @default("")
   likes       Int      @default(0)
 }
