@@ -1,5 +1,7 @@
 //This will pre-render the locations server-side from the API fetch for faster loading
 import { server } from "../../config/index";
+import { loginUser } from "../../redux/actions/userLoginSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export const getStaticProps = async () => {
   const res = await fetch(`${server}/api/locations`);
@@ -29,6 +31,11 @@ const Travel = ({ data }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [categorySelected, setCategorySelected] = useState("");
   const { data: session } = useSession();
+
+  const user = useSelector(loginUser);
+  const username = user?.payload?.user?.value?.user?.name;
+
+  console.log(username);
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
@@ -78,6 +85,8 @@ const Travel = ({ data }) => {
                   </span>
                 </Link>
                 <LikesCounter
+                  username={username}
+                  location={location}
                   id={location.item ? location.item.id : location.id}
                   likes={location.item ? location.item.likes : location.likes}
                 />

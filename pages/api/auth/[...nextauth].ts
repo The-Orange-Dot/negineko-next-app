@@ -1,8 +1,13 @@
 import NextAuth from "next-auth";
 import TwitchProvider from "next-auth/providers/twitch";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export default NextAuth({
   // Configure one or more authentication providers
+  adapter: PrismaAdapter(prisma),
 
   providers: [
     TwitchProvider({
@@ -11,8 +16,21 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
-  session: { strategy: "jwt" },
   callbacks: {
+    async jwt({ token, user }) {
+      user && (token.user = user);
+      return token;
+    },
+    async session({ session, user }) {
+      session = {
+        ...session,
+        user: {
+          ...session.user,
+          likes: user.location_likes,
+        },
+      };
+      return session;
+    },
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`;
