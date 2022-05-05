@@ -14,7 +14,6 @@ import {
   fetchLocations,
   getLocationsError,
   getLocationsStatus,
-  loadLocations,
 } from "../../redux/actions/locationSlice";
 
 const Travel = ({ data }) => {
