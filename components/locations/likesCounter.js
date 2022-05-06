@@ -69,6 +69,7 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
           onClick={() => {
             setLiked(liked - 1);
             addLike();
+            setLikeBool(false);
           }}
         >
           {"\u2665"}
