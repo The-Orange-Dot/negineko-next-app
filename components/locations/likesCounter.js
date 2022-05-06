@@ -1,29 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { server } from "../../config/index";
-import { useState } from "react";
 import styles from "../../styles/travel.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 //empty heart => "\u2661"
 //filled heart => "\u2665"
 
-const LikesCounter = ({ likes, id, location, username }) => {
+const LikesCounter = ({ likes, id, location, username, setLoading }) => {
   const user = useSelector((state) => state.user.value);
   const locationName = location.name;
   const [liked, setLiked] = useState(likes);
+  const [likedBool, setLikeBool] = useState(false);
   const [likeState, setLikeState] = useState([]);
+  const session = useSession();
 
   useEffect(() => {
     if (user.likes !== undefined) {
       setLikeState(user.likes.includes(locationName));
     }
-  }, [user.likes, locationName]);
+    setLoading(false);
+  }, [user.likes, locationName, likedBool, likeState, setLoading]);
 
   const addLike = async () => {
-    const updatedLikes = parseInt(likes + 1);
+    let updatedLikes;
+    likedBool
+      ? (updatedLikes = parseInt(likes - 1))
+      : (updatedLikes = parseInt(likes + 1));
     const locationName = location.name;
+
+    setLikeBool(!likedBool);
 
     axios({
       method: "PATCH",
@@ -44,7 +51,7 @@ const LikesCounter = ({ likes, id, location, username }) => {
 
   return (
     <div className={styles.likesContainer}>
-      {!likeState ? (
+      {!likedBool ? (
         <button
           onClick={() => {
             setLiked(liked + 1);

@@ -31,11 +31,10 @@ const Travel = ({ data }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [categorySelected, setCategorySelected] = useState("");
   const { data: session } = useSession();
+  const [loading, setLoading] = useState(true);
 
   const user = useSelector(loginUser);
   const username = user?.payload?.user?.value.name;
-
-  console.log(username);
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
@@ -49,7 +48,12 @@ const Travel = ({ data }) => {
     } else {
       setFilteredLocations(locations);
     }
-  }, [isMobile, locations, categorySelected]);
+    session
+      ? setLoading(false)
+      : pageLoaded
+      ? setLoading(false)
+      : setLoading(true);
+  }, [isMobile, locations, categorySelected, session]);
 
   const travelLocations =
     locations.length === 0 ? (
@@ -85,6 +89,7 @@ const Travel = ({ data }) => {
                   </span>
                 </Link>
                 <LikesCounter
+                  setLoading={setLoading}
                   username={username}
                   location={location}
                   id={location.item ? location.item.id : location.id}
@@ -194,35 +199,41 @@ const Travel = ({ data }) => {
             {travelLocations}
           </div>
         </div>
+      ) : loading ? (
+        <>
+          <div>Loading...</div>
+        </>
       ) : (
-        <div
-          className={
-            mobile ? styles.mobileTravelContainer : styles.travelPageContainer
-          }
-        >
-          {!mobile ? (
-            <div className={styles.filterContainer}>
-              <SearchBar
-                data={data}
-                setLocations={setLocations}
-                categorySelected={categorySelected}
-              />
-              <CategoryFilter
-                categorySelected={categorySelected}
-                setCategorySelected={setCategorySelected}
-              />
-            </div>
-          ) : null}
+        <>
           <div
             className={
-              mobile
-                ? styles.mobileLocationContainer
-                : styles.locationsContainer
+              mobile ? styles.mobileTravelContainer : styles.travelPageContainer
             }
           >
-            {travelLocations}
+            {!mobile ? (
+              <div className={styles.filterContainer}>
+                <SearchBar
+                  data={data}
+                  setLocations={setLocations}
+                  categorySelected={categorySelected}
+                />
+                <CategoryFilter
+                  categorySelected={categorySelected}
+                  setCategorySelected={setCategorySelected}
+                />
+              </div>
+            ) : null}
+            <div
+              className={
+                mobile
+                  ? styles.mobileLocationContainer
+                  : styles.locationsContainer
+              }
+            >
+              {travelLocations}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
