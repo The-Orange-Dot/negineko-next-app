@@ -13,18 +13,26 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
   const locationName = location.name;
   const [liked, setLiked] = useState(likes);
   const [likedBool, setLikeBool] = useState(false);
-  const [likeState, setLikeState] = useState([]);
+  const [likeState, setLikeState] = useState(user.likes);
   const session = useSession();
 
   useEffect(() => {
-    if (user.likes !== undefined) {
-      setLikeState(user.likes.includes(locationName));
-      if (user.likes.includes(locationName)) {
+    // setLikeState(user.likes.includes(locationName));
+    if (likeState) {
+      if (likeState.includes(locationName)) {
         setLikeBool(true);
       }
     }
     setLoading(false);
   }, [user.likes, locationName, likedBool, likeState, setLoading]);
+
+  const updateLocationLike = () => {
+    const updatedArray = user.likes.filter((location) => {
+      return location !== locationName;
+    });
+
+    setLikeState(updatedArray);
+  };
 
   const addLike = async () => {
     let updatedLikes;
@@ -70,6 +78,7 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
             setLiked(liked - 1);
             addLike();
             setLikeBool(false);
+            updateLocationLike();
           }}
         >
           {"\u2665"}
