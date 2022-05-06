@@ -59,14 +59,16 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
       },
     });
   };
-
+  console.log(session);
   return (
     <div className={styles.likesContainer}>
       {!likedBool ? (
         <button
           onClick={() => {
-            setLiked(liked + 1);
-            addLike("add");
+            if (session.status !== "unauthenticated") {
+              setLiked(liked + 1);
+              addLike("add");
+            }
           }}
         >
           {"\u2661"}
@@ -75,10 +77,12 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
       ) : (
         <button
           onClick={() => {
-            setLiked(liked - 1);
-            addLike("subtract");
-            setLikeBool(false);
-            updateLocationLike();
+            if (session.status !== "unauthenticated") {
+              setLiked(liked - 1);
+              addLike("subtract");
+              setLikeBool(false);
+              updateLocationLike();
+            }
           }}
         >
           {"\u2665"}
