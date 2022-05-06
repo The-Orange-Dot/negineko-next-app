@@ -59,13 +59,13 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
       },
     });
   };
-
+  console.log(session);
   return (
     <div className={styles.likesContainer}>
       {!likedBool ? (
         <button
           onClick={() => {
-            if (session.status !== null || session.status !== undefined) {
+            if (session.data !== null || session.data !== undefined) {
               setLiked(liked + 1);
               addLike("add");
             }
@@ -77,7 +77,7 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
       ) : (
         <button
           onClick={() => {
-            if (session.status !== null || session.status !== undefined) {
+            if (session.data !== null || session.data !== undefined) {
               setLiked(liked - 1);
               addLike("subtract");
               setLikeBool(false);
