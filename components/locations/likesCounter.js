@@ -19,7 +19,7 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
   useEffect(() => {
     if (user.likes !== undefined) {
       setLikeState(user.likes.includes(locationName));
-      if (user.likes.inclides(locationName)) {
+      if (user.likes.includes(locationName)) {
         setLikeBool(true);
       }
     }
