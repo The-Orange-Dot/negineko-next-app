@@ -34,11 +34,11 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
     setLikeState(updatedArray);
   };
 
-  const addLike = async () => {
+  const addLike = async (e) => {
     let updatedLikes;
-    likedBool
-      ? (updatedLikes = parseInt(likes - 1))
-      : (updatedLikes = parseInt(likes + 1));
+    e === "add"
+      ? (updatedLikes = parseInt(likes + 1))
+      : (updatedLikes = parseInt(likes - 1));
     const locationName = location.name;
 
     setLikeBool(!likedBool);
@@ -66,7 +66,7 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
         <button
           onClick={() => {
             setLiked(liked + 1);
-            addLike();
+            addLike("add");
           }}
         >
           {"\u2661"}
@@ -76,7 +76,7 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
         <button
           onClick={() => {
             setLiked(liked - 1);
-            addLike();
+            addLike("subtract");
             setLikeBool(false);
             updateLocationLike();
           }}
