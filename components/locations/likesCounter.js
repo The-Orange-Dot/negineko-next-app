@@ -59,7 +59,7 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
       },
     });
   };
-  console.log(session);
+
   return (
     <div className={styles.likesContainer}>
       {!likedBool ? (
