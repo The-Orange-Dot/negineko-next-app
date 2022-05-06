@@ -8,13 +8,11 @@ export default async function handler(req, res) {
       where: { id: parseInt(locationId) },
     });
     res.status(200).json(location);
-  } else if (req.method === "PUT") {
-    const location = await prisma.location.findUnique({
+  } else if (req.method === "PATCH") {
+    const location = await prisma.location.update({
       where: { id: parseInt(locationId) },
+      data: { likes: req.body.updatedLikes },
     });
-
-    location.likes++;
-
-    res.status(201).json(location.likes);
+    res.status(201).json(location);
   }
 }

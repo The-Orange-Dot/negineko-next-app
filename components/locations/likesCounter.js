@@ -2,48 +2,53 @@ import React from "react";
 import { server } from "../../config/index";
 import { useState } from "react";
 import styles from "../../styles/travel.module.css";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 //empty heart => "\u2661"
 //filled heart => "\u2665"
 
 const LikesCounter = ({ likes, id, location, username }) => {
+  const user = useSelector((state) => state.user.value);
+  const locationName = location.name;
   const [liked, setLiked] = useState(likes);
-  const [toggleLiked, setToggleLiked] = useState(false);
+  const [likeState, setLikeState] = useState([]);
 
-  const addLike = async (e) => {
-    // console.log(location.likes);
-    // console.log(likes);
+  useEffect(() => {
+    if (user.likes !== undefined) {
+      setLikeState(user.likes.includes(locationName));
+    }
+  }, [user.likes, locationName]);
 
-    const locationRes = await fetch(`${server}/api/locations/${id}`, {
-      method: "PUT",
-      body: JSON.stringify({ likes: likes + 1 }),
-      header: {
-        "Content-type": "application/json",
+  const addLike = async () => {
+    const updatedLikes = parseInt(likes + 1);
+    const locationName = location.name;
+
+    axios({
+      method: "PATCH",
+      url: `${server}/api/locations/${id}`,
+      data: {
+        updatedLikes,
       },
     });
 
-    // const userRes = await fetch(`${server}/api/users/${username}`, {
-    //   method: "POST",
-    //   body: JSON.stringify(),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-
-    const locationData = await locationRes.json();
-    // const userData = await userRes.json();
-    console.log(`Location ${id}: ${locationData}`);
-    // console.log(`User: ${userData}`);
+    axios({
+      method: "PATCH",
+      url: `${server}/api/users/${username}`,
+      data: {
+        locationName,
+      },
+    });
   };
 
   return (
     <div className={styles.likesContainer}>
-      {toggleLiked === false ? (
+      {!likeState ? (
         <button
-          onClick={(e) => {
+          onClick={() => {
             setLiked(liked + 1);
-            setToggleLiked(true);
-            addLike(e);
+            addLike();
           }}
         >
           {"\u2661"}
@@ -53,7 +58,7 @@ const LikesCounter = ({ likes, id, location, username }) => {
         <button
           onClick={() => {
             setLiked(liked - 1);
-            setToggleLiked(false);
+            addLike();
           }}
         >
           {"\u2665"}
