@@ -53,7 +53,7 @@ const Travel = ({ data }) => {
       : pageLoaded
       ? setLoading(false)
       : setLoading(true);
-  }, [isMobile, locations, categorySelected, session]);
+  }, [isMobile, locations, categorySelected, session, pageLoaded]);
 
   const travelLocations =
     locations.length === 0 ? (
