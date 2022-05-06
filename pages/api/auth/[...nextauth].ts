@@ -24,10 +24,8 @@ export default NextAuth({
     async session({ session, user }) {
       session = {
         ...session,
-        user: {
-          ...session.user,
-          likes: user.location_likes,
-        },
+        ...session.user,
+        likes: user.location_likes,
       };
       return session;
     },

@@ -33,7 +33,7 @@ const Travel = ({ data }) => {
   const { data: session } = useSession();
 
   const user = useSelector(loginUser);
-  const username = user?.payload?.user?.value?.user?.name;
+  const username = user?.payload?.user?.value;
 
   console.log(username);
 
