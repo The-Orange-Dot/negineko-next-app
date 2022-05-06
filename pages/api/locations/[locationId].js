@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   } else if (req.method === "PATCH") {
     const location = await prisma.location.update({
       where: { id: parseInt(locationId) },
-      data: { likes: req.body.updatedLikes },
+      data: { likes: req.body.updatedLiked },
     });
     res.status(201).json(location);
   }

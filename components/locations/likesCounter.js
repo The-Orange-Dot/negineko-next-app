@@ -17,14 +17,21 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
   const session = useSession();
 
   useEffect(() => {
-    // setLikeState(user.likes.includes(locationName));
-    if (likeState) {
-      if (likeState.includes(locationName)) {
+    if (session.data) {
+      setLikeState(session.data.likes);
+
+      if (likeState?.includes(locationName)) {
         setLikeBool(true);
       }
     }
-    setLoading(false);
-  }, [user.likes, locationName, likedBool, likeState, setLoading]);
+  }, [
+    user.likes,
+    locationName,
+    likedBool,
+    likeState,
+    setLoading,
+    session.data,
+  ]);
 
   const updateLocationLike = () => {
     const updatedArray = user.likes.filter((location) => {
@@ -35,39 +42,42 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
   };
 
   const addLike = async (e) => {
-    let updatedLikes;
-    e === "add"
-      ? (updatedLikes = parseInt(likes + 1))
-      : (updatedLikes = parseInt(likes - 1));
+    let updatedLiked;
+    if (e === "add") {
+      updatedLiked = liked + 1;
+      setLiked(liked + 1);
+    } else {
+      updatedLiked = liked - 1;
+      setLiked(liked - 1);
+    }
+
     const locationName = location.name;
 
     setLikeBool(!likedBool);
-
-    axios({
+    await axios({
       method: "PATCH",
       url: `${server}/api/locations/${id}`,
       data: {
-        updatedLikes,
+        updatedLiked,
       },
-    }).then((res) => console.log(res));
+    }); //.then((res) => console.log(res));
 
-    axios({
+    await axios({
       method: "PATCH",
       url: `${server}/api/users/${username}`,
       data: {
         locationName,
       },
-    }).then((res) => console.log(res));
+    }); //.then((res) => console.log(res));
   };
 
   return (
     <div className={styles.likesContainer}>
       {!likedBool ? (
         <button
-          onClick={() => {
-            if (session.data !== null && session.data !== undefined) {
-              setLiked(liked + 1);
-              addLike("add");
+          onClick={async () => {
+            if (session.status === "authenticated") {
+              await addLike("add");
             }
           }}
         >
@@ -76,10 +86,9 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
         </button>
       ) : (
         <button
-          onClick={() => {
-            if (session.data !== null && session.data !== undefined) {
-              setLiked(liked - 1);
-              addLike("subtract");
+          onClick={async () => {
+            if (session.status === "authenticated") {
+              await addLike("subtract");
               setLikeBool(false);
               updateLocationLike();
             }
