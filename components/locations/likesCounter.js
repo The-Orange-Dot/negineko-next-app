@@ -49,7 +49,7 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
       data: {
         updatedLikes,
       },
-    });
+    }).then((res) => console.log(res));
 
     axios({
       method: "PATCH",
@@ -57,9 +57,9 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
       data: {
         locationName,
       },
-    });
+    }).then((res) => console.log(res));
   };
-  console.log(session);
+
   return (
     <div className={styles.likesContainer}>
       {!likedBool ? (
