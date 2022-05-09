@@ -1,20 +1,19 @@
-import Cors from "cors";
-import initMiddleware from "./initMiddleware";
+import NextCors from "nextjs-cors";
 import { server } from "../../../config";
-// Initialize the cors middleware
-const cors = initMiddleware(
-  // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
-  Cors({
-    // Only allow requests with GET, PATCH and OPTIONS
-    methods: ["GET", "PATCH", "OPTIONS"],
-    origin: server,
-  })
-);
 
-export default async function handler(req, res) {
-  // Run cors
-  await cors(req, res);
+const protectAPI = async (req, res) => {
+  const whitelist = [req.headers.host];
 
-  // Rest of the API logic
-  res.json({ message: "Hello Everyone!" });
-}
+  await NextCors(req, res, {
+    methods: ["PATCH", "GET"],
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  });
+};
+
+export default protectAPI;

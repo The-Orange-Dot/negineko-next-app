@@ -1,15 +1,20 @@
 import prisma from "../../../lib/prisma";
-import protectAPI from "../middleware/protectAPI";
-import Cors from "cors";
+import NextCors from "nextjs-cors";
 import { server } from "../../../config";
 
-const cors = Cors({
-  methods: ["GET", "PATCH", "HEAD"],
-  origin: server,
-});
-
 async function handler(req, res) {
-  await protectAPI(req, res, cors);
+  const whitelist = req.headers.host;
+
+  await NextCors(req, res, {
+    methods: ["GET", "PATCH", "HEAD"],
+    origin: function (origin, callback) {
+      if (server.includes(whitelist)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  });
 
   const { locationId } = req.query;
 
