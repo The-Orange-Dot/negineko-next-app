@@ -11,7 +11,7 @@
   width: 80%;
   min-width: 1200px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -43,6 +43,13 @@
   color: white;
   margin: 0 2%;
   cursor: pointer;
+}
+
+.locationContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
 }
 
 /* ==========Individual Location Page============== */

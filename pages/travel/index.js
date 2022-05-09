@@ -77,7 +77,7 @@ const Travel = ({ data }) => {
                 : styles.locationCardContainer
             }
           >
-            <div>
+            <div className={styles.locationContent}>
               <div>
                 <Link
                   href={`/travel/${
