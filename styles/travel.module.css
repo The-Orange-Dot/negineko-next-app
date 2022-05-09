@@ -143,8 +143,14 @@
   min-height: 150px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   margin: 2%;
+  padding: 2% 1%;
+  border: 1px solid black;
+}
+
+.mobileLocationCardContainer > .locationContent > div h3 {
+  margin: 0;
 }
 
 .underConstructionContainer {

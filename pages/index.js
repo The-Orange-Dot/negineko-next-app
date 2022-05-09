@@ -104,7 +104,6 @@ const Home = ({ stream, accessToken }) => {
 
   const mobileLoadHandler = () => {
     if (mobile) {
-      tween.play(0);
       setTimeout(() => {
         subtitleTween?.play(0);
         setJP(false);
