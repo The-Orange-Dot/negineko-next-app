@@ -1,7 +1,13 @@
 import prisma from "../../../lib/prisma";
 import protectAPI from "../middleware/protectAPI";
+import Cors from "cors";
+
+const cors = Cors({
+  methods: ["GET", "PATCH", "HEAD"],
+});
 
 async function handler(req, res) {
+  await protectAPI(req, res, cors);
   const { username } = req.query;
   const user = await prisma.user.findFirst({
     where: { name: username },
@@ -30,4 +36,4 @@ async function handler(req, res) {
   }
 }
 
-export default protectAPI(handler);
+export default handler;

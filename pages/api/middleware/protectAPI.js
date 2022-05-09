@@ -1,14 +1,15 @@
 import { server } from "../../../config";
 
-const protectAPI = (handler) => {
-  return async (req, res) => {
-    if (`https://${req.headers.host}` !== server) {
-      return res.status(403).json({ success: false, message: "Forbidden" });
-    }
+const protectAPI = (req, res, fn) => {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
 
-    console.log(req.headers.host);
-    return handler(req, res);
-  };
+      return resolve(result);
+    });
+  });
 };
 
 export default protectAPI;
