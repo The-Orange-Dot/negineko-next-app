@@ -1,6 +1,7 @@
 import prisma from "../../../lib/prisma";
+import protectAPI from "../middleware/protectAPI";
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   const { locationId } = req.query;
 
   if (req.method === "GET") {
@@ -16,3 +17,5 @@ export default async function handler(req, res) {
     res.status(201).json(location);
   }
 }
+
+export default protectAPI(handler);

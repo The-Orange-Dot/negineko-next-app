@@ -1,8 +1,11 @@
 import prisma from "../../../lib/prisma";
+import protectAPI from "../middleware/protectAPI";
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   const locations = await prisma.location.findMany();
   if (req.method === "GET") {
     res.status(200).json(locations);
   }
 }
+
+export default protectAPI(handler);

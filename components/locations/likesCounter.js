@@ -16,8 +16,6 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
   const [likeState, setLikeState] = useState(user.likes);
   const session = useSession();
 
-  console.log(likes);
-
   useEffect(() => {
     if (session.data) {
       setLikeState(session.data.likes);

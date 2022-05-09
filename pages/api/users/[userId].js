@@ -1,6 +1,7 @@
 import prisma from "../../../lib/prisma";
+import protectAPI from "../middleware/protectAPI";
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   const { username } = req.query;
   const user = await prisma.user.findFirst({
     where: { name: username },
@@ -28,3 +29,5 @@ export default async function handler(req, res) {
     res.status(201).json(updatedUser);
   }
 }
+
+export default protectAPI(handler);
