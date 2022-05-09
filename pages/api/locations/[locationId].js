@@ -11,7 +11,7 @@ async function handler(req, res) {
       if (corsKey === corsreq) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        res.status(401).json({ error: "YOU AREN'T ORANGE! UNAUTHORIZED!" });
       }
     },
   });

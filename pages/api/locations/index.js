@@ -6,12 +6,12 @@ async function handler(req, res) {
   const corsKey = process.env.CORS_KEY;
 
   await NextCors(req, res, {
-    methods: ["GET", "HEAD"],
+    methods: ["GET"],
     origin: function (origin, callback) {
       if (corsKey === corsreq) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        res.status(401).json({ error: "YOU AREN'T ORANGE! UNAUTHORIZED!" });
       }
     },
   });
