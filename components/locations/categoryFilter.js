@@ -17,6 +17,9 @@ const CategoryFilter = ({ categorySelected, setCategorySelected }) => {
       case "nature":
         setCategorySelected("nature");
         break;
+      case "events":
+        setCategorySelected("events");
+        break;
       default:
         setCategorySelected("");
     }
@@ -87,6 +90,18 @@ const CategoryFilter = ({ categorySelected, setCategorySelected }) => {
           }}
         >
           <p>Nature</p>
+        </span>
+        <span
+          className={
+            categorySelected === "events"
+              ? styles.categoryButtonSelected
+              : styles.categoryButton
+          }
+          onClick={() => {
+            setCategorySelected("events");
+          }}
+        >
+          <p>Events</p>
         </span>
       </div>
     </div>

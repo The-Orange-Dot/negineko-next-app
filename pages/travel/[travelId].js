@@ -4,7 +4,6 @@ import styles from "../../styles/travel.module.css";
 import Link from "next/link";
 import { TwitchPlayer, TwitchClip } from "react-twitch-embed";
 import { useMediaQuery } from "react-responsive";
-import dynamic from "next/dynamic";
 
 const TravelId = () => {
   const router = useRouter();
@@ -20,7 +19,9 @@ const TravelId = () => {
   useEffect(() => {
     localStorage.setItem("travelId", router.query.travelId);
 
-    fetch(`../api/locations/${localStorage.getItem("travelId")}`)
+    fetch(`../api/locations/${localStorage.getItem("travelId")}`, {
+      headers: { key: "orange_is_orange" },
+    })
       .then((r) => r.json())
       .then((data) => {
         setLocation(data);

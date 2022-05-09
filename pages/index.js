@@ -100,7 +100,7 @@ const Home = ({ stream, accessToken }) => {
     setSubtitleTween(subtitleTween);
     setPageLoaded(true);
     console.log("Page Loaded");
-  }, [isMobile, mobile, pageLoaded]);
+  }, [isMobile, mobile, pageLoaded, accessToken, dispatch]);
 
   const mobileLoadHandler = () => {
     if (mobile) {
