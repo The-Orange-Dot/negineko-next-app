@@ -1,9 +1,11 @@
 import prisma from "../../../lib/prisma";
 import protectAPI from "../middleware/protectAPI";
 import Cors from "cors";
+import { server } from "../../../config";
 
 const cors = Cors({
   methods: ["GET", "PATCH", "HEAD"],
+  origin: "server",
 });
 
 async function handler(req, res) {
