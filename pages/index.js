@@ -163,11 +163,10 @@ const Home = ({ stream, accessToken }) => {
           id="circle"
         >
           <div className={styles.nacchan}>
-            {fetchStream?.length ? (
-              <h1 className={styles.liveText} id="live-text">
-                We&apos;re live now!
-              </h1>
-            ) : null}
+            <h1 className={styles.liveText} id="live-text">
+              OMG! 10,000 followers!
+            </h1>
+
             {mobile ? null : (
               <Image
                 src="/images/Nacchan.png"
