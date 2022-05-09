@@ -1,7 +1,7 @@
 //This will pre-render the locations server-side from the API fetch for faster loading
 import { server } from "../../config/index";
 import { loginUser } from "../../redux/actions/userLoginSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export const getStaticProps = async () => {
   const res = await fetch(`${server}/api/locations`, {
