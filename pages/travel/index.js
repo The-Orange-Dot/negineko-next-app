@@ -4,7 +4,9 @@ import { loginUser } from "../../redux/actions/userLoginSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export const getStaticProps = async () => {
-  const res = await fetch(`${server}/api/locations`);
+  const res = await fetch(`${server}/api/locations`, {
+    headers: { key: "orange_is_orange" },
+  });
   const data = await res.json();
 
   return {

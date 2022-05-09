@@ -1,14 +1,14 @@
 import prisma from "../../../lib/prisma";
 import NextCors from "nextjs-cors";
-import { server } from "../../../config";
 
 async function handler(req, res) {
-  const whitelist = req.headers.host;
+  const corsreq = req.headers.key;
+  const corsKey = process.env.CORS_KEY;
 
   await NextCors(req, res, {
-    methods: ["GET", "PATCH", "HEAD"],
+    methods: ["GET", "PATCH"],
     origin: function (origin, callback) {
-      if (server.includes(whitelist)) {
+      if (corsKey === corsreq) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
