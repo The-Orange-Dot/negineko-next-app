@@ -55,12 +55,22 @@ const Travel = ({ data }) => {
       : pageLoaded
       ? setLoading(false)
       : setLoading(true);
-  }, [isMobile, locations, categorySelected, session, pageLoaded]);
+
+    mobile ? setLocations(data) : null;
+  }, [
+    isMobile,
+    locations,
+    categorySelected,
+    session,
+    pageLoaded,
+    mobile,
+    data,
+  ]);
 
   const travelLocations =
     locations.length === 0 ? (
       <div style={{ width: "100%", textAlign: "center" }}>
-        <h1>No matches found</h1>
+        {mobile ? <h1>Loading...</h1> : <h1>No matches found</h1>}
       </div>
     ) : (
       filteredLocations.map((location) => {
@@ -77,19 +87,22 @@ const Travel = ({ data }) => {
                 : styles.locationCardContainer
             }
           >
-            <div className={styles.locationContent}>
-              <div>
-                <Link
-                  href={`/travel/${
-                    location.item ? location.item.id : location.id
-                  }`}
-                  passHref={true}
-                >
-                  <span>
-                    <h3>{locationNameSplit[0]}</h3>
-                    <h3>{locationNameSplit[1]?.slice(0, -1)}</h3>
-                  </span>
-                </Link>
+            {/* Mobile view */}
+            {!mobile ? null : (
+              <>
+                <div className={styles.mobileViewTitle}>
+                  <Link
+                    href={`/travel/${
+                      location.item ? location.item.id : location.id
+                    }`}
+                    passHref={true}
+                  >
+                    <span>
+                      <h3>{locationNameSplit[0]}</h3>
+                      <h3>{locationNameSplit[1]?.slice(0, -1)}</h3>
+                    </span>
+                  </Link>
+                </div>
                 <LikesCounter
                   setLoading={setLoading}
                   username={username}
@@ -97,8 +110,38 @@ const Travel = ({ data }) => {
                   id={location.item ? location.item.id : location.id}
                   likes={location.item ? location.item.likes : location.likes}
                 />
-              </div>
-
+              </>
+            )}
+            <div
+              className={
+                mobile ? styles.mobileLocationContent : styles.locationContent
+              }
+            >
+              {/* Monitor view */}
+              {mobile ? null : (
+                <>
+                  <div className={styles.monitorViewTitle}>
+                    <Link
+                      href={`/travel/${
+                        location.item ? location.item.id : location.id
+                      }`}
+                      passHref={true}
+                    >
+                      <span>
+                        <h3>{locationNameSplit[0]}</h3>
+                        <h3>{locationNameSplit[1]?.slice(0, -1)}</h3>
+                      </span>
+                    </Link>
+                  </div>
+                  <LikesCounter
+                    setLoading={setLoading}
+                    username={username}
+                    location={location}
+                    id={location.item ? location.item.id : location.id}
+                    likes={location.item ? location.item.likes : location.likes}
+                  />
+                </>
+              )}
               <p>{location.item ? location.item.caption : location.caption}</p>
               <p>{location.item ? location.item.address : location.address}</p>
               {pageLoaded ? (
@@ -163,7 +206,13 @@ const Travel = ({ data }) => {
               href={`/travel/${location.item ? location.item.id : location.id}`}
               passHref={true}
             >
-              <div className={styles.thumbnailContainer}>
+              <div
+                className={
+                  mobile
+                    ? styles.mobileThumbnailContainer
+                    : styles.thumbnailContainer
+                }
+              >
                 <Image
                   className={styles.thumbnails}
                   src={
@@ -212,19 +261,18 @@ const Travel = ({ data }) => {
               mobile ? styles.mobileTravelContainer : styles.travelPageContainer
             }
           >
-            {!mobile ? (
-              <div className={styles.filterContainer}>
-                <SearchBar
-                  data={data}
-                  setLocations={setLocations}
-                  categorySelected={categorySelected}
-                />
-                <CategoryFilter
-                  categorySelected={categorySelected}
-                  setCategorySelected={setCategorySelected}
-                />
-              </div>
-            ) : null}
+            <div className={styles.filterContainer}>
+              <SearchBar
+                data={data}
+                setLocations={setLocations}
+                categorySelected={categorySelected}
+              />
+              <CategoryFilter
+                categorySelected={categorySelected}
+                setCategorySelected={setCategorySelected}
+              />
+            </div>
+
             <div
               className={
                 mobile
