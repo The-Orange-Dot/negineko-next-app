@@ -57,6 +57,7 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
     await axios({
       method: "PATCH",
       url: `${server}/api/locations/${id}`,
+      headers: { key: "orange_is_orange" },
       data: {
         updatedLiked,
       },
@@ -65,6 +66,7 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
     await axios({
       method: "PATCH",
       url: `${server}/api/users/${username}`,
+      headers: { key: "orange_is_orange" },
       data: {
         locationName,
       },
