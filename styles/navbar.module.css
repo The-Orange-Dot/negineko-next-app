@@ -39,12 +39,17 @@
 
 .signInButton {
   height: 100%;
+  min-width: 90px;
   display: flex;
   align-items: center;
 }
 
 .logo {
   cursor: pointer;
+}
+
+.button {
+  min-width: 75px;
 }
 
 /* ==========MOBILE==========- */

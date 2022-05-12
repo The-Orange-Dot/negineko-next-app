@@ -122,7 +122,7 @@ const Home = ({ stream, accessToken }) => {
           : `${styles.homePageContainer} page-container`
       }
     >
-      <div className={`user-display`}>
+      <div className={`${styles.userDisplay} user-display`}>
         {session && !mobile ? <h2>Welcome, {session.user.name}!</h2> : null}
       </div>
       <div className={styles.homePageContent} id="title">

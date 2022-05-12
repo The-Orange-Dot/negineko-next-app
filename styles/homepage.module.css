@@ -85,6 +85,11 @@
   z-index: 10;
 }
 
+.userDisplay {
+  min-height: 65px;
+  min-width: 200px;
+}
+
 /* =========MOBILE============ */
 
 .mobileHomePageContainer {

@@ -140,9 +140,13 @@ const Navbar = () => {
                 <button>Sign In</button>
               </Link> */}
               {session ? (
-                <button onClick={() => signOut()}>Sign Out</button>
+                <button className={styles.button} onClick={() => signOut()}>
+                  Sign Out
+                </button>
               ) : (
-                <button onClick={() => signIn()}>Sign In</button>
+                <button className={styles.button} onClick={() => signIn()}>
+                  Sign In
+                </button>
               )}
             </div>
           </div>

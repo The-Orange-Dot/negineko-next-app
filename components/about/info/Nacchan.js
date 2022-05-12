@@ -65,7 +65,13 @@ const Nacchan = () => {
         </ul>
       </div>
       <div>
-        <h1 className={`${styles.loadingText} loading-anim`}>Loading...</h1>
+        <h1
+          className={`${
+            mobile ? styles.mobileLoadingText : styles.loadingText
+          } loading-anim`}
+        >
+          Loading...
+        </h1>
       </div>
 
       {mobile ? (
