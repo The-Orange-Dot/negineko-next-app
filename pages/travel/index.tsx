@@ -42,7 +42,6 @@ const Travel = ({ data }) => {
   });
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
-
   const user = useSelector(loginUser);
   const username = user?.payload?.user?.value.name;
 
