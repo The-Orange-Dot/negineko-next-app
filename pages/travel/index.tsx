@@ -46,6 +46,8 @@ const Travel = ({ data }) => {
     twitchVideo: string;
     twitter: string;
     website: string;
+    prefecture: string;
+    city: string;
   }>;
 
   const [locations, setLocations] = useState([]);
@@ -90,6 +92,8 @@ const Travel = ({ data }) => {
     mobile,
     data,
   ]);
+
+  console.log(locations);
 
   const travelLocations =
     locations.length === 0 ? (
@@ -168,7 +172,14 @@ const Travel = ({ data }) => {
                 </>
               )}
               <p>{location.item ? location.item.caption : location.caption}</p>
-              <p>{location.item ? location.item.address : location.address}</p>
+              <span>
+                <p>
+                  {location.item
+                    ? location.item.prefecture
+                    : location.prefecture}
+                  , {location.item ? location.item.city : location.city}
+                </p>
+              </span>
               {pageLoaded ? (
                 <div>
                   {/*Website Check*/}
