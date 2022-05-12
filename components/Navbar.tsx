@@ -5,9 +5,9 @@ import { useMediaQuery } from "react-responsive";
 import gsap from "gsap";
 import dynamic from "next/dynamic";
 import TextPlugin from "gsap/dist/TextPlugin";
-import { mouseIn, mouseOut } from "./NavBarAnimation.ts";
+import { mouseIn, mouseOut } from "./NavBarAnimation";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/userLoginSlice";
 
 const Navbar = () => {
@@ -25,7 +25,7 @@ const Navbar = () => {
   gsap.registerPlugin(TextPlugin);
   const ref = useRef();
   const isMobile = useMediaQuery({ maxWidth: 900 });
-  const navBarHandler = (value) => {
+  const navBarHandler = (value: "open" | "close") => {
     value === "open"
       ? gsap.fromTo(
           ".openNavBar",
