@@ -51,7 +51,8 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
       setLiked(liked - 1);
     }
 
-    const locationName = location.name;
+    const locationName = location.item ? location.item.name : location.name;
+    const username = session.data.user.name;
 
     setLikeBool(!likedBool);
     await axios({
@@ -62,13 +63,13 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
         updatedLiked,
       },
     }); //.then((res) => console.log(res));
-
     await axios({
       method: "PATCH",
       url: `${server}/api/users/${username}`,
       headers: { key: "orange_is_orange" },
       data: {
         locationName,
+        username,
       },
     }); //.then((res) => console.log(res));
   };

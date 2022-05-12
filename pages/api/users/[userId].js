@@ -25,10 +25,10 @@ async function handler(req, res) {
   if (req.method === "GET") {
     res.status(200).json(user);
   } else if (req.method === "PATCH") {
-    let updatedLocationLikes;
+    let updatedLocationLikes = user.location_likes;
 
     if (!user.location_likes.includes(req.body.locationName)) {
-      updatedLocationLikes = [...user.location_likes, req.body.locationName];
+      updatedLocationLikes.push(req.body.locationName);
     } else {
       updatedLocationLikes = user.location_likes.filter(
         (location) => location !== req.body.locationName
@@ -36,7 +36,7 @@ async function handler(req, res) {
     }
 
     const updatedUser = await prisma.user.update({
-      where: { name: user.name },
+      where: { name: req.body.username },
       data: {
         location_likes: updatedLocationLikes,
       },
