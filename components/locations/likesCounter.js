@@ -52,26 +52,28 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
     }
 
     const locationName = location.item ? location.item.name : location.name;
-    const username = session.data.user.name;
+    const username = session?.data?.user?.name;
 
-    setLikeBool(!likedBool);
-    await axios({
-      method: "PATCH",
-      url: `${server}/api/locations/${id}`,
-      headers: { key: "orange_is_orange" },
-      data: {
-        updatedLiked,
-      },
-    }); //.then((res) => console.log(res));
-    await axios({
-      method: "PATCH",
-      url: `${server}/api/users/${username}`,
-      headers: { key: "orange_is_orange" },
-      data: {
-        locationName,
-        username,
-      },
-    }); //.then((res) => console.log(res));
+    if (session) {
+      setLikeBool(!likedBool);
+      await axios({
+        method: "PATCH",
+        url: `${server}/api/locations/${id}`,
+        headers: { key: "orange_is_orange" },
+        data: {
+          updatedLiked,
+        },
+      }); //.then((res) => console.log(res));
+      await axios({
+        method: "PATCH",
+        url: `${server}/api/users/${username}`,
+        headers: { key: "orange_is_orange" },
+        data: {
+          locationName,
+          username,
+        },
+      }); //.then((res) => console.log(res));
+    }
   };
 
   return (
