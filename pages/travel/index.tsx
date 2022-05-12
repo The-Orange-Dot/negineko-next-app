@@ -37,7 +37,7 @@ const Travel = ({ data }) => {
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
-  const [categorySelected, setCategorySelected] = useState<Category>({
+  const [categorySelected, setCategorySelected] = useState({
     category: "",
   });
   const { data: session } = useSession();
