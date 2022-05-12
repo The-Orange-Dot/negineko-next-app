@@ -29,7 +29,7 @@ const Travel = ({ data }) => {
   type Type = "" | "food" | "recreation" | "nature" | "events" | "shopping";
 
   interface Category {
-    category: Type;
+    category: string;
   }
 
   const [locations, setLocations] = useState([]);
@@ -42,6 +42,7 @@ const Travel = ({ data }) => {
   });
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
+
   const user = useSelector(loginUser);
   const username = user?.payload?.user?.value.name;
 
