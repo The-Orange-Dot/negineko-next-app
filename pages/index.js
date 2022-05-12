@@ -42,13 +42,13 @@ const Home = ({ stream, accessToken }) => {
   const [mobile, setMobile] = useState(false);
   const fetchStream = stream.data;
   const [subtitleTween, setSubtitleTween] = useState("");
-  const [tween, setTween] = useState();
   const [JP, setJP] = useState(true);
   gsap.registerPlugin(TextPlugin);
   const [pageLoaded, setPageLoaded] = useState(false);
   const { data: session } = useSession();
   const token = useSelector((state) => state.token.value);
   const dispatch = useDispatch();
+  const [tween, setTween] = useState("");
 
   useEffect(() => {
     dispatch(addToken(accessToken));
@@ -57,7 +57,7 @@ const Home = ({ stream, accessToken }) => {
 
     //Starting animation
     const tl = gsap
-      .timeline()
+      .timeline({ paused: true })
       .to(".page-container", { opacity: 1 })
       .fromTo(
         "#title",
@@ -89,8 +89,6 @@ const Home = ({ stream, accessToken }) => {
       .fromTo("#live-text", { opacity: 0, y: 110 }, { opacity: 1, y: 80 })
       .fromTo(".user-display", { opacity: 0, y: -30 }, { opacity: 1, y: 0 });
 
-    setTween(tl);
-
     //Subtitle text animation Timeline and tween
     const subtitleTween = gsap.timeline({ paused: "true" });
     subtitleTween.to("#subtitle", {
@@ -99,6 +97,7 @@ const Home = ({ stream, accessToken }) => {
     });
     setSubtitleTween(subtitleTween);
     setPageLoaded(true);
+    setTween(tl);
     console.log("Page Loaded");
   }, [isMobile, mobile, pageLoaded, accessToken, dispatch]);
 
@@ -109,6 +108,10 @@ const Home = ({ stream, accessToken }) => {
         setJP(false);
       }, 3500);
     }
+  };
+
+  const playTween = () => {
+    tween.play(0);
   };
 
   return (
@@ -202,7 +205,9 @@ const Home = ({ stream, accessToken }) => {
               height={700}
               id="negi"
               placeholder="empty"
-              onLoadingComplete={() => {}}
+              onLoadingComplete={() => {
+                playTween();
+              }}
             />
           </div>
         )}

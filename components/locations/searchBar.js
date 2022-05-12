@@ -107,7 +107,6 @@ const SearchBar = ({ data, setLocations }) => {
       <button
         className={styles.searchButton}
         onClick={() => {
-          searchHandler(data);
           setSearchInput("");
           setLocationSearch("");
           setLocations(data);
