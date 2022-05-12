@@ -26,12 +26,36 @@ import { useSession } from "next-auth/react";
 import LikesCounter from "../../components/locations/likesCounter";
 
 const Travel = ({ data }) => {
+  type Type = "" | "food" | "recreation" | "nature" | "events" | "shopping";
+
+  interface Category {
+    category: Type;
+  }
+
+  type FilteredArray = Array<{
+    address: string;
+    caption: string;
+    category: string;
+    createdAt: string;
+    description: string;
+    id: number;
+    map: string;
+    name: string;
+    thumbnail: string;
+    twitchclip: string;
+    twitchVideo: string;
+    twitter: string;
+    website: string;
+  }>;
+
   const [locations, setLocations] = useState([]);
   const [filteredLocations, setFilteredLocations] = useState(locations);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
-  const [categorySelected, setCategorySelected] = useState("");
+  const [categorySelected, setCategorySelected] = useState<Category>({
+    category: "",
+  });
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
 
@@ -41,8 +65,8 @@ const Travel = ({ data }) => {
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
     setPageLoaded(true);
-    let filtered;
-    if (categorySelected !== "") {
+    let filtered: FilteredArray;
+    if (categorySelected) {
       filtered = locations.filter((location) => {
         return location.category === categorySelected;
       });
@@ -74,7 +98,8 @@ const Travel = ({ data }) => {
       </div>
     ) : (
       filteredLocations.map((location) => {
-        let locationName;
+        type LocationName = string;
+        let locationName: LocationName;
         locationName = location.item ? location.item.name : location.name;
         const locationNameSplit = locationName.split("(");
 
@@ -262,11 +287,7 @@ const Travel = ({ data }) => {
             }
           >
             <div className={styles.filterContainer}>
-              <SearchBar
-                data={data}
-                setLocations={setLocations}
-                categorySelected={categorySelected}
-              />
+              <SearchBar data={data} setLocations={setLocations} />
               <CategoryFilter
                 categorySelected={categorySelected}
                 setCategorySelected={setCategorySelected}

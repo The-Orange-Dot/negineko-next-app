@@ -23,8 +23,9 @@ model Location {
   twitchClip  String   @default("")
   twitchVideo String   @default("")
   thumbnail   String   @default("")
-  sns         String   @default("")
   likes       Int      @default(0)
+  prefecture  String   @default("")
+  city        String   @default("")
 }
 
 model Account {
