@@ -19,7 +19,6 @@ const TravelId = () => {
     website: string;
     map: string;
   }
-  const router = useRouter();
   const [location, setLocation] = useState<Location>({
     id: "",
     description: "",
@@ -34,7 +33,7 @@ const TravelId = () => {
     map: "",
   });
 
-  console.log(typeof location.id);
+  const router = useRouter();
   const [pageLoaded, setPageLoaded] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 900 });
   const [mobile, setMobile] = useState(false);

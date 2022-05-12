@@ -241,6 +241,8 @@ const Travel = ({ data }) => {
                   alt={location.item ? location.item.name : location.name}
                   width={300}
                   height={300}
+                  placeholder="blur"
+                  blurDataURL="https://freepikpsd.com/file/2019/10/now-loading-png-9-Transparent-Images.png"
                   priority={true}
                 />
               </div>
