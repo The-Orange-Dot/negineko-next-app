@@ -6,18 +6,41 @@ import { TwitchPlayer, TwitchClip } from "react-twitch-embed";
 import { useMediaQuery } from "react-responsive";
 
 const TravelId = () => {
+  interface Location {
+    id: string;
+    description: string;
+    address: string;
+    name: string;
+    caption: string;
+    twitchVideo: string;
+    twitchClip: string;
+    twitter: string;
+    instagram: string;
+    website: string;
+    map: string;
+  }
   const router = useRouter();
-  const [location, setLocation] = useState({
+  const [location, setLocation] = useState<Location>({
+    id: "",
+    description: "",
+    address: "",
     name: "",
-    id: router.query.travelId,
+    caption: "",
     twitchClip: "",
+    twitchVideo: "",
+    twitter: "",
+    instagram: "",
+    website: "",
+    map: "",
   });
+
+  console.log(typeof location.id);
   const [pageLoaded, setPageLoaded] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 900 });
   const [mobile, setMobile] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("travelId", router.query.travelId);
+    localStorage.setItem("travelId", router.query.travelId as string);
 
     fetch(`../api/locations/${localStorage.getItem("travelId")}`, {
       headers: { key: "orange_is_orange" },
@@ -26,6 +49,7 @@ const TravelId = () => {
       .then((data) => {
         setLocation(data);
         setPageLoaded(true);
+        console.log(data);
       });
     isMobile ? setMobile(true) : setMobile(false);
     console.log("loaded");
