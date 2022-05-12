@@ -28,7 +28,7 @@ async function handler(req, res) {
     let updatedLocationLikes = user.location_likes;
 
     if (!user.location_likes.includes(req.body.locationName)) {
-      updatedLocationLikes.push(req.body.locationName);
+      updatedLocationLikes = [...user.location_likes, req.body.locationName;
     } else {
       updatedLocationLikes = user.location_likes.filter(
         (location) => location !== req.body.locationName
