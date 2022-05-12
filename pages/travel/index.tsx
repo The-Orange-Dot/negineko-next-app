@@ -35,7 +35,7 @@ const Travel = ({ data }) => {
   type FilteredArray = Array<{
     address: string;
     caption: string;
-    category: string;
+    category: Type;
     createdAt: string;
     description: string;
     id: number;
@@ -70,7 +70,10 @@ const Travel = ({ data }) => {
     let filtered: FilteredArray;
     if (categorySelected) {
       filtered = locations.filter((location) => {
-        return location.category === categorySelected;
+        return (
+          location.category === categorySelected ||
+          location?.item?.category === categorySelected
+        );
       });
       setFilteredLocations(filtered);
     } else {
@@ -92,8 +95,6 @@ const Travel = ({ data }) => {
     mobile,
     data,
   ]);
-
-  console.log(locations);
 
   const travelLocations =
     locations.length === 0 ? (
