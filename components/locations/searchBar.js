@@ -17,6 +17,15 @@ const SearchBar = ({ data, setLocations }) => {
     threshold: 0.3,
   };
 
+  const locationOptions = {
+    keys: [
+      { name: "prefecture", weight: 1 },
+      { name: "city", weight: 1 },
+    ],
+    shouldSort: true,
+    threshold: 0.3,
+  };
+
   const searchHandler = (results) => {
     setLocations(results);
   };
