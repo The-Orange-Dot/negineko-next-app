@@ -32,8 +32,6 @@ const Travel = ({ data }) => {
     category: Type;
   }
 
-  console.log(data);
-
   const [locations, setLocations] = useState([]);
   const [filteredLocations, setFilteredLocations] = useState(locations);
   const [pageLoaded, setPageLoaded] = useState(false);
