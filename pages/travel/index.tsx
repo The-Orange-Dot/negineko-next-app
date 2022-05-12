@@ -272,6 +272,10 @@ const Travel = ({ data }) => {
             {travelLocations}
           </div>
         </div>
+      ) : loading ? (
+        <>
+          <div>Loading...</div>
+        </>
       ) : (
         <>
           <div
