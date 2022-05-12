@@ -32,23 +32,7 @@ const Travel = ({ data }) => {
     category: Type;
   }
 
-  type FilteredArray = Array<{
-    address: string;
-    caption: string;
-    category: Type;
-    createdAt: string;
-    description: string;
-    id: number;
-    map: string;
-    name: string;
-    thumbnail: string;
-    twitchclip: string;
-    twitchVideo: string;
-    twitter: string;
-    website: string;
-    prefecture: string;
-    city: string;
-  }>;
+  console.log(data);
 
   const [locations, setLocations] = useState([]);
   const [filteredLocations, setFilteredLocations] = useState(locations);
@@ -67,7 +51,7 @@ const Travel = ({ data }) => {
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
     setPageLoaded(true);
-    let filtered: FilteredArray;
+    let filtered;
     if (categorySelected) {
       filtered = locations.filter((location) => {
         return (
@@ -84,7 +68,6 @@ const Travel = ({ data }) => {
       : pageLoaded
       ? setLoading(false)
       : setLoading(true);
-
     mobile ? setLocations(data) : null;
   }, [
     isMobile,

@@ -196,20 +196,6 @@ const Navbar = () => {
               >
                 <Link href="/travel"> Travel-log </Link>
               </p>
-              {/* <p
-                onClick={() => {
-                  navBarHandler("close");
-                }}
-              >
-                <Link href="/multiView"> Multi-view </Link>
-              </p>
-              <p
-                onClick={() => {
-                  navBarHandler("close");
-                }}
-              >
-                <Link href="/giveaway"> Giveaway-tool </Link>
-              </p> */}
             </div>
           </div>
         </div>
