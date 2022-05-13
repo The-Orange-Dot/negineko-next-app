@@ -13,13 +13,14 @@
     "@next-auth/prisma-adapter": "^1.0.3",
     "@prisma/client": "^3.10.0",
     "@reduxjs/toolkit": "^1.8.1",
+    "@stripe/stripe-js": "^1.29.0",
     "axios": "^0.27.2",
     "convert-excel-to-json": "^1.7.0",
     "cors": "^2.8.5",
     "fuse.js": "^6.5.3",
     "gsap": "npm:@gsap/member@^3.10.2",
     "iron-session": "^6.1.2",
-    "next": "12.1.0",
+    "next": "^12.1.0",
     "next-auth": "^4.3.3",
     "nextjs-cors": "^2.1.1",
     "nodemailer": "^6.7.3",
@@ -33,6 +34,7 @@
     "react-twitch-embed": "^2.1.0",
     "react-twitch-embed-video": "^3.0.2",
     "redux-thunk": "^2.4.1",
+    "stripe": "^9.1.0",
     "xlsx": "^0.18.3"
   },
   "devDependencies": {
