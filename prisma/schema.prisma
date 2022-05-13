@@ -73,3 +73,14 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Product {
+  id          String    @id @default(cuid())
+  name        String
+  price_id    String    @unique
+  images      String[]  
+  description String
+  price       String    
+  sold        Boolean   @default(false)
+  buyer       String    @default("")
+}
