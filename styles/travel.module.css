@@ -51,6 +51,7 @@
   align-items: center;
   justify-content: space-evenly;
   text-align: center;
+  width: 70%;
 }
 
 .locationContent p {
