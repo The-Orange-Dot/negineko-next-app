@@ -1,0 +1,12 @@
+.storePageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.cardContainer {
+  border: 1px solid black;
+  min-width: 30%;
+  max-width: 30%;
+  height: 400px;
+}

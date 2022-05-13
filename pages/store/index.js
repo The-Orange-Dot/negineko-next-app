@@ -1,6 +1,7 @@
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
+import styles from "../../styles/store.module.css";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -38,21 +39,27 @@ export default function PreviewPage() {
 
   return (
     <>
-      <div>
-        <button
-          onClick={() => {
-            shoppingCartHandler("price_1KyvOvCsaqCLx2xLMYIYfAl5");
-          }}
-        >
-          Test RX-78F00 Gundam
-        </button>
-        <button
-          onClick={() => {
-            shoppingCartHandler("price_1KypynCsaqCLx2xLRAvslsse");
-          }}
-        >
-          Haro Test Product
-        </button>
+      <div className={styles.storePageContainer}>
+        <span className={styles.cardContainer}>
+          <h2> Test RX-78F00 Gundam</h2>
+          <button
+            onClick={() => {
+              shoppingCartHandler("price_1KyvOvCsaqCLx2xLMYIYfAl5");
+            }}
+          >
+            Add to Cart{" "}
+          </button>
+        </span>
+        <span className={styles.cardContainer}>
+          <h2> Haro Test Product</h2>
+          <button
+            onClick={() => {
+              shoppingCartHandler("price_1KypynCsaqCLx2xLRAvslsse");
+            }}
+          >
+            Add to cart{" "}
+          </button>
+        </span>
       </div>
       <form action="/api/checkout_sessions" method="POST">
         <section>

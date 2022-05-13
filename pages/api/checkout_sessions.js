@@ -4,7 +4,11 @@ export default async function handler(req, res) {
   const productArray = req.body.product;
 
   const parsedItems = productArray.split(",").map((item) => {
-    return { price: item, quantity: 1 };
+    return {
+      price: item,
+      quantity: 1,
+      tax_rates: ["txr_1Kyzm9CsaqCLx2xLIiAoYsOl"],
+    };
   });
 
   if (req.method === "POST") {
