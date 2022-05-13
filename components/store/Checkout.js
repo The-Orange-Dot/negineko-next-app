@@ -7,7 +7,7 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
-const Checkout = ({ productId }) => {
+export default function Checkout({ productId }) {
   React.useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
@@ -65,6 +65,4 @@ const Checkout = ({ productId }) => {
       </form>
     </>
   );
-};
-
-export default Checkout;
+}
