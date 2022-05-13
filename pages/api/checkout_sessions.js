@@ -1,20 +1,63 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
+  const productArray = req.body.product;
+
+  const parsedItems = productArray.split(",").map((item) => {
+    return { price: item, quantity: 1 };
+  });
+
   if (req.method === "POST") {
     try {
       // Create Checkout Sessions from body params.
       const session = await stripe.checkout.sessions.create({
-        line_items: [
+        line_items: parsedItems,
+        payment_method_types: ["card"],
+        shipping_options: [
           {
-            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-            price: "{{PRICE_ID}}",
-            quantity: 1,
+            shipping_rate_data: {
+              type: "fixed_amount",
+              fixed_amount: {
+                amount: 600,
+                currency: "jpy",
+              },
+              display_name: "Regular",
+              delivery_estimate: {
+                minimum: {
+                  unit: "business_day",
+                  value: 7,
+                },
+                maximum: {
+                  unit: "business_day",
+                  value: 14,
+                },
+              },
+            },
+          },
+          {
+            shipping_rate_data: {
+              type: "fixed_amount",
+              fixed_amount: {
+                amount: 1500,
+                currency: "jpy",
+              },
+              display_name: "Next day air",
+              delivery_estimate: {
+                minimum: {
+                  unit: "business_day",
+                  value: 1,
+                },
+                maximum: {
+                  unit: "business_day",
+                  value: 1,
+                },
+              },
+            },
           },
         ],
         mode: "payment",
         success_url: `${req.headers.origin}/?success=true`,
-        cancel_url: `${req.headers.origin}/?canceled=true`,
+        cancel_url: `${req.headers.origin}/store/?canceled=true`,
       });
       res.redirect(303, session.url);
     } catch (err) {

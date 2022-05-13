@@ -8,7 +8,7 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 export default function PreviewPage() {
-  const [priceId, setPriceId] = useState("");
+  const [priceId, setPriceId] = useState([]);
 
   React.useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -22,43 +22,73 @@ export default function PreviewPage() {
         "Order canceled -- continue to shop around and checkout when you’re ready."
       );
     }
-  }, []);
+    console.log(priceId);
+  }, [priceId]);
+
+  const shoppingCartHandler = (id) => {
+    if (priceId.includes(id)) {
+      const filtered = priceId.filter((product) => {
+        return product !== id;
+      });
+      setPriceId(filtered);
+    } else {
+      setPriceId([...priceId, id]);
+    }
+  };
 
   return (
-    <form action="/api/checkout_sessions" method="POST">
-      <section>
-        <button type="submit" role="link">
-          Checkout
+    <>
+      <div>
+        <button
+          onClick={() => {
+            shoppingCartHandler("price_1KyvOvCsaqCLx2xLMYIYfAl5");
+          }}
+        >
+          Test RX-78F00 Gundam
         </button>
-        <input type="hidden" name="product" value={priceId} />
-      </section>
-      <style jsx>
-        {`
-          section {
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            width: 400px;
-            height: 112px;
-            border-radius: 6px;
-            justify-content: space-between;
-          }
-          button {
-            height: 36px;
-            background: #556cd6;
-            border-radius: 4px;
-            color: white;
-            border: 0;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
-          }
-          button:hover {
-            opacity: 0.8;
-          }
-        `}
-      </style>
-    </form>
+        <button
+          onClick={() => {
+            shoppingCartHandler("price_1KypynCsaqCLx2xLRAvslsse");
+          }}
+        >
+          Haro Test Product
+        </button>
+      </div>
+      <form action="/api/checkout_sessions" method="POST">
+        <section>
+          <button type="submit" role="link">
+            Checkout
+          </button>
+          <input type="hidden" name="product" value={priceId} />
+        </section>
+        <style jsx>
+          {`
+            section {
+              background: #ffffff;
+              display: flex;
+              flex-direction: column;
+              width: 400px;
+              height: 112px;
+              border-radius: 6px;
+              justify-content: space-between;
+            }
+            button {
+              height: 36px;
+              background: #556cd6;
+              border-radius: 4px;
+              color: white;
+              border: 0;
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.2s ease;
+              box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+            }
+            button:hover {
+              opacity: 0.8;
+            }
+          `}
+        </style>
+      </form>
+    </>
   );
 }
