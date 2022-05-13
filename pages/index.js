@@ -102,6 +102,8 @@ const Home = ({ stream, accessToken }) => {
   }, [isMobile, mobile, pageLoaded, accessToken, dispatch]);
 
   const mobileLoadHandler = () => {
+    tween.play(0);
+
     if (mobile) {
       setTimeout(() => {
         subtitleTween?.play(0);
