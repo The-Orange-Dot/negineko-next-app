@@ -1,17 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import styles from "../../styles/store.module.css";
-import { server } from "../../config/index";
 import Image from "next/image";
 import { numberWithCommas } from "../NumberWithCommas";
 
-const ProductCard = ({ product, priceId, setPriceId }) => {
+const ProductCard = ({ product, priceId, setPriceId, key }) => {
   const [mouseIn, setMouseIn] = useState(false);
 
   //ADDS AND REMOVES ITEMS FROM SHOPPING CARD IN AN ARRAY
-  const shoppingCartHandler = (id) => {
-    if (priceId.includes(id)) {
-      const filtered = priceId.filter((product) => {
+  const shoppingCartHandler = (id: string) => {
+    if (priceId?.includes(id)) {
+      const filtered = priceId?.filter((product: string) => {
         return product !== id;
       });
       setPriceId(filtered);
@@ -21,7 +20,7 @@ const ProductCard = ({ product, priceId, setPriceId }) => {
   };
 
   return (
-    <span className={styles.cardContainer} key={product.name}>
+    <span className={styles.cardContainer}>
       <div>
         <Image
           className={styles.thumbnail}

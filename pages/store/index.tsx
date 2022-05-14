@@ -3,14 +3,20 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import styles from "../../styles/store.module.css";
 import { server } from "../../config/index";
-import Image from "next/image";
 import ProductCard from "../../components/store/ProductCard";
 
 export const getStaticProps = async () => {
-  const res = await fetch(`${server}/api/store`, {
+  let data;
+  await fetch(`${server}/api/store`, {
     headers: { key: "orange_is_orange" },
+  }).then(async (res) => {
+    try {
+      data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
   });
-  const data = await res.json();
 
   return {
     props: { data },
@@ -24,7 +30,7 @@ const stripePromise = loadStripe(
 );
 export default function PreviewPage({ data }) {
   const [priceId, setPriceId] = useState([]);
-  console.log(data);
+  const [products, setProducts] = useState([]);
 
   React.useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -38,19 +44,18 @@ export default function PreviewPage({ data }) {
         "Order canceled -- continue to shop around and checkout when you’re ready."
       );
     }
+    setProducts(data);
     console.log(priceId);
-  }, [priceId]);
+  }, [priceId, data]);
 
-  const productsMap = data.map((product) => {
-    return (
-      <ProductCard
-        product={product}
-        key={product.id}
-        priceId={priceId}
-        setPriceId={setPriceId}
-      />
-    );
-  });
+  const productsMap = products?.map((product) => (
+    <ProductCard
+      product={product}
+      key={product.id}
+      priceId={priceId}
+      setPriceId={setPriceId}
+    />
+  ));
 
   return (
     <>
