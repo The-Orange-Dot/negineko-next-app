@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import styles from "../../styles/store.module.css";
 import { server } from "../../config/index";
 import ProductCard from "../../components/store/ProductCard";
+import { useMediaQuery } from "react-responsive";
 
 export const getStaticProps = async () => {
-  let data;
+  let data: any[];
   await fetch(`${server}/api/store`, {
     headers: { key: "orange_is_orange" },
   }).then(async (res) => {
     try {
       data = await res.json();
-      console.log(data);
     } catch (error) {
       console.log(error.message);
     }
@@ -31,8 +31,11 @@ const stripePromise = loadStripe(
 export default function PreviewPage({ data }) {
   const [priceId, setPriceId] = useState([]);
   const [products, setProducts] = useState([]);
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
+  const [mobile, setMobile] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    isMobile ? setMobile(true) : setMobile(false);
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
@@ -46,7 +49,7 @@ export default function PreviewPage({ data }) {
     }
     setProducts(data);
     console.log(priceId);
-  }, [priceId, data]);
+  }, [priceId, data, isMobile]);
 
   const productsMap = products?.map((product) => (
     <ProductCard
@@ -54,17 +57,24 @@ export default function PreviewPage({ data }) {
       key={product.id}
       priceId={priceId}
       setPriceId={setPriceId}
+      mobile={mobile}
     />
   ));
 
   return (
     <>
-      <div className={styles.pageHeader}>
+      <div className={mobile ? styles.mobilePageHeader : styles.pageHeader}>
         <h1>The NegiNeko Subscriber Store</h1>
         <p>This store is exclusive to the NegiNeko channel subscribers</p>
         <p>(Orange is currently testing this page)</p>
       </div>
-      <div className={styles.storePageContainer}>{productsMap}</div>
+      <div
+        className={
+          mobile ? styles.mobileStorePageContainer : styles.storePageContainer
+        }
+      >
+        {productsMap}
+      </div>
       <form
         action="/api/checkout_sessions"
         method="POST"
@@ -76,7 +86,11 @@ export default function PreviewPage({ data }) {
             role="link"
             className={
               priceId.length > 0
-                ? styles.checkoutButton
+                ? mobile
+                  ? styles.mobileCheckoutButton
+                  : styles.checkoutButton
+                : mobile
+                ? styles.mobileHideCheckoutButton
                 : styles.hideCheckoutButton
             }
           >

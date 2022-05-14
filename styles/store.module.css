@@ -109,3 +109,86 @@
 .thumbnail {
   object-fit: cover;
 }
+
+/* =============MOBILE=============== */
+
+.mobileStorePageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mobileCardContainer {
+  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.21);
+  width: 80%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  padding: 0% 0% 0% 0%;
+  overflow: hidden;
+  margin: 5% 0;
+}
+
+.mobileCardContainer h2 {
+  margin: 0;
+}
+
+.mobilePageHeader {
+  text-align: center;
+}
+
+.mobilePageHeader h1 {
+  margin: 0;
+}
+
+.mobilePageHeader p {
+  margin: 0;
+}
+
+.mobileDescription {
+  height: 100px;
+  padding: 0 10px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.mobileCheckoutButton {
+  bottom: 5%;
+  left: 5%;
+  right: 5%;
+  width: 87%;
+  height: 50px;
+  background: #556cd6;
+  border-radius: 4px;
+  color: white;
+  border: 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+  position: fixed;
+}
+
+.mobileHideCheckoutButton {
+  bottom: 0%;
+  left: 5%;
+  right: 5%;
+  width: 87%;
+  height: 50px;
+  background: #556cd6;
+  border-radius: 4px;
+  color: white;
+  border: 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+  position: fixed;
+  opacity: 0;
+}

@@ -4,7 +4,7 @@ import styles from "../../styles/store.module.css";
 import Image from "next/image";
 import { numberWithCommas } from "../NumberWithCommas";
 
-const ProductCard = ({ product, priceId, setPriceId, key }) => {
+const ProductCard = ({ product, priceId, setPriceId, mobile }) => {
   const [mouseIn, setMouseIn] = useState(false);
 
   //ADDS AND REMOVES ITEMS FROM SHOPPING CARD IN AN ARRAY
@@ -20,7 +20,9 @@ const ProductCard = ({ product, priceId, setPriceId, key }) => {
   };
 
   return (
-    <span className={styles.cardContainer}>
+    <span
+      className={mobile ? styles.mobileCardContainer : styles.cardContainer}
+    >
       <div>
         <Image
           className={styles.thumbnail}
@@ -34,8 +36,9 @@ const ProductCard = ({ product, priceId, setPriceId, key }) => {
         />
       </div>
       <h2> {product.name}</h2>
-      <p>{product.description}</p>
-
+      <div className={mobile ? styles.mobileDescription : ""}>
+        <p>{product.description}</p>
+      </div>
       <button
         onMouseEnter={() => setMouseIn(true)}
         onMouseLeave={() => setMouseIn(false)}
@@ -50,7 +53,7 @@ const ProductCard = ({ product, priceId, setPriceId, key }) => {
       >
         {priceId.includes(product.priceId)
           ? "Remove from Cart"
-          : mouseIn
+          : mouseIn && !mobile
           ? "Add to Cart"
           : `¥${numberWithCommas(product.price)}`}
       </button>
