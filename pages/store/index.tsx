@@ -19,7 +19,7 @@ export const getStaticProps = async () => {
   });
 
   return {
-    props: { data },
+    props: { data: data || null },
   };
 };
 
