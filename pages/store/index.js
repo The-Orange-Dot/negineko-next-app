@@ -2,14 +2,29 @@ import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import styles from "../../styles/store.module.css";
+import { server } from "../../config/index";
+import Image from "next/image";
+import ProductCard from "../../components/store/ProductCard";
+
+export const getStaticProps = async () => {
+  const res = await fetch(`${server}/api/store`, {
+    headers: { key: "orange_is_orange" },
+  });
+  const data = await res.json();
+
+  return {
+    props: { data },
+  };
+};
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
-export default function PreviewPage() {
+export default function PreviewPage({ data }) {
   const [priceId, setPriceId] = useState([]);
+  console.log(data);
 
   React.useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -26,45 +41,20 @@ export default function PreviewPage() {
     console.log(priceId);
   }, [priceId]);
 
-  const shoppingCartHandler = (id) => {
-    if (priceId.includes(id)) {
-      const filtered = priceId.filter((product) => {
-        return product !== id;
-      });
-      setPriceId(filtered);
-    } else {
-      setPriceId([...priceId, id]);
-    }
-  };
+  const productsMap = data.map((product) => {
+    return (
+      <ProductCard
+        product={product}
+        key={product.id}
+        priceId={priceId}
+        setPriceId={setPriceId}
+      />
+    );
+  });
 
   return (
     <>
-      <div className={styles.storePageContainer}>
-        <span className={styles.cardContainer}>
-          <h2> Test RX-78F00 Gundam</h2>
-          <button
-            onClick={() => {
-              shoppingCartHandler("price_1KyvOvCsaqCLx2xLMYIYfAl5");
-            }}
-          >
-            {priceId.includes("price_1KyvOvCsaqCLx2xLMYIYfAl5")
-              ? "Remove from Cart"
-              : "Add to Cart"}
-          </button>
-        </span>
-        <span className={styles.cardContainer}>
-          <h2> Haro Test Product</h2>
-          <button
-            onClick={() => {
-              shoppingCartHandler("price_1KypynCsaqCLx2xLRAvslsse");
-            }}
-          >
-            {priceId.includes("price_1KypynCsaqCLx2xLRAvslsse")
-              ? "Remove from Cart"
-              : "Add to Cart"}
-          </button>
-        </span>
-      </div>
+      <div className={styles.storePageContainer}>{productsMap}</div>
       <form
         action="/api/checkout_sessions"
         method="POST"
