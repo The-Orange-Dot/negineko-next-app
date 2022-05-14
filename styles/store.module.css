@@ -81,13 +81,13 @@
   border: 0;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.4s ease;
   box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
   position: fixed;
 }
 
 .hideCheckoutButton {
-  bottom: 5%;
+  bottom: 0%;
   width: 400px;
   height: 50px;
   background: #556cd6;
@@ -96,7 +96,7 @@
   border: 0;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.4s ease;
   box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
   position: fixed;
   opacity: 0;

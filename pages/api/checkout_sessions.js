@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     return {
       price: item,
       quantity: 1,
-      tax_rates: ["txr_1Kyzm9CsaqCLx2xLIiAoYsOl"],
+      tax_rates: ["txr_1KyzkECsaqCLx2xL81dnE9sc"],
     };
   });
 
