@@ -54,6 +54,11 @@ export default function PreviewPage({ data }) {
 
   return (
     <>
+      <div className={styles.pageHeader}>
+        <h1>The NegiNeko Subscriber Store</h1>
+        <p>This store is exclusive to the NegiNeko channel subscribers</p>
+        <p>(Orange is currently testing this page)</p>
+      </div>
       <div className={styles.storePageContainer}>{productsMap}</div>
       <form
         action="/api/checkout_sessions"

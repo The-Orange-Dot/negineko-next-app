@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.pageHeader {
+  text-align: center;
+}
+
 .cardContainer {
   box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.21);
   min-width: 30%;
