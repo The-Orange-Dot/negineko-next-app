@@ -160,6 +160,7 @@ const About = ({ user }) => {
         </div>
       </div>
       <div
+        className={styles.events}
         style={{
           width: "100%",
           display: "flex",

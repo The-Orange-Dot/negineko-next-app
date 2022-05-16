@@ -97,6 +97,10 @@
   text-align: start;
 }
 
+.eventCardsContainer {
+  margin-bottom: 5%;
+}
+
 .eventsContainer {
   display: flex;
   flex-direction: column;
@@ -110,11 +114,16 @@
 .event {
   width: 100%;
   text-align: center;
-  margin: 1%;
+  margin-bottom: 4%;
   border-radius: 2rem;
   display: flex;
   background-color: #b2deef;
   overflow: hidden;
+  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.21);
+}
+
+.events {
+  transform: translateY(-50px);
 }
 
 .eventContents {

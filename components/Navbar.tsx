@@ -107,15 +107,15 @@ const Navbar = () => {
                 <h4
                   className={styles.link}
                   onMouseEnter={() => {
-                    mouseIn("store", "店");
+                    mouseIn("store", "ショップ");
                   }}
                   onMouseLeave={() => {
-                    mouseOut("store", "Store");
+                    mouseOut("store", "Shop");
                   }}
                   ref={ref}
                   id="store"
                 >
-                  Store
+                  Shop
                 </h4>
               </Link>
 

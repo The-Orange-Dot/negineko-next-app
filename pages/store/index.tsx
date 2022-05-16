@@ -38,8 +38,6 @@ export default function PreviewPage({ data }) {
   const username = session?.data?.name;
   console.log(username);
 
-  const successHandler = async () => {};
-
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
     // Check to see if this is a redirect back from Checkout
@@ -81,9 +79,11 @@ export default function PreviewPage({ data }) {
   return (
     <>
       <div className={mobile ? styles.mobilePageHeader : styles.pageHeader}>
-        <h1>The NegiNeko Subscriber Store</h1>
-        <p>This store is exclusive to the NegiNeko channel subscribers</p>
+        <h1>The NegiNeko Store</h1>
         <p>(Orange is currently testing this page)</p>
+        <p>
+          All data and stripe info is in test mode and is subjected to change
+        </p>
       </div>
       <div
         className={
