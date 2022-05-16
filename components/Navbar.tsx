@@ -214,7 +214,14 @@ const Navbar = () => {
                   navBarHandler("close");
                 }}
               >
-                <Link href="/travel"> Travel-log </Link>
+                <Link href="/travel"> Travel </Link>
+              </p>
+              <p
+                onClick={() => {
+                  navBarHandler("close");
+                }}
+              >
+                <Link href="/store"> Store </Link>
               </p>
             </div>
           </div>
