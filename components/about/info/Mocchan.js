@@ -127,7 +127,7 @@ const Mocchan = () => {
             left: 0,
             opacity: 0,
             width: 800,
-            height: 640,
+            height: 500,
           }}
           rel="preload"
         >

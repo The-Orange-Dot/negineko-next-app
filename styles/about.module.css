@@ -8,14 +8,6 @@
   text-align: center;
 }
 
-.event {
-  width: 80%;
-  text-align: center;
-  background-color: #b2deef;
-  margin: 1%;
-  border-radius: 2rem;
-}
-
 .aboutContainer {
   max-width: 80%;
   text-align: center;
@@ -110,9 +102,51 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 50%;
+  width: 60%;
   margin: 1%;
   border-radius: 2rem;
+}
+
+.event {
+  width: 100%;
+  text-align: center;
+  margin: 1%;
+  border-radius: 2rem;
+  display: flex;
+  background-color: #b2deef;
+  overflow: hidden;
+}
+
+.eventContents {
+  margin: 0 1%;
+  width: 70%;
+  padding: 0 5%;
+}
+
+.eventImages {
+  min-height: 100%;
+  height: 100%;
+  transform: scale(102%);
+}
+
+.eventsCardHeader {
+  height: 30%;
+  padding: 2%;
+}
+
+.eventsCardHeader p {
+  line-height: 0.2;
+}
+
+.eventsCardHeader h2 {
+  line-height: 0.2;
+}
+
+.eventCardDescription {
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ========MOBILE======== */
@@ -142,6 +176,14 @@
   align-items: center;
 }
 
+.mobileEventCardsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .mobileEventsContainer {
   display: flex;
   flex-direction: column;
@@ -156,9 +198,34 @@
   width: 80%;
   text-align: center;
   background-color: #b2deef;
-  margin: 10%;
-  padding: 10%;
+  margin: 3%;
   border-radius: 2rem;
+  overflow: hidden;
+}
+
+.mobileEventContents {
+  padding: 1%;
+  width: 70%;
+}
+
+.mobileEventImages {
+  width: 100%;
+  height: 80%;
+  overflow: hidden;
+  transform: scale(102%);
+}
+
+.mobileEventsCardHeader {
+  height: 30%;
+  padding: 3%;
+}
+
+.mobileEventsCardHeader p {
+  margin: 0;
+}
+
+.mobileEventsCardHeader h2 {
+  margin: 1%;
 }
 
 .loadingText {
@@ -169,4 +236,12 @@
 
 .mobileLoadingText {
   margin: 0;
+}
+
+.mobileEventCardDescription {
+  padding: 0 5%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

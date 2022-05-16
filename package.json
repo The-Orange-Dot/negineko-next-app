@@ -18,7 +18,7 @@
     "convert-excel-to-json": "^1.7.0",
     "cors": "^2.8.5",
     "fuse.js": "^6.5.3",
-    "gsap": "npm:@gsap/member@^3.10.2",
+    "gsap": "file:gsap-bonus.tgz",
     "iron-session": "^6.1.2",
     "next": "^12.1.0",
     "next-auth": "^4.3.3",
