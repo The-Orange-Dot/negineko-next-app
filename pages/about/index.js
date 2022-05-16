@@ -160,7 +160,7 @@ const About = ({ user }) => {
         </div>
       </div>
       <div
-        className={styles.events}
+        className={mobile ? "" : styles.events}
         style={{
           width: "100%",
           display: "flex",
