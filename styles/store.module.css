@@ -110,6 +110,11 @@
   object-fit: cover;
 }
 
+.soldThumbnail {
+  object-fit: cover;
+  opacity: 50%;
+}
+
 /* =============MOBILE=============== */
 
 .mobileStorePageContainer {

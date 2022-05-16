@@ -60,7 +60,7 @@ export default async function handler(req, res) {
           },
         ],
         mode: "payment",
-        success_url: `${req.headers.origin}/?success=true`,
+        success_url: `${req.headers.origin}/store/?success=true`,
         cancel_url: `${req.headers.origin}/store/?canceled=true`,
       });
       res.redirect(303, session.url);

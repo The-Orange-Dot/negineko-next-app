@@ -25,7 +25,7 @@ const ProductCard = ({ product, priceId, setPriceId, mobile }) => {
     >
       <div>
         <Image
-          className={styles.thumbnail}
+          className={product.sold ? styles.soldThumbnail : styles.thumbnail}
           src={product.images[0]}
           alt={product.name}
           width={400}

@@ -16,9 +16,11 @@ async function handler(req, res) {
     },
   });
 
-  const users = await prisma.user.findMany();
+  let users = await prisma.user.findMany();
+  console.log(users);
+
   if (req.method === "GET") {
-    res.status(200).json(users);
+    return res.status(200).json(users);
   }
 }
 

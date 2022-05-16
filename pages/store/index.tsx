@@ -5,6 +5,7 @@ import styles from "../../styles/store.module.css";
 import { server } from "../../config/index";
 import ProductCard from "../../components/store/ProductCard";
 import { useMediaQuery } from "react-responsive";
+import { useSession } from "next-auth/react";
 
 export const getStaticProps = async () => {
   let data: any[];
@@ -33,12 +34,26 @@ export default function PreviewPage({ data }) {
   const [products, setProducts] = useState([]);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
+  const session = useSession();
+  const username = session?.data?.name;
+  console.log(username);
+
+  const successHandler = async () => {};
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
+      fetch(`${server}/api/store`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId: priceId, username: username }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+
+      console.log(data);
       console.log("Order placed! You will receive an email confirmation.");
     }
 
@@ -49,17 +64,19 @@ export default function PreviewPage({ data }) {
     }
     setProducts(data);
     console.log(priceId);
-  }, [priceId, data, isMobile]);
+  }, [priceId, data, isMobile, username]);
 
-  const productsMap = products?.map((product) => (
-    <ProductCard
-      product={product}
-      key={product.id}
-      priceId={priceId}
-      setPriceId={setPriceId}
-      mobile={mobile}
-    />
-  ));
+  const productsMap = products?.map((product) => {
+    return (
+      <ProductCard
+        product={product}
+        key={product.id}
+        priceId={priceId}
+        setPriceId={setPriceId}
+        mobile={mobile}
+      />
+    );
+  });
 
   return (
     <>

@@ -36,6 +36,7 @@ import TextPlugin from "gsap/dist/TextPlugin";
 import { useSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToken } from "../redux/actions/tokenSlice";
+import { loginUser } from "../redux/actions/userLoginSlice";
 
 const Home = ({ stream, accessToken }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
@@ -52,7 +53,9 @@ const Home = ({ stream, accessToken }) => {
 
   useEffect(() => {
     dispatch(addToken(accessToken));
-
+    if (session) {
+      dispatch(loginUser(session));
+    }
     isMobile ? setMobile(true) : setMobile(false);
 
     //Starting animation

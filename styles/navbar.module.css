@@ -16,9 +16,9 @@
 }
 
 .pageSelector {
-  width: 40%;
+  width: 48%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -26,6 +26,8 @@
   cursor: pointer;
   font-size: 1rem;
   z-index: 5;
+  width: 25%;
+  text-align: center;
 }
 
 /* .link:hover {

@@ -103,6 +103,22 @@ const Navbar = () => {
                 </h4>
               </Link>
 
+              <Link href="/store" passHref={true}>
+                <h4
+                  className={styles.link}
+                  onMouseEnter={() => {
+                    mouseIn("store", "店");
+                  }}
+                  onMouseLeave={() => {
+                    mouseOut("store", "Store");
+                  }}
+                  ref={ref}
+                  id="store"
+                >
+                  Store
+                </h4>
+              </Link>
+
               <Link href="/multiView" passHref={true}>
                 <h4
                   className={styles.link}
@@ -110,12 +126,12 @@ const Navbar = () => {
                     mouseIn("multi", "マルチビュー");
                   }}
                   onMouseLeave={() => {
-                    mouseOut("multi", "Multi-viewer");
+                    mouseOut("multi", "Multi-view");
                   }}
                   ref={ref}
                   id="multi"
                 >
-                  Multi-viewer
+                  Multi-view
                 </h4>
               </Link>
 

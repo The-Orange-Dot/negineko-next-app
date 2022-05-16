@@ -42,3 +42,5 @@ https://user-images.githubusercontent.com/92559518/166092386-06b388c7-f6af-4d67-
 - Next-auth added for Twitch sign-in (omg, took forever)
 - Added redux store
 - CORS has been added to API routes to prevent unauthorized access to servers
+- Store page with product back end
+- Stripe integration in store page
