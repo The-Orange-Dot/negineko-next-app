@@ -64,6 +64,10 @@ model User {
   accounts      Account[]
   sessions      Session[]
   location_likes String[]
+  streamer      Boolean   @default(false)
+  mods          String[]  
+  mod           Boolean   @default(false)
+  modFor        String[]
 }
 
 model VerificationToken {

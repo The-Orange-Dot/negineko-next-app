@@ -24,9 +24,9 @@ const Options = ({ setTextColor, textColor, screenColor, setScreenColor }) => {
           name="key-color"
           id="key-color"
           onChange={() => {
-            screenColor === "white"
+            screenColor === "none"
               ? setScreenColor("#00b140")
-              : setScreenColor("white");
+              : setScreenColor("none");
           }}
         />
       </span>

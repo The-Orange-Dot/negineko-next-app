@@ -135,19 +135,22 @@ const Navbar = () => {
                 </h4>
               </Link>
 
-              <Link href="/giveaway" passHref={true}>
+              <Link
+                href={session ? `/dashboard` : `/api/auth/signin`}
+                passHref={true}
+              >
                 <h4
                   className={styles.link}
                   onMouseEnter={() => {
-                    mouseIn("giveaway", "抽選機能");
+                    mouseIn("dashboard", "ダッシュボード");
                   }}
                   onMouseLeave={() => {
-                    mouseOut("giveaway", "Raffle-tool");
+                    mouseOut("dashboard", "Dashboard");
                   }}
                   ref={ref}
-                  id="giveaway"
+                  id="dashboard"
                 >
-                  Raffle-tool
+                  Dashboard
                 </h4>
               </Link>
             </div>

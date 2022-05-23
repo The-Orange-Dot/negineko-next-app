@@ -1,0 +1,40 @@
+.newPageContainer {
+  width: 100%;
+  max-width: 1500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.formContainer {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formSelector {
+  display: flex;
+  width: 100%;
+  height: 400px;
+  justify-content: space-around;
+}
+
+.selector {
+  background-color: #b2deef;
+  border-radius: 1rem;
+  box-shadow: -5px 5px 10px 5px rgba(0, 0, 0, 0.1);
+  width: 40%;
+  cursor: pointer;
+}
+
+.modList {
+  display: flex;
+  max-height: 250px;
+  max-width: 100%;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow: scroll;
+}

@@ -1,0 +1,112 @@
+.dashboardContainer {
+  width: 100%;
+  height: 90vh;
+  max-width: 1500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  position: absolute;
+}
+
+.darkBackground {
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  position: absolute;
+  background-color: rgb(47, 79, 79);
+}
+
+/* ===========TOOLBAR============= */
+
+.darkToolBarContainer {
+  position: absolute;
+  width: 250px;
+  height: 92.5%;
+  left: -250px;
+  background-color: rgb(27, 49, 49);
+  padding-left: 10px;
+  padding-right: 10px;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.toolBarContainer {
+  position: absolute;
+  width: 250px;
+  height: 92.5%;
+  left: -250px;
+  background-color: #b2deef;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.toolBarButton {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  left: 210px;
+  top: 40%;
+  background-color: #b2deef;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.darkToolBarButton {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  left: 210px;
+  top: 40%;
+  background-color: rgb(27, 49, 49);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.bar {
+  transform: translateX(15px);
+  width: 15px;
+  height: 3px;
+  margin: 1px 0;
+  background-color: black;
+}
+
+.streamerToolsContainer {
+  margin: 1% 0;
+  min-height: 44%;
+}
+
+.modToolsContainer {
+  margin: 1% 0;
+  min-height: 44%;
+}
+
+.darkMode {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

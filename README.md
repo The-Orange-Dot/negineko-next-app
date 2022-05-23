@@ -44,3 +44,11 @@ https://user-images.githubusercontent.com/92559518/166092386-06b388c7-f6af-4d67-
 - CORS has been added to API routes to prevent unauthorized access to servers
 - Store page with product back end
 - Stripe integration in store page
+
+## May 23, 2022
+
+Added Features
+
+- Added Dashboard and darkmode
+
+Still need to add redux-persist to save redux to local storage
