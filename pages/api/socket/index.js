@@ -15,6 +15,7 @@ const SocketHandler = async (req, res) => {
       cors: {
         origin: server,
         methods: ["GET"],
+        credentials: true,
       },
     });
     res.socket.server.io = io;

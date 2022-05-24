@@ -44,7 +44,7 @@ const ModChannelDisplay = ({
           >
             Close Channel
           </button>
-        ) : user?.modfor?.length ? (
+        ) : user.streamer ? (
           <button
             className={styles.modStatusOpenButton}
             onClick={() => streamerChannels("close-channel")}

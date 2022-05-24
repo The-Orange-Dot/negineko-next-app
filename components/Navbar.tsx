@@ -12,7 +12,7 @@ import { loginUser } from "../redux/actions/userLoginSlice";
 import io from "socket.io-client";
 import { server } from "../config";
 
-const socket = io(server, { path: "/api/socket" });
+const socket = io(server, { path: "/api/socket", withCredentials: true });
 
 const Navbar = () => {
   const dispatch = useDispatch();
