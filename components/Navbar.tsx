@@ -12,8 +12,10 @@ import { loginUser } from "../redux/actions/userLoginSlice";
 import io from "socket.io-client";
 import { server } from "../config";
 
-const socket = io(server, {
+const ws = server.replace(/^http/, "wss");
+const socket = io(ws, {
   path: "/api/socket",
+  transports: ["Websocket"],
   withCredentials: true,
 });
 

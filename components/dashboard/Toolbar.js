@@ -11,7 +11,9 @@ import ModChannelDisplay from "./ModChannelDisplay";
 import { useSession } from "next-auth/react";
 import io from "socket.io-client";
 import { server } from "../../config/index";
-const socket = io(server, {
+
+const ws = server.replace(/^http/, "wss");
+const socket = io(ws, {
   path: "/api/socket",
   transports: ["Websocket"],
   withCredentials: true,
