@@ -11,7 +11,11 @@ import ModChannelDisplay from "./ModChannelDisplay";
 import { useSession } from "next-auth/react";
 import io from "socket.io-client";
 import { server } from "../../config/index";
-const socket = io(server, { path: "/api/socket", withCredentials: true });
+const socket = io(server, {
+  transports: ["websocket"],
+  path: "/api/socket",
+  withCredentials: true,
+});
 
 const Toolbar = ({ children }) => {
   const session = useSession();
