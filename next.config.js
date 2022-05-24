@@ -2,7 +2,7 @@
 
 const ContentSecurityPolicy = `
   frame-ancestors 'self';
-  frame-ancestors 'https://player.twitch.tv' 'https://twitch.tv' 'https://usher.ttvnw.net' 'https://negineko.netlify.app'; 
+  frame-ancestors 'https://player.twitch.tv' 'https://twitch.tv' 'https://usher.ttvnw.net' 'https://negineko.netlify.app' 'https://negineko.netlify.app/api/'; 
 `;
 
 const nextConfig = {
