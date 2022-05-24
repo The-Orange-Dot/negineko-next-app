@@ -32,7 +32,7 @@ const ModChannelDisplay = ({
 
   return (
     <div className={styles.statusContainer}>
-      {streamer}
+      {user.mod ? streamer : null}
 
       <div className={styles.modStatusContainer}>
         <h5 className={styles.modStatusHeader}>Mod Channel</h5>
