@@ -10,7 +10,13 @@ const SocketHandler = async (req, res) => {
   //Will connect to sockets when loading in
   if (!res.socket.server.io) {
     console.log("Socket is initializing");
-    io = new Server(res.socket.server, { path: "/api/socket" });
+    io = new Server(res.socket.server, {
+      path: "/api/socket",
+      cors: {
+        origin: server,
+        methods: ["GET"],
+      },
+    });
     res.socket.server.io = io;
   } else {
     console.log("Socket is already running");
