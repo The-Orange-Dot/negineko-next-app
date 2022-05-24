@@ -13,7 +13,7 @@ import io from "socket.io-client";
 import { server } from "../config";
 
 const socket = io(server, {
-  transports: ["websocket"],
+  transports: ["websocket", "polling"],
   path: "/api/socket",
   withCredentials: true,
 });
