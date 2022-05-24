@@ -95,14 +95,17 @@
   background-color: black;
 }
 
+.toolBarMenu {
+  min-height: 15%;
+}
+
 .streamerToolsContainer {
-  margin: 1% 0;
-  min-height: 44%;
+  min-height: 29%;
 }
 
 .modToolsContainer {
-  margin: 1% 0;
-  min-height: 44%;
+  min-height: 29%;
+  margin-bottom: 50%;
 }
 
 .darkMode {

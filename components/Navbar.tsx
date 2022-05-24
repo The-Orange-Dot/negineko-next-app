@@ -142,15 +142,15 @@ const Navbar = () => {
                 <h4
                   className={styles.link}
                   onMouseEnter={() => {
-                    mouseIn("dashboard", "ダッシュボード");
+                    mouseIn("juicebox", "ジュースボックス");
                   }}
                   onMouseLeave={() => {
-                    mouseOut("dashboard", "Dashboard");
+                    mouseOut("juicebox", "Juice-box");
                   }}
                   ref={ref}
-                  id="dashboard"
+                  id="juicebox"
                 >
-                  Dashboard
+                  Juice-box
                 </h4>
               </Link>
             </div>

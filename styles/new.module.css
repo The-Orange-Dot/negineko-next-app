@@ -30,6 +30,10 @@
   cursor: pointer;
 }
 
+.selector::-webkit-scrollbar {
+  display: none;
+}
+
 .modList {
   display: flex;
   max-height: 250px;

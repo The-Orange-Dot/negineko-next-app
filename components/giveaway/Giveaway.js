@@ -1,15 +1,15 @@
-import styles from "../../../styles/giveaway.module.css";
+import styles from "../../styles/giveaway.module.css";
 import { useEffect, useState } from "react";
-import ShuffleHandler from "../../../components/giveaway/ShuffleHandler";
-import AddButtons from "../../../components/giveaway/AddButtons";
-import TimerButtons from "../../../components/giveaway/TimerButtons";
-import Options from "../../../components/giveaway/Options";
+import ShuffleHandler from "./ShuffleHandler";
+import AddButtons from "./AddButtons";
+import TimerButtons from "./TimerButtons";
+import Options from "./Options";
 import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
-import Toolbar from "../../../components/dashboard/Toolbar";
+import Toolbar from "../dashboard/Toolbar";
 import { useRouter } from "next/router";
 
-export default function Home() {
+export default function Giveaway() {
   const router = useRouter();
   const darkMode = useSelector((state) => state.darkMode.value);
   const session = useSession();
@@ -82,17 +82,14 @@ export default function Home() {
     );
   } else if (session.status === "authenticated") {
     return (
-      <Toolbar>
-        <div className={styles.container}>
-          <div
-            className={darkMode ? styles.darkBackground : styles.background}
-          />
+      <div className={styles.container}>
+        <div className={darkMode ? styles.darkBackground : styles.background} />
 
-          <main className={styles.main}>
-            <div
-              style={{ display: "flex", alignItems: "center", ...screenStyles }}
-            >
-              {/* {winner && !videoHidden ? (
+        <main className={styles.main}>
+          <div
+            style={{ display: "flex", alignItems: "center", ...screenStyles }}
+          >
+            {/* {winner && !videoHidden ? (
             <video
               autoPlay
               muted
@@ -108,7 +105,7 @@ export default function Home() {
               <source src={"/images/confetti.mp4"} />
             </video>
           ) : null} */}
-              {/* <span>
+            {/* <span>
             {winner ? (
               <Image
                 src={"/images/Nacchan.png"}
@@ -119,14 +116,14 @@ export default function Home() {
               />
             ) : null}
           </span> */}
-              <span className={styles.screenDisplay}>
-                <h1 style={textStyles}>{descriptorSelector}</h1>
-                <div>
-                  {winner ? <h1 style={textStyles}>WINNER!</h1> : null}
-                  <h1 style={textStyles}>{shuffle}</h1>
-                </div>
-              </span>
-              {/* <span>
+            <span className={styles.screenDisplay}>
+              <h1 style={textStyles}>{descriptorSelector}</h1>
+              <div>
+                {winner ? <h1 style={textStyles}>WINNER!</h1> : null}
+                <h1 style={textStyles}>{shuffle}</h1>
+              </div>
+            </span>
+            {/* <span>
             {winner ? (
               <Image
                 src={"/images/Mocchan.png"}
@@ -137,69 +134,68 @@ export default function Home() {
               />
             ) : null}
           </span> */}
+          </div>
+
+          <div className={styles.controlsContainer}>
+            {/* ADD USERNAMES CONTAINER */}
+            <div className={styles.formContainer}>
+              <AddButtons
+                setItemNameInput={setItemNameInput}
+                setDescriptionInput={setDescriptionInput}
+                setUserInput={setUserInput}
+                itemNameInput={itemNameInput}
+                userInput={userInput}
+                descriptionInput={descriptionInput}
+                arrays={arrays}
+                descriptor={descriptor}
+                setArrays={setArrays}
+                setDescriptor={setDescriptor}
+              />
             </div>
 
-            <div className={styles.controlsContainer}>
-              {/* ADD USERNAMES CONTAINER */}
-              <div className={styles.formContainer}>
-                <AddButtons
-                  setItemNameInput={setItemNameInput}
-                  setDescriptionInput={setDescriptionInput}
-                  setUserInput={setUserInput}
-                  itemNameInput={itemNameInput}
-                  userInput={userInput}
-                  descriptionInput={descriptionInput}
+            {/* CATEGORY BUTTONS */}
+            {Object.keys(arrays).length ? (
+              <div className={styles.keyButtons}>{keyButtons}</div>
+            ) : (
+              <div style={{ width: 400, textAlign: "center" }}>
+                <p>Add a giveaway item on the left.</p>
+                <p>(9 buttons max)</p>
+                <p>Refreshing page will erase all buttons for now.</p>
+              </div>
+            )}
+
+            {/* SHUFFLE AND RESET BUTTONS */}
+            <div className={styles.controls}>
+              <div style={{ margin: "10%" }}>
+                <ShuffleHandler
                   arrays={arrays}
-                  descriptor={descriptor}
-                  setArrays={setArrays}
-                  setDescriptor={setDescriptor}
-                />
-              </div>
-
-              {/* CATEGORY BUTTONS */}
-              {Object.keys(arrays).length ? (
-                <div className={styles.keyButtons}>{keyButtons}</div>
-              ) : (
-                <div style={{ width: 400, textAlign: "center" }}>
-                  <p>Add a giveaway item on the left.</p>
-                  <p>(9 buttons max)</p>
-                  <p>Refreshing page will erase all buttons for now.</p>
-                </div>
-              )}
-
-              {/* SHUFFLE AND RESET BUTTONS */}
-              <div className={styles.controls}>
-                <div style={{ margin: "10%" }}>
-                  <ShuffleHandler
-                    arrays={arrays}
-                    selector={selector}
-                    setShuffle={setShuffle}
-                    setVideoHidden={setVideoHidden}
-                    setDescriptorSelector={setDescriptorSelector}
-                    setWinner={setWinner}
-                    timer={timer}
-                  />
-                </div>
-              </div>
-
-              {/* TIMER BUTTONS */}
-              <div className={styles.timerContainer}>
-                <TimerButtons setTimer={setTimer} />
-              </div>
-
-              {/* OPTIONS SELECTORS */}
-              <div className={styles.optionsContainer}>
-                <Options
-                  setTextColor={setTextColor}
-                  textColor={textColor}
-                  screenColor={screenColor}
-                  setScreenColor={setScreenColor}
+                  selector={selector}
+                  setShuffle={setShuffle}
+                  setVideoHidden={setVideoHidden}
+                  setDescriptorSelector={setDescriptorSelector}
+                  setWinner={setWinner}
+                  timer={timer}
                 />
               </div>
             </div>
-          </main>
-        </div>
-      </Toolbar>
+
+            {/* TIMER BUTTONS */}
+            <div className={styles.timerContainer}>
+              <TimerButtons setTimer={setTimer} />
+            </div>
+
+            {/* OPTIONS SELECTORS */}
+            <div className={styles.optionsContainer}>
+              <Options
+                setTextColor={setTextColor}
+                textColor={textColor}
+                screenColor={screenColor}
+                setScreenColor={setScreenColor}
+              />
+            </div>
+          </div>
+        </main>
+      </div>
     );
   } else if (session.status === "unauthenticated") {
     console.log("Unauthorized");

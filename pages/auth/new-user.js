@@ -13,7 +13,7 @@ const New = () => {
   const session = useSession();
   const route = useRouter();
 
-  console.log(session?.data?.user?.name);
+  console.log(session?.status);
   const submitNewUser = async () => {
     const res = await fetch(`${server}/api/users`, {
       method: "PATCH",
@@ -74,46 +74,60 @@ const New = () => {
     setModsArray([...modsArray, input]);
   };
 
-  return (
-    <div className={styles.newPageContainer}>
-      <h3>Welcome to the Juice Box</h3>
-      <p>
-        The Juice Box provides irl streamers with tools to use with their
-        streams and moderator controls to assist irl streamers
-      </p>
-
-      <h4>Notice</h4>
-      <ul>
-        <li>
-          The Juice Box <strong>DOES NOT</strong> share any user data with
-          anyone.
-        </li>
-        <li>
-          We will <strong>NEVER</strong> ask for any user&apos;s email or
-          password.
-        </li>
-        <li>Orange would really love your feedback and suggestions</li>
-        <li>
-          If you find this application useful, please credit us in your about
-          section
-        </li>
-      </ul>
-      <div className={styles.formContainer}>
-        <h4>Account set-up</h4>
-        <div className={styles.formSelector}>
-          <span className={styles.selector} onClick={() => setStreamer(true)}>
-            <h2>I&apos;m a streamer</h2>
-            {streamer ? streamerModForm : null}
-          </span>
-          <span className={styles.selector} onClick={() => setModerator(true)}>
-            <h2>I&apos;m a moderator</h2>
-            {moderator ? moderatorForm : null}
-          </span>
-        </div>
-        <button onClick={() => submitNewUser()}>Finished</button>
+  if (session.status === "loading") {
+    return (
+      <div>
+        <h1>Loading...</h1>
       </div>
-    </div>
-  );
+    );
+  } else if (session.status === "authenticated") {
+    return (
+      <div className={styles.newPageContainer}>
+        <h3>Welcome to the Juice Box</h3>
+        <p>
+          The Juice Box provides irl streamers with tools to use with their
+          streams and moderator controls to assist irl streamers
+        </p>
+
+        <h4>Notice</h4>
+        <ul>
+          <li>
+            The Juice Box <strong>DOES NOT</strong> share any user data with
+            anyone.
+          </li>
+          <li>
+            We will <strong>NEVER</strong> ask for any user&apos;s email or
+            password.
+          </li>
+          <li>Orange would really love your feedback and suggestions</li>
+          <li>
+            If you find this application useful, please credit us in your about
+            section
+          </li>
+        </ul>
+        <div className={styles.formContainer}>
+          <h4>Account set-up</h4>
+          <div className={styles.formSelector}>
+            <span className={styles.selector} onClick={() => setStreamer(true)}>
+              <h2>I&apos;m a streamer</h2>
+              {streamer ? streamerModForm : null}
+            </span>
+            <span
+              className={styles.selector}
+              onClick={() => setModerator(true)}
+            >
+              <h2>I&apos;m a moderator</h2>
+              {moderator ? moderatorForm : null}
+            </span>
+          </div>
+          <button onClick={() => submitNewUser()}>Finished</button>
+        </div>
+      </div>
+    );
+  } else if (session.data === "unauthenticated") {
+    console.log("Unauthorized");
+    route.push("/auth/signin");
+  }
 };
 
 export default New;

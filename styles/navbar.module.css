@@ -16,7 +16,7 @@
 }
 
 .pageSelector {
-  width: 52%;
+  width: 60%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,7 +26,7 @@
   cursor: pointer;
   font-size: 1rem;
   z-index: 5;
-  width: 26%;
+  width: 30%;
   text-align: center;
 }
 

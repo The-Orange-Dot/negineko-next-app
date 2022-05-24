@@ -6,10 +6,12 @@ import gsap from "gsap";
 import Switch from "../Switch";
 import { useDispatch, useSelector } from "react-redux";
 import { darkModeOn, darkModeOff } from "../../redux/actions/darkModeSlice";
+import { selectMenu } from "../../redux/actions/juiceboxMenuSlice";
 
 const Toolbar = ({ children }) => {
   const dispatch = useDispatch();
   const ref = useRef();
+  const [menuSelector, setMenuSelector] = useState("dashboard");
   const [tween, setTween] = useState();
   const [animState, setAnimState] = useState(false);
   const [value, setValue] = useState(darkMode);
@@ -63,24 +65,49 @@ const Toolbar = ({ children }) => {
           <span className={styles.bar} />
         </div>
 
+        <div className={styles.toolBarMenu}>
+          <h3 style={{ textAlign: "center" }}>Menu</h3>
+          <span
+            className={styles.selector}
+            style={{ cursor: "pointer" }}
+            onClick={() => dispatch(selectMenu("dashboard"))}
+          >
+            <h4
+              className={styles.link}
+              onMouseEnter={() => {
+                mouseIn("dashboard", "ダッシュボード");
+              }}
+              onMouseLeave={() => {
+                mouseOut("dashboard", "Dashboard");
+              }}
+              ref={ref}
+              id="dashboard"
+            >
+              Dashboard
+            </h4>
+          </span>
+        </div>
+
         <div className={styles.streamerToolsContainer}>
           <h3 style={{ textAlign: "center" }}>Streamer Tools</h3>
-          <span className={styles.selector} style={{ cursor: "pointer" }}>
-            <Link href="/dashboard/giveaway" passHref={true}>
-              <h4
-                className={styles.link}
-                onMouseEnter={() => {
-                  mouseIn("giveaway", "抽選機能");
-                }}
-                onMouseLeave={() => {
-                  mouseOut("giveaway", "Raffle-tool");
-                }}
-                ref={ref}
-                id="giveaway"
-              >
-                Raffle-tool
-              </h4>
-            </Link>
+          <span
+            className={styles.selector}
+            style={{ cursor: "pointer" }}
+            onClick={() => dispatch(selectMenu("giveaway"))}
+          >
+            <h4
+              className={styles.link}
+              onMouseEnter={() => {
+                mouseIn("giveaway", "抽選機能");
+              }}
+              onMouseLeave={() => {
+                mouseOut("giveaway", "Raffle-tool");
+              }}
+              ref={ref}
+              id="giveaway"
+            >
+              Raffle-tool
+            </h4>
           </span>
         </div>
         <div className={styles.modToolsContainer}>

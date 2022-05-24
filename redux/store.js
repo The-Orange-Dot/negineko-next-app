@@ -6,6 +6,7 @@ import tokenSlice from "./actions/tokenSlice";
 import locationSlice from "./actions/locationSlice";
 import counterReducer from "./actions/likeSlice";
 import darkModeReducer from "./actions/darkModeSlice";
+import juiceBoxReducer from "./actions/juiceboxMenuSlice";
 
 export default configureStore({
   reducer: {
@@ -15,5 +16,6 @@ export default configureStore({
     location: locationSlice,
     counter: counterReducer,
     darkMode: darkModeReducer,
+    juicebox: juiceBoxReducer,
   },
 });
