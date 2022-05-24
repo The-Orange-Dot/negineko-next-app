@@ -10,7 +10,6 @@ const SocketHandler = async (req, res) => {
     io = new Server(res.socket.server, {
       path: "/api/socket",
       cors: {
-        origin: server,
         methods: ["GET", "POST"],
         allowedHeaders: ["Access-Control-Allow-Origin"],
         credentials: false,
