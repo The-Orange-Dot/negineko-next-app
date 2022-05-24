@@ -26,6 +26,10 @@ const SocketHandler = async (req, res) => {
       socket.broadcast.emit("created", `${host} has created a new room.`);
     });
 
+    socket.once("init", () => {
+      console.log("Connected");
+    });
+
     socket.on("join-room", async (user) => {
       const userSearch = await prisma.user.findFirst({
         where: { name: user },

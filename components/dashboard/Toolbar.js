@@ -37,6 +37,8 @@ const Toolbar = ({ children }) => {
 
     setTween(tl);
 
+    socket.emit("init");
+
     socket.on("mod-joined", (mod) => {
       setMods([...mods, mod]);
     });
