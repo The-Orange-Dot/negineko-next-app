@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 import io from "socket.io-client";
 import { server } from "../../config/index";
 const socket = io(server, {
-  transports: ["polling"],
+  transports: ["websocket", "polling"],
   // path: "/api/socket",
   withCredentials: true,
 });
