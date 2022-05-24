@@ -17,9 +17,12 @@
   top: 0;
   z-index: -1;
   position: absolute;
+  background-color: rgb(255, 255, 255);
+  transition: 0.8s;
 }
 
 .darkBackground {
+  transition: 0.8s;
   width: 100vw;
   height: 100vh;
   left: 0;
@@ -36,15 +39,17 @@
   width: 250px;
   height: 92.5%;
   left: -250px;
+  transition: 0.5s;
   background-color: rgb(27, 49, 49);
   padding-left: 10px;
   padding-right: 10px;
-  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 5px 8px 5px rgba(0, 0, 0, 0.1);
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
 }
 
 .toolBarContainer {
+  transition: 0.5s;
   position: absolute;
   width: 250px;
   height: 92.5%;
@@ -52,7 +57,7 @@
   background-color: #b2deef;
   padding-left: 10px;
   padding-right: 10px;
-  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 5px 8px 5px rgba(0, 0, 0, 0.1);
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
 }
@@ -70,9 +75,11 @@
   justify-content: center;
   align-items: center;
   z-index: 1;
+  transition: 0.5s;
 }
 
 .darkToolBarButton {
+  transition: 0.5s;
   position: absolute;
   width: 70px;
   height: 70px;
@@ -100,16 +107,62 @@
 }
 
 .streamerToolsContainer {
-  min-height: 29%;
+  min-height: 20%;
 }
 
 .modToolsContainer {
-  min-height: 29%;
-  margin-bottom: 50%;
+  min-height: 20%;
+  margin-bottom: 20%;
 }
 
 .darkMode {
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+/* ============MOD ROOM STATUS================= */
+.statusContainer {
+  min-height: 15%;
+}
+
+.streamerContainer {
+  height: 70px;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  padding: 0 2% 1% 2%;
+}
+
+.streamerContainer > h5 {
+  text-align: center;
+  margin: 0.5rem;
+}
+
+.streamerRoom {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modStatusContainer {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+}
+
+.modStatusHeader {
+  text-align: center;
+  margin: 0;
+}
+
+.modStatus {
+  text-align: center;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.modStatusOpenButton {
+  font-size: 0.5rem;
 }

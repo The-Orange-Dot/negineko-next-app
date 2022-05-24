@@ -49,6 +49,31 @@
   width: 100%;
 }
 
+.textBox {
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 0.2rem;
+  margin: 0.05rem;
+  transition: 0.8s;
+}
+
+.textBox::placeholder {
+  color: gray;
+}
+
+.darkTextBox {
+  background-color: gray;
+  border: 1px solid black;
+  border-radius: 0.2rem;
+  margin: 0.05rem;
+  transition: 0.8s;
+  color: black;
+}
+
+.darkTextBox::placeholder {
+  color: darkgray;
+}
+
 .controls {
   width: 20%;
   height: 100%;

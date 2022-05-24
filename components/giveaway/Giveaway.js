@@ -6,10 +6,9 @@ import TimerButtons from "./TimerButtons";
 import Options from "./Options";
 import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
-import Toolbar from "../dashboard/Toolbar";
 import { useRouter } from "next/router";
 
-export default function Giveaway() {
+export default function Giveaway({ socket }) {
   const router = useRouter();
   const darkMode = useSelector((state) => state.darkMode.value);
   const session = useSession();
@@ -71,8 +70,19 @@ export default function Giveaway() {
         );
       })
     );
+
+    socket.emit("items", arrays);
+
     console.log("Page Loaded");
-  }, [arrays, selectedKey, descriptor]);
+  }, [arrays, selectedKey, descriptor, socket]);
+
+  const socketHandler = async () => {
+    const updatedArrays = await socket.on("items", (items) => {
+      return items;
+    });
+    console.log(updatedArrays);
+    setArrays(updatedArrays);
+  };
 
   if (session.status === "loading") {
     return (
@@ -83,8 +93,6 @@ export default function Giveaway() {
   } else if (session.status === "authenticated") {
     return (
       <div className={styles.container}>
-        <div className={darkMode ? styles.darkBackground : styles.background} />
-
         <main className={styles.main}>
           <div
             style={{ display: "flex", alignItems: "center", ...screenStyles }}
@@ -150,6 +158,7 @@ export default function Giveaway() {
                 descriptor={descriptor}
                 setArrays={setArrays}
                 setDescriptor={setDescriptor}
+                socket={socket}
               />
             </div>
 

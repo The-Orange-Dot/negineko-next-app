@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../../styles/giveaway.module.css";
+import { useSelector } from "react-redux";
 
 const AddButtons = ({
   setItemNameInput,
@@ -13,14 +14,17 @@ const AddButtons = ({
   setArrays,
   setDescriptor,
 }) => {
-  const addNewItem = (users, description) => {
-    setArrays({ ...arrays, ...users });
-    setDescriptor({ ...descriptor, ...description });
+  const addNewItem = async (users, description) => {
+    await setArrays({ ...arrays, ...users });
+    await setDescriptor({ ...descriptor, ...description });
   };
+  const darkMode = useSelector((state) => state.darkMode.value);
+
   return (
     <>
       <div className={styles.inputContainer}>
         <input
+          className={darkMode ? styles.darkTextBox : styles.textBox}
           type="text"
           name="name"
           placeholder="Button Name"
@@ -31,6 +35,7 @@ const AddButtons = ({
           required
         />
         <input
+          className={darkMode ? styles.darkTextBox : styles.textBox}
           type="text"
           name="description"
           placeholder='Title (ex: "Gaming mouse Giveaway")'
@@ -41,6 +46,7 @@ const AddButtons = ({
           required
         />
         <textarea
+          className={darkMode ? styles.darkTextBox : styles.textBox}
           type="text"
           name="users"
           placeholder='Users - Seperate users with a space (ex: "mocchan nacchan debuneko draculabot")'
@@ -50,6 +56,7 @@ const AddButtons = ({
           rows="8"
           cols="50"
           required
+          style={{ resize: "none" }}
         />
       </div>
       <div className={styles.submitButton}>

@@ -7,6 +7,7 @@ import Switch from "../Switch";
 import { useDispatch, useSelector } from "react-redux";
 import { darkModeOn, darkModeOff } from "../../redux/actions/darkModeSlice";
 import { selectMenu } from "../../redux/actions/juiceboxMenuSlice";
+import ModChannelDisplay from "./ModChannelDisplay";
 
 const Toolbar = ({ children }) => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Toolbar = ({ children }) => {
   const [animState, setAnimState] = useState(false);
   const [value, setValue] = useState(darkMode);
   const darkMode = useSelector((state) => state.darkMode.value);
+  const [roomStatus, setRoomStatus] = useState("closed");
 
   useEffect(() => {
     const tl = gsap.timeline({ paused: true }).fromTo(
@@ -86,6 +88,25 @@ const Toolbar = ({ children }) => {
               Dashboard
             </h4>
           </span>
+          <span
+            className={styles.selector}
+            style={{ cursor: "pointer" }}
+            onClick={() => dispatch(selectMenu("settings"))}
+          >
+            <h4
+              className={styles.link}
+              onMouseEnter={() => {
+                mouseIn("settings", "設定");
+              }}
+              onMouseLeave={() => {
+                mouseOut("settings", "Settings");
+              }}
+              ref={ref}
+              id="settings"
+            >
+              Settings
+            </h4>
+          </span>
         </div>
 
         <div className={styles.streamerToolsContainer}>
@@ -113,6 +134,7 @@ const Toolbar = ({ children }) => {
         <div className={styles.modToolsContainer}>
           <h3 style={{ textAlign: "center" }}>Mod tools</h3>
         </div>
+        <ModChannelDisplay roomStatus={roomStatus} />
         <div className={styles.darkMode}>
           <h5>Dark Mode</h5>
           <Switch
