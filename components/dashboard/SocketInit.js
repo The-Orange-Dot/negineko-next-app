@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import { useEffect } from "react";
 const socket = io(server, {
   path: "/api/socket",
+  transports: ["Websocket"],
   withCredentials: true,
 });
 
