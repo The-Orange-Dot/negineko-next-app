@@ -2,27 +2,43 @@ import { Server } from "socket.io";
 import { Server as net } from "http";
 import prisma from "../../../lib/prisma";
 import { server } from "../../../config";
+import { SocketAddress } from "net";
+import { join } from "path/posix";
 
-const SocketHandler = (req, res) => {
-  if (res.socket.server.io) {
-    console.log("Socket is already running");
-  } else {
+const SocketHandler = async (req, res) => {
+  let io;
+  //Will connect to sockets when loading in
+  if (!res.socket.server.io) {
     console.log("Socket is initializing");
-    const io = new Server(res.socket.server);
+    io = new Server(res.socket.server, { path: "/api/socket" });
     res.socket.server.io = io;
-
-    io.on("connection", (socket) => {
-      socket.on("input", (msg) => {
-        socket.broadcast.emit("update", msg);
-      });
-
-      socket.on("items", (items) => {
-        socket.broadcast.emit("items", items);
-
-        console.log(items);
-      });
-    });
+  } else {
+    console.log("Socket is already running");
+    io = await res.socket.server.io;
   }
+  io.setMaxListeners(0);
+  let host;
+
+  io.on("connection", (socket) => {
+    socket.on("create-room", (user) => {
+      host = user;
+      socket.join(host);
+      socket.broadcast.emit("created", `${host} has created a new room.`);
+    });
+
+    socket.on("join-room", async (user) => {
+      const userSearch = await prisma.user.findFirst({
+        where: { name: user },
+      });
+
+      const streamer = await prisma.user.findFirst({
+        where: { name: { equals: userSearch.modFor[0], mode: "insensitive" } },
+      });
+
+      socket.join(streamer.name);
+      socket.broadcast.emit("mod-joined", userSearch.name);
+    });
+  });
   res.end();
 };
 

@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
-export default function Giveaway({ socket }) {
+export default function Giveaway() {
   const router = useRouter();
   const darkMode = useSelector((state) => state.darkMode.value);
   const session = useSession();
@@ -71,18 +71,8 @@ export default function Giveaway({ socket }) {
       })
     );
 
-    socket.emit("items", arrays);
-
     console.log("Page Loaded");
-  }, [arrays, selectedKey, descriptor, socket]);
-
-  const socketHandler = async () => {
-    const updatedArrays = await socket.on("items", (items) => {
-      return items;
-    });
-    console.log(updatedArrays);
-    setArrays(updatedArrays);
-  };
+  }, [arrays, selectedKey, descriptor]);
 
   if (session.status === "loading") {
     return (
@@ -158,7 +148,6 @@ export default function Giveaway({ socket }) {
                 descriptor={descriptor}
                 setArrays={setArrays}
                 setDescriptor={setDescriptor}
-                socket={socket}
               />
             </div>
 
