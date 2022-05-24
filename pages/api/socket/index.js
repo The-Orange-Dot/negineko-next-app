@@ -8,9 +8,8 @@ const SocketHandler = async (req, res) => {
   if (!res.socket.server.io) {
     console.log("Socket is initializing");
     io = new Server(res.socket.server, {
-      path: "/api/socket",
       cors: {
-        origin: "*",
+        origin: server,
         methods: ["GET", "POST"],
       },
     });
