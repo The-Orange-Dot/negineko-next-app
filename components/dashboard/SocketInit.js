@@ -3,7 +3,7 @@ import { server } from "../../config";
 import io from "socket.io-client";
 import { useEffect } from "react";
 const socket = io(server, {
-  // path: "/api/socket",
+  path: "/api/socket",
   withCredentials: true,
 });
 
