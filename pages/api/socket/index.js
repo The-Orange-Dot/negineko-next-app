@@ -1,9 +1,6 @@
 import { Server } from "socket.io";
-import { Server as net } from "http";
 import prisma from "../../../lib/prisma";
 import { server } from "../../../config";
-import { SocketAddress } from "net";
-import { join } from "path/posix";
 
 const SocketHandler = async (req, res) => {
   let io;
@@ -13,9 +10,8 @@ const SocketHandler = async (req, res) => {
     io = new Server(res.socket.server, {
       path: "/api/socket",
       cors: {
-        origin: server,
-        methods: ["GET"],
-        credentials: true,
+        origin: "*",
+        methods: ["GET", "POST"],
       },
     });
     res.socket.server.io = io;
