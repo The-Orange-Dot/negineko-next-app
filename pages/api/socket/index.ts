@@ -2,6 +2,7 @@ import { NextApiRequest } from "next";
 import { NextApiResponseServerIO } from "../../../source/types/next";
 import { Server as ServerIO } from "socket.io";
 import { Server as NetServer } from "http";
+import { server } from "../../../config";
 
 export const config = {
   api: {
@@ -22,7 +23,7 @@ const SocketHandler = async (
     const io = new ServerIO(httpServer, {
       path: "/api/socket",
       cors: {
-        origin: "http://localhost:8100",
+        origin: server,
         methods: ["GET", "POST"],
         credentials: true,
       },
