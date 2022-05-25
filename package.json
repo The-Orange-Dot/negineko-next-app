@@ -39,8 +39,8 @@
     "react-twitch-embed-video": "^3.0.2",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
-    "socket.io": "^4.5.1",
-    "socket.io-client": "^2.3.0",
+    "socket.io": "^3.1.2",
+    "socket.io-client": "^3.1.2",
     "stripe": "^9.1.0",
     "xlsx": "^0.18.3"
   },
