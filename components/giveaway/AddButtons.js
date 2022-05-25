@@ -16,9 +16,19 @@ const AddButtons = ({
   setDescriptor,
 }) => {
   const session = useSession();
-  const addNewItem = async (users, description) => {
+  const addNewItem = async () => {
+    const users = { [`${itemNameInput}`]: userInput.split(" ") };
+    const description = { [`${itemNameInput}`]: descriptionInput };
+
     await setArrays({ ...arrays, ...users });
     await setDescriptor({ ...descriptor, ...description });
+
+    await socket?.emit(
+      "add-button",
+      { ...arrays, ...users },
+      { ...descriptor, ...description },
+      [...mods, ...modFor]
+    );
   };
   const darkMode = useSelector((state) => state.darkMode.value);
   const socket = useSelector((state) => state.socket.value.socket);
@@ -31,15 +41,6 @@ const AddButtons = ({
       await setDescriptor({ ...descriptor, ...descriptions });
     });
   }, [socket, descriptor, arrays, setArrays, setDescriptor]);
-
-  const submitHandler = async () => {
-    await addNewItem(
-      { [`${itemNameInput}`]: userInput.split(" ") },
-      { [`${itemNameInput}`]: descriptionInput }
-    );
-
-    await socket?.emit("add-button", arrays, descriptor, [...mods, ...modFor]);
-  };
 
   return (
     <>
@@ -83,7 +84,7 @@ const AddButtons = ({
       <div className={styles.submitButton}>
         <button
           onClick={() => {
-            Object.keys(arrays).length < 9 ? submitHandler() : null;
+            Object.keys(arrays).length < 9 ? addNewItem() : null;
           }}
         >
           Submit

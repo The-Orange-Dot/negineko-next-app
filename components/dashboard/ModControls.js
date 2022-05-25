@@ -27,7 +27,6 @@ const ModControls = () => {
           if (socket?.connected === true) {
             console.log("clicked");
             const room = session?.data?.modFor[0];
-            socket?.emit("shuffle", room, "TEST");
           }
         }}
       >
