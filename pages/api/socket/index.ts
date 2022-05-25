@@ -30,6 +30,8 @@ const SocketHandler = async (
       allowEIO3: true,
     });
 
+    httpServer.listen(8885);
+
     io.on("connection", (socket) => {
       clients++;
       console.log(`${clients} clients connected - ${socket.id} has joined`);
