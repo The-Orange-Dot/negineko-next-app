@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 export default function Giveaway() {
+  const socket = useSelector((state) => state.socket.value.socket);
   const router = useRouter();
   const darkMode = useSelector((state) => state.darkMode.value);
   const session = useSession();
@@ -41,6 +42,8 @@ export default function Giveaway() {
     alignItems: "center",
     backgroundColor: screenColor === "none" ? "rgba(0,0,0,0)" : screenColor,
   };
+  const mods = session.data.mods;
+  const modFor = session.data.modFor;
 
   useEffect(() => {
     const selectorHandler = (e) => {
@@ -63,6 +66,8 @@ export default function Giveaway() {
             onClick={() => {
               selectorHandler(key);
               setSelectedKey(key);
+
+              socket?.emit("item-selected", key, [...mods, ...modFor]);
             }}
           >
             {key}
@@ -71,8 +76,13 @@ export default function Giveaway() {
       })
     );
 
+    socket?.on("sent-keys", (key) => {
+      setSelectedKey(key);
+      selectorHandler(key);
+    });
+
     console.log("Page Loaded");
-  }, [arrays, selectedKey, descriptor]);
+  }, [arrays, selectedKey, descriptor, modFor, mods, socket]);
 
   if (session.status === "loading") {
     return (

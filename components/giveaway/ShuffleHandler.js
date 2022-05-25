@@ -16,10 +16,18 @@ const ShuffleHandler = ({
   const [shuffleState, setShuffleState] = useState();
   const session = useSession();
   const room = session?.data?.modFor[0];
+  const mods = session?.data?.mods;
 
   useEffect(() => {
     socket?.on("shuffle-res", () => {
       shufflePressed();
+    });
+
+    socket?.on("res-reset", () => {
+      setDescriptorSelector("");
+      shuffleHandler("reset");
+      setWinner(false);
+      setVideoHidden(true);
     });
   }, [socket, timer, setWinner, selector, arrays, setShuffle, setVideoHidden]);
 
@@ -84,6 +92,8 @@ const ShuffleHandler = ({
             shuffleHandler("reset");
             setWinner(false);
             setVideoHidden(true);
+
+            socket?.emit("req-reset", [...mods, room]);
           }}
         >
           Reset

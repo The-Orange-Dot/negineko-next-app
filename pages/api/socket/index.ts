@@ -82,6 +82,18 @@ const SocketHandler = async (
           });
         }
       );
+
+      socket.on("item-selected", (item: string, mods: string[]) => {
+        mods.map((mod) => {
+          socket.to(mod.toLowerCase()).emit("sent-keys", item);
+        });
+      });
+
+      socket.on("req-reset", (mods: string[]) => {
+        mods.map((mod) => {
+          socket.to(mod.toLowerCase()).emit("res-reset");
+        });
+      });
     });
 
     // append SocketIO server to Next.js socket server response
