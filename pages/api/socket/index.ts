@@ -21,7 +21,7 @@ const SocketHandler = async (
     // adapt Next's net Server to http Server
     const httpServer: NetServer = res.socket.server as any;
     const io = new ServerIO(httpServer, {
-      path: "/api/socket",
+      path: "/api/*",
       cors: {
         origin: "*:*",
         methods: ["GET", "POST"],
