@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 export async function getServerSideProps(context) {
   const providers = await getProviders();
   return {
-    props: { data: providers },
+    props: { providers },
   };
 }
 

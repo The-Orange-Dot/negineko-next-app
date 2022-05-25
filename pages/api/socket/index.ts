@@ -21,12 +21,17 @@ const SocketHandler = async (
     const httpServer: NetServer = res.socket.server as any;
     const io = new ServerIO(httpServer, {
       path: "/api/socket",
+      cors: {
+        origin: "http://localhost:8100",
+        methods: ["GET", "POST"],
+        credentials: true,
+      },
+      allowEIO3: true,
     });
 
     io.on("connection", (socket) => {
       clients++;
       console.log(`${clients} clients connected - ${socket.id} has joined`);
-      console.log(httpServer);
 
       socket.on("disconnect", () => {
         clients--;
