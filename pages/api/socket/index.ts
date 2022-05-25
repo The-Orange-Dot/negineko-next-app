@@ -23,9 +23,9 @@ const SocketHandler = async (
     const io = new ServerIO(httpServer, {
       path: "/api/socket",
       cors: {
-        origin: server,
+        origin: "*:*",
         methods: ["GET", "POST"],
-        credentials: true,
+        credentials: false,
       },
       transports: ["polling"],
       allowEIO3: true,
