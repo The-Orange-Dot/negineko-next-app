@@ -1,5 +1,4 @@
 import { NextApiRequest } from "next";
-import { Socket } from "socket.io";
 import { NextApiResponseServerIO } from "../../source/types/next";
 
 const Test = (req: NextApiRequest, res: NextApiResponseServerIO) => {

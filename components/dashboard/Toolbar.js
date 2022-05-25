@@ -9,6 +9,8 @@ import { darkModeOn, darkModeOff } from "../../redux/actions/darkModeSlice";
 import { selectMenu } from "../../redux/actions/juiceboxMenuSlice";
 import ModChannelDisplay from "./ModChannelDisplay";
 import { useSession } from "next-auth/react";
+import SocketIOClient from "socket.io-client";
+import { server } from "../../config";
 
 const Toolbar = ({ children }) => {
   const session = useSession();
@@ -22,6 +24,7 @@ const Toolbar = ({ children }) => {
   const [roomStatus, setRoomStatus] = useState("closed");
   const [mods, setMods] = useState([]);
   const user = useSelector((state) => state.user.value);
+  const socket = useSelector((state) => state.socket.value);
 
   useEffect(() => {
     const tl = gsap.timeline({ paused: true }).fromTo(
@@ -35,9 +38,13 @@ const Toolbar = ({ children }) => {
     setTween(tl);
   }, [mods]);
 
-  const joinChannel = () => {};
+  const joinChannel = async () => {};
 
-  const streamerChannels = () => {};
+  const streamerChannels = async (option) => {
+    if (option === "open") {
+    } else {
+    }
+  };
 
   if (value === true) {
     dispatch(darkModeOn());

@@ -7,6 +7,7 @@ import locationSlice from "./actions/locationSlice";
 import counterReducer from "./actions/likeSlice";
 import darkModeReducer from "./actions/darkModeSlice";
 import juiceBoxReducer from "./actions/juiceboxMenuSlice";
+import socketReducer from "./actions/socketSlice";
 
 export default configureStore({
   reducer: {
@@ -17,5 +18,10 @@ export default configureStore({
     counter: counterReducer,
     darkMode: darkModeReducer,
     juicebox: juiceBoxReducer,
+    socket: socketReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

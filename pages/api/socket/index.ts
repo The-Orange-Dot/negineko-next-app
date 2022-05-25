@@ -20,9 +20,11 @@ const SocketHandler = async (
     const io = new ServerIO(httpServer, {
       path: "/api/socket",
     });
+
     // append SocketIO server to Next.js socket server response
     res.socket.server.io = io;
   }
+
   res.end();
 };
 
