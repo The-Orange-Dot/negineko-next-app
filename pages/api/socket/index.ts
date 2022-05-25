@@ -39,10 +39,6 @@ const SocketHandler = async (
         console.log(`${clients} clients connected - ${socket.id} has left`);
       });
 
-      socket.on("test-req", () => {
-        // socket.emit("test", "This is a test");
-      });
-
       socket.on("create-room", (user) => {
         const room = user.toLowerCase();
 
@@ -64,7 +60,6 @@ const SocketHandler = async (
 
         //Notifies SELF when joining
         socket.emit("mod-joined", user, `${user} has joined the room`);
-
         console.log(io.sockets.adapter.rooms.get(room));
       });
     });

@@ -18,7 +18,7 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   const [roomStatus, setRoomStatus] = useState("closed");
 
   useEffect(() => {
-    const socket = SocketIOClient.connect(server, {
+    const socket = SocketIOClient.connect(process.env.BASE_URL, {
       path: "/api/socket",
       autoConnect: false,
     });
@@ -97,7 +97,6 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   const createStreamerChannel = (option) => {
     if (socket?.connected === true) {
       if (option === "open") {
-        socket?.emit("test-req");
         socket?.emit("create-room", session.data.user.name);
         setRoomStatus("open");
       }
