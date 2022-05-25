@@ -30,30 +30,31 @@ const SocketHandler = async (
       allowEIO3: true,
     });
 
-    console.log(res.socket);
-
     io.on("connection", (socket) => {
       clients++;
       console.log(`${clients} clients connected - ${socket.id} has joined`);
+
+      socket.on("room", (user: any) => {
+        const room = user.name.toLowerCase();
+        const announce = user.modFor[0];
+        socket.join(room);
+        console.log(room);
+
+        if (announce) {
+          io.to(announce).emit("logged-in", room);
+        }
+      });
 
       socket.on("disconnect", () => {
         clients--;
         console.log(`${clients} clients connected - ${socket.id} has left`);
       });
 
-      socket.on("create-room", (user: string) => {
-        const room = user.toLowerCase();
-
-        socket.join(room);
-        console.log(room);
-        socket.emit("test", `You've created a room - ${user}`);
-        console.log(io.sockets.adapter.rooms.get(room));
-      });
-
-      socket.on("join-streamer-channel", (streamer, user) => {
+      socket.on("join-streamer-channel", (streamer: string, user: string) => {
         const room = streamer.toLowerCase().trim();
 
         socket.join(room);
+        console.log(io.sockets.adapter.rooms.get(room));
 
         //Notifies and updates everyone EXCEPT SENDER when joining
         io.sockets
@@ -62,8 +63,25 @@ const SocketHandler = async (
 
         //Notifies SELF when joining
         socket.emit("mod-joined", user, `${user} has joined the room`);
-        console.log(io.sockets.adapter.rooms.get(room));
+        // console.log(io.sockets.adapter.rooms.get(room));
+        console.log(io.sockets.adapter.rooms);
       });
+
+      socket.on("shuffle", (room: string, res: any) => {
+        socket.to(room).emit("shuffle-res", "broadcast-test");
+      });
+
+      socket.on(
+        "add-button",
+        (users: any, descriptions: any, mods: string[]) => {
+          console.log(mods);
+          mods.map((mod) => {
+            socket
+              .to(mod.toLowerCase())
+              .emit("sent-buttons", users, descriptions);
+          });
+        }
+      );
     });
 
     // append SocketIO server to Next.js socket server response

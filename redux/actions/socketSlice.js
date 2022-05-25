@@ -9,14 +9,19 @@ export const socketSlice = createSlice({
   reducers: {
     addSocket: (state, action) => {
       state.value = action.payload;
-      state.connected = true;
     },
     eraseSocket: (state, action) => {
       state.value = {};
+    },
+    connected: (state) => {
+      state.connected = true;
+    },
+    disconnected: (state) => {
       state.connected = false;
     },
   },
 });
 
-export const { addSocket, eraseSocket } = socketSlice.actions;
+export const { addSocket, eraseSocket, connected, disconnected } =
+  socketSlice.actions;
 export default socketSlice.reducer;

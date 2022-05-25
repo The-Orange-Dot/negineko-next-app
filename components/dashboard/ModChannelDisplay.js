@@ -9,7 +9,7 @@ import SocketIOClient from "socket.io-client";
 import { server } from "../../config";
 
 const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
-  const [streamers, setStreamers] = useState(user.modFor[0]);
+  const [streamers, setStreamers] = useState(user?.modFor[0]);
   const [socket, setSocket] = useState({});
   const [connection, setConnection] = useState(false);
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
       console.log("SOCKET CONNECTED!", socket.id);
       setConnection(true);
       dispatch(addSocket({ socket }));
+      socket?.emit("room", session.data);
     });
 
     socket.on("created", (msg) => {
@@ -49,6 +50,10 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
       console.log(msg);
     });
 
+    socket?.on("logged-in", (user) => {
+      console.log(`${user} just logged in`);
+    });
+
     socket.on("mod-joined", (mod, msg) => {
       setMods([...mods, mod]);
       console.log(msg);
@@ -58,7 +63,7 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
     if (socket) return () => socket.disconnect();
 
     setSocket(socket);
-  }, [dispatch, mods]);
+  }, [dispatch, mods, session.data.user.name, session.data]);
 
   const connectToServer = async (option) => {
     if (option === "connect") {

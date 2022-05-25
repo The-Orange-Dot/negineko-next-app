@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../../styles/giveaway.module.css";
 import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 
 const AddButtons = ({
   setItemNameInput,
@@ -14,11 +15,31 @@ const AddButtons = ({
   setArrays,
   setDescriptor,
 }) => {
+  const session = useSession();
   const addNewItem = async (users, description) => {
     await setArrays({ ...arrays, ...users });
     await setDescriptor({ ...descriptor, ...description });
   };
   const darkMode = useSelector((state) => state.darkMode.value);
+  const socket = useSelector((state) => state.socket.value.socket);
+  const mods = session.data.mods;
+  const modFor = session.data.modFor;
+
+  useEffect(() => {
+    socket?.on("sent-buttons", async (users, descriptions) => {
+      await setArrays({ ...arrays, ...users });
+      await setDescriptor({ ...descriptor, ...descriptions });
+    });
+  }, [socket, descriptor, arrays, setArrays, setDescriptor]);
+
+  const submitHandler = async () => {
+    await addNewItem(
+      { [`${itemNameInput}`]: userInput.split(" ") },
+      { [`${itemNameInput}`]: descriptionInput }
+    );
+
+    await socket?.emit("add-button", arrays, descriptor, [...mods, ...modFor]);
+  };
 
   return (
     <>
@@ -62,12 +83,7 @@ const AddButtons = ({
       <div className={styles.submitButton}>
         <button
           onClick={() => {
-            Object.keys(arrays).length < 9
-              ? addNewItem(
-                  { [`${itemNameInput}`]: userInput.split(" ") },
-                  { [`${itemNameInput}`]: descriptionInput }
-                )
-              : null;
+            Object.keys(arrays).length < 9 ? submitHandler() : null;
           }}
         >
           Submit

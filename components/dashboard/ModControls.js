@@ -8,7 +8,16 @@ const ModControls = () => {
   const socket = useSelector((state) => state.socket.value.socket);
   const session = useSession();
 
-  useEffect(() => {}, [socket]);
+  useEffect(() => {
+    socket?.on("confirmation", () => {
+      console.log("SHUFFLING!!");
+    });
+
+    socket?.on("sent-buttons", (users, descriptions) => {
+      console.log(users);
+      console.log(descriptions);
+    });
+  }, [socket]);
 
   return (
     <div className={styles.modControlsPageContainer}>
@@ -16,8 +25,9 @@ const ModControls = () => {
       <button
         onClick={() => {
           if (socket?.connected === true) {
-            socket?.emit("test-req");
-            socket?.emit("create-room", session.data.user.name);
+            console.log("clicked");
+            const room = session?.data?.modFor[0];
+            socket?.emit("shuffle", room, "TEST");
           }
         }}
       >
