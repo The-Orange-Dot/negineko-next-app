@@ -30,7 +30,7 @@ const SocketHandler = async (
       allowEIO3: true,
     });
 
-    io.listen(8080);
+    httpServer.listen(3000);
 
     io.on("connection", (socket) => {
       clients++;
