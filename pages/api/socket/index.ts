@@ -30,6 +30,8 @@ const SocketHandler = async (
       allowEIO3: true,
     });
 
+    io.listen(3000);
+
     io.on("connection", (socket) => {
       clients++;
       console.log(`${clients} clients connected - ${socket.id} has joined`);
@@ -39,7 +41,7 @@ const SocketHandler = async (
         console.log(`${clients} clients connected - ${socket.id} has left`);
       });
 
-      socket.on("create-room", (user) => {
+      socket.on("create-room", (user: string) => {
         const room = user.toLowerCase();
 
         socket.join(room);
