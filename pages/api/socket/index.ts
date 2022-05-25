@@ -26,7 +26,7 @@ const SocketHandler = async (
     io.on("connection", (socket) => {
       clients++;
       console.log(`${clients} clients connected - ${socket.id} has joined`);
-      console.log();
+      console.log(httpServer);
 
       socket.on("disconnect", () => {
         clients--;
@@ -50,11 +50,15 @@ const SocketHandler = async (
         const room = streamer.toLowerCase().trim();
 
         socket.join(room);
-        socket.broadcast.emit(
-          "mod-joined",
-          user,
-          `${user} has joined the room`
-        );
+
+        //Notifies and updates everyone EXCEPT SENDER when joining
+        io.sockets
+          .to(room)
+          .emit("mod-joined", user, `${user} has joined the room`);
+
+        //Notifies SELF when joining
+        socket.emit("mod-joined", user, `${user} has joined the room`);
+
         console.log(io.sockets.adapter.rooms.get(room));
       });
     });

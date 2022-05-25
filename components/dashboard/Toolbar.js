@@ -21,8 +21,6 @@ const Toolbar = ({ children }) => {
   const [animState, setAnimState] = useState(false);
   const [value, setValue] = useState(darkMode);
   const darkMode = useSelector((state) => state.darkMode.value);
-  const [roomStatus, setRoomStatus] = useState("closed");
-  const [mods, setMods] = useState([]);
   const user = useSelector((state) => state.user.value);
   const socket = useSelector((state) => state.socket.value);
 
@@ -36,7 +34,7 @@ const Toolbar = ({ children }) => {
     );
 
     setTween(tl);
-  }, [mods]);
+  }, []);
 
   const joinChannel = async () => {};
 
@@ -169,10 +167,8 @@ const Toolbar = ({ children }) => {
           </span>
         </div>
         <ModChannelDisplay
-          roomStatus={roomStatus}
           streamerChannels={streamerChannels}
           joinChannel={joinChannel}
-          mods={mods}
           user={user}
         />
         <div className={styles.darkMode}>

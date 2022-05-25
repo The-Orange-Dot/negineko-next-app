@@ -8,18 +8,14 @@ import { useSession } from "next-auth/react";
 import SocketIOClient from "socket.io-client";
 import { server } from "../../config";
 
-const ModChannelDisplay = ({
-  joinChannel,
-  roomStatus,
-  streamerChannels,
-  mods,
-  user,
-}) => {
+const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   const [streamers, setStreamers] = useState(user.modFor[0]);
   const [socket, setSocket] = useState({});
   const [connection, setConnection] = useState(false);
   const dispatch = useDispatch();
   const session = useSession();
+  const [mods, setMods] = useState([]);
+  const [roomStatus, setRoomStatus] = useState("closed");
 
   useEffect(() => {
     const socket = SocketIOClient.connect(server, {
@@ -52,7 +48,8 @@ const ModChannelDisplay = ({
       console.log(msg);
     });
 
-    socket.on("mod-joined", (msg) => {
+    socket.on("mod-joined", (mod, msg) => {
+      setMods([...mods, mod]);
       console.log(msg);
     });
 
@@ -60,7 +57,7 @@ const ModChannelDisplay = ({
     if (socket) return () => socket.disconnect();
 
     setSocket(socket);
-  }, [dispatch]);
+  }, [dispatch, mods]);
 
   const connectToServer = async (option) => {
     if (option === "connect") {
@@ -102,6 +99,7 @@ const ModChannelDisplay = ({
       if (option === "open") {
         socket?.emit("test-req");
         socket?.emit("create-room", session.data.user.name);
+        setRoomStatus("open");
       }
     }
   };
