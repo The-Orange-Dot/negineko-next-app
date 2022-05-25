@@ -48,38 +48,23 @@ const ModChannelDisplay = ({
       console.log(msg);
     });
 
+    socket.on("test", (msg) => {
+      console.log(msg);
+    });
+
+    socket.on("mod-joined", (msg) => {
+      console.log(msg);
+    });
+
     // socket disconnet onUnmount if exists
     if (socket) return () => socket.disconnect();
 
     setSocket(socket);
-  }, []);
-
-  let streamer;
-  if (streamers !== "") {
-    streamer = (
-      <div className={styles.streamerContainer}>
-        <h5>Streamer Channels</h5>
-        <div className={styles.streamerRoom}>
-          {streamers}
-          <button
-            onClick={() => joinChannel()}
-            className={styles.modStatusOpenButton}
-          >
-            Connect
-          </button>
-        </div>
-      </div>
-    );
-  }
+  }, [dispatch]);
 
   const connectToServer = async (option) => {
     if (option === "connect") {
-      await socket.connect();
-
-      await fetch("/api/streamerSocket", {
-        method: "POST",
-        body: JSON.stringify(session.data.user.name.toLowerCase()),
-      });
+      socket.connect();
     } else {
       socket.disconnect();
       dispatch(eraseSocket());
@@ -112,6 +97,44 @@ const ModChannelDisplay = ({
     );
   }
 
+  const createStreamerChannel = (option) => {
+    if (socket?.connected === true) {
+      if (option === "open") {
+        socket?.emit("test-req");
+        socket?.emit("create-room", session.data.user.name);
+      }
+    }
+  };
+
+  const joinStreamerChannel = () => {
+    const modFor = session?.data?.modFor[0];
+    const user = session?.data?.user?.name;
+
+    if (modFor) {
+      socket?.emit("join-streamer-channel", modFor, user);
+    } else {
+      console.log("You currently don't mod for anyone");
+    }
+  };
+
+  let streamer;
+  if (streamers !== "") {
+    streamer = (
+      <div className={styles.streamerContainer}>
+        <h5>Streamer Channels</h5>
+        <div className={styles.streamerRoom}>
+          {streamers}
+          <button
+            onClick={() => joinStreamerChannel()}
+            className={styles.modStatusOpenButton}
+          >
+            Connect
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.statusContainer}>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -125,14 +148,14 @@ const ModChannelDisplay = ({
         {roomStatus === "open" ? (
           <button
             className={styles.modStatusOpenButton}
-            onClick={() => streamerChannels("open")}
+            onClick={() => createStreamerChannel("open")}
           >
             Close Channel
           </button>
         ) : user.streamer ? (
           <button
             className={styles.modStatusOpenButton}
-            onClick={() => streamerChannels("close")}
+            onClick={() => createStreamerChannel("open")}
           >
             Open Channel
           </button>

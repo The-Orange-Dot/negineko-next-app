@@ -9,6 +9,8 @@ export const config = {
   },
 };
 
+let clients: number = 0;
+
 const SocketHandler = async (
   req: NextApiRequest,
   res: NextApiResponseServerIO
@@ -19,6 +21,42 @@ const SocketHandler = async (
     const httpServer: NetServer = res.socket.server as any;
     const io = new ServerIO(httpServer, {
       path: "/api/socket",
+    });
+
+    io.on("connection", (socket) => {
+      clients++;
+      console.log(`${clients} clients connected - ${socket.id} has joined`);
+      console.log();
+
+      socket.on("disconnect", () => {
+        clients--;
+        console.log(`${clients} clients connected - ${socket.id} has left`);
+      });
+
+      socket.on("test-req", () => {
+        // socket.emit("test", "This is a test");
+      });
+
+      socket.on("create-room", (user) => {
+        const room = user.toLowerCase();
+
+        socket.join(room);
+        console.log(room);
+        socket.emit("test", `You've created a room - ${user}`);
+        console.log(io.sockets.adapter.rooms.get(room));
+      });
+
+      socket.on("join-streamer-channel", (streamer, user) => {
+        const room = streamer.toLowerCase().trim();
+
+        socket.join(room);
+        socket.broadcast.emit(
+          "mod-joined",
+          user,
+          `${user} has joined the room`
+        );
+        console.log(io.sockets.adapter.rooms.get(room));
+      });
     });
 
     // append SocketIO server to Next.js socket server response
