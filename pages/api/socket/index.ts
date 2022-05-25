@@ -23,14 +23,12 @@ const SocketHandler = async (
     const io = new ServerIO(httpServer, {
       path: "/api/socket",
       cors: {
-        origin: "*:*",
+        origin: "*.*",
         methods: ["GET", "POST"],
       },
       transports: ["polling"],
       allowEIO3: true,
     });
-
-    httpServer.listen(8885);
 
     io.on("connection", (socket) => {
       clients++;
