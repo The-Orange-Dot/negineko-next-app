@@ -59,6 +59,7 @@ const ShuffleHandler = ({
     shufflePressed();
   };
 
+  //Timer for shuffle
   const delay = (time) => {
     return new Promise((resolve) => setTimeout(resolve, time));
   };
