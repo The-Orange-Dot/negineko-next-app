@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
-import prisma from "../../../lib/prisma";
 import { server } from "../../../config";
+import prisma from "../../../lib/prisma";
 
 const SocketHandler = async (req, res) => {
   let io;
@@ -8,30 +8,27 @@ const SocketHandler = async (req, res) => {
   if (!res.socket.server.io) {
     console.log("Socket is initializing");
     io = new Server(res.socket.server, {
-      path: "/api/socket",
       cors: {
+        origin: server,
         methods: ["GET", "POST"],
-        allowedHeaders: ["Access-Control-Allow-Origin"],
-        credentials: false,
       },
     });
     res.socket.server.io = io;
   } else {
-    console.log("Socket is already running");
-    io = await res.socket.server.io;
+    io = res.socket.server.io;
   }
   io.setMaxListeners(0);
   let host;
 
-  io.on("connection", (socket) => {
+  io.once("connection", (socket) => {
     socket.on("create-room", (user) => {
       host = user;
       socket.join(host);
       socket.broadcast.emit("created", `${host} has created a new room.`);
     });
 
-    socket.once("init", () => {
-      console.log("Connected");
+    socket.on("test", () => {
+      console.log("Testing...");
     });
 
     socket.on("join-room", async (user) => {

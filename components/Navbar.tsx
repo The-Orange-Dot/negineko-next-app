@@ -9,15 +9,6 @@ import { mouseIn, mouseOut } from "./NavBarAnimation";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/userLoginSlice";
-import io from "socket.io-client";
-import { server } from "../config";
-
-const ws = server.replace(/^http/, "wss");
-const socket = io(ws, {
-  path: "/api/socket",
-  transports: ["Websocket"],
-  withCredentials: true,
-});
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -51,8 +42,6 @@ const Navbar = () => {
     if (session) {
       dispatch(loginUser(session));
     }
-
-    socket.emit("init");
   }, [session, dispatch]);
 
   return (

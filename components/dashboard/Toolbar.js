@@ -9,17 +9,13 @@ import { darkModeOn, darkModeOff } from "../../redux/actions/darkModeSlice";
 import { selectMenu } from "../../redux/actions/juiceboxMenuSlice";
 import ModChannelDisplay from "./ModChannelDisplay";
 import { useSession } from "next-auth/react";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import { server } from "../../config/index";
 
-const ws = server.replace(/^http/, "wss");
-const socket = io(ws, {
-  path: "/api/socket",
-  transports: ["Websocket"],
-  withCredentials: true,
-});
-
 const Toolbar = ({ children }) => {
+  const socket = io(server, {
+    path: "/api/socket",
+  });
   const session = useSession();
   const dispatch = useDispatch();
   const ref = useRef();
@@ -43,15 +39,15 @@ const Toolbar = ({ children }) => {
 
     setTween(tl);
 
-    socket.on("mod-joined", (mod) => {
-      if (!mods.includes(mod)) {
-        setMods([...mods, mod]);
-      }
-    });
+    // socket.on("mod-joined", (mod) => {
+    //   if (!mods.includes(mod)) {
+    //     setMods([...mods, mod]);
+    //   }
+    // });
 
-    socket.on("created", (res) => {
-      console.log(res);
-    });
+    // socket.on("created", (res) => {
+    //   console.log(res);
+    // });
   }, [mods]);
 
   const joinChannel = () => {
