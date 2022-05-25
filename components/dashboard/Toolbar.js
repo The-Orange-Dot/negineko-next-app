@@ -9,13 +9,8 @@ import { darkModeOn, darkModeOff } from "../../redux/actions/darkModeSlice";
 import { selectMenu } from "../../redux/actions/juiceboxMenuSlice";
 import ModChannelDisplay from "./ModChannelDisplay";
 import { useSession } from "next-auth/react";
-import { io } from "socket.io-client";
-import { server } from "../../config/index";
 
 const Toolbar = ({ children }) => {
-  const socket = io(server, {
-    path: "/api/socket",
-  });
   const session = useSession();
   const dispatch = useDispatch();
   const ref = useRef();
@@ -38,25 +33,11 @@ const Toolbar = ({ children }) => {
     );
 
     setTween(tl);
-
-    // socket.on("mod-joined", (mod) => {
-    //   if (!mods.includes(mod)) {
-    //     setMods([...mods, mod]);
-    //   }
-    // });
-
-    // socket.on("created", (res) => {
-    //   console.log(res);
-    // });
   }, [mods]);
 
-  const joinChannel = () => {
-    socket.emit("join-room", session.data.user.name);
-  };
+  const joinChannel = () => {};
 
-  const streamerChannels = () => {
-    socket.emit("create-room", session.data.user.name);
-  };
+  const streamerChannels = () => {};
 
   if (value === true) {
     dispatch(darkModeOn());
