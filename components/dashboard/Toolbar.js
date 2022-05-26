@@ -37,8 +37,6 @@ const Toolbar = ({ children }) => {
     setTween(tl);
   }, []);
 
-  const joinChannel = async () => {};
-
   const streamerChannels = async (option) => {
     if (option === "open") {
     } else {
@@ -167,11 +165,7 @@ const Toolbar = ({ children }) => {
             </h4>
           </span>
         </div>
-        <ModChannelDisplay
-          streamerChannels={streamerChannels}
-          joinChannel={joinChannel}
-          user={user}
-        />
+        <ModChannelDisplay streamerChannels={streamerChannels} user={user} />
         <div className={styles.darkMode}>
           <h5>Dark Mode</h5>
           <Switch

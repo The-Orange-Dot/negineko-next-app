@@ -36,7 +36,7 @@ const Orange = () => {
         { opacity: 0, x: -30 },
         { opacity: 1, x: 0, duration: 0.3 }
       );
-  }, [isMobile, tween]);
+  }, [isMobile, mobile, tween]);
 
   const loadAnimationHandler = () => {
     tween.play(0);

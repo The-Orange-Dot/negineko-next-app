@@ -29,7 +29,14 @@ const AddButtons = ({
       { ...descriptor, ...description },
       [...mods, ...modFor]
     );
+
+    localStorage.setItem("arrays", JSON.stringify({ ...arrays, ...users }));
+    localStorage.setItem(
+      "descriptions",
+      JSON.stringify({ ...descriptor, ...description })
+    );
   };
+
   const darkMode = useSelector((state) => state.darkMode.value);
   const socket = useSelector((state) => state.socket.value.socket);
   const mods = session.data.mods;
@@ -39,6 +46,12 @@ const AddButtons = ({
     socket?.on("sent-buttons", async (users, descriptions) => {
       await setArrays({ ...arrays, ...users });
       await setDescriptor({ ...descriptor, ...descriptions });
+
+      localStorage.setItem("arrays", JSON.stringify({ ...arrays, ...users }));
+      localStorage.setItem(
+        "descriptions",
+        JSON.stringify({ ...descriptor, ...descriptions })
+      );
     });
   }, [socket, descriptor, arrays, setArrays, setDescriptor]);
 

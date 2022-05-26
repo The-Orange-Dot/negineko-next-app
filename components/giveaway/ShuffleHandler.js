@@ -11,16 +11,28 @@ const ShuffleHandler = ({
   setWinner,
   arrays,
   timer,
+  selectedKey,
+  setDeletedUpdate,
+  descriptor,
 }) => {
   const socket = useSelector((state) => state.socket.value.socket);
   const [shuffleState, setShuffleState] = useState();
   const session = useSession();
-  const room = session?.data?.modFor[0];
+  const room = session?.data?.modFor;
   const mods = session?.data?.mods;
 
   useEffect(() => {
-    socket?.on("shuffle-res", () => {
+    socket?.on("res-shuffle", () => {
       shufflePressed();
+      console.log(selector);
+    });
+
+    socket?.on("res-delete-button", (key) => {
+      delete arrays[key];
+      setDeletedUpdate(true);
+
+      localStorage.setItem("arrays", JSON.stringify(arrays));
+      localStorage.setItem("descriptions", JSON.stringify(descriptor));
     });
 
     socket?.on("res-reset", () => {
@@ -29,7 +41,16 @@ const ShuffleHandler = ({
       setWinner(false);
       setVideoHidden(true);
     });
-  }, [socket, timer, setWinner, selector, arrays, setShuffle, setVideoHidden]);
+  }, [
+    socket,
+    descriptor,
+    selector,
+    setWinner,
+    setVideoHidden,
+    arrays,
+    setDeletedUpdate,
+    setDescriptorSelector,
+  ]);
 
   const shuffleHandler = (i) => {
     const result = selector[Math.floor(Math.random() * selector.length)];
@@ -38,7 +59,7 @@ const ShuffleHandler = ({
 
   const shufflePressed = async () => {
     console.log("shuffling");
-    if (Object.keys(arrays).length && selector) {
+    if (Object.keys(arrays).length || selector) {
       setVideoHidden(false);
       for (let i = 0; i <= timer[0]; i++) {
         shuffleHandler(i);
@@ -72,12 +93,27 @@ const ShuffleHandler = ({
     return new Promise((resolve) => setTimeout(resolve, time));
   };
 
+  const deleteHandler = () => {
+    const foundKey = Object.keys(arrays).filter((findKey) => {
+      return findKey === selectedKey;
+    });
+
+    delete arrays[foundKey];
+
+    setDeletedUpdate(true);
+
+    localStorage.setItem("arrays", JSON.stringify(arrays));
+    localStorage.setItem("descriptions", JSON.stringify(descriptor));
+
+    socket?.emit("req-delete-button", foundKey, [...mods, ...room]);
+  };
+
   return (
     <div className={styles.shuffleContainer}>
       <span>
         <button
           onClick={() => {
-            socket?.emit("shuffle", room, "TEST");
+            socket?.emit("shuffle", [...room, ...mods]);
             shuffle();
           }}
         >
@@ -93,10 +129,19 @@ const ShuffleHandler = ({
             setWinner(false);
             setVideoHidden(true);
 
-            socket?.emit("req-reset", [...mods, room]);
+            socket?.emit("req-reset", [...mods, ...room]);
           }}
         >
           Reset
+        </button>
+      </span>
+      <span>
+        <button
+          onClick={() => {
+            deleteHandler();
+          }}
+        >
+          Delete Selected
         </button>
       </span>
     </div>

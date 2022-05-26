@@ -40,8 +40,14 @@ const SocketHandler = async (
         socket.join(room);
         console.log(room);
 
+        let streamerOnline: boolean;
+
+        io.sockets.adapter.rooms.get("negineko_tokyo")
+          ? (streamerOnline = true)
+          : (streamerOnline = false);
+
         if (announce) {
-          io.to(announce).emit("logged-in", room);
+          io.to(announce).emit("logged-in", room, streamerOnline);
         }
       });
 
@@ -50,25 +56,20 @@ const SocketHandler = async (
         console.log(`${clients} clients connected - ${socket.id} has left`);
       });
 
-      socket.on("join-streamer-channel", (streamer: string, user: string) => {
-        const room = streamer.toLowerCase().trim();
+      socket.on("join-streamer-channel", (mods: any[], user: any) => {
+        console.log(io.sockets.adapter.rooms.get(user.toLowerCase()));
 
-        socket.join(room);
-        console.log(io.sockets.adapter.rooms.get(room));
-
-        //Notifies and updates everyone EXCEPT SENDER when joining
-        io.sockets
-          .to(room)
-          .emit("mod-joined", user, `${user} has joined the room`);
-
-        //Notifies SELF when joining
-        socket.emit("mod-joined", user, `${user} has joined the room`);
-        // console.log(io.sockets.adapter.rooms.get(room));
-        console.log(io.sockets.adapter.rooms);
+        mods.map((mod) =>
+          socket
+            .to(mod.toLowerCase())
+            .emit("mod-joined", user, `${user} has joined the room`)
+        );
       });
 
-      socket.on("shuffle", (room: string, res: any) => {
-        socket.to(room).emit("shuffle-res", "broadcast-test");
+      socket.on("shuffle", (rooms: any[]) => {
+        rooms.map((room) =>
+          socket.to(room.toLowerCase()).broadcast.emit("res-shuffle")
+        );
       });
 
       socket.on(
@@ -91,7 +92,22 @@ const SocketHandler = async (
 
       socket.on("req-reset", (mods: string[]) => {
         mods.map((mod) => {
-          socket.to(mod.toLowerCase()).emit("res-reset");
+          socket.to(mod?.toLowerCase()).emit("res-reset");
+        });
+      });
+
+      socket.on(
+        "req-timer",
+        (timer: number[], selector: string, mods: string[]) => {
+          mods.map((mod) => {
+            socket.to(mod.toLowerCase()).emit("res-timer", timer, selector);
+          });
+        }
+      );
+
+      socket.on("req-delete-button", (key: string, users: string[]) => {
+        users.map((user) => {
+          socket.to(user.toLowerCase()).emit("res-delete-button", key);
         });
       });
     });

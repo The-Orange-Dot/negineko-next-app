@@ -9,10 +9,14 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 export default function Giveaway() {
+  const localStorageArrays = JSON.parse(localStorage.getItem("arrays")) || {};
+  const localStorageDescriptions =
+    JSON.parse(localStorage.getItem("descriptions")) || {};
   const socket = useSelector((state) => state.socket.value.socket);
   const router = useRouter();
   const darkMode = useSelector((state) => state.darkMode.value);
   const session = useSession();
+  const [deletedUpdate, setDeletedUpdate] = useState(false);
   const [itemNameInput, setItemNameInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
   const [userInput, setUserInput] = useState("");
@@ -22,8 +26,8 @@ export default function Giveaway() {
   const [shuffle, setShuffle] = useState("");
   const [videoHidden, setVideoHidden] = useState(false);
   const [keyButtons, setKeyButtons] = useState();
-  const [arrays, setArrays] = useState({});
-  const [descriptor, setDescriptor] = useState({});
+  const [arrays, setArrays] = useState(localStorageArrays);
+  const [descriptor, setDescriptor] = useState(localStorageDescriptions);
   const [timer, setTimer] = useState([400, 120, 60, 20]);
   const [selectedKey, setSelectedKey] = useState("");
   // TEXT-COLOR-OPTIONS
@@ -47,6 +51,7 @@ export default function Giveaway() {
 
   useEffect(() => {
     const selectorHandler = (e) => {
+      setSelectedKey(e);
       for (let key in arrays) {
         if (e === key) {
           setSelector(arrays[key]);
@@ -65,7 +70,6 @@ export default function Giveaway() {
             key={key}
             onClick={() => {
               selectorHandler(key);
-              setSelectedKey(key);
 
               socket?.emit("item-selected", key, [...mods, ...modFor]);
             }}
@@ -76,13 +80,17 @@ export default function Giveaway() {
       })
     );
 
+    // console.log(selectedKey);
+
     socket?.on("sent-keys", (key) => {
       setSelectedKey(key);
       selectorHandler(key);
     });
 
-    console.log("Page Loaded");
-  }, [arrays, selectedKey, descriptor, modFor, mods, socket]);
+    setDeletedUpdate(false);
+
+    console.log("Raffle Page Loaded");
+  }, [arrays, selectedKey, descriptor, modFor, mods, socket, deletedUpdate]);
 
   if (session.status === "loading") {
     return (
@@ -183,6 +191,9 @@ export default function Giveaway() {
                   setDescriptorSelector={setDescriptorSelector}
                   setWinner={setWinner}
                   timer={timer}
+                  selectedKey={selectedKey}
+                  setDeletedUpdate={setDeletedUpdate}
+                  descriptor={descriptor}
                 />
               </div>
             </div>
