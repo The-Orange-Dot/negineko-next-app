@@ -24,9 +24,8 @@ const SocketHandler = async (
       path: "/api/socket",
       cors: {
         origin: server,
-        methods: ["GET", "POST"],
       },
-      transports: ["polling", "websocket"],
+      transports: ["polling"],
       allowEIO3: true,
     });
 
@@ -34,23 +33,23 @@ const SocketHandler = async (
       clients++;
       console.log(`${clients} clients connected - ${socket.id} has joined`);
 
-      socket.on("room", (user: any) => {
-        const room = user.name.toLowerCase();
-        const announce = user.modFor[0] || room;
-        socket.join(room);
+      // socket.on("room", (user: any) => {
+      //   const room = user.name.toLowerCase();
+      //   const announce = user.modFor[0] || room;
+      //   socket.join(room);
 
-        console.log(announce);
+      //   console.log(announce);
 
-        let streamerOnline: boolean;
+      //   let streamerOnline: boolean;
 
-        io.sockets.adapter.rooms.get("negineko_tokyo")
-          ? (streamerOnline = true)
-          : (streamerOnline = false);
+      //   io.sockets.adapter.rooms.get("negineko_tokyo")
+      //     ? (streamerOnline = true)
+      //     : (streamerOnline = false);
 
-        if (announce) {
-          io.to(announce).emit("logged-in", room, streamerOnline);
-        }
-      });
+      //   if (announce) {
+      //     io.to(announce).emit("logged-in", room, streamerOnline);
+      //   }
+      // });
 
       socket.on("disconnect", () => {
         clients--;

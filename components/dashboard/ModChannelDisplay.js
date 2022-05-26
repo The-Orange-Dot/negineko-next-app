@@ -32,12 +32,12 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
     setSocket(socket);
 
     // log socket connection
-    socket.on("connect", () => {
-      console.log("SOCKET CONNECTED!", socket.id);
-      setConnection(true);
-      dispatch(addSocket({ socket }));
-      socket?.emit("room", session.data);
-    });
+    // socket.on("connect", () => {
+    //   console.log("SOCKET CONNECTED!", socket.id);
+    //   setConnection(true);
+    //   dispatch(addSocket({ socket }));
+    //   socket?.emit("room", session.data);
+    // });
 
     socket.on("created", (msg) => {
       console.log(msg);
@@ -75,7 +75,7 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
     if (socket) return () => socket.disconnect();
 
     setSocket(socket);
-  }, [dispatch, mods, session.data.user.name, session.data]);
+  }, []);
 
   const connectToServer = async (option) => {
     if (option === "connect") {
