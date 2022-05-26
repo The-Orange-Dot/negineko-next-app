@@ -15,15 +15,12 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   const dispatch = useDispatch();
   const session = useSession();
   const [mods, setMods] = useState([]);
-  const [roomStatus, setRoomStatus] = useState("closed");
+  const [roomOpen, setRoomOpen] = useState(false);
   const [streamerOnline, setStreamerOnline] = useState(false);
   const username = user.name;
   const modarray = user.mods;
   const modFor = user.modFor;
   const displayName = user.streamer ? user.name : user.modFor[0];
-
-  console.log(modFor);
-  console.log(modarray);
 
   useEffect(() => {
     const socket = SocketIOClient.connect(server, {
@@ -59,8 +56,15 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
     });
 
     socket?.on("logged-in", (user, streamerOnline) => {
-      console.log(`${user} just logged in`);
-      setStreamerOnline(streamerOnline);
+      console.log(`Streamer online? ${streamerOnline}`);
+      if (user.streamer) {
+        setRoomOpen(true);
+      } else {
+        if (streamerOnline) {
+          console.log(`${user} just logged in`);
+          setStreamerOnline(streamerOnline);
+        }
+      }
     });
 
     socket.on("mod-joined", (mod, msg) => {
@@ -126,34 +130,34 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   //   }
   // };
 
-  const joinStreamerChannel = () => {
-    const modFor = session?.data?.modFor[0];
-    const user = session?.data?.user?.name;
+  // const joinStreamerChannel = () => {
+  //   const modFor = session?.data?.modFor[0];
+  //   const user = session?.data?.user?.name;
 
-    if (modFor) {
-      socket?.emit("join-streamer-channel", modFor, user);
-    } else {
-      console.log("You currently don't mod for anyone");
-    }
-  };
+  //   if (modFor) {
+  //     socket?.emit("join-streamer-channel", modFor, user);
+  //   } else {
+  //     console.log("You currently don't mod for anyone");
+  //   }
+  // };
 
   let streamer;
-  if (streamers !== "") {
-    streamer = (
-      <div className={styles.streamerContainer}>
-        <h5>Streamer Channels</h5>
-        <div className={styles.streamerRoom}>
-          {streamers}
-          <button
-            onClick={() => joinStreamerChannel()}
-            className={styles.modStatusOpenButton}
-          >
-            Connect
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // if (streamers !== "") {
+  //   streamer = (
+  //     <div className={styles.streamerContainer}>
+  //       <h5>Streamer Channels</h5>
+  //       <div className={styles.streamerRoom}>
+  //         {streamers}
+  //         <button
+  //           onClick={() => joinStreamerChannel()}
+  //           className={styles.modStatusOpenButton}
+  //         >
+  //           Connect
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className={styles.statusContainer}>
@@ -164,7 +168,9 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
 
       <div className={styles.modStatusContainer}>
         <h5 className={styles.modStatusHeader}>{displayName} Mods Connected</h5>
-        <p className={styles.modStatus}>Room Status: {roomStatus}</p>
+        <p className={styles.modStatus}>
+          Room Status: {streamerOnline || roomOpen ? "Open" : "Closed"}
+        </p>
 
         {mods}
       </div>

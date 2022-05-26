@@ -23,10 +23,10 @@ const SocketHandler = async (
     const io = new ServerIO(httpServer, {
       path: "/api/socket",
       cors: {
-        origin: "*:*",
+        origin: server,
         methods: ["GET", "POST"],
       },
-      transports: ["polling"],
+      transports: ["polling", "websocket"],
       allowEIO3: true,
     });
 
@@ -36,9 +36,10 @@ const SocketHandler = async (
 
       socket.on("room", (user: any) => {
         const room = user.name.toLowerCase();
-        const announce = user.modFor[0];
+        const announce = user.modFor[0] || room;
         socket.join(room);
-        console.log(room);
+
+        console.log(announce);
 
         let streamerOnline: boolean;
 
@@ -84,9 +85,9 @@ const SocketHandler = async (
         }
       );
 
-      socket.on("item-selected", (item: string, mods: string[]) => {
+      socket.on("item-selected", (key: string, mods: string[]) => {
         mods.map((mod) => {
-          socket.to(mod.toLowerCase()).emit("sent-keys", item);
+          socket.to(mod.toLowerCase()).emit("sent-keys", key);
         });
       });
 

@@ -20,8 +20,8 @@ const AddButtons = ({
     const users = { [`${itemNameInput}`]: userInput.split(" ") };
     const description = { [`${itemNameInput}`]: descriptionInput };
 
-    await setArrays({ ...arrays, ...users });
-    await setDescriptor({ ...descriptor, ...description });
+    // await setArrays({ ...arrays, ...users });
+    // await setDescriptor({ ...descriptor, ...description });
 
     await socket?.emit(
       "add-button",

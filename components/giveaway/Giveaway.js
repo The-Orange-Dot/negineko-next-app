@@ -56,6 +56,10 @@ export default function Giveaway() {
         if (e === key) {
           setSelector(arrays[key]);
           setDescriptorSelector(descriptor[key]);
+
+          console.log(`Selector: ${selector}`);
+          console.log(`Desc selector: ${descriptorSelector}`);
+          console.log(`selectorHandler Key: ${key}`);
         }
       }
     };
@@ -83,7 +87,6 @@ export default function Giveaway() {
     // console.log(selectedKey);
 
     socket?.on("sent-keys", (key) => {
-      setSelectedKey(key);
       selectorHandler(key);
     });
 
