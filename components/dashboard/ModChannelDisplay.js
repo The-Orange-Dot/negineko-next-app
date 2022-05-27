@@ -32,26 +32,30 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
     setSocket(socket);
 
     // log socket connection
-    socket.on("connect", () => {
+    socket?.on("connect", () => {
       console.log("SOCKET CONNECTED!", socket.id);
       setConnection(true);
       dispatch(addSocket({ socket }));
       socket?.emit("room", session.data);
     });
 
-    socket.on("created", (msg) => {
+    socket?.on("connect_error", (err) => {
+      console.log("Error:", err.message);
+    });
+
+    socket?.on("created", (msg) => {
       console.log(msg);
     });
 
-    socket.on("room-created", (msg) => {
+    socket?.on("room-created", (msg) => {
       console.log(msg);
     });
 
-    socket.on("test-res", (msg) => {
+    socket?.on("test-res", (msg) => {
       console.log(msg);
     });
 
-    socket.on("test", (msg) => {
+    socket?.on("test", (msg) => {
       console.log(msg);
     });
 
@@ -67,7 +71,7 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
       }
     });
 
-    socket.on("mod-joined", (mod, msg) => {
+    socket?.on("mod-joined", (mod, msg) => {
       setMods([...mods, mod]);
     });
 
