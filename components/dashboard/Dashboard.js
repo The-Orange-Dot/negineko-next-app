@@ -10,16 +10,18 @@ const Dashboard = () => {
   const socket = useSelector((state) => state.socket.value.socket);
   const connection = useSelector((state) => state.socket.connected);
   const session = useSession();
-
-  useEffect(() => {
-    if (socket?.connected === true) {
-      dispatch(connected());
-      console.log(`Connection: ${connection}`);
-    } else {
-      dispatch(disconnected());
-      console.log(`Connection: ${connection}`);
-    }
-  }, [socket, connection]);
+  useEffect(
+    () => {
+      if (socket?.connected === true) {
+        dispatch(connected());
+        console.log(`Connection: ${connection}`);
+      } else {
+        dispatch(disconnected());
+        console.log(`Connection: ${connection}`);
+      }
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [socket, connection]
+  );
 
   return (
     <div className={styles.dashboardContainer}>

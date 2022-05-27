@@ -36,68 +36,60 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
     if (socket) return () => socket.disconnect();
   }, []);
 
-  useEffect(() => {
-    // log socket connection
-    socket?.on("connect", () => {
-      console.log("SOCKET CONNECTED!", socket.id);
-      setConnection(true);
-      dispatch(addSocket({ socket }));
-      socket?.emit("room", session.data);
-    });
+  useEffect(
+    () => {
+      // log socket connection
+      socket?.on("connect", () => {
+        const username = session.data.name;
+        console.log("SOCKET CONNECTED!", socket.id);
+        setConnection(true);
+        dispatch(addSocket({ socket }));
 
-    socket?.on("connect_error", (err) => {
-      console.log("Error:", err.message);
-    });
-
-    socket?.on("created", (msg) => {
-      console.log(msg);
-    });
-
-    socket?.on("room-created", (msg) => {
-      console.log(msg);
-    });
-
-    socket?.on("test-res", (msg) => {
-      console.log(msg);
-    });
-
-    socket?.on("test", (msg) => {
-      console.log(msg);
-    });
-
-    socket?.on("logged-in", (user, streamerOnline) => {
-      console.log(`Streamer online? ${streamerOnline}`);
-      if (user.streamer) {
-        setRoomOpen(true);
-      } else {
-        if (streamerOnline) {
-          console.log(`${user} just logged in`);
-          setStreamerOnline(streamerOnline);
+        socket?.emit("room", session.data, username);
+        if (!mods.includes(username)) {
+          setMods([...mods, username]);
         }
-      }
-    });
+      });
 
-    socket?.on("mod-joined", (mod, msg) => {
-      setMods([...mods, mod]);
-    });
-  }, [socket]);
+      socket?.on("connect_error", (err) => {
+        console.log("Error:", err.message);
+      });
+
+      socket?.on("sign-off", (test) => {
+        console.log(test);
+      });
+
+      socket?.on("logged-in", (user, username, streamerOnline, usersOnline) => {
+        console.log(`Streamer online? ${streamerOnline}`);
+        setMods([username, ...usersOnline]);
+        setStreamerOnline(streamerOnline);
+      });
+
+      socket?.on("logged-off", (usersOnline, streamerOnline) => {
+        setMods(usersOnline);
+        setStreamerOnline(streamerOnline);
+      });
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [socket]
+  );
+
+  const disconnectHandler = async () => {
+    const username = session.data.name;
+    let streamerStatus = true;
+    if (session.data.streamer) {
+      streamerStatus = false;
+    }
+    await socket?.emit("user-sign-off", session.data, username, streamerStatus);
+    dispatch(eraseSocket());
+    setConnection(false);
+    socket.disconnect();
+  };
 
   const connectToServer = async (option) => {
     if (option === "connect") {
       await socket.connect();
-      socket.emit(
-        "join-streamer-channel",
-        [username, ...modarray, ...modFor],
-        username
-      );
-
-      if (!mods.includes(username)) {
-        setMods([...mods, username]);
-      }
     } else {
-      socket.disconnect();
-      dispatch(eraseSocket());
-      setConnection(false);
+      disconnectHandler();
     }
   };
 
@@ -126,58 +118,34 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
     );
   }
 
-  // const createStreamerChannel = (option) => {
-  //   if (socket?.connected === true) {
-  //     if (option === "open") {
-  //       socket?.emit("create-room", session.data.user.name);
-  //       setRoomStatus("open");
-  //     }
-  //   }
-  // };
-
-  // const joinStreamerChannel = () => {
-  //   const modFor = session?.data?.modFor[0];
-  //   const user = session?.data?.user?.name;
-
-  //   if (modFor) {
-  //     socket?.emit("join-streamer-channel", modFor, user);
-  //   } else {
-  //     console.log("You currently don't mod for anyone");
-  //   }
-  // };
-
-  let streamer;
-  // if (streamers !== "") {
-  //   streamer = (
-  //     <div className={styles.streamerContainer}>
-  //       <h5>Streamer Channels</h5>
-  //       <div className={styles.streamerRoom}>
-  //         {streamers}
-  //         <button
-  //           onClick={() => joinStreamerChannel()}
-  //           className={styles.modStatusOpenButton}
-  //         >
-  //           Connect
-  //         </button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className={styles.statusContainer}>
       <div style={{ display: "flex", justifyContent: "center" }}>
         {connectServerButton}
       </div>
-      {user.mod ? streamer : null}
 
       <div className={styles.modStatusContainer}>
-        <h5 className={styles.modStatusHeader}>{displayName} Mods Connected</h5>
-        <p className={styles.modStatus}>
-          Room Status: {streamerOnline || roomOpen ? "Open" : "Closed"}
-        </p>
-
-        {mods}
+        <h5 className={styles.modStatusHeader}>{displayName}</h5>
+        {connection ? (
+          <>
+            <p
+              className={
+                streamerOnline ? styles.modStatusOpen : styles.modStatusClose
+              }
+            >
+              Streamer is currently: {streamerOnline ? "Online" : "Offline"}
+            </p>
+            <ul className={styles.userList}>
+              {mods.map((mod) => {
+                return <li key={mod}>{mod}</li>;
+              })}
+            </ul>
+          </>
+        ) : (
+          <div className={styles.offlineModsContainer}>
+            <p>You are currently offline</p>
+          </div>
+        )}
       </div>
     </div>
   );

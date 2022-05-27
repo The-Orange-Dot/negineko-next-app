@@ -26,39 +26,65 @@ const SocketHandler = async (
     io.on("connection", (socket) => {
       clients++;
       console.log(`${clients} clients connected - ${socket.id} has joined`);
-
-      socket.on("room", (user: any) => {
-        const room = user.name.toLowerCase();
-        const announce = user.modFor[0] || room;
-        socket.join(room);
-
-        console.log(announce);
-
-        let streamerOnline: boolean;
-
-        io.sockets.adapter.rooms.get("negineko_tokyo")
-          ? (streamerOnline = true)
-          : (streamerOnline = false);
-
-        if (announce) {
-          io.to(announce).emit("logged-in", room, streamerOnline);
-        }
-      });
-
       socket.on("disconnect", () => {
         clients--;
         console.log(`${clients} clients connected - ${socket.id} has left`);
       });
 
-      socket.on("join-streamer-channel", (mods: any[], user: any) => {
-        console.log(io.sockets.adapter.rooms.get(user.toLowerCase()));
+      //FIRES WHEN USER LOGS IN
+      socket.on("room", async (user: any, username: string) => {
+        const rooms = [...user.mods, ...user.modFor];
+        await socket.join(user.name.toLowerCase());
 
-        mods.map((mod) =>
+        let streamerOnline: boolean = false;
+
+        let usersOnline = [];
+
+        //checks who's online
+        rooms.map((room) => {
+          if (io.sockets.adapter.rooms.get(room.toLowerCase())) {
+            usersOnline.push(room);
+          }
+        });
+
+        if (user.streamer || usersOnline.includes(user.modFor[0])) {
+          streamerOnline = true;
+        }
+
+        rooms.map((room) => {
           socket
-            .to(mod.toLowerCase())
-            .emit("mod-joined", user, `${user} has joined the room`)
-        );
+            .to(room.toLowerCase())
+            .emit("logged-in", user, username, streamerOnline, usersOnline);
+        });
+        socket.emit("logged-in", user, username, streamerOnline, usersOnline);
       });
+
+      //FIRES WHEN USER LOGS OFF
+      socket.on(
+        "user-sign-off",
+        async (user: any, username: string, streamerStatus: boolean) => {
+          const rooms = [...user.mods, ...user.modFor];
+          let usersOnline = [];
+
+          //checks who's online
+          rooms.map((room) => {
+            if (io.sockets.adapter.rooms.get(room.toLowerCase())) {
+              if (room.toLowerCase() !== username.toLowerCase()) {
+                usersOnline.push(room);
+              }
+            }
+          });
+
+          rooms.map((room) => {
+            socket
+              .to(room.toLowerCase())
+              .emit("logged-off", usersOnline, streamerStatus);
+          });
+          socket.emit("logged-off", usersOnline, streamerStatus);
+
+          socket.leave(username.toLowerCase());
+        }
+      );
 
       socket.on("shuffle", (rooms: any[]) => {
         rooms.map((room) =>
