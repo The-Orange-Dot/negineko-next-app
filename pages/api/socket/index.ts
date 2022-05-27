@@ -4,12 +4,6 @@ import { Server as ServerIO } from "socket.io";
 import { Server as NetServer } from "http";
 import { server } from "../../../config";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 let clients: number = 0;
 
 const SocketHandler = async (
@@ -25,7 +19,6 @@ const SocketHandler = async (
       cors: {
         origin: server,
       },
-      transports: ["websocket"],
       allowEIO3: true,
     });
 

@@ -13,9 +13,9 @@ const Test = (req: NextApiRequest, res: NextApiResponseServerIO) => {
     res.status(201).json(message);
   }
 
-  res?.socket?.server?.io?.emit("test", "this is a test");
+  // res?.socket?.server?.io?.emit("test", "this is a test");
 
-  res.status(200).json("this is a test");
+  // res.status(200).json("this is a test");
 };
 
 export default Test;

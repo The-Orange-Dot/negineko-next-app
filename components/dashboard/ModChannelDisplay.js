@@ -10,7 +10,7 @@ import { server } from "../../config";
 
 const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   const [streamers, setStreamers] = useState(user?.modFor[0]);
-  const [socket, setSocket] = useState({});
+  const [socket, setSocket] = useState(null);
   const [connection, setConnection] = useState(false);
   const dispatch = useDispatch();
   const session = useSession();
@@ -31,6 +31,11 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
 
     setSocket(socket);
 
+    // socket disconnet onUnmount if exists
+    if (socket) return () => socket.disconnect();
+  }, []);
+
+  useEffect(() => {
     // log socket connection
     socket?.on("connect", () => {
       console.log("SOCKET CONNECTED!", socket.id);
@@ -74,10 +79,7 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
     socket?.on("mod-joined", (mod, msg) => {
       setMods([...mods, mod]);
     });
-
-    // socket disconnet onUnmount if exists
-    if (socket) return () => socket.disconnect();
-  }, []);
+  }, [socket]);
 
   const connectToServer = async (option) => {
     if (option === "connect") {
