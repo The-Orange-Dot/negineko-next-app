@@ -92,7 +92,7 @@ const SocketHandler = async (
       });
 
       socket.on("req-add-button", (button: any, mods: string[]) => {
-        console.log(mods);
+        console.log(button);
         mods.map((mod) => {
           socket.to(mod.toLowerCase()).emit("res-add-button", button);
         });

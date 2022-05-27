@@ -7,6 +7,7 @@ import { addSocket, eraseSocket } from "../../redux/actions/socketSlice";
 import { useSession } from "next-auth/react";
 import SocketIOClient from "socket.io-client";
 import { server } from "../../config";
+import { addButton, deleteButton } from "../../redux/actions/giveawaySlice";
 
 const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   const [streamers, setStreamers] = useState(user?.modFor[0]);
@@ -45,7 +46,7 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
         const username = session.data.name;
         console.log("SOCKET CONNECTED!", socket.id);
         setConnection(true);
-        dispatch(addSocket(socket));
+        // dispatch(addSocket(socket));
 
         socket?.emit("room", session.data, username);
         if (!mods.includes(username)) {
@@ -57,8 +58,12 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
         console.log("Error:", err.message);
       });
 
-      socket?.on("sign-off", (test) => {
-        console.log(test);
+      socket?.on("res-add-button", (newButton) => {
+        dispatch(addButton(newButton));
+      });
+
+      socket?.on("res-delete-button", (updatedButtons) => {
+        dispatch(deleteButton(updatedButtons));
       });
 
       socket?.on("logged-in", (user, username, streamerOnline, usersOnline) => {
@@ -82,7 +87,7 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
       streamerStatus = false;
     }
     await socket?.emit("user-sign-off", session.data, username, streamerStatus);
-    dispatch(eraseSocket());
+    // dispatch(eraseSocket());
     setConnection(false);
     socket.disconnect();
   };

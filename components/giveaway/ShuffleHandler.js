@@ -28,8 +28,6 @@ const ShuffleHandler = ({
         console.log(usersArray);
       });
 
-      socket?.on("res-delete-button", (key) => {});
-
       socket?.on("res-reset", () => {
         setDescriptorSelector("");
         shuffleHandler("reset");
@@ -84,7 +82,14 @@ const ShuffleHandler = ({
 
     dispatch(deleteButton(updatedButtons));
 
-    // socket?.emit("req-delete-button", foundKey, [...mods, ...room]);
+    fetch("/api/raffleSocket", {
+      method: "POST",
+      body: JSON.stringify({
+        emit: "delete-button",
+        mods: [...mods, ...room],
+        button: updatedButtons,
+      }),
+    });
   };
 
   return (

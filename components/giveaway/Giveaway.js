@@ -63,7 +63,7 @@ export default function Giveaway() {
   const keyButtons = raffleButtons?.map((button) => {
     return (
       <button
-        key={button.title}
+        key={`${button.title} ${button.buttonName}`}
         onClick={() => {
           selectorHandler(button);
         }}

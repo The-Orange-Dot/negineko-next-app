@@ -14,7 +14,6 @@ const AddButtons = () => {
   const [userInput, setUserInput] = useState("");
 
   const addNewItem = async () => {
-    const state = buttons;
     const newButton = {
       buttonName: buttonNameInput,
       title: descriptionInput,
@@ -23,19 +22,22 @@ const AddButtons = () => {
 
     dispatch(addButton(newButton));
 
-    await socket?.emit("req-add-button", newButton, [...mods, ...modFor]);
+    fetch("/api/raffleSocket", {
+      method: "POST",
+      body: JSON.stringify({
+        emit: "add-button",
+        mods: [...mods, ...modFor],
+        button: newButton,
+      }),
+    });
+
+    // await socket?.emit("req-add-button", newButton, [...mods, ...modFor]);
   };
 
   const darkMode = useSelector((state) => state.darkMode.value);
   const socket = useSelector((state) => state.socket.value.socket);
   const mods = session.data.mods;
   const modFor = session.data.modFor;
-
-  useEffect(() => {
-    socket?.on("res-add-button", (button) => {
-      dispatch(addButton(button));
-    });
-  }, [socket]);
 
   return (
     <>
