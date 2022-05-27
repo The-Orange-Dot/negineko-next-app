@@ -6,7 +6,7 @@ import styles from "../../styles/dashboard.module.css";
 import { addSocket, eraseSocket } from "../../redux/actions/socketSlice";
 import { useSession } from "next-auth/react";
 import SocketIOClient from "socket.io-client";
-import { server } from "../../config";
+// import { server } from "../../config";
 
 const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   const [streamers, setStreamers] = useState(user?.modFor[0]);
@@ -21,6 +21,10 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   const modarray = user.mods;
   const modFor = user.modFor;
   const displayName = user.streamer ? user.name : user.modFor[0];
+  const dev = process.env.NODE_ENV !== "production";
+  const server = dev
+    ? "http://localhost:3000"
+    : "https://negineko.netlify.app:3000";
 
   useEffect(() => {
     const socket = SocketIOClient.connect(server, {
