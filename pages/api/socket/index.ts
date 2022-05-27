@@ -21,7 +21,6 @@ const SocketHandler = async (
         methods: ["GET", "POST"],
         credentials: true,
       },
-      transports: ["websocket", "polling"],
       allowEIO3: true,
     });
 

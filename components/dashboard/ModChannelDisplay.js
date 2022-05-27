@@ -25,7 +25,6 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   useEffect(() => {
     const socket = SocketIOClient.connect(server, {
       path: "/api/socket",
-      transports: ["websocket", "polling"],
       autoConnect: false,
       reconnectionAttempts: 5,
       rejectUnauthorized: false,
