@@ -18,8 +18,10 @@ const SocketHandler = async (
       path: "/api/socket",
       cors: {
         origin: server,
+        methods: ["GET", "POST"],
+        credentials: true,
       },
-      transports: ["polling", "websocket"],
+      transports: ["websocket", "polling"],
       allowEIO3: true,
     });
 
