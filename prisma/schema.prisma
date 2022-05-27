@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://espmmtgwoesfgi:76d3974d9e396f577c6b4139f258c75d5a8cda346397ebb35687be6d607684c8@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d682h0q44a3rij?schema=public?connect_timeout=60&connection_limit=1"
+  url      = "postgres://espmmtgwoesfgi:76d3974d9e396f577c6b4139f258c75d5a8cda346397ebb35687be6d607684c8@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d682h0q44a3rij?schema=public&connection_limit=1"
 }
 
 model Location {
