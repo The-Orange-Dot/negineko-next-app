@@ -22,8 +22,8 @@ const Toolbar = ({ children }) => {
   const [tween, setTween] = useState();
   const [animState, setAnimState] = useState(false);
   const [value, setValue] = useState(darkMode);
-  const darkMode = useSelector((state) => state.darkMode.value);
-  const user = useSelector((state) => state.user.value);
+  const darkMode = useSelector((state) => state?.darkMode?.value);
+  const user = useSelector((state) => state?.user?.value);
 
   useEffect(() => {
     const tl = gsap.timeline({ paused: true }).fromTo(

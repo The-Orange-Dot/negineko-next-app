@@ -11,8 +11,8 @@ import Dashboard from "../../components/dashboard/Dashboard";
 import ModControls from "../../components/dashboard/ModControls";
 
 const Home = () => {
-  const darkMode = useSelector((state) => state.darkMode.value);
-  const juiceBoxMenu = useSelector((state) => state.juicebox.menu);
+  const darkMode = useSelector((state) => state?.darkMode?.value);
+  const juiceBoxMenu = useSelector((state) => state?.juicebox?.menu);
   const session = useSession();
   const router = useRouter();
   const [input, setInput] = useState("");

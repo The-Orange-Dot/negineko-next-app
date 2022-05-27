@@ -46,7 +46,7 @@ const Home = ({ stream, accessToken }) => {
   gsap.registerPlugin(TextPlugin);
   const [pageLoaded, setPageLoaded] = useState(false);
   const { data: session } = useSession();
-  const token = useSelector((state) => state.token.value);
+  // const token = useSelector((state) => state.token.value);
   const dispatch = useDispatch();
   const [tween, setTween] = useState("");
 

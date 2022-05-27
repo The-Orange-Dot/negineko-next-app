@@ -2,13 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const giveawaySlice = createSlice({
   name: "giveaway",
-  initialState: {
-    value: {},
-  },
-  addButton: (state, action) => {
-    state.value = action.payload;
+  initialState: { buttons: [], selected: {} },
+  reducers: {
+    addButton: (state, action) => {
+      state.buttons.push(action.payload);
+    },
+    deleteButton: (state, action) => {
+      state.buttons = action.payload;
+    },
+    selectButton: (state, action) => {
+      state.selected = action.payload;
+    },
   },
 });
 
-export const { addButton } = giveawaySlice.actions;
+export const { addButton, deleteButton, selectButton } = giveawaySlice.actions;
 export default giveawaySlice.reducer;

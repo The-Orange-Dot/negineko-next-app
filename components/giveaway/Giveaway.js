@@ -5,29 +5,20 @@ import AddButtons from "./AddButtons";
 import TimerButtons from "./TimerButtons";
 import Options from "./Options";
 import { useSession } from "next-auth/react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { selectButton } from "../../redux/actions/giveawaySlice";
 
 export default function Giveaway() {
-  const localStorageArrays = JSON.parse(localStorage.getItem("arrays")) || {};
-  const localStorageDescriptions =
-    JSON.parse(localStorage.getItem("descriptions")) || {};
+  const dispatch = useDispatch();
+  const raffleButtons = useSelector((state) => state.giveaway.buttons);
   const socket = useSelector((state) => state.socket.value.socket);
   const router = useRouter();
-  const darkMode = useSelector((state) => state.darkMode.value);
   const session = useSession();
-  const [deletedUpdate, setDeletedUpdate] = useState(false);
-  const [itemNameInput, setItemNameInput] = useState("");
-  const [descriptionInput, setDescriptionInput] = useState("");
-  const [userInput, setUserInput] = useState("");
-  const [selector, setSelector] = useState("");
+  const [usersArray, setUsersArray] = useState("");
   const [descriptorSelector, setDescriptorSelector] = useState("");
   const [winner, setWinner] = useState(false);
   const [shuffle, setShuffle] = useState("");
-  const [videoHidden, setVideoHidden] = useState(false);
-  const [keyButtons, setKeyButtons] = useState();
-  const [arrays, setArrays] = useState(localStorageArrays);
-  const [descriptor, setDescriptor] = useState(localStorageDescriptions);
   const [timer, setTimer] = useState([400, 120, 60, 20]);
   const [selectedKey, setSelectedKey] = useState("");
   // TEXT-COLOR-OPTIONS
@@ -51,54 +42,41 @@ export default function Giveaway() {
 
   useEffect(
     () => {
-      const selectorHandler = (e) => {
-        setSelectedKey(e);
-        for (let key in arrays) {
-          if (e === key) {
-            setSelector(arrays[key]);
-            setDescriptorSelector(descriptor[key]);
-
-            console.log(`Selector: ${selector}`);
-            console.log(`Desc selector: ${descriptorSelector}`);
-            console.log(`selectorHandler Key: ${key}`);
-          }
-        }
-      };
-
-      setKeyButtons(
-        Object.keys(arrays).map((key) => {
-          return (
-            <button
-              className={
-                selectedKey === key
-                  ? styles.selectedKeyButton
-                  : styles.keyButton
-              }
-              key={key}
-              onClick={() => {
-                selectorHandler(key);
-
-                socket?.emit("item-selected", key, [...mods, ...modFor]);
-              }}
-            >
-              {key}
-            </button>
-          );
-        })
-      );
-
-      // console.log(selectedKey);
-
-      socket?.on("sent-keys", (key) => {
-        selectorHandler(key);
+      socket?.on("res-selected-button", (selected) => {
+        selectorHandler(selected);
       });
-
-      setDeletedUpdate(false);
 
       console.log("Raffle Page Loaded");
     }, //eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [socket]
   );
+
+  const selectorHandler = (e) => {
+    dispatch(selectButton(e));
+    setDescriptorSelector(e.title);
+    setUsersArray(e.users);
+    setSelectedKey(e.buttonName);
+
+    // socket.emit("req-select-button", e, [...mods, ...modFor]);
+  };
+
+  const keyButtons = raffleButtons?.map((button) => {
+    return (
+      <button
+        key={button.title}
+        onClick={() => {
+          selectorHandler(button);
+        }}
+        className={
+          selectedKey === button.buttonName
+            ? styles.selectedKeyButton
+            : styles.keyButton
+        }
+      >
+        {button.buttonName}
+      </button>
+    );
+  });
 
   if (session.status === "loading") {
     return (
@@ -113,33 +91,6 @@ export default function Giveaway() {
           <div
             style={{ display: "flex", alignItems: "center", ...screenStyles }}
           >
-            {/* {winner && !videoHidden ? (
-            <video
-              autoPlay
-              muted
-              style={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                top: 0,
-                left: 0,
-              }}
-              className="winner-video"
-            >
-              <source src={"/images/confetti.mp4"} />
-            </video>
-          ) : null} */}
-            {/* <span>
-            {winner ? (
-              <Image
-                src={"/images/Nacchan.png"}
-                alt="nacchan"
-                width={400}
-                height={400}
-                style={{}}
-              />
-            ) : null}
-          </span> */}
             <span className={styles.screenDisplay}>
               <h1 style={textStyles}>{descriptorSelector}</h1>
               <div>
@@ -147,44 +98,21 @@ export default function Giveaway() {
                 <h1 style={textStyles}>{shuffle}</h1>
               </div>
             </span>
-            {/* <span>
-            {winner ? (
-              <Image
-                src={"/images/Mocchan.png"}
-                alt="mocchan"
-                width={400}
-                height={400}
-                style={{}}
-              />
-            ) : null}
-          </span> */}
           </div>
 
           <div className={styles.controlsContainer}>
             {/* ADD USERNAMES CONTAINER */}
             <div className={styles.formContainer}>
-              <AddButtons
-                setItemNameInput={setItemNameInput}
-                setDescriptionInput={setDescriptionInput}
-                setUserInput={setUserInput}
-                itemNameInput={itemNameInput}
-                userInput={userInput}
-                descriptionInput={descriptionInput}
-                arrays={arrays}
-                descriptor={descriptor}
-                setArrays={setArrays}
-                setDescriptor={setDescriptor}
-              />
+              <AddButtons />
             </div>
 
             {/* CATEGORY BUTTONS */}
-            {Object.keys(arrays).length ? (
+            {keyButtons?.length > 0 ? (
               <div className={styles.keyButtons}>{keyButtons}</div>
             ) : (
-              <div style={{ width: 400, textAlign: "center" }}>
+              <div style={{ width: 300, textAlign: "center" }}>
                 <p>Add a giveaway item on the left.</p>
                 <p>(9 buttons max)</p>
-                <p>Refreshing page will erase all buttons for now.</p>
               </div>
             )}
 
@@ -192,16 +120,13 @@ export default function Giveaway() {
             <div className={styles.controls}>
               <div style={{ margin: "10%" }}>
                 <ShuffleHandler
-                  arrays={arrays}
-                  selector={selector}
+                  usersArray={usersArray}
                   setShuffle={setShuffle}
-                  setVideoHidden={setVideoHidden}
                   setDescriptorSelector={setDescriptorSelector}
                   setWinner={setWinner}
                   timer={timer}
-                  selectedKey={selectedKey}
-                  setDeletedUpdate={setDeletedUpdate}
-                  descriptor={descriptor}
+                  setUsersArray={setUsersArray}
+                  setSelectedKey={setSelectedKey}
                 />
               </div>
             </div>

@@ -10,7 +10,7 @@ export const socketSlice = createSlice({
     addSocket: (state, action) => {
       state.value = action.payload;
     },
-    eraseSocket: (state, action) => {
+    eraseSocket: (state) => {
       state.value = {};
     },
     connected: (state) => {

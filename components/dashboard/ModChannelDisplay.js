@@ -17,10 +17,10 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   const [mods, setMods] = useState([]);
   const [roomOpen, setRoomOpen] = useState(false);
   const [streamerOnline, setStreamerOnline] = useState(false);
-  const username = user.name;
-  const modarray = user.mods;
-  const modFor = user.modFor;
-  const displayName = user.streamer ? user.name : user.modFor[0];
+  const username = user?.name;
+  const modarray = user?.mods;
+  const modFor = user?.modFor;
+  const displayName = user?.streamer ? user?.name : user?.modFor[0];
 
   useEffect(() => {
     const socket = SocketIOClient.connect(server, {
@@ -45,7 +45,7 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
         const username = session.data.name;
         console.log("SOCKET CONNECTED!", socket.id);
         setConnection(true);
-        dispatch(addSocket({ socket }));
+        dispatch(addSocket(socket));
 
         socket?.emit("room", session.data, username);
         if (!mods.includes(username)) {

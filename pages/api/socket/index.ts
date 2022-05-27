@@ -86,27 +86,21 @@ const SocketHandler = async (
         }
       );
 
+      //SHUFFLES THE GIVEAWAY PAGE
       socket.on("shuffle", (rooms: any[]) => {
-        rooms.map((room) =>
-          socket.to(room.toLowerCase()).broadcast.emit("res-shuffle")
-        );
+        rooms.map((room) => socket.to(room.toLowerCase()).emit("res-shuffle"));
       });
 
-      socket.on(
-        "add-button",
-        (users: any, descriptions: any, mods: string[]) => {
-          console.log(mods);
-          mods.map((mod) => {
-            socket
-              .to(mod.toLowerCase())
-              .emit("sent-buttons", users, descriptions);
-          });
-        }
-      );
-
-      socket.on("item-selected", (key: string, mods: string[]) => {
+      socket.on("req-add-button", (button: any, mods: string[]) => {
+        console.log(mods);
         mods.map((mod) => {
-          socket.to(mod.toLowerCase()).emit("sent-keys", key);
+          socket.to(mod.toLowerCase()).emit("res-add-button", button);
+        });
+      });
+
+      socket.on("req-select-button", (selected: string, mods: string[]) => {
+        mods.map((mod) => {
+          socket.to(mod.toLowerCase()).emit("res-selected-button", selected);
         });
       });
 

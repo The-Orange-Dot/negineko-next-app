@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/giveaway.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
+import { deleteButton } from "../../redux/actions/giveawaySlice";
 
 const ShuffleHandler = ({
-  selector,
+  usersArray,
   setShuffle,
-  setVideoHidden,
   setDescriptorSelector,
   setWinner,
-  arrays,
   timer,
-  selectedKey,
-  setDeletedUpdate,
-  descriptor,
+  setUsersArray,
+  setSelectedKey,
 }) => {
+  const dispatch = useDispatch();
+  const raffleButtons = useSelector((state) => state.giveaway.buttons);
+  const selectedButton = useSelector((state) => state.giveaway.selected);
   const socket = useSelector((state) => state.socket.value.socket);
-  const [shuffleState, setShuffleState] = useState();
   const session = useSession();
   const room = session?.data?.modFor;
   const mods = session?.data?.mods;
@@ -25,35 +25,23 @@ const ShuffleHandler = ({
     () => {
       socket?.on("res-shuffle", () => {
         shufflePressed();
-        console.log(selector);
+        console.log(usersArray);
       });
 
-      socket?.on("res-delete-button", (key) => {
-        delete arrays[key];
-        setDeletedUpdate(true);
-
-        localStorage.setItem("arrays", JSON.stringify(arrays));
-        localStorage.setItem("descriptions", JSON.stringify(descriptor));
-      });
+      socket?.on("res-delete-button", (key) => {});
 
       socket?.on("res-reset", () => {
         setDescriptorSelector("");
         shuffleHandler("reset");
         setWinner(false);
-        setVideoHidden(true);
       });
     }, //eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [socket]
   );
-  const shuffleHandler = (i) => {
-    const result = selector[Math.floor(Math.random() * selector.length)];
-    i === "reset" ? setShuffle([]) : setShuffle(result);
-  };
 
   const shufflePressed = async () => {
     console.log("shuffling");
-    if (Object.keys(arrays).length || selector) {
-      setVideoHidden(false);
+    if (raffleButtons) {
       for (let i = 0; i <= timer[0]; i++) {
         shuffleHandler(i);
         await delay(10);
@@ -71,14 +59,13 @@ const ShuffleHandler = ({
         await delay(500);
       }
       setWinner(true);
-      setTimeout(() => {
-        setVideoHidden(true);
-      }, 18000);
+      setTimeout(() => {}, 18000);
     }
   };
 
-  const shuffle = () => {
-    shufflePressed();
+  const shuffleHandler = (i) => {
+    const result = usersArray[Math.floor(Math.random() * usersArray.length)];
+    i === "reset" ? setShuffle([]) : setShuffle(result);
   };
 
   //Timer for shuffle
@@ -87,18 +74,17 @@ const ShuffleHandler = ({
   };
 
   const deleteHandler = () => {
-    const foundKey = Object.keys(arrays).filter((findKey) => {
-      return findKey === selectedKey;
+    const updatedButtons = raffleButtons.filter((button) => {
+      return button.buttonName !== selectedButton.buttonName;
     });
 
-    delete arrays[foundKey];
+    setDescriptorSelector("");
+    setUsersArray("");
+    setSelectedKey("");
 
-    setDeletedUpdate(true);
+    dispatch(deleteButton(updatedButtons));
 
-    localStorage.setItem("arrays", JSON.stringify(arrays));
-    localStorage.setItem("descriptions", JSON.stringify(descriptor));
-
-    socket?.emit("req-delete-button", foundKey, [...mods, ...room]);
+    // socket?.emit("req-delete-button", foundKey, [...mods, ...room]);
   };
 
   return (
@@ -107,7 +93,7 @@ const ShuffleHandler = ({
         <button
           onClick={() => {
             socket?.emit("shuffle", [...room, ...mods]);
-            shuffle();
+            shufflePressed();
           }}
         >
           Shuffle
@@ -120,7 +106,6 @@ const ShuffleHandler = ({
             setDescriptorSelector("");
             shuffleHandler("reset");
             setWinner(false);
-            setVideoHidden(true);
 
             socket?.emit("req-reset", [...mods, ...room]);
           }}

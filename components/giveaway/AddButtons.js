@@ -1,40 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/giveaway.module.css";
 import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { addButton } from "../../redux/actions/giveawaySlice";
 
-const AddButtons = ({
-  setItemNameInput,
-  setDescriptionInput,
-  setUserInput,
-  itemNameInput,
-  userInput,
-  descriptionInput,
-  arrays,
-  descriptor,
-  setArrays,
-  setDescriptor,
-}) => {
+const AddButtons = () => {
   const session = useSession();
+  const dispatch = useDispatch();
+  const buttons = useSelector((state) => state.giveaway.buttons);
+  const [buttonNameInput, setButtonNameInput] = useState("");
+  const [descriptionInput, setDescriptionInput] = useState("");
+  const [userInput, setUserInput] = useState("");
+
   const addNewItem = async () => {
-    const users = { [`${itemNameInput}`]: userInput.split(" ") };
-    const description = { [`${itemNameInput}`]: descriptionInput };
+    const state = buttons;
+    const newButton = {
+      buttonName: buttonNameInput,
+      title: descriptionInput,
+      users: userInput.split(" "),
+    };
 
-    // await setArrays({ ...arrays, ...users });
-    // await setDescriptor({ ...descriptor, ...description });
+    dispatch(addButton(newButton));
 
-    await socket?.emit(
-      "add-button",
-      { ...arrays, ...users },
-      { ...descriptor, ...description },
-      [...mods, ...modFor]
-    );
-
-    localStorage.setItem("arrays", JSON.stringify({ ...arrays, ...users }));
-    localStorage.setItem(
-      "descriptions",
-      JSON.stringify({ ...descriptor, ...description })
-    );
+    await socket?.emit("req-add-button", newButton, [...mods, ...modFor]);
   };
 
   const darkMode = useSelector((state) => state.darkMode.value);
@@ -43,17 +32,10 @@ const AddButtons = ({
   const modFor = session.data.modFor;
 
   useEffect(() => {
-    socket?.on("sent-buttons", async (users, descriptions) => {
-      await setArrays({ ...arrays, ...users });
-      await setDescriptor({ ...descriptor, ...descriptions });
-
-      localStorage.setItem("arrays", JSON.stringify({ ...arrays, ...users }));
-      localStorage.setItem(
-        "descriptions",
-        JSON.stringify({ ...descriptor, ...descriptions })
-      );
+    socket?.on("res-add-button", (button) => {
+      dispatch(addButton(button));
     });
-  }, [socket, descriptor, arrays, setArrays, setDescriptor]);
+  }, [socket]);
 
   return (
     <>
@@ -64,7 +46,7 @@ const AddButtons = ({
           name="name"
           placeholder="Button Name"
           onChange={(e) => {
-            setItemNameInput(e.target.value);
+            setButtonNameInput(e.target.value);
           }}
           maxLength="10"
           required
@@ -97,7 +79,7 @@ const AddButtons = ({
       <div className={styles.submitButton}>
         <button
           onClick={() => {
-            Object.keys(arrays).length < 9 ? addNewItem() : null;
+            addNewItem();
           }}
         >
           Submit
