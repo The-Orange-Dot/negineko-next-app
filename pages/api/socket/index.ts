@@ -25,7 +25,7 @@ const SocketHandler = async (
       cors: {
         origin: server,
       },
-      transports: ["polling"],
+      transports: ["polling", "websocket"],
       allowEIO3: true,
     });
 
