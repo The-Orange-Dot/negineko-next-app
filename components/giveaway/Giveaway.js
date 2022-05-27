@@ -49,51 +49,56 @@ export default function Giveaway() {
   const mods = session.data.mods;
   const modFor = session.data.modFor;
 
-  useEffect(() => {
-    const selectorHandler = (e) => {
-      setSelectedKey(e);
-      for (let key in arrays) {
-        if (e === key) {
-          setSelector(arrays[key]);
-          setDescriptorSelector(descriptor[key]);
+  useEffect(
+    () => {
+      const selectorHandler = (e) => {
+        setSelectedKey(e);
+        for (let key in arrays) {
+          if (e === key) {
+            setSelector(arrays[key]);
+            setDescriptorSelector(descriptor[key]);
 
-          console.log(`Selector: ${selector}`);
-          console.log(`Desc selector: ${descriptorSelector}`);
-          console.log(`selectorHandler Key: ${key}`);
+            console.log(`Selector: ${selector}`);
+            console.log(`Desc selector: ${descriptorSelector}`);
+            console.log(`selectorHandler Key: ${key}`);
+          }
         }
-      }
-    };
+      };
 
-    setKeyButtons(
-      Object.keys(arrays).map((key) => {
-        return (
-          <button
-            className={
-              selectedKey === key ? styles.selectedKeyButton : styles.keyButton
-            }
-            key={key}
-            onClick={() => {
-              selectorHandler(key);
+      setKeyButtons(
+        Object.keys(arrays).map((key) => {
+          return (
+            <button
+              className={
+                selectedKey === key
+                  ? styles.selectedKeyButton
+                  : styles.keyButton
+              }
+              key={key}
+              onClick={() => {
+                selectorHandler(key);
 
-              socket?.emit("item-selected", key, [...mods, ...modFor]);
-            }}
-          >
-            {key}
-          </button>
-        );
-      })
-    );
+                socket?.emit("item-selected", key, [...mods, ...modFor]);
+              }}
+            >
+              {key}
+            </button>
+          );
+        })
+      );
 
-    // console.log(selectedKey);
+      // console.log(selectedKey);
 
-    socket?.on("sent-keys", (key) => {
-      selectorHandler(key);
-    });
+      socket?.on("sent-keys", (key) => {
+        selectorHandler(key);
+      });
 
-    setDeletedUpdate(false);
+      setDeletedUpdate(false);
 
-    console.log("Raffle Page Loaded");
-  }, [arrays, selectedKey, descriptor, modFor, mods, socket, deletedUpdate]);
+      console.log("Raffle Page Loaded");
+    }, //eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   if (session.status === "loading") {
     return (

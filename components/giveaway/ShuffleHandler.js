@@ -21,37 +21,30 @@ const ShuffleHandler = ({
   const room = session?.data?.modFor;
   const mods = session?.data?.mods;
 
-  useEffect(() => {
-    socket?.on("res-shuffle", () => {
-      shufflePressed();
-      console.log(selector);
-    });
+  useEffect(
+    () => {
+      socket?.on("res-shuffle", () => {
+        shufflePressed();
+        console.log(selector);
+      });
 
-    socket?.on("res-delete-button", (key) => {
-      delete arrays[key];
-      setDeletedUpdate(true);
+      socket?.on("res-delete-button", (key) => {
+        delete arrays[key];
+        setDeletedUpdate(true);
 
-      localStorage.setItem("arrays", JSON.stringify(arrays));
-      localStorage.setItem("descriptions", JSON.stringify(descriptor));
-    });
+        localStorage.setItem("arrays", JSON.stringify(arrays));
+        localStorage.setItem("descriptions", JSON.stringify(descriptor));
+      });
 
-    socket?.on("res-reset", () => {
-      setDescriptorSelector("");
-      shuffleHandler("reset");
-      setWinner(false);
-      setVideoHidden(true);
-    });
-  }, [
-    socket,
-    descriptor,
-    selector,
-    setWinner,
-    setVideoHidden,
-    arrays,
-    setDeletedUpdate,
-    setDescriptorSelector,
-  ]); //eslint-disable-next-line react-hooks/exhaustive-deps
-
+      socket?.on("res-reset", () => {
+        setDescriptorSelector("");
+        shuffleHandler("reset");
+        setWinner(false);
+        setVideoHidden(true);
+      });
+    }, //eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
   const shuffleHandler = (i) => {
     const result = selector[Math.floor(Math.random() * selector.length)];
     i === "reset" ? setShuffle([]) : setShuffle(result);
