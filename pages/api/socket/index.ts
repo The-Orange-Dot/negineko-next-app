@@ -21,7 +21,6 @@ const SocketHandler = async (
         methods: ["GET", "POST"],
         credentials: true,
       },
-      allowEIO3: true,
     });
 
     io.on("connection", (socket) => {
