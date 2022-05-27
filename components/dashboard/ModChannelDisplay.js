@@ -27,6 +27,7 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
       path: "/api/socket",
       autoConnect: false,
       reconnectionAttempts: 5,
+      rejectUnauthorized: false,
     });
 
     setSocket(socket);
