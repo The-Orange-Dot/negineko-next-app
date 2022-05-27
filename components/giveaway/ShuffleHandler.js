@@ -50,7 +50,7 @@ const ShuffleHandler = ({
     arrays,
     setDeletedUpdate,
     setDescriptorSelector,
-  ]);
+  ]); //eslint-disable-next-line react-hooks/exhaustive-deps
 
   const shuffleHandler = (i) => {
     const result = selector[Math.floor(Math.random() * selector.length)];

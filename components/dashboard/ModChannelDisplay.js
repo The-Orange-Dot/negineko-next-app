@@ -32,12 +32,12 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
     setSocket(socket);
 
     // log socket connection
-    // socket.on("connect", () => {
-    //   console.log("SOCKET CONNECTED!", socket.id);
-    //   setConnection(true);
-    //   dispatch(addSocket({ socket }));
-    //   socket?.emit("room", session.data);
-    // });
+    socket.on("connect", () => {
+      console.log("SOCKET CONNECTED!", socket.id);
+      setConnection(true);
+      dispatch(addSocket({ socket }));
+      socket?.emit("room", session.data);
+    });
 
     socket.on("created", (msg) => {
       console.log(msg);
@@ -73,22 +73,20 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
 
     // socket disconnet onUnmount if exists
     if (socket) return () => socket.disconnect();
-
-    setSocket(socket);
   }, []);
 
   const connectToServer = async (option) => {
     if (option === "connect") {
       await socket.connect();
-      // socket.emit(
-      //   "join-streamer-channel",
-      //   [username, ...modarray, ...modFor],
-      //   username
-      // );
+      socket.emit(
+        "join-streamer-channel",
+        [username, ...modarray, ...modFor],
+        username
+      );
 
-      // if (!mods.includes(username)) {
-      //   setMods([...mods, username]);
-      // }
+      if (!mods.includes(username)) {
+        setMods([...mods, username]);
+      }
     } else {
       socket.disconnect();
       dispatch(eraseSocket());

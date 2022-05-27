@@ -19,7 +19,7 @@ const Dashboard = () => {
       dispatch(disconnected());
       console.log(`Connection: ${connection}`);
     }
-  }, [socket, connection, dispatch]);
+  }, [socket, connection]);
 
   return (
     <div className={styles.dashboardContainer}>
