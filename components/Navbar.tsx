@@ -7,11 +7,12 @@ import dynamic from "next/dynamic";
 import TextPlugin from "gsap/dist/TextPlugin";
 import { mouseIn, mouseOut } from "./NavBarAnimation";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/actions/userLoginSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const hide = useSelector((state: any) => state.hideMenu.value);
   const { data: session } = useSession();
   /**
    * This fixed "Expected server HTML to contain a matching <div> in <div>"
@@ -54,7 +55,10 @@ const Navbar = () => {
                 <h3>NegiNeko_Tokyo</h3>
               </Link>
             </div>
-            <div className={styles.pageSelector}>
+            <div
+              className={styles.pageSelector}
+              style={hide ? { opacity: 0 } : { opacity: 1 }}
+            >
               <Link href="/" passHref={true}>
                 <h4
                   className={styles.link}
@@ -154,7 +158,10 @@ const Navbar = () => {
                 </h4>
               </Link>
             </div>
-            <div className={styles.signInButton}>
+            <div
+              className={styles.signInButton}
+              style={hide ? { opacity: 0 } : { opacity: 1 }}
+            >
               {/* <Link href="/account/login" passHref={true}>
                 <button>Sign In</button>
               </Link> */}

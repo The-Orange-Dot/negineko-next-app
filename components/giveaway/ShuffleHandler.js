@@ -21,8 +21,9 @@ const ShuffleHandler = () => {
 
   //Shuffles and sends shuffle command to websocket
   const shuffle = () => {
-    const result = userArray[Math.floor(Math.random() * userArray.length)];
     if (userArray) {
+      const result = userArray[Math.floor(Math.random() * userArray.length)];
+
       ShufflePress(raffleButtons, userArray, timer, dispatch, result);
       fetch("api/raffleSocket", {
         method: "POST",

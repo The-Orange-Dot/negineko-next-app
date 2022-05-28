@@ -11,6 +11,8 @@ import { selectButton } from "../../redux/actions/giveawaySlice";
 
 export default function Giveaway() {
   const dispatch = useDispatch();
+  const screenColor = useSelector((state) => state.giveaway.screenColor);
+  const hide = useSelector((state) => state.hideMenu.value);
   const raffleButtons = useSelector((state) => state.giveaway.buttons);
   const selectedButton = useSelector((state) => state.giveaway.selected);
   const winner = useSelector((state) => state.giveaway.winner);
@@ -25,18 +27,10 @@ export default function Giveaway() {
     color: textColor,
   };
   // SCREEN-AREA-OPTIONS
-  const [screenColor, setScreenColor] = useState("none");
   const screenStyles = {
-    width: "150%",
-    height: "60vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: screenColor === "none" ? "rgba(0,0,0,0)" : screenColor,
   };
-  const mods = session.data.mods;
-  const modFor = session.data.modFor;
+  const mods = [...session.data.mods, ...session.data.modFor];
 
   //Tracks which key you've pressed
   const selectorHandler = (e) => {
@@ -45,7 +39,7 @@ export default function Giveaway() {
       method: "POST",
       body: JSON.stringify({
         emit: "selector-req",
-        mods: [...mods, ...modFor],
+        mods: mods,
         button: e,
       }),
     });
@@ -76,7 +70,7 @@ export default function Giveaway() {
     fetch("/api/raffleSocket", {
       method: "POST",
       body: JSON.stringify({
-        mods: [...mods, ...modFor],
+        mods: mods,
         emit: "sync-buttons-req",
         requester: requester,
       }),
@@ -93,9 +87,8 @@ export default function Giveaway() {
     return (
       <div className={styles.container}>
         <main className={styles.main}>
-          <div
-            style={{ display: "flex", alignItems: "center", ...screenStyles }}
-          >
+          <div className={styles.colorKey} style={{ ...screenStyles }} />
+          <div className={styles.giveawayStyles}>
             <span className={styles.screenDisplay}>
               <h1 style={textStyles}>{selectedButton.title}</h1>
               <div>
@@ -106,12 +99,18 @@ export default function Giveaway() {
           </div>
           <div className={styles.controlsContainer}>
             {/* ADD USERNAMES CONTAINER */}
-            <div className={styles.formContainer}>
+            <div
+              className={styles.formContainer}
+              style={hide ? { opacity: 0 } : { opacity: 1 }}
+            >
               <AddButtons />
             </div>
 
             {/* CATEGORY BUTTONS */}
-            <div className={styles.buttonsContainer}>
+            <div
+              className={styles.buttonsContainer}
+              style={hide ? { opacity: 0 } : { opacity: 1 }}
+            >
               {keyButtons?.length > 0 ? (
                 <div className={styles.keyButtons}>{keyButtons}</div>
               ) : (
@@ -121,7 +120,10 @@ export default function Giveaway() {
                 </div>
               )}
               {connection ? (
-                <div className={styles.connectedButtons}>
+                <div
+                  className={styles.connectedButtons}
+                  style={hide ? { opacity: 0 } : { opacity: 1 }}
+                >
                   <button
                     onClick={() => {
                       syncButtonsHandler();
@@ -134,24 +136,33 @@ export default function Giveaway() {
             </div>
 
             {/* SHUFFLE AND RESET BUTTONS */}
-            <div className={styles.controls}>
+            <div
+              className={styles.controls}
+              style={hide ? { opacity: 0 } : { opacity: 1 }}
+            >
               <div style={{ margin: "10%" }}>
                 <ShuffleHandler timer={timer} />
               </div>
             </div>
 
             {/* TIMER BUTTONS */}
-            <div className={styles.timerContainer}>
+            <div
+              className={styles.timerContainer}
+              style={hide ? { opacity: 0 } : { opacity: 1 }}
+            >
               <TimerButtons setTimer={setTimer} />
             </div>
 
             {/* OPTIONS SELECTORS */}
-            <div className={styles.optionsContainer}>
+            <div
+              className={styles.optionsContainer}
+              style={hide ? { opacity: 0 } : { opacity: 1 }}
+            >
               <Options
                 setTextColor={setTextColor}
                 textColor={textColor}
                 screenColor={screenColor}
-                setScreenColor={setScreenColor}
+                mods={mods}
               />
             </div>
           </div>

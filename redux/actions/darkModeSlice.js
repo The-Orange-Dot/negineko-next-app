@@ -4,6 +4,7 @@ export const darkModeSlice = createSlice({
   name: "darkMode",
   initialState: {
     value: false,
+    hideMenu: false,
   },
   reducers: {
     darkModeOn: (state) => {

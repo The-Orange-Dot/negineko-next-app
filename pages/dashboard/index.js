@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "../../styles/dashboard.module.css";
 import Toolbar from "../../components/dashboard/Toolbar";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,13 +9,25 @@ import Giveaway from "../../components/giveaway/Giveaway";
 import Settings from "../../components/dashboard/Settings";
 import Dashboard from "../../components/dashboard/Dashboard";
 import ModControls from "../../components/dashboard/ModControls";
+import { hideMenu, showMenu } from "../../redux/actions/hideMenuSlice";
+import { useEffect } from "react";
 
 const Home = () => {
   const darkMode = useSelector((state) => state?.darkMode?.value);
   const juiceBoxMenu = useSelector((state) => state?.juicebox?.menu);
+  const hide = useSelector((state) => state.hideMenu.value);
   const session = useSession();
   const router = useRouter();
-  const [input, setInput] = useState("");
+  const dispatch = useDispatch();
+  const [tween, setTween] = useState();
+
+  const hideMenuHandler = () => {
+    if (hide) {
+      dispatch(showMenu());
+    } else {
+      dispatch(hideMenu());
+    }
+  };
 
   //If toolbar menu is selected
   let screen;
@@ -38,10 +50,26 @@ const Home = () => {
     );
   } else if (session.status === "authenticated") {
     return (
-      <Toolbar>
-        <div className={darkMode ? styles.darkBackground : styles.background} />
-        {screen}
-      </Toolbar>
+      <>
+        <Toolbar tween={tween} setTween={setTween}>
+          <div
+            className={
+              darkMode ? styles.darkHideMenuButton : styles.hideMenuButton
+            }
+            onClick={() => {
+              hideMenuHandler();
+              tween.resume(0);
+            }}
+            id="hide-menu"
+          >
+            Hide menu
+          </div>
+          <div
+            className={darkMode ? styles.darkBackground : styles.background}
+          />
+          {screen}
+        </Toolbar>
+      </>
     );
   } else if (session.status === "unauthenticated") {
     console.log("Unauthorized");

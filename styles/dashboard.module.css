@@ -201,3 +201,39 @@
   opacity: 50%;
   background-color: rgba(128, 128, 128, 70%);
 }
+
+/* ================MENU BUTTON================= */
+
+.hideMenuButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100px;
+  position: absolute;
+  background-color: #b2deef;
+  bottom: 2%;
+  left: -175px;
+  z-index: 1;
+  transition: 0.5s;
+  border-radius: 1rem;
+}
+
+.darkHideMenuButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100px;
+  position: absolute;
+  background-color: rgb(27, 49, 49);
+  bottom: 2%;
+  left: -175px;
+  z-index: 1;
+  transition: 0.5s;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+.hideMenuNutton {
+}

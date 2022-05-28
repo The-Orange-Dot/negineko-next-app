@@ -4,18 +4,21 @@ import styles from "../styles/switch.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { darkModeOff, darkModeOn } from "../redux/actions/darkModeSlice";
 
-const Switch = ({ isOn, handleToggle, onColor }) => {
+const Switch = ({ isOn, onColor }) => {
   const dispatch = useDispatch();
   const darkMode = useSelector((state) => state.darkMode.value);
   const [toggle, setToggle] = useState(darkMode);
 
-  useEffect(() => {
-    if (toggle === true) {
-      dispatch(darkModeOn());
-    } else if (toggle === false) {
-      dispatch(darkModeOff());
-    }
-  }, [toggle]);
+  useEffect(
+    () => {
+      if (toggle === true) {
+        dispatch(darkModeOn());
+      } else if (toggle === false) {
+        dispatch(darkModeOff());
+      }
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [toggle]
+  );
 
   return (
     <>

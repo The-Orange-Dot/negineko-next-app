@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
-
 import styles from "../../styles/dashboard.module.css";
 import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
-import { connected, disconnected } from "../../redux/actions/socketSlice";
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
   const socket = useSelector((state) => state.socket.value.socket);
   const connection = useSelector((state) => state.socket.connected);
   const session = useSession();

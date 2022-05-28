@@ -9,6 +9,8 @@ import darkModeReducer from "./actions/darkModeSlice";
 import juiceBoxReducer from "./actions/juiceboxMenuSlice";
 import socketReducer from "./actions/socketSlice";
 import storage from "redux-persist/lib/storage";
+import hideMenuReducer from "./actions/hideMenuSlice";
+
 import {
   persistReducer,
   FLUSH,
@@ -24,7 +26,7 @@ const persistConfig = {
   version: 1,
   storage,
   whitelist: ["giveaway", "user", "darkMode"],
-  blacklist: ["socket"],
+  blacklist: ["socket", "hideMenu"],
 };
 
 const rootReducer = combineReducers({
@@ -36,6 +38,7 @@ const rootReducer = combineReducers({
   darkMode: darkModeReducer,
   juicebox: juiceBoxReducer,
   socket: socketReducer,
+  hideMenu: hideMenuReducer,
 });
 
 // const rootReducer = {

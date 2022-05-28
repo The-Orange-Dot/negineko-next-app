@@ -13,6 +13,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  transition: 0.5s;
 }
 
 .pageSelector {
@@ -20,6 +21,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: 0.5s;
 }
 
 .link {

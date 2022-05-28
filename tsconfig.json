@@ -22,8 +22,10 @@
     "components/Navbar.js",
     "redux/reducers/giveawayItems.js",
     "redux/actions/addTokenSlice.js",
-    "redux/store.js",
-    "redux/store.js"
-, "pages/api/store/index.js"  ],
+    "redux/store.ts",
+    "redux/store.ts",
+    "pages/api/store/index.js",
+    "redux/actions/darkModeSlice.js"
+  ],
   "exclude": ["node_modules"]
 }

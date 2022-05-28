@@ -2,7 +2,7 @@ import Contact from "../components/Contact";
 import Navbar from "../components/Navbar";
 import "../styles/globals.css";
 import { persistStore } from "redux-persist";
-import store from "../redux/store";
+import store from "../redux/store.ts";
 import { Provider } from "react-redux";
 import { SessionProvider } from "next-auth/react";
 import { PersistGate } from "redux-persist/integration/react";

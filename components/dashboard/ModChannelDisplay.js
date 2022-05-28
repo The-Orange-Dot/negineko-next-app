@@ -9,6 +9,7 @@ import { server } from "../../config";
 import {
   addButton,
   deleteButton,
+  setScreenColor,
   syncButtons,
 } from "../../redux/actions/giveawaySlice";
 import { connected, disconnected } from "../../redux/actions/socketSlice";
@@ -131,6 +132,10 @@ const ModChannelDisplay = ({ user }) => {
         dispatch(selectButton({}));
         dispatch(winnerSelected(false));
         dispatch(winner(""));
+      });
+
+      socket?.on("res-screen-color", (color) => {
+        dispatch(setScreenColor(color));
       });
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [socket]
