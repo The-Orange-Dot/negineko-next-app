@@ -1,9 +1,72 @@
 .modControlsPageContainer {
   width: 100%;
   max-width: 1500px;
+  height: 90vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
+}
+
+.videoPlayerContainer {
+  width: 100%;
+  height: 70%;
+}
+
+/* =============CONTROL PANEL=============== */
+
+.controlsContainer {
+  width: 100%;
+  height: 30%;
+}
+
+.toolsSelectorContainer {
+  width: 100%;
+  height: 18%;
+  padding-top: 5px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.selectorTab {
+  height: 50px;
+  width: 100px;
+  background-color: black;
+  z-index: -1;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  cursor: pointer;
+}
+
+.selectedTab {
+  height: 50px;
+  width: 100px;
+  background-color: black;
+  z-index: -1;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  opacity: 60%;
+}
+
+.selectorTab > p {
+  color: white;
+}
+
+.selectedTab > p {
+  color: white;
+}
+
+.controls {
+  border: 1px solid black;
+  width: 100%;
+  height: 82%;
+  background-color: white;
+}
+
+/* =============RAFFLE CONTROL PANEL============== */
+
+.rafflePanelContainer {
+  width: 100%;
+  height: 100%;
 }

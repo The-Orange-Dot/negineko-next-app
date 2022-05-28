@@ -15,29 +15,32 @@ const Toolbar = ({ children, tween, setTween }) => {
   const user = useSelector((state) => state?.user?.value);
   const hide = useSelector((state) => state.hideMenu.value);
 
-  useEffect(() => {
-    const tl = gsap
-      .timeline()
+  useEffect(
+    () => {
+      const tl = gsap
+        .timeline()
 
-      .fromTo(
-        "#toolbar",
-        { x: 0 },
-        {
-          x: 250,
-        },
-        0
-      )
-      .fromTo(
-        "#hide-menu",
-        { x: 0 },
-        {
-          x: 250,
-        },
-        0
-      );
+        .fromTo(
+          "#toolbar",
+          { x: 0 },
+          {
+            x: 250,
+          },
+          0
+        )
+        .fromTo(
+          "#hide-menu",
+          { x: 0 },
+          {
+            x: 250,
+          },
+          0
+        );
 
-    setTween(tl);
-  }, []);
+      setTween(tl);
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   const streamerChannels = async (option) => {
     if (option === "open") {
@@ -148,15 +151,15 @@ const Toolbar = ({ children, tween, setTween }) => {
             <h4
               className={styles.link}
               onMouseEnter={() => {
-                mouseIn("mod-controls", "(Japanese text)");
+                mouseIn("mod-controls", "コントロールパネル");
               }}
               onMouseLeave={() => {
-                mouseOut("mod-controls", "Mod-Controls");
+                mouseOut("mod-controls", "Mod Control Room");
               }}
               ref={ref}
               id="mod-controls"
             >
-              Mod-Controls
+              Mod Control Room
             </h4>
           </span>
         </div>

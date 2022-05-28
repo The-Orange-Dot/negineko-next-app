@@ -46,6 +46,7 @@
   box-shadow: 3px 5px 8px 5px rgba(0, 0, 0, 0.1);
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
+  z-index: 3;
 }
 
 .toolBarContainer {
@@ -60,6 +61,7 @@
   box-shadow: 3px 5px 8px 5px rgba(0, 0, 0, 0.1);
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
+  z-index: 3;
 }
 
 .toolBarButton {
@@ -214,7 +216,7 @@
   background-color: #b2deef;
   bottom: 2%;
   left: -175px;
-  z-index: 1;
+  z-index: 4;
   transition: 0.5s;
   border-radius: 1rem;
 }
@@ -229,11 +231,8 @@
   background-color: rgb(27, 49, 49);
   bottom: 2%;
   left: -175px;
-  z-index: 1;
+  z-index: 4;
   transition: 0.5s;
   cursor: pointer;
   border-radius: 1rem;
-}
-
-.hideMenuNutton {
 }
