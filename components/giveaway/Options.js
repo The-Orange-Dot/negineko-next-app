@@ -30,10 +30,6 @@ const Options = ({ setTextColor, textColor, screenColor, setScreenColor }) => {
           }}
         />
       </span>
-      {/* <label htmlFor="mocchan">Mocchan</label>
-      <input type="checkbox" name="mocchan" id="mocchan" />
-      <label htmlFor="nacchan">Nacchan</label>
-      <input type="checkbox" name="nacchan" id="nacchan" /> */}
     </>
   );
 };

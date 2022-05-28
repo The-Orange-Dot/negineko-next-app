@@ -21,7 +21,6 @@ const Toolbar = ({ children }) => {
   const [menuSelector, setMenuSelector] = useState("dashboard");
   const [tween, setTween] = useState();
   const [animState, setAnimState] = useState(false);
-  const [value, setValue] = useState(darkMode);
   const darkMode = useSelector((state) => state?.darkMode?.value);
   const user = useSelector((state) => state?.user?.value);
 
@@ -42,14 +41,6 @@ const Toolbar = ({ children }) => {
     } else {
     }
   };
-
-  if (value === true) {
-    dispatch(darkModeOn());
-    localStorage.setItem("darkMode", true);
-  } else if (value === false) {
-    dispatch(darkModeOff());
-    localStorage.setItem("darkMode", false);
-  }
 
   const tweenAnim = () => {
     if (animState === false) {
@@ -168,11 +159,7 @@ const Toolbar = ({ children }) => {
         <ModChannelDisplay streamerChannels={streamerChannels} user={user} />
         <div className={styles.darkMode}>
           <h5>Dark Mode</h5>
-          <Switch
-            isOn={darkMode}
-            handleToggle={() => setValue(!value)}
-            onColor={"#06D6A0"}
-          />
+          <Switch isOn={darkMode} onColor={"#06D6A0"} />
         </div>
       </div>
 

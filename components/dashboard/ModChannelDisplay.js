@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../../styles/dashboard.module.css";
-import { addSocket, eraseSocket } from "../../redux/actions/socketSlice";
 import { useSession } from "next-auth/react";
 import SocketIOClient from "socket.io-client";
 import { server } from "../../config";
@@ -13,22 +12,27 @@ import {
   syncButtons,
 } from "../../redux/actions/giveawaySlice";
 import { connected, disconnected } from "../../redux/actions/socketSlice";
+import {
+  selectButton,
+  winnerSelected,
+  winner,
+  selectTimer,
+} from "../../redux/actions/giveawaySlice";
+import { ShufflePress } from "../giveaway/ShufflePress";
 
 const ModChannelDisplay = ({ user }) => {
-  const [streamers, setStreamers] = useState(user?.modFor[0]);
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
   const session = useSession();
   const [mods, setMods] = useState([]);
-  const [roomOpen, setRoomOpen] = useState(false);
   const [streamerOnline, setStreamerOnline] = useState(false);
-  const username = user?.name;
-  const modarray = user?.mods;
-  const modFor = user?.modFor;
   const displayName = user?.streamer ? user?.name : user?.modFor[0];
   const [connection, setConnection] = useState(false);
   // const connection = useSelector((state) => state.socket.connected);
   const buttons = useSelector((state) => state.giveaway.buttons);
+  const selectedButton = useSelector((state) => state.giveaway.selected);
+  const raffleButtons = useSelector((state) => state.giveaway.buttons);
+  const timer = useSelector((state) => state.giveaway.timer);
 
   useEffect(() => {
     const socket = SocketIOClient.connect(server, {
@@ -72,6 +76,7 @@ const ModChannelDisplay = ({ user }) => {
 
       socket?.on("res-delete-button", (updatedButtons) => {
         dispatch(deleteButton(updatedButtons));
+        dispatch(selectButton({}));
       });
 
       socket?.on("logged-in", (user, username, streamerOnline, usersOnline) => {
@@ -85,19 +90,47 @@ const ModChannelDisplay = ({ user }) => {
         setStreamerOnline(streamerOnline);
       });
 
+      socket?.on("res-selected-button", (selectedButton) => {
+        dispatch(selectButton(selectedButton));
+      });
+
       socket?.on("req-buttons", (requester) => {
         fetch("/api/raffleSocket", {
           method: "POST",
-          body: {
+          body: JSON.stringify({
             emit: "sync-buttons-res",
             requester: requester,
             buttons: buttons,
-          },
+          }),
         });
       });
 
-      socket?.on("res-buttons", (buttons) => {
+      socket?.on("res-timer-selected", (timer) => {
+        dispatch(selectTimer(timer));
+      });
+
+      socket?.once("res-buttons", (buttons) => {
         dispatch(syncButtons(buttons));
+      });
+
+      socket?.on("res-shuffle", (body) => {
+        const parsedBody = JSON.parse(body);
+        const winner = parsedBody.winnerName;
+        const timer = parsedBody.timer;
+        const sentSelectedButton = parsedBody.selectedButton;
+        ShufflePress(
+          raffleButtons,
+          sentSelectedButton,
+          timer,
+          dispatch,
+          winner
+        );
+      });
+
+      socket?.on("res-reset", () => {
+        dispatch(selectButton({}));
+        dispatch(winnerSelected(false));
+        dispatch(winner(""));
       });
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [socket]

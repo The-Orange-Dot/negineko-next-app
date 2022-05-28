@@ -23,7 +23,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["giveaway", "user"],
+  whitelist: ["giveaway", "user", "darkMode"],
   blacklist: ["socket"],
 };
 

@@ -6,10 +6,10 @@ export const darkModeSlice = createSlice({
     value: false,
   },
   reducers: {
-    darkModeOn: (state, action) => {
+    darkModeOn: (state) => {
       state.value = true;
     },
-    darkModeOff: (state, action) => {
+    darkModeOff: (state) => {
       state.value = false;
     },
   },

@@ -13,10 +13,8 @@ const Dashboard = () => {
   useEffect(
     () => {
       if (socket?.connected === true) {
-        dispatch(connected());
         console.log(`Connection: ${connection}`);
       } else {
-        dispatch(disconnected());
         console.log(`Connection: ${connection}`);
       }
     }, // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/giveaway.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
+import { selectTimer } from "../../redux/actions/giveawaySlice";
 
 const TimerButtons = ({ setTimer }) => {
-  const [timerSelected, setTimerSelected] = useState("30");
-  const socket = useSelector((state) => state.socket.value.socket);
+  const dispatch = useDispatch();
+  // const [timerSelected, setTimerSelected] = useState("30");
   const session = useSession();
-  const mods = session.data.mods;
-  const modFor = session.data.modFor;
+  const mods = [...session.data.mods, ...session.data.modFor];
+  const timerSelected = useSelector((state) => state.giveaway.timerSelected);
+  const timerArray = useSelector((state) => state.giveaway.timer);
 
-  useEffect(() => {
-    socket?.on("res-timer", (resTimer, selector) => {
-      setTimer(resTimer);
-      setTimerSelected(selector);
+  const timeSelectionHandler = (timerSelected, timer) => {
+    dispatch(selectTimer({ timerSelected: timerSelected, timer: timer }));
+
+    fetch("api/raffleSocket", {
+      method: "POST",
+      body: JSON.stringify({
+        emit: "req-timer-selection",
+        mods: mods,
+        body: { timer: timerArray, timerSelected: timerSelected },
+      }),
     });
-  }, [setTimer, setTimerSelected, socket]);
+  };
 
   return (
     <>
@@ -24,16 +32,11 @@ const TimerButtons = ({ setTimer }) => {
         <span>
           <button
             className={
-              timerSelected === "45" ? styles.selectedTimer : styles.button
+              timerSelected === 45 ? styles.selectedTimer : styles.button
             }
             name="45"
             onClick={() => {
-              setTimer([750, 250, 95, 25]);
-              setTimerSelected("45");
-              socket?.emit("req-timer", [750, 250, 95, 25], "45", [
-                ...mods,
-                ...modFor,
-              ]);
+              timeSelectionHandler(45, [750, 250, 95, 25]);
             }}
           >
             45 sec
@@ -42,16 +45,11 @@ const TimerButtons = ({ setTimer }) => {
         <span>
           <button
             className={
-              timerSelected === "30" ? styles.selectedTimer : styles.button
+              timerSelected === 30 ? styles.selectedTimer : styles.button
             }
             name="30"
             onClick={() => {
-              setTimer([400, 120, 60, 20]);
-              setTimerSelected("30");
-              socket?.emit("req-timer", [400, 120, 60, 20], "30", [
-                ...mods,
-                ...modFor,
-              ]);
+              timeSelectionHandler(30, [400, 120, 60, 20]);
             }}
           >
             30 sec
@@ -60,16 +58,11 @@ const TimerButtons = ({ setTimer }) => {
         <span>
           <button
             className={
-              timerSelected === "15" ? styles.selectedTimer : styles.button
+              timerSelected === 15 ? styles.selectedTimer : styles.button
             }
             name="15"
             onClick={() => {
-              setTimer([200, 60, 30, 10]);
-              setTimerSelected("15");
-              socket?.emit("req-timer", [200, 60, 30, 10], "15", [
-                ...mods,
-                ...modFor,
-              ]);
+              timeSelectionHandler(15, [200, 60, 30, 10]);
             }}
           >
             15 sec
@@ -78,16 +71,11 @@ const TimerButtons = ({ setTimer }) => {
         <span>
           <button
             className={
-              timerSelected === "10" ? styles.selectedTimer : styles.button
+              timerSelected === 10 ? styles.selectedTimer : styles.button
             }
             name="10"
             onClick={() => {
-              setTimer([150, 40, 20, 6]);
-              setTimerSelected("10");
-              socket?.emit("req-timer", [150, 40, 20, 6], "10", [
-                ...mods,
-                ...modFor,
-              ]);
+              timeSelectionHandler(10, [150, 40, 20, 6]);
             }}
           >
             10 sec
@@ -96,16 +84,11 @@ const TimerButtons = ({ setTimer }) => {
         <span>
           <button
             className={
-              timerSelected === "5" ? styles.selectedTimer : styles.button
+              timerSelected === 5 ? styles.selectedTimer : styles.button
             }
             name="5"
             onClick={() => {
-              setTimer([65, 15, 7, 5]);
-              setTimerSelected("5");
-              socket?.emit("req-timer", [65, 15, 7, 5], "5", [
-                ...mods,
-                ...modFor,
-              ]);
+              timeSelectionHandler(5, [65, 15, 7, 5]);
             }}
           >
             5 sec
@@ -114,16 +97,11 @@ const TimerButtons = ({ setTimer }) => {
         <span>
           <button
             className={
-              timerSelected === "off" ? styles.selectedTimer : styles.button
+              timerSelected === 0 ? styles.selectedTimer : styles.button
             }
             name="off"
             onClick={() => {
-              setTimer([0, 0, 0, 0]);
-              setTimerSelected("off");
-              socket?.emit("req-timer", [0, 0, 0, 0], "off", [
-                ...mods,
-                ...modFor,
-              ]);
+              timeSelectionHandler(0, [0, 0, 0, 0]);
             }}
           >
             Off

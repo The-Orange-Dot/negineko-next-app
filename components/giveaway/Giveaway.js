@@ -12,16 +12,13 @@ import { selectButton } from "../../redux/actions/giveawaySlice";
 export default function Giveaway() {
   const dispatch = useDispatch();
   const raffleButtons = useSelector((state) => state.giveaway.buttons);
-  const socket = useSelector((state) => state.socket.value.socket);
+  const selectedButton = useSelector((state) => state.giveaway.selected);
+  const winner = useSelector((state) => state.giveaway.winner);
+  const selectedWinner = useSelector((state) => state.giveaway.winnerSelected);
   const router = useRouter();
   const session = useSession();
   const connection = useSelector((state) => state.socket.connected);
-  const [usersArray, setUsersArray] = useState("");
-  const [descriptorSelector, setDescriptorSelector] = useState("");
-  const [winner, setWinner] = useState(false);
-  const [shuffle, setShuffle] = useState("");
   const [timer, setTimer] = useState([400, 120, 60, 20]);
-  const [selectedKey, setSelectedKey] = useState("");
   // TEXT-COLOR-OPTIONS
   const [textColor, setTextColor] = useState("black");
   const textStyles = {
@@ -41,26 +38,20 @@ export default function Giveaway() {
   const mods = session.data.mods;
   const modFor = session.data.modFor;
 
-  useEffect(
-    () => {
-      socket?.on("res-selected-button", (selected) => {
-        selectorHandler(selected);
-      });
-
-      console.log("Raffle Page Loaded");
-    }, //eslint-disable-next-line react-hooks/exhaustive-deps
-    [socket]
-  );
-
+  //Tracks which key you've pressed
   const selectorHandler = (e) => {
     dispatch(selectButton(e));
-    setDescriptorSelector(e.title);
-    setUsersArray(e.users);
-    setSelectedKey(e.buttonName);
-
-    // socket.emit("req-select-button", e, [...mods, ...modFor]);
+    fetch("/api/raffleSocket", {
+      method: "POST",
+      body: JSON.stringify({
+        emit: "selector-req",
+        mods: [...mods, ...modFor],
+        button: e,
+      }),
+    });
   };
 
+  //List of all created Buttons
   const keyButtons = raffleButtons?.map((button) => {
     return (
       <button
@@ -69,7 +60,7 @@ export default function Giveaway() {
           selectorHandler(button);
         }}
         className={
-          selectedKey === button.buttonName
+          selectedButton.buttonName === button.buttonName
             ? styles.selectedKeyButton
             : styles.keyButton
         }
@@ -79,6 +70,7 @@ export default function Giveaway() {
     );
   });
 
+  //Fetches buttons from all other connected users
   const syncButtonsHandler = () => {
     const requester = session.data.name;
     fetch("/api/raffleSocket", {
@@ -105,14 +97,13 @@ export default function Giveaway() {
             style={{ display: "flex", alignItems: "center", ...screenStyles }}
           >
             <span className={styles.screenDisplay}>
-              <h1 style={textStyles}>{descriptorSelector}</h1>
+              <h1 style={textStyles}>{selectedButton.title}</h1>
               <div>
-                {winner ? <h1 style={textStyles}>WINNER!</h1> : null}
-                <h1 style={textStyles}>{shuffle}</h1>
+                {selectedWinner ? <h1 style={textStyles}>WINNER!</h1> : null}
+                <h1 style={textStyles}>{winner}</h1>
               </div>
             </span>
           </div>
-
           <div className={styles.controlsContainer}>
             {/* ADD USERNAMES CONTAINER */}
             <div className={styles.formContainer}>
@@ -120,7 +111,6 @@ export default function Giveaway() {
             </div>
 
             {/* CATEGORY BUTTONS */}
-
             <div className={styles.buttonsContainer}>
               {keyButtons?.length > 0 ? (
                 <div className={styles.keyButtons}>{keyButtons}</div>
@@ -146,15 +136,7 @@ export default function Giveaway() {
             {/* SHUFFLE AND RESET BUTTONS */}
             <div className={styles.controls}>
               <div style={{ margin: "10%" }}>
-                <ShuffleHandler
-                  usersArray={usersArray}
-                  setShuffle={setShuffle}
-                  setDescriptorSelector={setDescriptorSelector}
-                  setWinner={setWinner}
-                  timer={timer}
-                  setUsersArray={setUsersArray}
-                  setSelectedKey={setSelectedKey}
-                />
+                <ShuffleHandler timer={timer} />
               </div>
             </div>
 
