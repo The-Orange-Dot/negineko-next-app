@@ -10,7 +10,6 @@ import Settings from "../../components/dashboard/Settings";
 import Dashboard from "../../components/dashboard/Dashboard";
 import ModControls from "../../components/dashboard/ModControls";
 import { hideMenu, showMenu } from "../../redux/actions/hideMenuSlice";
-import { useEffect } from "react";
 
 const Home = () => {
   const darkMode = useSelector((state) => state?.darkMode?.value);
@@ -62,7 +61,7 @@ const Home = () => {
             }}
             id="hide-menu"
           >
-            Hide menu
+            {hide ? "Show menu" : "Hide menu"}
           </div>
           <div
             className={darkMode ? styles.darkBackground : styles.background}

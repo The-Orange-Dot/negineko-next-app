@@ -1,19 +1,47 @@
 import React from "react";
-import { setScreenColor } from "../../redux/actions/giveawaySlice";
-import { useDispatch } from "react-redux";
+import {
+  setScreenColor,
+  setTextColor,
+} from "../../redux/actions/giveawaySlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 
-const Options = ({ mods, setTextColor, textColor, screenColor }) => {
+const Options = () => {
+  const session = useSession();
   const dispatch = useDispatch();
-  const screenColorHandler = () => {
-    let color;
-    if (screenColor !== "none") {
-      dispatch(setScreenColor("none"));
-      color = "none";
+  const mods = [...session.data.mods, ...session.data.modFor];
+
+  //Sets text color from black to white
+  const textColorHandler = (e) => {
+    let textColor;
+    if (e.target.checked) {
+      textColor = "white";
+      dispatch(setTextColor("white"));
     } else {
-      dispatch(setScreenColor("#00b140"));
-      color = "#00b140";
+      textColor = "black";
+      dispatch(setTextColor("black"));
     }
 
+    fetch("/api/raffleSocket", {
+      method: "POST",
+      body: JSON.stringify({
+        emit: "req-text-color",
+        mods: mods,
+        textColor: textColor,
+      }),
+    });
+  };
+
+  //Adds key color of #00b140
+  const screenColorHandler = (e) => {
+    let color;
+    if (e.target.checked) {
+      dispatch(setScreenColor("#00b140"));
+      color = "#00b140";
+    } else {
+      dispatch(setScreenColor("none"));
+      color = "none";
+    }
     fetch("/api/raffleSocket", {
       method: "POST",
       body: JSON.stringify({
@@ -33,10 +61,8 @@ const Options = ({ mods, setTextColor, textColor, screenColor }) => {
           type="checkbox"
           name="white-text"
           id="white-text"
-          onChange={() => {
-            textColor === "white"
-              ? setTextColor("black")
-              : setTextColor("white");
+          onChange={(e) => {
+            textColorHandler(e);
           }}
         />
       </span>
@@ -46,8 +72,8 @@ const Options = ({ mods, setTextColor, textColor, screenColor }) => {
           type="checkbox"
           name="key-color"
           id="key-color"
-          onChange={() => {
-            screenColorHandler();
+          onChange={(e) => {
+            screenColorHandler(e);
           }}
         />
       </span>

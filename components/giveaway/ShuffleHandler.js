@@ -57,6 +57,7 @@ const ShuffleHandler = () => {
     });
   };
 
+  //Unmounts the button selected and hides on screen
   const resetHandler = () => {
     dispatch(selectButton({}));
     dispatch(winnerSelected(false));

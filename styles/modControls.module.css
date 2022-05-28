@@ -23,7 +23,7 @@
 
 .toolsSelectorContainer {
   width: 100%;
-  height: 18%;
+  height: 15%;
   padding-top: 5px;
   display: flex;
   justify-content: space-around;
@@ -40,27 +40,32 @@
 }
 
 .selectedTab {
-  height: 50px;
+  height: 35px;
   width: 100px;
   background-color: black;
   z-index: -1;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   opacity: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .selectorTab > p {
   color: white;
+  margin: 0;
 }
 
 .selectedTab > p {
   color: white;
+  margin: 0;
 }
 
 .controls {
   border: 1px solid black;
   width: 100%;
-  height: 82%;
+  height: 85%;
   background-color: white;
 }
 
@@ -69,4 +74,55 @@
 .rafflePanelContainer {
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.raffleButtonsContainer {
+  height: 100%;
+  width: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.raffleShuffleContainer {
+  height: 100%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.raffleShuffleContainer button {
+  height: 25%;
+}
+
+.raffleTimersContainer {
+  height: 100%;
+  width: 20%;
+
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.raffleOptionsContainer {
+  height: 100%;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.keyButton {
+  height: 40px;
+  width: 30%;
+}
+
+.selectedKeyButton {
+  height: 40px;
+  width: 30%;
+  opacity: 70%;
 }

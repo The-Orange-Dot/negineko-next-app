@@ -57,6 +57,16 @@ const raffleSocket = (req: NextApiRequest, res: NextApiResponseServerIO) => {
       mods.map((mod: string) => {
         socket?.to(mod).emit("res-screen-color", color);
       });
+    } else if (emit === "req-text-color") {
+      const textColor = body.textColor;
+      mods.map((mod: string) => {
+        socket?.to(mod).emit("res-text-color", textColor);
+      });
+    } else if (emit === "req-hide-menu") {
+      const hideOverlay = body.hideOverlay;
+      mods.map((mod: string) => {
+        socket?.to(mod).emit("res-hide-menu", hideOverlay);
+      });
     }
 
     res.end();

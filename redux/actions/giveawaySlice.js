@@ -10,6 +10,7 @@ export const giveawaySlice = createSlice({
     timer: [[400, 120, 60, 20]],
     timerSelected: 30,
     screenColor: "none",
+    textColor: "rgba(0,0,0,1)",
   },
   reducers: {
     syncButtons: (state, action) => {
@@ -42,6 +43,9 @@ export const giveawaySlice = createSlice({
     setScreenColor: (state, action) => {
       state.screenColor = action.payload;
     },
+    setTextColor: (state, action) => {
+      state.textColor = action.payload;
+    },
   },
 });
 
@@ -55,5 +59,6 @@ export const {
   selectButton,
   syncButtons,
   selectTimer,
+  setTextColor,
 } = giveawaySlice.actions;
 export default giveawaySlice.reducer;

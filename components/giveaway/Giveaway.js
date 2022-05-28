@@ -11,6 +11,7 @@ import { selectButton } from "../../redux/actions/giveawaySlice";
 
 export default function Giveaway() {
   const dispatch = useDispatch();
+  const textColor = useSelector((state) => state.giveaway.textColor);
   const screenColor = useSelector((state) => state.giveaway.screenColor);
   const hide = useSelector((state) => state.hideMenu.value);
   const raffleButtons = useSelector((state) => state.giveaway.buttons);
@@ -22,9 +23,9 @@ export default function Giveaway() {
   const connection = useSelector((state) => state.socket.connected);
   const [timer, setTimer] = useState([400, 120, 60, 20]);
   // TEXT-COLOR-OPTIONS
-  const [textColor, setTextColor] = useState("black");
   const textStyles = {
     color: textColor,
+    transition: "0.3s",
   };
   // SCREEN-AREA-OPTIONS
   const screenStyles = {
@@ -158,12 +159,7 @@ export default function Giveaway() {
               className={styles.optionsContainer}
               style={hide ? { opacity: 0 } : { opacity: 1 }}
             >
-              <Options
-                setTextColor={setTextColor}
-                textColor={textColor}
-                screenColor={screenColor}
-                mods={mods}
-              />
+              <Options />
             </div>
           </div>
         </main>

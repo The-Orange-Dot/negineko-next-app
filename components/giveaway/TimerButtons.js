@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import { selectTimer } from "../../redux/actions/giveawaySlice";
 
-const TimerButtons = ({ setTimer }) => {
+const TimerButtons = () => {
   const dispatch = useDispatch();
   // const [timerSelected, setTimerSelected] = useState("30");
   const session = useSession();
@@ -28,7 +28,7 @@ const TimerButtons = ({ setTimer }) => {
   return (
     <>
       <p style={{ lineHeight: 0 }}>timers</p>
-      <div>
+      <div className={styles.timers}>
         <span>
           <button
             className={

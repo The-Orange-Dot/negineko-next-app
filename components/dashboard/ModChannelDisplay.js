@@ -10,6 +10,7 @@ import {
   addButton,
   deleteButton,
   setScreenColor,
+  setTextColor,
   syncButtons,
 } from "../../redux/actions/giveawaySlice";
 import { connected, disconnected } from "../../redux/actions/socketSlice";
@@ -20,6 +21,7 @@ import {
   selectTimer,
 } from "../../redux/actions/giveawaySlice";
 import { ShufflePress } from "../giveaway/ShufflePress";
+import { toggleMenu } from "../../redux/actions/hideMenuSlice";
 
 const ModChannelDisplay = ({ user }) => {
   const [socket, setSocket] = useState(null);
@@ -31,9 +33,7 @@ const ModChannelDisplay = ({ user }) => {
   const [connection, setConnection] = useState(false);
   // const connection = useSelector((state) => state.socket.connected);
   const buttons = useSelector((state) => state.giveaway.buttons);
-  const selectedButton = useSelector((state) => state.giveaway.selected);
   const raffleButtons = useSelector((state) => state.giveaway.buttons);
-  const timer = useSelector((state) => state.giveaway.timer);
 
   useEffect(() => {
     const socket = SocketIOClient.connect(server, {
@@ -95,6 +95,10 @@ const ModChannelDisplay = ({ user }) => {
         dispatch(selectButton(selectedButton));
       });
 
+      socket?.on("res-hide-menu", (hideOverlay) => {
+        dispatch(toggleMenu(hideOverlay));
+      });
+
       socket?.on("req-buttons", (requester) => {
         fetch("/api/raffleSocket", {
           method: "POST",
@@ -104,6 +108,10 @@ const ModChannelDisplay = ({ user }) => {
             buttons: buttons,
           }),
         });
+      });
+
+      socket?.on("res-text-color", (textColor) => {
+        dispatch(setTextColor(textColor));
       });
 
       socket?.on("res-timer-selected", (timer) => {

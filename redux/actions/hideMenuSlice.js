@@ -12,8 +12,11 @@ export const hideMenuSlice = createSlice({
     showMenu: (state) => {
       state.value = false;
     },
+    toggleMenu: (state, action) => {
+      state.value = action.payload;
+    },
   },
 });
 
-export const { showMenu, hideMenu } = hideMenuSlice.actions;
+export const { showMenu, hideMenu, toggleMenu } = hideMenuSlice.actions;
 export default hideMenuSlice.reducer;

@@ -158,6 +158,14 @@
   width: 100%;
 }
 
+.timers {
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
 .timerContainer {
   width: 20%;
   height: 100%;
@@ -172,15 +180,18 @@
   max-width: 50%;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .selectedTimer {
   opacity: 70%;
-  width: 45%;
+  min-width: 70px;
+  height: 50px;
 }
 
 .button {
-  width: 45%;
+  min-width: 70px;
+  height: 50px;
 }
 
 .giveawayStyles {
