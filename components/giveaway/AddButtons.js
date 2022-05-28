@@ -8,7 +8,6 @@ import { addButton } from "../../redux/actions/giveawaySlice";
 const AddButtons = () => {
   const session = useSession();
   const dispatch = useDispatch();
-  const buttons = useSelector((state) => state.giveaway.buttons);
   const [buttonNameInput, setButtonNameInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
   const [userInput, setUserInput] = useState("");

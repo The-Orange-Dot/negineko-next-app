@@ -24,6 +24,6 @@
     "redux/actions/addTokenSlice.js",
     "redux/store.js",
     "redux/store.js"
-  ],
+, "pages/api/store/index.js"  ],
   "exclude": ["node_modules"]
 }

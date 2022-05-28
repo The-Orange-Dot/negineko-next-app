@@ -15,6 +15,7 @@ export default function Giveaway() {
   const socket = useSelector((state) => state.socket.value.socket);
   const router = useRouter();
   const session = useSession();
+  const connection = useSelector((state) => state.socket.connected);
   const [usersArray, setUsersArray] = useState("");
   const [descriptorSelector, setDescriptorSelector] = useState("");
   const [winner, setWinner] = useState(false);
@@ -78,6 +79,18 @@ export default function Giveaway() {
     );
   });
 
+  const syncButtonsHandler = () => {
+    const requester = session.data.name;
+    fetch("/api/raffleSocket", {
+      method: "POST",
+      body: JSON.stringify({
+        mods: [...mods, ...modFor],
+        emit: "sync-buttons-req",
+        requester: requester,
+      }),
+    });
+  };
+
   if (session.status === "loading") {
     return (
       <div>
@@ -107,14 +120,28 @@ export default function Giveaway() {
             </div>
 
             {/* CATEGORY BUTTONS */}
-            {keyButtons?.length > 0 ? (
-              <div className={styles.keyButtons}>{keyButtons}</div>
-            ) : (
-              <div style={{ width: 300, textAlign: "center" }}>
-                <p>Add a giveaway item on the left.</p>
-                <p>(9 buttons max)</p>
-              </div>
-            )}
+
+            <div className={styles.buttonsContainer}>
+              {keyButtons?.length > 0 ? (
+                <div className={styles.keyButtons}>{keyButtons}</div>
+              ) : (
+                <div className={styles.emptyKeyButtons}>
+                  <p>Add a giveaway item on the left.</p>
+                  <p>(9 buttons max)</p>
+                </div>
+              )}
+              {connection ? (
+                <div className={styles.connectedButtons}>
+                  <button
+                    onClick={() => {
+                      syncButtonsHandler();
+                    }}
+                  >
+                    Sync buttons
+                  </button>
+                </div>
+              ) : null}
+            </div>
 
             {/* SHUFFLE AND RESET BUTTONS */}
             <div className={styles.controls}>

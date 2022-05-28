@@ -4,6 +4,9 @@ export const giveawaySlice = createSlice({
   name: "giveaway",
   initialState: { buttons: [], selected: {} },
   reducers: {
+    syncButtons: (state, action) => {
+      state.buttons = [...state.buttons, ...action.payload];
+    },
     addButton: (state, action) => {
       state.buttons.push(action.payload);
     },

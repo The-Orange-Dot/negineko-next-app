@@ -7,12 +7,16 @@ import { addSocket, eraseSocket } from "../../redux/actions/socketSlice";
 import { useSession } from "next-auth/react";
 import SocketIOClient from "socket.io-client";
 import { server } from "../../config";
-import { addButton, deleteButton } from "../../redux/actions/giveawaySlice";
+import {
+  addButton,
+  deleteButton,
+  syncButtons,
+} from "../../redux/actions/giveawaySlice";
+import { connected, disconnected } from "../../redux/actions/socketSlice";
 
-const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
+const ModChannelDisplay = ({ user }) => {
   const [streamers, setStreamers] = useState(user?.modFor[0]);
   const [socket, setSocket] = useState(null);
-  const [connection, setConnection] = useState(false);
   const dispatch = useDispatch();
   const session = useSession();
   const [mods, setMods] = useState([]);
@@ -22,6 +26,9 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
   const modarray = user?.mods;
   const modFor = user?.modFor;
   const displayName = user?.streamer ? user?.name : user?.modFor[0];
+  const [connection, setConnection] = useState(false);
+  // const connection = useSelector((state) => state.socket.connected);
+  const buttons = useSelector((state) => state.giveaway.buttons);
 
   useEffect(() => {
     const socket = SocketIOClient.connect(server, {
@@ -46,12 +53,13 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
         const username = session.data.name;
         console.log("SOCKET CONNECTED!", socket.id);
         setConnection(true);
-        // dispatch(addSocket(socket));
 
         socket?.emit("room", session.data, username);
         if (!mods.includes(username)) {
           setMods([...mods, username]);
         }
+        dispatch(connected());
+        console.log(connection);
       });
 
       socket?.on("connect_error", (err) => {
@@ -76,6 +84,21 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
         setMods(usersOnline);
         setStreamerOnline(streamerOnline);
       });
+
+      socket?.on("req-buttons", (requester) => {
+        fetch("/api/raffleSocket", {
+          method: "POST",
+          body: {
+            emit: "sync-buttons-res",
+            requester: requester,
+            buttons: buttons,
+          },
+        });
+      });
+
+      socket?.on("res-buttons", (buttons) => {
+        dispatch(syncButtons(buttons));
+      });
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [socket]
   );
@@ -87,8 +110,9 @@ const ModChannelDisplay = ({ joinChannel, streamerChannels, user }) => {
       streamerStatus = false;
     }
     await socket?.emit("user-sign-off", session.data, username, streamerStatus);
-    // dispatch(eraseSocket());
     setConnection(false);
+    dispatch(disconnected());
+
     socket.disconnect();
   };
 

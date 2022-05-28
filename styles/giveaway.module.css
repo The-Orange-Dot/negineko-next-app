@@ -87,12 +87,33 @@
   height: 50px;
 }
 
-.keyButtons {
+.buttonsContainer {
   width: 25%;
   height: 100%;
+}
+
+.keyButtons {
+  width: 100%;
+  min-height: 80%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.emptyKeyButtons {
+  width: 100%;
+  min-height: 80%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.connectedButtons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 20%;
 }
 
 .keyButton {
