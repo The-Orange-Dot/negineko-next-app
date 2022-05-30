@@ -4,18 +4,14 @@ import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Dashboard = () => {
-  const socket = useSelector((state) => state.socket.value.socket);
   const connection = useSelector((state) => state.socket.connected);
   const session = useSession();
+
   useEffect(
     () => {
-      if (socket?.connected === true) {
-        console.log(`Connection: ${connection}`);
-      } else {
-        console.log(`Connection: ${connection}`);
-      }
+      console.log(`Server connection: ${connection}`);
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [socket, connection]
+    [connection]
   );
 
   return (

@@ -140,7 +140,7 @@ const Navbar = () => {
               </Link>
 
               <Link
-                href={session ? `/dashboard` : `/api/auth/signin`}
+                href={session ? `/juicebox` : `/api/auth/signin`}
                 passHref={true}
               >
                 <h4

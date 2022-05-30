@@ -1,3 +1,30 @@
+// export const getStaticProps = async () => {
+//   //Gets OAuth token from Twitch
+//   const token = await fetch(
+//     `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_CLIENT_ID}&client_secret=${process.env.TWITCH_CLIENT_SECRET}&grant_type=client_credentials&scope=viewing_activity_read+moderation%3Aread`,
+//     {
+//       method: "POST",
+//     }
+//   );
+
+//   const tokenParsed = await token.json();
+//   //Fetches Negi and Orange's data from Twitch
+//   const res = await fetch(
+//     "https://api.twitch.tv/helix/users?login=negineko_tokyo&login=the_orange_dot",
+//     {
+//       headers: {
+//         Authorization: `Bearer ${tokenParsed.access_token}`,
+//         "Client-Id": ${process.env.TWITCH_CLIENT_ID},
+//       },
+//     }
+//   );
+
+//   const data = await res.json();
+//   return {
+//     props: { user: data },
+//   };
+// };
+
 import React from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -28,6 +55,8 @@ const Home = () => {
     }
   };
 
+  console.log(session);
+
   //If toolbar menu is selected
   let screen;
   if (juiceBoxMenu === "dashboard") {
@@ -39,6 +68,16 @@ const Home = () => {
   } else if (juiceBoxMenu === "mod-controls") {
     screen = <ModControls />;
   }
+
+  const testHandler = () => {
+    fetch("/api/twitchStreamer", {
+      method: "POST",
+      headers: { key: "orange_is_orange" },
+      body: JSON.stringify({ username: session.data.name }),
+    });
+  };
+
+  console.log(session?.data?.name);
 
   if (session.status === "loading") {
     return (
@@ -68,6 +107,13 @@ const Home = () => {
           />
           {screen}
         </Toolbar>
+        <div
+          onClick={() => {
+            testHandler();
+          }}
+        >
+          <button>Test</button>
+        </div>
       </>
     );
   } else if (session.status === "unauthenticated") {

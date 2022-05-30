@@ -1,7 +1,7 @@
 export const getStaticProps = async () => {
   //Gets OAuth token from Twitch
   const token = await fetch(
-    `https://id.twitch.tv/oauth2/token?client_id=05rkef9kwzbr5jdi4ahjbuj3uc83ov&client_secret=1bit1lnms0h8i8ad0spnougksclgjh&grant_type=client_credentials&scope=viewing_activity_read`,
+    `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_CLIENT_ID}&client_secret=${process.env.TWITCH_CLIENT_SECRET}&grant_type=client_credentials&scope=viewing_activity_read+moderation%3Aread`,
     {
       method: "POST",
     }
@@ -17,6 +17,7 @@ export const getStaticProps = async () => {
       },
     }
   );
+
   const data = await res.json();
   return {
     props: { user: data },
@@ -36,26 +37,19 @@ import Events from "../../components/about/accomplishments/events";
 import gsap from "gsap";
 
 const About = ({ user }) => {
-  const [negi, setNegi] = useState(user.data[0]);
-  const [orange, setOrange] = useState(user?.data[1]);
   const [pageLoaded, setPageLoaded] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
   const [teamSelector, setTeamSelector] = useState("negi");
   const [teamView, setTeamView] = useState(<Negi />);
-  const [memberAnim, setMemberAnim] = useState();
 
   useEffect(() => {
-    //Sorts the users alphabetically
-    const sorted = user.data.sort((a, b) =>
-      a.login > b.login ? 1 : b.login > a.login ? -1 : 0
-    );
     isMobile ? setMobile(true) : setMobile(false);
-    // setNegi(sorted[0]);
-    // setOrange(sorted[1]);
     setPageLoaded(true);
     console.log("Page Loaded");
-  }, [user.data, isMobile, teamView]);
+  }, [isMobile]);
+
+  console.log(user);
 
   const teamSelectorHandler = (member) => {
     switch (member) {
@@ -81,7 +75,11 @@ const About = ({ user }) => {
     <div className={styles.aboutPageContainer}>
       <h1>Who we are</h1>
       <div className={styles.aboutContainer}>
-        <p>{negi?.description}</p>
+        <p>
+          ようこそ〜！IRL TOKYO! A streamer from Japan that shows around
+          Japanese Culture! Watch this and you can vicariously live the Japanese
+          Life through our camera!!!
+        </p>
         <h2>The NegiNeko Team</h2>
         <div
           className={
@@ -153,7 +151,7 @@ const About = ({ user }) => {
                   mobile ? styles.mobileContainer : styles.teamContainer
                 }
               >
-                {negi.profile_image_url ? teamView : null}
+                {pageLoaded ? teamView : null}
               </div>
             </>
           ) : null}

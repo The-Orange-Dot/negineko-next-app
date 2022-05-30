@@ -81,7 +81,7 @@ const ModChannelDisplay = ({ user }) => {
       });
 
       socket?.on("logged-in", (user, username, streamerOnline, usersOnline) => {
-        console.log(`Streamer online? ${streamerOnline}`);
+        console.log(`Streamer online: ${streamerOnline}`);
         setMods([username, ...usersOnline]);
         setStreamerOnline(streamerOnline);
       });

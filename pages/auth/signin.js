@@ -18,7 +18,7 @@ export default function SignIn({ providers }) {
   useEffect(() => {
     if (session.status === "authenticated") {
       console.log("Session detected, pushing to dashboard.");
-      router.push("/dashboard");
+      router.push("/juicebox");
     }
   }, [router, session]);
 
