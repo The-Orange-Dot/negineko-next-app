@@ -67,7 +67,8 @@ model User {
   streamer      Boolean   @default(false)
   mods          Mod[]  
   mod           Boolean   @default(false)
-  pendingModFor String[]
+  modRequestSent String[]
+  modRequestReceived String[]
   modFor        String[]
 }
 

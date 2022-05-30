@@ -10,9 +10,11 @@
 
 .formContainer {
   width: 90%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 10%;
 }
 
 .formSelector {
@@ -31,7 +33,7 @@
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  padding: 1%;
+  padding: 2%;
 }
 
 .formCards > button {
@@ -92,4 +94,30 @@
 
 .modName:hover {
   background-color: gray;
+  text-decoration: line-through;
+}
+
+.streamerInfo {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.streamerInfo > p {
+  font-size: 1.3rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.submitButtons {
+  margin-top: 2%;
+  height: 10%;
+  width: 100%;
+}
+
+.submitButtons button {
+  margin: 1%;
 }

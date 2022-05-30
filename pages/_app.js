@@ -6,6 +6,7 @@ import store from "../redux/store.ts";
 import { Provider } from "react-redux";
 import { SessionProvider } from "next-auth/react";
 import { PersistGate } from "redux-persist/integration/react";
+import { useEffect } from "react";
 
 let persistor = persistStore(store);
 

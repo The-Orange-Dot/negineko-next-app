@@ -13,7 +13,7 @@ export const getStaticProps = async () => {
     {
       headers: {
         Authorization: `Bearer ${tokenParsed.access_token}`,
-        "Client-Id": "05rkef9kwzbr5jdi4ahjbuj3uc83ov",
+        "Client-Id": process.env.TWITCH_CLIENT_ID,
       },
     }
   );

@@ -1,13 +1,14 @@
 import prisma from "../../../lib/prisma";
 import NextCors from "nextjs-cors";
 import { server } from "../../../config";
+import { stream } from "xlsx";
 
 async function handler(req, res) {
   const corsreq = req.headers.key;
   const corsKey = process.env.CORS_KEY;
 
   await NextCors(req, res, {
-    methods: ["GET", "PATCH"],
+    methods: ["GET", "PATCH", "POST"],
     origin: function (origin, callback) {
       if (corsKey === corsreq) {
         callback(null, true);

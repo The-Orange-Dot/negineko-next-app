@@ -26,7 +26,7 @@ const persistConfig = {
   version: 1,
   storage,
   whitelist: ["giveaway", "user", "darkMode"],
-  blacklist: ["socket", "hideMenu"],
+  blacklist: ["socket", "hideMenu", "token"],
 };
 
 const rootReducer = combineReducers({

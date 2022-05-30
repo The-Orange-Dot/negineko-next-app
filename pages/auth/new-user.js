@@ -4,28 +4,48 @@ import styles from "../../styles/new.module.css";
 import { server } from "../../config/index";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 const New = () => {
   const [streamer, setStreamer] = useState(false);
   const [modInput, setModInput] = useState("");
-  const [modsArray, setModsArray] = useState([]);
   const [moderator, setModerator] = useState(false);
   const [streamerInput, setStreamerInput] = useState("");
   const [modsLoaded, setModsLoaded] = useState(false);
   const [mods, setMods] = useState([]);
+  const [foundStreamer, setFoundStreamer] = useState({
+    username: "Streamer",
+    image: "/images/placeholder.png",
+  });
   const session = useSession();
   const route = useRouter();
 
   // console.log(session?.status);
-  const submitNewUser = async () => {
+  const submitNewMod = async () => {
+    if (streamerInput.toLowerCase() === session.data.name.toLowerCase()) {
+      setFoundStreamer({
+        username: "THAT'S YOUUU!!",
+        image: "/images/Orange.jpeg",
+      });
+    } else {
+      await fetch(`${server}/api/users/streamers/${streamerInput}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          key: "orange_is_orange",
+        },
+        body: JSON.stringify({
+          username: session.data.name,
+        }),
+      });
+    }
+  };
+
+  const submitNewStreamer = async () => {
     const res = await fetch(`${server}/api/users`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", key: "orange_is_orange" },
       body: JSON.stringify({
         username: session.data.name,
-        streamer: streamer,
-        pendingMods: mods,
-        mod: moderator,
-        pendingModFor: streamerInput,
       }),
     });
   };
@@ -69,14 +89,11 @@ const New = () => {
           </div>
         )}
       </div>
-      <form
-        onSubmit={(e) => modsArrayHandler(e, modInput)}
-        className={styles.form}
-      >
+      <form onSubmit={(e) => modsArrayHandler(e, modInput)}>
         <input
           type="text"
           onChange={(e) => setModInput(e.target.value)}
-          placeholder="Input mod usernames"
+          placeholder="Add additional mods"
           name="mod-input"
           value={modInput}
         />
@@ -89,12 +106,14 @@ const New = () => {
   );
 
   const streamerHandler = async () => {
-    setStreamer(!streamer);
-    const modList = await fetch(`${server}/api/twitchStreamer`, {
-      method: "POST",
-      headers: { key: "orange_is_orange" },
-      body: JSON.stringify({ username: session.data.name }),
-    });
+    setModerator(false);
+    setStreamer(true);
+    const modList = await fetch(
+      `${server}/api/users/mods/${session.data.name}`,
+      {
+        headers: { key: "orange_is_orange" },
+      }
+    );
 
     const modNames = await modList.json();
     const mods = await modNames.map((mod) => {
@@ -104,15 +123,55 @@ const New = () => {
     setModsLoaded(true);
   };
 
+  const moderatorHandler = async () => {
+    setModerator(true);
+    setStreamer(false);
+  };
+
+  const findStreamerHandler = async (e) => {
+    e.preventDefault();
+
+    await fetch(`${server}/api/users/streamers/${streamerInput}`, {
+      headers: { key: "orange_is_orange" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setFoundStreamer(data);
+      });
+  };
+
   //When "I'm a moderator" is selected, this form shows up to input who they mod for
   const moderatorForm = (
     <>
-      <h4>Who do you mod for?</h4>
-      <input
-        type="text"
-        onChange={(e) => setStreamerInput(e.target.value)}
-        placeholder="Input mod usernames"
-      />
+      <div className={styles.cardHeader}>
+        <h3>Who do you mod for?</h3>
+        <p>
+          This will send a request to the streamer. Once approved, then
+          you&apos;re all set!
+        </p>
+      </div>
+      <div className={styles.streamerInfo}>
+        <Image src={foundStreamer.image} alt="img" width={200} height={200} />
+        <p>{foundStreamer?.username}</p>
+      </div>
+      <form onSubmit={(e) => findStreamerHandler(e, streamerInput)}>
+        <input
+          type="text"
+          onChange={(e) => setStreamerInput(e.target.value)}
+          placeholder="Input mod usernames"
+        />
+        <input type="submit" value="Find streamer" />
+      </form>
+      <div className={styles.submitButtons}>
+        <button
+          onClick={() => {
+            setModerator(true);
+          }}
+        >
+          Cancel
+        </button>
+        <button onClick={() => submitNewMod()}>Send Request</button>
+      </div>
     </>
   );
 
@@ -171,13 +230,15 @@ const New = () => {
             </span>
             <span
               className={styles.formCards}
-              onClick={() => setModerator(true)}
+              onClick={() => moderatorHandler()}
             >
-              <h2>I&apos;m a moderator</h2>
-              {moderator ? moderatorForm : null}
+              {moderator ? (
+                moderatorForm
+              ) : (
+                <button>I&apos;m a moderator</button>
+              )}
             </span>
           </div>
-          <button onClick={() => submitNewUser()}>Finished</button>
         </div>
       </div>
     );
