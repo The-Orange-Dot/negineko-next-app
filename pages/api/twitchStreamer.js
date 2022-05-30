@@ -1,4 +1,5 @@
 import NextCors from "nextjs-cors";
+import { server } from "../../config/index";
 
 async function handler(req, res) {
   const corsreq = req.headers.key;
@@ -25,7 +26,7 @@ async function handler(req, res) {
     );
 
     const tokenParsed = await token.json();
-    const username = JSON.parse(req.body).username;
+    const username = await JSON.parse(req.body).username;
 
     const user = await fetch(
       `https://api.twitch.tv/helix/users?login=${username}`,
@@ -38,15 +39,24 @@ async function handler(req, res) {
     );
 
     const userInfo = await user.json();
-    const userId = userInfo.data[0];
+    const userId = await userInfo.data[0].id;
 
-    console.log(userId);
+    const userToken = await fetch(`${server}/api/users`, {
+      method: "POST",
+      headers: {
+        key: "orange_is_orange",
+      },
+      body: JSON.stringify({ userId: userId }),
+    });
+
+    const ParsedUserToken = await userToken.json();
+    // console.log(ParsedUserToken);
 
     const channel = await fetch(
-      `https://api.twitch.tv/helix/moderation/moderators?broadcaster_id=${userId}&user_id=${userId}`,
+      `https://api.twitch.tv/helix/moderation/moderators?broadcaster_id=${userId}`,
       {
         headers: {
-          Authorization: `Bearer ${tokenParsed.access_token}`,
+          Authorization: `Bearer ${ParsedUserToken.access_token}`,
           "Client-Id": process.env.TWITCH_CLIENT_ID,
         },
       }
@@ -55,8 +65,7 @@ async function handler(req, res) {
     const channelInfo = await channel.json();
     console.log(channelInfo);
 
-    // res.status(200).json(data);
-    res.end();
+    res.status(200).json(data);
   }
 }
 

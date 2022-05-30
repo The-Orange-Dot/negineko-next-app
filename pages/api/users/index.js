@@ -6,7 +6,7 @@ async function handler(req, res) {
   const corsKey = process.env.CORS_KEY;
 
   await NextCors(req, res, {
-    methods: ["GET", "PATCH"],
+    methods: ["GET", "PATCH", "POST"],
     origin: function (origin, callback) {
       if (corsKey === corsreq) {
         callback(null, true);
@@ -18,8 +18,12 @@ async function handler(req, res) {
 
   let users = await prisma.user.findMany();
 
-  if (req.method === "GET") {
-    return res.status(200).json(users);
+  if (req.method === "POST") {
+    const id = JSON.parse(req.body).userId;
+    const account = await prisma.account.findFirst({
+      where: { providerAccountId: id },
+    });
+    return res.status(200).json(account);
   } else if (req.method === "PATCH") {
     let user = await prisma.user.update({
       where: { name: req.body.user },

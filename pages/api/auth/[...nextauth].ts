@@ -13,6 +13,9 @@ export default NextAuth({
     TwitchProvider({
       clientId: process.env.TWITCH_CLIENT_ID,
       clientSecret: process.env.TWITCH_CLIENT_SECRET,
+      authorization: {
+        params: { scope: "openid user:read:email moderation:read" },
+      },
     }),
     // ...add more providers here
   ],
@@ -30,6 +33,7 @@ export default NextAuth({
       session = {
         ...session,
         ...session.user,
+        id: user.id,
         likes: user.location_likes,
         streamer: user.streamer,
         mod: user.mod,
