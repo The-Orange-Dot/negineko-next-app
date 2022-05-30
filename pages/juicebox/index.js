@@ -55,8 +55,6 @@ const Home = () => {
     }
   };
 
-  console.log(session);
-
   //If toolbar menu is selected
   let screen;
   if (juiceBoxMenu === "dashboard") {
@@ -76,8 +74,6 @@ const Home = () => {
       body: JSON.stringify({ username: session.data.name }),
     });
   };
-
-  console.log(session?.data?.name);
 
   if (session.status === "loading") {
     return (

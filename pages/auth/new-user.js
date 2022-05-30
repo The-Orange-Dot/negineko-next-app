@@ -10,35 +10,69 @@ const New = () => {
   const [modsArray, setModsArray] = useState([]);
   const [moderator, setModerator] = useState(false);
   const [streamerInput, setStreamerInput] = useState("");
+  const [modsLoaded, setModsLoaded] = useState(false);
+  const [mods, setMods] = useState([]);
   const session = useSession();
   const route = useRouter();
 
-  console.log(session?.status);
+  // console.log(session?.status);
   const submitNewUser = async () => {
     const res = await fetch(`${server}/api/users`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", key: "orange_is_orange" },
       body: JSON.stringify({
-        user: session.data.user.name,
+        username: session.data.name,
         streamer: streamer,
-        mods: modsArray,
+        pendingMods: mods,
         mod: moderator,
-        modFor: streamerInput,
+        pendingModFor: streamerInput,
       }),
     });
-    const data = await res.json();
-    console.log(data);
+  };
 
-    // if (res.status === 201) {
-    //   route.push("/dashboard");
-    // }
+  const subtractModHandler = (e) => {
+    const modName = e.target.innerText;
+    const updatedMods = mods.filter((mod) => {
+      return mod !== modName;
+    });
+    setMods(updatedMods);
   };
 
   //When "I'm a streamer" is selected, this form shows up to input mods for the channel
   const streamerModForm = (
     <>
-      <h4>Channel moderators</h4>
-      <form onSubmit={(e) => modsArrayHandler(e, modInput)}>
+      <div className={styles.cardHeader}>
+        <h3>Channel moderators</h3>
+        <p>
+          Customize who your mods are and who you can link with. (Don&apos;t
+          worry, you can change this later)
+        </p>
+      </div>
+      <div className={styles.modList}>
+        {modsLoaded ? (
+          mods.map((mod) => {
+            return (
+              <span className={styles.modName} key={mod}>
+                <p
+                  onClick={(mod) => {
+                    subtractModHandler(mod);
+                  }}
+                >
+                  {mod}
+                </p>
+              </span>
+            );
+          })
+        ) : (
+          <div>
+            <h3>Fetching your mods!</h3>
+          </div>
+        )}
+      </div>
+      <form
+        onSubmit={(e) => modsArrayHandler(e, modInput)}
+        className={styles.form}
+      >
         <input
           type="text"
           onChange={(e) => setModInput(e.target.value)}
@@ -48,13 +82,27 @@ const New = () => {
         />
         <input type="submit" value="Add" />
       </form>
-      <div className={styles.modList}>
-        {modsArray.map((mod) => {
-          return <p key={mod}>{mod}</p>;
-        })}
+      <div>
+        <button onClick={() => setStreamer(false)}>Cancel</button>
       </div>
     </>
   );
+
+  const streamerHandler = async () => {
+    setStreamer(!streamer);
+    const modList = await fetch(`${server}/api/twitchStreamer`, {
+      method: "POST",
+      headers: { key: "orange_is_orange" },
+      body: JSON.stringify({ username: session.data.name }),
+    });
+
+    const modNames = await modList.json();
+    const mods = await modNames.map((mod) => {
+      return mod.user_name;
+    });
+    setMods(mods);
+    setModsLoaded(true);
+  };
 
   //When "I'm a moderator" is selected, this form shows up to input who they mod for
   const moderatorForm = (
@@ -71,7 +119,7 @@ const New = () => {
   const modsArrayHandler = (e, input) => {
     e.preventDefault();
     setModInput("");
-    setModsArray([...modsArray, input]);
+    setMods([...mods, input]);
   };
 
   if (session.status === "loading") {
@@ -108,12 +156,21 @@ const New = () => {
         <div className={styles.formContainer}>
           <h4>Account set-up</h4>
           <div className={styles.formSelector}>
-            <span className={styles.selector} onClick={() => setStreamer(true)}>
-              <h2>I&apos;m a streamer</h2>
-              {streamer ? streamerModForm : null}
+            <span className={styles.formCards}>
+              {streamer ? (
+                streamerModForm
+              ) : (
+                <button
+                  onClick={() => {
+                    streamerHandler();
+                  }}
+                >
+                  I&apos;m a streamer
+                </button>
+              )}
             </span>
             <span
-              className={styles.selector}
+              className={styles.formCards}
               onClick={() => setModerator(true)}
             >
               <h2>I&apos;m a moderator</h2>

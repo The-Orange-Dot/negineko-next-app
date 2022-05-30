@@ -22,12 +22,45 @@
   justify-content: space-around;
 }
 
-.selector {
+.formCards {
   background-color: #b2deef;
   border-radius: 1rem;
   box-shadow: -5px 5px 10px 5px rgba(0, 0, 0, 0.1);
   width: 40%;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  padding: 1%;
+}
+
+.formCards > button {
+  width: 100%;
+  height: 100%;
+  background-color: #b2deef;
+  border: 0;
+  color: black;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  width: 100%;
+  height: 10%;
+}
+
+.cardHeader > p {
+  font-size: 0.7rem;
+}
+
+.cardHeader > p,
+.cardHeader > h3 {
+  margin: 0;
 }
 
 .selector::-webkit-scrollbar {
@@ -36,9 +69,27 @@
 
 .modList {
   display: flex;
-  max-height: 250px;
+  min-height: 70%;
+  max-height: 70%;
+  min-width: 100%;
   max-width: 100%;
-  flex-direction: column;
   flex-wrap: wrap;
   overflow: scroll;
+  justify-content: center;
+  align-items: center;
+}
+
+.modName {
+  width: 50%;
+  height: 10%;
+  cursor: pointer;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.modName:hover {
+  background-color: gray;
 }

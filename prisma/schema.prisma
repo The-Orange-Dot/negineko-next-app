@@ -65,10 +65,22 @@ model User {
   sessions      Session[]
   location_likes String[]
   streamer      Boolean   @default(false)
-  mods          String[]  
+  mods          Mod[]  
   mod           Boolean   @default(false)
+  pendingModFor String[]
   modFor        String[]
 }
+
+model Mod {
+  id            String    @id @default(cuid())
+  userId        String
+  username      String
+  status        String    @default("pending")
+  image         String    @default("/images/placeholder.png")           
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+
 
 model VerificationToken {
   identifier String

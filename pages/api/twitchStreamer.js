@@ -52,7 +52,7 @@ async function handler(req, res) {
     const ParsedUserToken = await userToken.json();
     // console.log(ParsedUserToken);
 
-    const channel = await fetch(
+    const mod = await fetch(
       `https://api.twitch.tv/helix/moderation/moderators?broadcaster_id=${userId}`,
       {
         headers: {
@@ -62,10 +62,16 @@ async function handler(req, res) {
       }
     );
 
-    const channelInfo = await channel.json();
-    console.log(channelInfo);
+    const modList = await mod.json();
+    const parsedModList = modList.data;
 
-    res.status(200).json(data);
+    //Filters out all the bot names
+    const bots = ["streamlab", "nightbot", "streamelements", "streamlabs"];
+    const updatedList = await parsedModList.filter((mod) => {
+      return !bots.includes(mod.user_name.toLowerCase());
+    });
+
+    res.status(200).json(updatedList);
   }
 }
 
