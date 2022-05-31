@@ -13,7 +13,7 @@ const ModControls = () => {
   const session = useSession();
   const modFor = session?.data?.modFor[0];
   const isMod = session.data.mod;
-  const streamerName = session.data.name;
+  const streamerName = session.data.modFor;
   const isStreamer = session.data.streamer;
 
   useEffect(
@@ -42,8 +42,8 @@ const ModControls = () => {
       <div className={styles.videoPlayerContainer}>
         {pageLoaded ? (
           <TwitchEmbed
-            channel={streamer}
-            id={streamer}
+            channel={streamerName}
+            id={streamerName}
             theme="dark"
             muted
             width="100%"

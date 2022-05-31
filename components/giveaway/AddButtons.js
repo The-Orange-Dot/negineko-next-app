@@ -11,6 +11,10 @@ const AddButtons = () => {
   const [buttonNameInput, setButtonNameInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
   const [userInput, setUserInput] = useState("");
+  const mods = useSelector((state) => state.mods.mods);
+  const modFor = session.data.modFor;
+  const darkMode = useSelector((state) => state.darkMode.value);
+  const socket = useSelector((state) => state.socket.value.socket);
 
   const addNewItem = async () => {
     const newButton = {
@@ -25,18 +29,13 @@ const AddButtons = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "add-button",
-        mods: [...mods, ...modFor],
+        mods: [...mods, modFor],
         button: newButton,
       }),
     });
 
-    // await socket?.emit("req-add-button", newButton, [...mods, ...modFor]);
+    // await socket?.emit("req-add-button", newButton, [...mods, modFor]);
   };
-
-  const darkMode = useSelector((state) => state.darkMode.value);
-  const socket = useSelector((state) => state.socket.value.socket);
-  const mods = session.data.mods;
-  const modFor = session.data.modFor;
 
   return (
     <>

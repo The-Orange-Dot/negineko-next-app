@@ -53,6 +53,8 @@ const ModChannelDisplay = ({ user }) => {
     if (socket) return () => socket.disconnect();
   }, []);
 
+  console.log(session.data.modFor);
+
   useEffect(
     () => {
       // log socket connection
@@ -66,6 +68,7 @@ const ModChannelDisplay = ({ user }) => {
         setConnection(true);
         socket?.emit("room", mods, user);
         setMods([...mods, user.name]);
+        dispatch(storeMods(mods));
         dispatch(connected());
         console.log(connection);
       });

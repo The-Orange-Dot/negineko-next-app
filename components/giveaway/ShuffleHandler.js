@@ -15,7 +15,7 @@ const ShuffleHandler = () => {
   const raffleButtons = useSelector((state) => state.giveaway.buttons);
   const selectedButton = useSelector((state) => state.giveaway.selected);
   const session = useSession();
-  const mods = [...session?.data?.mods, ...session?.data?.modFor];
+  const mods = useSelector((state) => state.mods.mods);
   const timer = useSelector((state) => state.giveaway.timer);
   const userArray = selectedButton?.users;
 
@@ -29,7 +29,7 @@ const ShuffleHandler = () => {
         method: "POST",
         body: JSON.stringify({
           emit: "req-shuffle",
-          mods: mods,
+          mods: [...mods, session.data.modFor],
           body: JSON.stringify({
             timer: timer,
             selectedButton: userArray,
@@ -51,7 +51,7 @@ const ShuffleHandler = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "delete-button",
-        mods: mods,
+        mods: [...mods, session.data.modFor],
         button: updatedButtons,
       }),
     });
@@ -67,7 +67,7 @@ const ShuffleHandler = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-reset",
-        mods: mods,
+        mods: [...mods, session.data.modFor],
       }),
     });
   };

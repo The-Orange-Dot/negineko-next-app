@@ -31,7 +31,7 @@ export default function Giveaway() {
   const screenStyles = {
     backgroundColor: screenColor === "none" ? "rgba(0,0,0,0)" : screenColor,
   };
-  const mods = [...session.data.mods, ...session.data.modFor];
+  const mods = useSelector((store) => store.mods);
 
   //Tracks which key you've pressed
   const selectorHandler = (e) => {
@@ -40,7 +40,7 @@ export default function Giveaway() {
       method: "POST",
       body: JSON.stringify({
         emit: "selector-req",
-        mods: mods,
+        mods: [...mods, session.data.modFor],
         button: e,
       }),
     });
@@ -71,7 +71,7 @@ export default function Giveaway() {
     fetch("/api/raffleSocket", {
       method: "POST",
       body: JSON.stringify({
-        mods: mods,
+        mods: [...mods, session.data.modFor],
         emit: "sync-buttons-req",
         requester: requester,
       }),

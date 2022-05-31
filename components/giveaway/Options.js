@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 const Options = () => {
   const session = useSession();
   const dispatch = useDispatch();
-  const mods = [...session.data.mods, ...session.data.modFor];
+  const mods = useSelector((state) => state.mods.mods);
 
   //Sets text color from black to white
   const textColorHandler = (e) => {
@@ -26,7 +26,7 @@ const Options = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-text-color",
-        mods: mods,
+        mods: [...mods, session.data.modFor],
         textColor: textColor,
       }),
     });
@@ -46,7 +46,7 @@ const Options = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-screen-color",
-        mods: mods,
+        mods: [...mods, session.data.modFor],
         color: color,
       }),
     });

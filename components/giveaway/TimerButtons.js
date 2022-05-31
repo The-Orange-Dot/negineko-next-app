@@ -8,7 +8,7 @@ const TimerButtons = () => {
   const dispatch = useDispatch();
   // const [timerSelected, setTimerSelected] = useState("30");
   const session = useSession();
-  const mods = [...session.data.mods, ...session.data.modFor];
+  const mods = useSelector((state) => state.mods.mods);
   const timerSelected = useSelector((state) => state.giveaway.timerSelected);
   const timerArray = useSelector((state) => state.giveaway.timer);
 
@@ -19,7 +19,7 @@ const TimerButtons = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-timer-selection",
-        mods: mods,
+        mods: [...mods, session.data.modFor],
         body: { timer: timerArray, timerSelected: timerSelected },
       }),
     });

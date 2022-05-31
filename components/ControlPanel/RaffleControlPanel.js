@@ -17,8 +17,10 @@ const RaffleControlPanel = () => {
   const timer = useSelector((state) => state.giveaway.timer);
   const buttons = useSelector((state) => state.giveaway.buttons);
   const selectedButton = useSelector((state) => state.giveaway.selected);
-  const mods = [...session.data.mods, ...session.data.modFor];
+  const mods = useSelector((state) => state.mods.mods);
   const [hideOverlay, setHideOverlay] = useState(false);
+
+  console.log(mods);
 
   //Shuffles and sends shuffle command to websocket
   const shuffle = () => {
@@ -33,7 +35,7 @@ const RaffleControlPanel = () => {
         method: "POST",
         body: JSON.stringify({
           emit: "req-shuffle",
-          mods: mods,
+          mods: [...mods, session.data.modFor],
           body: JSON.stringify({
             timer: timer,
             selectedButton: selectedButton.users,
@@ -54,7 +56,7 @@ const RaffleControlPanel = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-reset",
-        mods: mods,
+        mods: [...mods, session.data.modFor],
       }),
     });
   };
@@ -66,7 +68,7 @@ const RaffleControlPanel = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "selector-req",
-        mods: mods,
+        mods: [...mods, session.data.modFor],
         button: e,
       }),
     });
@@ -100,7 +102,7 @@ const RaffleControlPanel = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-hide-menu",
-        mods: mods,
+        mods: [...mods, session.data.modFor],
         hideOverlay: hideOverlay,
       }),
     });
