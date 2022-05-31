@@ -11,9 +11,9 @@ const ModControls = () => {
   const [pageLoaded, setPageLoaded] = useState(false);
   const [toolSelected, setToolSelected] = useState("raffle");
   const session = useSession();
-  const modFor = session?.data?.modFor[0];
+  const modFor = session?.data?.modFor;
   const isMod = session.data.mod;
-  const streamerName = session.data.modFor;
+  const streamerName = session.data.name;
   const isStreamer = session.data.streamer;
 
   useEffect(
@@ -40,10 +40,10 @@ const ModControls = () => {
   return (
     <div className={styles.modControlsPageContainer}>
       <div className={styles.videoPlayerContainer}>
-        {pageLoaded ? (
+        {streamer ? (
           <TwitchEmbed
-            channel={streamerName}
-            id={streamerName}
+            channel={streamer}
+            id={streamer}
             theme="dark"
             muted
             width="100%"

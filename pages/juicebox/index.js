@@ -67,14 +67,6 @@ const Home = () => {
     screen = <ModControls />;
   }
 
-  const testHandler = () => {
-    fetch("/api/twitchStreamer", {
-      method: "POST",
-      headers: { key: "orange_is_orange" },
-      body: JSON.stringify({ username: session.data.name }),
-    });
-  };
-
   if (session.status === "loading") {
     return (
       <div className={styles.dashboardContainer}>
@@ -103,13 +95,6 @@ const Home = () => {
           />
           {screen}
         </Toolbar>
-        <div
-          onClick={() => {
-            testHandler();
-          }}
-        >
-          <button>Test</button>
-        </div>
       </>
     );
   } else if (session.status === "unauthenticated") {

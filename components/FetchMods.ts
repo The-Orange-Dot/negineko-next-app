@@ -11,8 +11,6 @@ export const fetchMods = async (username: string) => {
 
 //Fetches approved mods for socket rooms
 export const fetchModNames = async (username: string) => {
-  console.log(username);
-
   type ModType = {
     id: string;
     streamer: string;

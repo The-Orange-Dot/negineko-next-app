@@ -1,9 +1,47 @@
 .settingsPageContainer {
   width: 100%;
   max-width: 1500px;
+  height: 90vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
+}
+
+.currentModsContainer {
+  background-color: #b2deef;
+  width: 80%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.21);
+  border-radius: 1rem;
+}
+
+.modContainer {
+  width: 90%;
+  min-height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.modCards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32%;
+}
+
+.modCards > p {
+  margin-left: 5px;
+  font-weight: 600;
+}
+
+.modImage {
+  border-radius: 20rem;
 }

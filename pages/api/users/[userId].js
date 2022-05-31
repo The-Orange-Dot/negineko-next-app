@@ -40,7 +40,6 @@ async function handler(req, res) {
       ];
     }
 
-    console.log(data);
     res.status(200).json(data);
   } else if (req.method === "PATCH") {
     let updatedLocationLikes = user.location_likes;
