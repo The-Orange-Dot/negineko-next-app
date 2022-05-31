@@ -18,13 +18,30 @@ async function handler(req, res) {
     },
   });
 
-  const { username } = req.query;
-  const user = await prisma.user.findFirst({
-    where: { name: username },
-  });
-
   if (req.method === "GET") {
-    res.status(200).json(user);
+    let username = req.query.userId;
+    let data;
+    const user = await prisma.user.findFirst({
+      where: { name: { contains: username, mode: "insensitive" } },
+    });
+
+    if (user.streamer) {
+      data = await prisma.mod.findMany({
+        where: {
+          streamer: { contains: username, mode: "insensitive" },
+          pending: false,
+        },
+      });
+    } else if (user.mod) {
+      data = [
+        await prisma.user.findFirst({
+          where: { name: { contains: user.modFor, mode: "insensitive" } },
+        }),
+      ];
+    }
+
+    console.log(data);
+    res.status(200).json(data);
   } else if (req.method === "PATCH") {
     let updatedLocationLikes = user.location_likes;
 

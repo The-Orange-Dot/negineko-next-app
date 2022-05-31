@@ -31,7 +31,7 @@ export const giveawaySlice = createSlice({
     winnerSelected: (state, action) => {
       state.winnerSelected = action.payload;
     },
-    resetRaffle: (state) => {
+    resetRaffle: (state: any) => {
       state.winner = "";
       state.winnerBool = false;
       state.selectButton = {};

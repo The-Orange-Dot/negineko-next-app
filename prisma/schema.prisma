@@ -68,17 +68,17 @@ model User {
   mods          Mod[]  
   mod           Boolean   @default(false)
   modRequestSent String[]
-  modRequestReceived String[]
-  modFor        String[]
+  modRequenstReceived String[]
+  modFor        String?   @default("")
 }
 
 model Mod {
   id            String    @id @default(cuid())
-  userId        String
-  username      String
-  status        String    @default("pending")
+  streamer      String
+  name          String    @default("")
+  pending       Boolean   @default(true)
   image         String    @default("/images/placeholder.png")           
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User      @relation(fields: [streamer], references: [name], onDelete: Cascade)
 }
 
 

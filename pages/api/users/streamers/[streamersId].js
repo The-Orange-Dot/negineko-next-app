@@ -1,7 +1,5 @@
 import prisma from "../../../../lib/prisma";
 import NextCors from "nextjs-cors";
-import { server } from "../../../../config";
-import { stream } from "xlsx";
 
 async function handler(req, res) {
   const corsreq = req.headers.key;

@@ -2,8 +2,9 @@ import prisma from "../../../../lib/prisma";
 import NextCors from "nextjs-cors";
 import { server } from "../../../../config";
 import { stream } from "xlsx";
+import { Req, Res } from "../../../../source/requests";
 
-async function handler(req, res) {
+async function handler(req: Req, res: Res) {
   const corsreq = req.headers.key;
   const corsKey = process.env.CORS_KEY;
 

@@ -36,7 +36,7 @@ export default NextAuth({
         id: user.id,
         likes: user.location_likes,
         streamer: user.streamer,
-        mod: user.mod,
+        mod: user.mods,
         modFor: user.modFor,
         mods: user.mods,
       };

@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "../../styles/settings.module.css";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 import Image from "next/image";
 
 const Settings = () => {
@@ -16,7 +15,7 @@ const Settings = () => {
     return (
       <>
         <p>{mod.name}</p>
-        <Image src={mod?.image} width={100} height={100} alt="img" />
+        <Image src={mod.image} width={100} height={100} alt="img" />
       </>
     );
   });

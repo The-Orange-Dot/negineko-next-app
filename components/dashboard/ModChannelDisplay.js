@@ -22,6 +22,8 @@ import {
 } from "../../redux/actions/giveawaySlice";
 import { ShufflePress } from "../giveaway/ShufflePress";
 import { toggleMenu } from "../../redux/actions/hideMenuSlice";
+import { fetchModNames } from "../FetchMods";
+import { storeMods } from "../../redux/actions/modSlice";
 
 const ModChannelDisplay = ({ user }) => {
   const [socket, setSocket] = useState(null);
@@ -29,7 +31,7 @@ const ModChannelDisplay = ({ user }) => {
   const session = useSession();
   const [mods, setMods] = useState([]);
   const [streamerOnline, setStreamerOnline] = useState(false);
-  const displayName = user?.streamer ? user?.name : user?.modFor[0];
+  const displayName = user?.streamer ? user?.name : user?.modFor;
   const [connection, setConnection] = useState(false);
   // const connection = useSelector((state) => state.socket.connected);
   const buttons = useSelector((state) => state.giveaway.buttons);
@@ -54,15 +56,16 @@ const ModChannelDisplay = ({ user }) => {
   useEffect(
     () => {
       // log socket connection
-      socket?.on("connect", () => {
-        const username = session.data.name;
+      socket?.on("connect", async () => {
+        const user = session.data;
+        const mods = await fetchModNames(user.name);
+
+        console.log(mods);
+
         console.log("SOCKET CONNECTED!", socket.id);
         setConnection(true);
-
-        socket?.emit("room", session.data, username);
-        if (!mods.includes(username)) {
-          setMods([...mods, username]);
-        }
+        socket?.emit("room", mods, user);
+        setMods([...mods, user.name]);
         dispatch(connected());
         console.log(connection);
       });
@@ -155,7 +158,12 @@ const ModChannelDisplay = ({ user }) => {
     if (session.data.streamer) {
       streamerStatus = false;
     }
-    await socket?.emit("user-sign-off", session.data, username, streamerStatus);
+    await socket?.emit(
+      "user-sign-off",
+      [...mods, username],
+      username,
+      streamerStatus
+    );
     setConnection(false);
     dispatch(disconnected());
 

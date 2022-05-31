@@ -3,11 +3,14 @@ import { useEffect } from "react";
 import styles from "../styles/switch.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { darkModeOff, darkModeOn } from "../redux/actions/darkModeSlice";
+import { RootState } from "../redux/store";
 
 const Switch = ({ isOn, onColor }) => {
   const dispatch = useDispatch();
-  const darkMode = useSelector((state) => state.darkMode.value);
+  const darkMode = useSelector((state: RootState) => state.darkMode.value);
   const [toggle, setToggle] = useState(darkMode);
+
+  console.log(darkMode);
 
   useEffect(
     () => {

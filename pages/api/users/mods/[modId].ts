@@ -1,7 +1,8 @@
 import NextCors from "nextjs-cors";
 import { server } from "../../../../config/index";
+import { Req, Res } from "../../../../source/requests";
 
-async function handler(req, res) {
+async function handler(req: Req, res: Res) {
   const corsreq = req.headers.key;
   const corsKey = process.env.CORS_KEY;
 
