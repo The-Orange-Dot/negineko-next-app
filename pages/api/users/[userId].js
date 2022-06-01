@@ -20,7 +20,7 @@ async function handler(req, res) {
 
   if (req.method === "GET") {
     let username = req.query.userId;
-    let data;
+    let data = [];
     const user = await prisma.user.findFirst({
       where: { name: { contains: username, mode: "insensitive" } },
     });
@@ -28,11 +28,10 @@ async function handler(req, res) {
     if (user.streamer) {
       data = await prisma.mod.findMany({
         where: {
-          streamer: { contains: username, mode: "insensitive" },
-          pending: false,
+          streamer: username,
         },
       });
-    } else if (user.mod) {
+    } else {
       data = [
         await prisma.user.findFirst({
           where: { name: { contains: user.modFor, mode: "insensitive" } },
@@ -40,7 +39,14 @@ async function handler(req, res) {
       ];
     }
 
-    res.status(200).json(data || []);
+    const parsedMods = data.map((mod) => {
+      return {
+        name: mod.name,
+        image: mod.image,
+      };
+    });
+
+    res.status(200).json(parsedMods);
   } else if (req.method === "PATCH") {
     let updatedLocationLikes = user.location_likes;
 

@@ -48,7 +48,7 @@ const SocketHandler = async (
           }
         });
 
-        if (user.streamer || roomCheck.includes(user.modFor)) {
+        if (user.streamer || roomCheck.includes(user.modFor.toLowerCase())) {
           streamerOnline = true;
         }
 
@@ -75,7 +75,7 @@ const SocketHandler = async (
             }
           });
 
-          mods.map((room) => {
+          mods.map((room: string) => {
             socket
               .to(room.toLowerCase())
               .emit("logged-off", usersOnline, streamerStatus);

@@ -12,16 +12,44 @@
 .currentModsContainer {
   background-color: #b2deef;
   width: 80%;
-  height: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.21);
   border-radius: 1rem;
+  padding-bottom: 2%;
+}
+
+.currentStreamerContainer {
+  background-color: #b2deef;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.21);
+  border-radius: 1rem;
+  padding-bottom: 2%;
 }
 
 .modContainer {
+  width: 90%;
+  min-height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.streamerName {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.streamerContainer {
   width: 90%;
   min-height: 50%;
   display: flex;
@@ -34,33 +62,65 @@
   width: 100%;
   height: 100%;
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.streamerCardContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.streamerCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin: 1% 0;
+}
+
+.streamerName > p {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
 }
 
 .pendingModCards {
   display: flex;
-  justify-content: center;
+  justify-content: baseline;
   align-items: center;
-  width: 100%;
+  width: 30%;
+  margin: 1% 0;
 }
 
 .pendingModCards > p {
   color: gray;
-  margin-left: 5px;
   font-weight: 600;
+  margin-left: 10px;
+  width: 60%;
 }
 
 .modCards {
   display: flex;
-  justify-content: center;
+  justify-content: baseline;
   align-items: center;
-  width: 100%;
+  width: 30%;
+  margin: 1% 0;
 }
 
 .modCards > p {
   margin-left: 5px;
   font-weight: 600;
+  width: 60%;
 }
 
 .modImage {
   border-radius: 20rem;
+  max-width: 100px;
+  min-width: 100px;
+  min-height: 100px;
+  max-height: 100px;
 }

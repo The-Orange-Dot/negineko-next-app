@@ -25,7 +25,7 @@ async function handler(req: Req, res: Res) {
 
     const streamerData = await prisma.user.update({
       where: { name: streamerName },
-      data: { modsPending: mods },
+      data: { modsPending: mods, streamer: true },
     });
 
     res.status(201).json(streamerData.modsPending);

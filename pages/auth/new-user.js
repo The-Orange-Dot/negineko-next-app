@@ -49,11 +49,12 @@ const New = () => {
       );
 
       const streamerData = await streamerInfo.json();
+
       if (streamerInfo.status === 406) {
         setError(true);
         setErrorMessage(streamerData.error);
       } else {
-        console.log(streamerData);
+        route.push("/juicebox");
       }
     }
   };
