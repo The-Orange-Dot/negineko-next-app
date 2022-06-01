@@ -37,11 +37,13 @@ import Settings from "../../components/dashboard/Settings";
 import Dashboard from "../../components/dashboard/Dashboard";
 import ModControls from "../../components/dashboard/ModControls";
 import { hideMenu, showMenu } from "../../redux/actions/hideMenuSlice";
+import { useEffect } from "react";
 
 const Home = () => {
   const darkMode = useSelector((state) => state?.darkMode?.value);
   const juiceBoxMenu = useSelector((state) => state?.juicebox?.menu);
   const hide = useSelector((state) => state.hideMenu.value);
+  const [pendingMods, setPendingMods] = useState([]);
   const session = useSession();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -62,7 +64,7 @@ const Home = () => {
   } else if (juiceBoxMenu === "giveaway") {
     screen = <Giveaway />;
   } else if (juiceBoxMenu === "settings") {
-    screen = <Settings />;
+    screen = <Settings juiceBoxMenu={juiceBoxMenu} />;
   } else if (juiceBoxMenu === "mod-controls") {
     screen = <ModControls />;
   }

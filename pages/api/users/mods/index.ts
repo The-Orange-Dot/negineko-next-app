@@ -19,9 +19,19 @@ async function handler(req: Req, res: Res) {
     },
   });
 
-  console.log(req.query);
-  const { username } = req.query;
-  console.log(username);
+  if (req.method === "PATCH") {
+    const mods = req.body.modRequests;
+    const streamerName = req.body.username;
+
+    const streamerData = await prisma.user.update({
+      where: { name: streamerName },
+      data: { modsPending: mods },
+    });
+
+    res.status(201).json(streamerData.modsPending);
+  }
+
+  res.end();
 }
 
 export default handler;

@@ -5,13 +5,19 @@ import { server } from "../../config/index";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { storeMods, storePendingMods } from "../../redux/actions/modSlice";
+
 const New = () => {
+  const dispatch = useDispatch();
   const [streamer, setStreamer] = useState(false);
   const [modInput, setModInput] = useState("");
   const [moderator, setModerator] = useState(false);
   const [streamerInput, setStreamerInput] = useState("");
   const [modsLoaded, setModsLoaded] = useState(false);
   const [mods, setMods] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [foundStreamer, setFoundStreamer] = useState({
     username: "Streamer",
     image: "/images/placeholder.png",
@@ -19,7 +25,7 @@ const New = () => {
   const session = useSession();
   const route = useRouter();
 
-  // console.log(session?.status);
+  //Submit Handler for Registering new MODS
   const submitNewMod = async () => {
     if (streamerInput.toLowerCase() === session.data.name.toLowerCase()) {
       setFoundStreamer({
@@ -27,27 +33,46 @@ const New = () => {
         image: "/images/Orange.jpeg",
       });
     } else {
-      await fetch(`${server}/api/users/streamers/${streamerInput}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          key: "orange_is_orange",
-        },
-        body: JSON.stringify({
-          username: session.data.name,
-        }),
-      });
+      const streamerInfo = await fetch(
+        `${server}/api/users/streamers/${streamerInput}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            key: "orange_is_orange",
+          },
+          body: JSON.stringify({
+            username: session.data.name,
+            streamer: foundStreamer,
+          }),
+        }
+      );
+
+      const streamerData = await streamerInfo.json();
+      if (streamerInfo.status === 406) {
+        setError(true);
+        setErrorMessage(streamerData.error);
+      } else {
+        console.log(streamerData);
+      }
     }
   };
 
+  //Submit Handler for Registering new STREAMERS
   const submitNewStreamer = async () => {
-    const res = await fetch(`${server}/api/users`, {
+    const modsDataArray = await fetch(`${server}/api/users/mods`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", key: "orange_is_orange" },
       body: JSON.stringify({
         username: session.data.name,
+        modRequests: mods,
       }),
     });
+
+    const modsData = await modsDataArray.json();
+    dispatch(storePendingMods(modsData));
+
+    route.push("/juicebox");
   };
 
   const subtractModHandler = (e) => {
@@ -101,6 +126,7 @@ const New = () => {
       </form>
       <div>
         <button onClick={() => setStreamer(false)}>Cancel</button>
+        <button onClick={() => submitNewStreamer()}>Finished</button>
       </div>
     </>
   );
@@ -124,12 +150,14 @@ const New = () => {
   };
 
   const moderatorHandler = async () => {
+    setError(false);
     setModerator(true);
     setStreamer(false);
   };
 
   const findStreamerHandler = async (e) => {
     e.preventDefault();
+    setError(false);
 
     await fetch(`${server}/api/users/streamers/${streamerInput}`, {
       headers: { key: "orange_is_orange" },
@@ -150,10 +178,16 @@ const New = () => {
           you&apos;re all set!
         </p>
       </div>
-      <div className={styles.streamerInfo}>
-        <Image src={foundStreamer.image} alt="img" width={200} height={200} />
-        <p>{foundStreamer?.username}</p>
-      </div>
+      {error ? (
+        <div className={styles.streamerInfo}>
+          <p>{errorMessage}</p>
+        </div>
+      ) : (
+        <div className={styles.streamerInfo}>
+          <Image src={foundStreamer.image} alt="img" width={200} height={200} />
+          <p>{foundStreamer?.username}</p>
+        </div>
+      )}
       <form onSubmit={(e) => findStreamerHandler(e, streamerInput)}>
         <input
           type="text"
@@ -183,7 +217,7 @@ const New = () => {
 
   if (session.status === "loading") {
     return (
-      <div>
+      <div className={styles.newPageContainer}>
         <h1>Loading...</h1>
       </div>
     );

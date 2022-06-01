@@ -9,8 +9,6 @@ const raffleSocket = (req: NextApiRequest, res: NextApiResponseServerIO) => {
     const mods = body.mods.map((mod: string) => mod.toLowerCase());
     const emit = body.emit;
 
-    console.log(body);
-
     if (emit === "add-button") {
       const newButton = body.button;
 

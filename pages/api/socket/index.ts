@@ -48,8 +48,6 @@ const SocketHandler = async (
           }
         });
 
-        console.log(usersOnline);
-
         if (user.streamer || roomCheck.includes(user.modFor)) {
           streamerOnline = true;
         }
@@ -94,7 +92,6 @@ const SocketHandler = async (
       });
 
       socket.on("req-add-button", (button: any, mods: string[]) => {
-        console.log(button);
         mods.map((mod) => {
           socket.to(mod.toLowerCase()).emit("res-add-button", button);
         });

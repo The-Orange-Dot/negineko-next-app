@@ -68,7 +68,8 @@ model User {
   mods          Mod[]  
   mod           Boolean   @default(false)
   modRequestSent String[]
-  modRequenstReceived String[]
+  modRequestReceived String[]
+  modsPending String[]
   modFor        String?   @default("")
 }
 

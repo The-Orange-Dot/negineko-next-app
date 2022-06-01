@@ -18,55 +18,63 @@ async function handler(req, res) {
 
   if (req.method === "PATCH") {
     const mod = req.body.username;
-    const streamer = req.query.streamersId;
+    const streamer = req.body.streamer;
 
     //Finds streamer and mod data
     const foundStreamer = await prisma.user.findFirst({
       where: {
         name: {
           mode: "insensitive",
-          contains: streamer,
+          contains: streamer.username,
         },
       },
     });
 
-    const foundMod = await prisma.user.findFirst({
-      where: {
-        name: {
-          mode: "insensitive",
-          contains: mod,
-        },
-      },
-    });
+    console.log(foundStreamer);
 
-    const modRecievedArray = foundStreamer.modRequestReceived.map((mod) =>
-      mod.toLowerCase()
-    );
-    const modSentArray = foundMod.modRequestSent.map((streamer) =>
-      streamer.toLowerCase()
-    );
-
-    if (!modRecievedArray.includes(mod.toLowerCase())) {
-      //Adds mod to streamer's pending list
-      await prisma.user.update({
-        where: {
-          name: foundStreamer.name,
-        },
-        data: {
-          modRequestReceived: [...foundStreamer.modRequestReceived, mod],
-        },
+    if (!foundStreamer) {
+      res.status(406).json({
+        error: "The streamer has not registered with this site yet!",
       });
     }
 
-    //Adds mod to own sent and pending list
-    if (!modSentArray.includes(streamer.toLowerCase())) {
-      await prisma.user.update({
-        where: {
-          name: foundMod.name,
-        },
-        data: { modRequestSent: [...foundMod.modRequestSent, streamer] },
-      });
-    }
+    // const foundMod = await prisma.user.findFirst({
+    //   where: {
+    //     name: {
+    //       mode: "insensitive",
+    //       contains: mod,
+    //     },
+    //   },
+    // });
+
+    // const modRecievedArray = foundStreamer.modRequestReceived.map((mod) =>
+    //   mod.toLowerCase()
+    // );
+    // const modSentArray = foundMod.modRequestSent.map((streamer) =>
+    //   streamer.toLowerCase()
+    // );
+
+    // if (!modRecievedArray.includes(mod.toLowerCase())) {
+    //   //Adds mod to streamer's pending list
+    //   await prisma.user.update({
+    //     where: {
+    //       name: foundStreamer.name,
+    //     },
+    //     data: {
+    //       modRequestReceived: [...foundStreamer.modRequestReceived, mod],
+    //     },
+    //   });
+    // }
+
+    // //Adds mod to own sent and pending list
+    // if (!modSentArray.includes(streamer.username.toLowerCase())) {
+    //   await prisma.user.update({
+    //     where: {
+    //       name: foundMod.name,
+    //     },
+    //     data: { modRequestSent: [...foundMod.modRequestSent, streamer] },
+    //   });
+    // }
 
     res.status(201).end();
   } else if (req.method === "GET") {

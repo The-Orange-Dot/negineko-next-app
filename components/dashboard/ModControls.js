@@ -11,10 +11,12 @@ const ModControls = () => {
   const [pageLoaded, setPageLoaded] = useState(false);
   const [toolSelected, setToolSelected] = useState("raffle");
   const session = useSession();
-  const modFor = session?.data?.modFor;
+  const modFor = session.data.modFor;
   const isMod = session.data.mod;
   const streamerName = session.data.name;
   const isStreamer = session.data.streamer;
+
+  console.log(session.data);
 
   useEffect(
     () => {

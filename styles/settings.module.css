@@ -30,11 +30,30 @@
   flex-wrap: wrap;
 }
 
+.modCardsContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.pendingModCards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.pendingModCards > p {
+  color: gray;
+  margin-left: 5px;
+  font-weight: 600;
+}
+
 .modCards {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32%;
+  width: 100%;
 }
 
 .modCards > p {

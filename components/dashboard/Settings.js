@@ -2,32 +2,73 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/settings.module.css";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { fetchMods } from "../FetchMods";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
-const Settings = () => {
+const Settings = ({ juiceBoxMenu }) => {
   const session = useSession();
   const [mods, setMods] = useState([]);
+  const pendingModsStore = useSelector((state) => state.mods.pendingMods);
+  const pendingModsArray = session.data.modsPending;
+  const [pendingMods, setPendingMods] = useState(pendingModsArray);
   const username = session.data.name;
   const [pageLoaded, setPageLoaded] = useState(false);
 
+  console.log(pendingModsStore);
+
+  //Fetches mods from DB
   useEffect(
     () => {
       const fetchModData = async (username) => {
         const modsData = await fetch(`/api/users/${username}`, {
           headers: { key: "orange_is_orange" },
         });
-        const mods = await modsData.json();
+        let mods = [];
+        if (modsData) {
+          const approvedMods = await modsData.json();
+          mods.push(...approvedMods);
+        }
 
         setMods(mods);
         setPageLoaded(true);
       };
 
+      let pending;
+
+      //Logic to hydrate pending mods for new users
+      if (pendingModsArray.length < 1) {
+        pending = pendingModsStore;
+      } else {
+        pending = pendingModsArray;
+      }
+
+      console.log(pendingModsArray);
+
+      //Array of pending mods waiting for approval
+      const pendingModsList = pending.map((mod) => {
+        console.log(mod);
+        return (
+          <span key={mod.name} className={styles.pendingModCards}>
+            <Image
+              src="/images/placeholder.png"
+              width={50}
+              height={50}
+              alt="img"
+              className={styles.modImage}
+            />
+            <p>{`${mod} (Pending)`}</p>
+          </span>
+        );
+      });
+
       fetchModData(username);
+      setPendingMods(pendingModsList);
       console.log("Settings Page Loaded");
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [session.data.modsPending, juiceBoxMenu]
   );
 
+  //Array of approved mods
   const modList = mods.map((mod) => {
     return (
       <span key={mod.name} className={styles.modCards}>
@@ -49,7 +90,15 @@ const Settings = () => {
       <div className={styles.currentModsContainer}>
         <h2>Your moderators</h2>
         <div className={styles.modContainer}>
-          {pageLoaded ? modList : <p>Fetching your mods!</p>}
+          {pageLoaded ? (
+            <>
+              <span className={styles.modCardsContainer}>
+                {(modList, pendingMods)}
+              </span>
+            </>
+          ) : (
+            <p>Fetching your mods!</p>
+          )}
         </div>
       </div>
       {/* <div>

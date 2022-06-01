@@ -5,6 +5,7 @@ export const modSlice = createSlice({
   initialState: {
     modData: [],
     mods: [],
+    pendingMods: [],
   },
   reducers: {
     storeMods: (state, action) => {
@@ -13,8 +14,11 @@ export const modSlice = createSlice({
     storeModData: (state, action) => {
       state.modData = action.payload;
     },
+    storePendingMods: (state, action) => {
+      state.pendingMods = action.payload;
+    },
   },
 });
 
-export const { storeMods, storeModData } = modSlice.actions;
+export const { storeMods, storeModData, storePendingMods } = modSlice.actions;
 export default modSlice.reducer;
