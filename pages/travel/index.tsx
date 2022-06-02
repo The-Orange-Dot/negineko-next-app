@@ -4,8 +4,8 @@ import { loginUser } from "../../redux/actions/userLoginSlice";
 import { useSelector } from "react-redux";
 
 export const getStaticProps = async () => {
-  let data: any[];
-  const res = await fetch(`${server}/api/locations`, {
+  let data: any[] = [];
+  await fetch(`${server}/api/locations`, {
     headers: { key: "orange_is_orange" },
   }).then(async (res) => {
     try {
@@ -16,7 +16,7 @@ export const getStaticProps = async () => {
   });
 
   return {
-    props: { data: data || null },
+    props: { data: data },
   };
 };
 
