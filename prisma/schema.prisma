@@ -14,7 +14,7 @@ model Location {
   category    String   @default("")
   address     String   @unique
   map         String   @unique
-  description String
+  description String[]
   website     String   @default("")
   twitter     String   @default("")
   instagram   String   @default("")
@@ -69,7 +69,7 @@ model User {
   mod           Boolean   @default(false)
   modRequestSent String[]
   modRequestReceived String[]
-  modsPending String[]
+  modsPending   String[]
   modFor        String?   @default("")
 }
 

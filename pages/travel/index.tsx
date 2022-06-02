@@ -84,7 +84,7 @@ const Travel = ({ data }) => {
   ]);
 
   const travelLocations =
-    locations.length === 0 ? (
+    locations?.length === 0 ? (
       <div style={{ width: "100%", textAlign: "center" }}>
         {mobile ? <h1>Loading...</h1> : <h1>No matches found</h1>}
       </div>

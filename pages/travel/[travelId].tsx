@@ -8,7 +8,7 @@ import { useMediaQuery } from "react-responsive";
 const TravelId = () => {
   interface Location {
     id: string;
-    description: string;
+    description: string[];
     address: string;
     name: string;
     caption: string;
@@ -21,7 +21,7 @@ const TravelId = () => {
   }
   const [location, setLocation] = useState<Location>({
     id: "",
-    description: "",
+    description: [],
     address: "",
     name: "",
     caption: "",
@@ -57,11 +57,7 @@ const TravelId = () => {
   //Parses the description into a clean array
   let descriptions = [];
   location.description
-    ? (descriptions = location.description.split("|"))
-    : null;
-
-  descriptions.length
-    ? descriptions.unshift(`Address: ${location.address}`)
+    ? (descriptions = [`Address: ${location.address}`, ...location.description])
     : null;
 
   return (
