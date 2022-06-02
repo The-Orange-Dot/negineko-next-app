@@ -16,6 +16,8 @@ const nextConfig = {
   },
   future: { webpack5: true },
 
+  target: "experimental-serverless-trace",
+
   async headers() {
     return [
       {

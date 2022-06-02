@@ -24,8 +24,10 @@
     "redux/actions/addTokenSlice.js",
     "redux/store.ts",
     "redux/store.ts",
-    "pages/api/store/index.js",
-    "redux/actions/darkModeSlice.js"
+    "pages/api/store/index.ts",
+    "redux/actions/darkModeSlice.ts",
+    "pages/api/users/streamers/[streamersId].js",
+    "redux/actions/locationSlice.js"
   ],
   "exclude": ["node_modules"]
 }
