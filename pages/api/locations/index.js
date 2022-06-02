@@ -18,7 +18,7 @@ async function handler(req, res) {
 
   if (req.method === "GET") {
     const locations = await prisma.location.findMany();
-    return res.status(200).json(locations);
+    res.status(200).json(locations);
   }
 }
 

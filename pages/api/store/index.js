@@ -28,7 +28,7 @@ async function handler(req, res) {
       sold: product.sold,
     }));
 
-    return res.status(200).json(parsedProducts);
+    res.status(200).json(parsedProducts);
   }
   // else if (req.method === "PATCH") {
   //   const priceArray = req.body.priceId;
