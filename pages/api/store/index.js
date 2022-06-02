@@ -28,8 +28,6 @@ async function handler(req, res) {
       sold: product.sold,
     }));
 
-    console.log(parsedProducts);
-
     return res.status(200).json(parsedProducts);
   }
   // else if (req.method === "PATCH") {
