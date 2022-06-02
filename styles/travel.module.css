@@ -26,6 +26,10 @@
   border: 1px solid black;
 }
 
+.descriptionItem {
+  list-style: none;
+}
+
 .locationCardContainer h3 {
   margin: 0;
   cursor: pointer;

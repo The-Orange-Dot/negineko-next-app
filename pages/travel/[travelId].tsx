@@ -55,10 +55,7 @@ const TravelId = () => {
   }, [router.query.travelId, isMobile]);
 
   //Parses the description into a clean array
-  let descriptions = [];
-  location.description
-    ? (descriptions = [`Address: ${location.address}`, ...location.description])
-    : null;
+  let descriptions = [location.address, ...location.description];
 
   return (
     <div

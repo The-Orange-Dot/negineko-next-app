@@ -21,7 +21,6 @@ export default NextAuth({
   ],
   pages: {
     signIn: "/auth/signin",
-    signOut: "/auth/signout",
     newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
   callbacks: {
