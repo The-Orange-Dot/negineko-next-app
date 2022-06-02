@@ -14,20 +14,18 @@ import CategoryFilter from "../../components/locations/categoryFilter";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import LikesCounter from "../../components/locations/likesCounter";
+import { useRouter } from "next/router";
 
-const Travel = ({ data }) => {
-  type Type = "" | "food" | "recreation" | "nature" | "events" | "shopping";
+const Travel = () => {
+  const router = useRouter();
 
-  interface Category {
-    category: string;
-  }
-
+  const [data, setData] = useState([]);
   const [locations, setLocations] = useState([]);
   const [filteredLocations, setFilteredLocations] = useState(locations);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
-  const [categorySelected, setCategorySelected] = useState<Category>({
+  const [categorySelected, setCategorySelected] = useState({
     category: "",
   });
   const { data: session } = useSession();
@@ -35,6 +33,18 @@ const Travel = ({ data }) => {
 
   const user = useSelector(loginUser);
   const username = user?.payload?.user?.value.name;
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      const data = await fetch(`${server}/api/locations`, {
+        headers: { key: "orange_is_orange" },
+      });
+      const locations: LocationType[] = await data.json();
+      setData(locations);
+    };
+
+    fetchLocations();
+  }, [router]);
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
@@ -293,18 +303,18 @@ const Travel = ({ data }) => {
   );
 };
 
-export const getStaticProps = async () => {
-  const data = await fetch(`${server}/api/locations`, {
-    headers: { key: "orange_is_orange" },
-  });
+// export const getStaticProps = async () => {
+//   const data = await fetch(`${server}/api/locations`, {
+//     headers: { key: "orange_is_orange" },
+//   });
 
-  const locations: LocationType[] = await data.json();
+//   const locations: LocationType[] = await data.json();
 
-  console.log(locations);
+//   console.log(locations);
 
-  return {
-    props: { data: locations },
-  };
-};
+//   return {
+//     props: { data: locations },
+//   };
+// };
 
 export default Travel;

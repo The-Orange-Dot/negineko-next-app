@@ -12,7 +12,8 @@ import { useSession } from "next-auth/react";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
-const StorePage = ({ data }) => {
+const StorePage = () => {
+  const [data, setData] = useState([]);
   const [priceId, setPriceId] = useState([]);
   const [products, setProducts] = useState([]);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
@@ -20,6 +21,20 @@ const StorePage = ({ data }) => {
   const session = useSession();
   const username = session?.data?.name;
   console.log(username);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await fetch(`${server}/api/store`, {
+        headers: { key: "orange_is_orange" },
+      });
+
+      const products = await data.json();
+
+      setData(products);
+    };
+
+    fetchProducts();
+  }, []);
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
@@ -103,16 +118,16 @@ const StorePage = ({ data }) => {
   );
 };
 
-export const getStaticProps = async () => {
-  const data = await fetch(`${server}/api/store`, {
-    headers: { key: "orange_is_orange" },
-  });
+// export const getStaticProps = async () => {
+//   const data = await fetch(`${server}/api/store`, {
+//     headers: { key: "orange_is_orange" },
+//   });
 
-  const products = await data.json();
+//   const products = await data.json();
 
-  return {
-    props: { data: await products },
-  };
-};
+//   return {
+//     props: { data: await products },
+//   };
+// };
 
 export default StorePage;
