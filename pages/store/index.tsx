@@ -24,7 +24,7 @@ const StorePage = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const data = await fetch(`${server}/api/store`, {
+      const data = await fetch(`/api/store`, {
         headers: { key: "orange_is_orange" },
       });
 
