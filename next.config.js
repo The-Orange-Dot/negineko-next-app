@@ -16,8 +16,6 @@ const nextConfig = {
   },
   future: { webpack5: true },
 
-  target: "experimental-serverless-trace",
-
   async headers() {
     return [
       {
@@ -42,6 +40,15 @@ const nextConfig = {
         ],
       },
     ];
+  },
+
+  target: "experimental-serverless-trace",
+  webpack: (config, { defaultLoaders, isServer }) => {
+    if (isServer) {
+      config.externals.push("_http_common");
+    }
+
+    return config;
   },
 };
 
