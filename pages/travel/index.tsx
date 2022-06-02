@@ -11,7 +11,7 @@ export const getStaticProps = async () => {
   const locations = await data.json();
 
   return {
-    props: { data: await locations },
+    props: { data: (await locations) || [] },
   };
 };
 
