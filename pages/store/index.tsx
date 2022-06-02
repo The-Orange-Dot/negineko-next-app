@@ -7,24 +7,12 @@ import ProductCard from "../../components/store/ProductCard";
 import { useMediaQuery } from "react-responsive";
 import { useSession } from "next-auth/react";
 
-export const getStaticProps = async () => {
-  const data = await fetch(`${server}/api/store`, {
-    headers: { key: "orange_is_orange" },
-  });
-
-  const products = await data.json();
-
-  return {
-    props: { data: (await products) || [] },
-  };
-};
-
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
-export default function PreviewPage({ data }) {
+const StorePage = ({ data }) => {
   const [priceId, setPriceId] = useState([]);
   const [products, setProducts] = useState([]);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
@@ -113,4 +101,18 @@ export default function PreviewPage({ data }) {
       </form>
     </>
   );
-}
+};
+
+export const getStaticProps = async () => {
+  const data = await fetch(`${server}/api/store`, {
+    headers: { key: "orange_is_orange" },
+  });
+
+  const products = await data.json();
+
+  return {
+    props: { data: await products },
+  };
+};
+
+export default StorePage;

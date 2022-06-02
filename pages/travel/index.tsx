@@ -3,18 +3,6 @@ import { server } from "../../config/index";
 import { loginUser } from "../../redux/actions/userLoginSlice";
 import { useSelector } from "react-redux";
 
-export const getStaticProps = async () => {
-  const data = await fetch(`${server}/api/locations`, {
-    headers: { key: "orange_is_orange" },
-  });
-
-  const locations = await data.json();
-
-  return {
-    props: { data: (await locations) || [] },
-  };
-};
-
 //Everything below this is CSR on browser
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -302,6 +290,18 @@ const Travel = ({ data }) => {
       )}
     </>
   );
+};
+
+export const getStaticProps = async () => {
+  const data = await fetch(`${server}/api/locations`, {
+    headers: { key: "orange_is_orange" },
+  });
+
+  const locations = await data.json();
+
+  return {
+    props: { data: await locations },
+  };
 };
 
 export default Travel;
