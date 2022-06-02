@@ -8,19 +8,14 @@ import { useMediaQuery } from "react-responsive";
 import { useSession } from "next-auth/react";
 
 export const getStaticProps = async () => {
-  let data: any[];
-  await fetch(`${server}/api/store`, {
+  const data = await fetch(`${server}/api/store`, {
     headers: { key: "orange_is_orange" },
-  }).then(async (res) => {
-    try {
-      data = await res.json();
-    } catch (error) {
-      console.log(error.message);
-    }
   });
 
+  const products = await data.json();
+
   return {
-    props: { data: data || null },
+    props: { data: await products },
   };
 };
 
