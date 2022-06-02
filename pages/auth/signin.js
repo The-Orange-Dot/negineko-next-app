@@ -12,15 +12,18 @@ export async function getServerSideProps(context) {
 }
 
 export default function SignIn({ providers }) {
-  const session = useSession();
   const router = useRouter();
+  const session = useSession();
 
-  useEffect(() => {
-    if (session.status === "authenticated") {
-      console.log("Session detected, pushing to dashboard.");
-      router.push("/juicebox");
-    }
-  }, [router, session]);
+  useEffect(
+    () => {
+      if (session.status === "authenticated") {
+        console.log("Session detected, pushing to dashboard.");
+        router.push("/juicebox");
+      }
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [session]
+  );
 
   return (
     <>

@@ -25,21 +25,25 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      user && (token.user = user);
+      if (user) {
+        user && (token.user = user);
+      }
       return token;
     },
     async session({ session, user }) {
-      session = {
-        ...session,
-        ...session.user,
-        id: user.id,
-        likes: user.location_likes,
-        streamer: user.streamer,
-        mod: user.mod,
-        modFor: user.modFor,
-        mods: user.mods,
-        modsPending: user.modsPending,
-      };
+      if (user) {
+        session = {
+          ...session,
+          ...session.user,
+          id: user.id,
+          likes: user.location_likes,
+          streamer: user.streamer,
+          mod: user.mod,
+          modFor: user.modFor,
+          mods: user.mods,
+          modsPending: user.modsPending,
+        };
+      }
       return session;
     },
     async redirect({ url, baseUrl }) {
