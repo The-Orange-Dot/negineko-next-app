@@ -2,6 +2,7 @@
 import { server } from "../../config/index";
 import { loginUser } from "../../redux/actions/userLoginSlice";
 import { useSelector } from "react-redux";
+import { LocationType } from "../../source/types/next";
 
 //Everything below this is CSR on browser
 import Link from "next/link";
@@ -297,10 +298,12 @@ export const getStaticProps = async () => {
     headers: { key: "orange_is_orange" },
   });
 
-  const locations = await data.json();
+  const locations: LocationType[] = await data.json();
+
+  console.log(locations);
 
   return {
-    props: { data: await locations },
+    props: { data: locations },
   };
 };
 

@@ -1,7 +1,9 @@
 import prisma from "../../../lib/prisma";
 import NextCors from "nextjs-cors";
+import { NextApiRequest, NextApiResponse } from "next";
+import { LocationType } from "../../../source/types/next";
 
-async function handler(req, res) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
   const corsreq = req.headers.key;
   const corsKey = "orange_is_orange";
 
@@ -17,7 +19,7 @@ async function handler(req, res) {
   });
 
   if (req.method === "GET") {
-    const locations = await prisma.location.findMany();
+    const locations: LocationType[] = await prisma.location.findMany();
     res.status(200).json(locations);
   }
 }
