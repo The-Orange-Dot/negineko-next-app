@@ -3,7 +3,7 @@ import NextCors from "nextjs-cors";
 
 async function handler(req, res) {
   const corsreq = req.headers.key;
-  const corsKey = process.env.CORS_KEY;
+  const corsKey = "orange_is_orange";
 
   await NextCors(req, res, {
     methods: ["GET"],
