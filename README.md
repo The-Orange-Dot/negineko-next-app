@@ -51,7 +51,7 @@ Added Features
 
 - Added Dashboard and darkmode
 
-https://user-images.githubusercontent.com/92559518/171800503-62db3047-c6b6-446d-91a2-db76ea53f32c.mp4
+![Dark mode](https://user-images.githubusercontent.com/92559518/171800503-62db3047-c6b6-446d-91a2-db76ea53f32c.mp4)
 
 ## May 26, 2022
 
@@ -76,6 +76,8 @@ Added Features
 - Eliminated "mod" column in user db and created a mod table to associate with user table
 - Added scope to find mods on Twitch API on streamer's account to verify mods so users can't randomly inject their own info into streamer's mods list
 - Continued work on emitters and listeners. When streamer logs in, a channel verifies mods through Twitch API and connects ONLY verified mods
+
+![redux-persist](https://user-images.githubusercontent.com/92559518/171810257-69abfcb2-22d9-4053-b9e9-538093e9d3e1.mp4)
 
 ## May 31, 2022
 
