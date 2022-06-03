@@ -84,6 +84,9 @@ https://user-images.githubusercontent.com/92559518/171810257-69abfcb2-22d9-4053-
 Added Features
 
 - Connection with Mods and Streamer now allows mods to control streamers UI. When used in tandem with OBS studio, streamer can capture the window and key-color to allow obs studio and allow mods to control streamer functionality through websocket.
+- Created window on juicebox toolbar to allow streamers and verified mods to see who's online when connected.
+
+https://user-images.githubusercontent.com/92559518/171812986-59e67adb-4e7f-4687-9139-602e2d34d2c8.mp4
 
 ## June 1, 2022
 
