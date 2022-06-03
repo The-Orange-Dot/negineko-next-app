@@ -88,8 +88,12 @@ Added Features
 
 https://user-images.githubusercontent.com/92559518/171812986-59e67adb-4e7f-4687-9139-602e2d34d2c8.mp4
 
+(Note: For the safety and security of the streamers who want to use this, you must press connect when to connect to the server rather than it always being on. I'll add functionality to allow streamer to control everything on mobile only in the near future.)
+
 
 https://user-images.githubusercontent.com/92559518/171814961-be675775-3dda-4c4c-8e58-6b159b6fe151.mp4
+
+(Note: Streamers and moderators will have full control of buttons and functionality of raffles)
 
 
 ## June 1, 2022
