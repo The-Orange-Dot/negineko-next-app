@@ -100,6 +100,7 @@ Added Features
 - Added Typescript for many components to fix the bugs created when mods column was eliminated and mods table was created instead.
 
 https://user-images.githubusercontent.com/92559518/171818108-a45dcd17-d62f-443e-a14c-403be8322f22.mp4
+(Streamer can eliminate key color on OBS Studio to show only the font on their overlays)
 
 ## June 2, 2022
 
