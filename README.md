@@ -121,3 +121,6 @@ https://user-images.githubusercontent.com/92559518/171821572-237a9d48-f650-461b-
 
 (Note: Moderators will be taken off the pending list and added as a verified mod automatically when they register and send a request to mod for the channel)
 
+## June 3, 2022
+
+- Seems like Netlify doesn't do websockets and aws amplify needs quite a lot of configuration with nextauth and prisma. Not sure about Heroku. No updates until that's fixed
