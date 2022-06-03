@@ -41,6 +41,9 @@ const nextConfig = {
       },
     ];
   },
+  env: {
+    MY_ENV_VAR: process.env.MY_ENV_VAR,
+  },
 
   target: "experimental-serverless-trace",
   webpack: (config, { defaultLoaders, isServer }) => {
