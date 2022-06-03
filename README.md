@@ -115,3 +115,9 @@ Added Features
         => Streamer: Using the nextauth provider info, it was fetch data from Twitch API to find your mods. You can choose to take off any mods that are on the list. Any mods submitted will be put on the streamer's pending list. If the mods send a request, they will automatically be set as a mod for the streamer's channel.
         => Moderator: Using the form, the moderator will input a streamer's name, and the form will use the Twitch API to fetch a user if they exist. When submitted, the moderator will be put on a pending list. If the streamer has the resgistering mod already on their pending list, they will be automatically approved.
 - Added logic to settings page to show streamers their mod list and their pending list. While moderators will only see the streamers they are registered with.
+
+
+https://user-images.githubusercontent.com/92559518/171821572-237a9d48-f650-461b-b2ae-2d1924da838e.mov
+
+(Note: Moderators will be taken off the pending list and added as a verified mod automatically when they register and send a request to mod for the channel)
+
