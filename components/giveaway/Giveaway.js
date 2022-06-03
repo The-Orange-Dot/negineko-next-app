@@ -31,7 +31,7 @@ export default function Giveaway() {
   const screenStyles = {
     backgroundColor: screenColor === "none" ? "rgba(0,0,0,0)" : screenColor,
   };
-  const mods = useSelector((store) => store.mods);
+  const mods = useSelector((store) => store.mods.mods);
 
   //Tracks which key you've pressed
   const selectorHandler = (e) => {
