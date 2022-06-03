@@ -116,8 +116,7 @@ Added Features
         => Moderator: Using the form, the moderator will input a streamer's name, and the form will use the Twitch API to fetch a user if they exist. When submitted, the moderator will be put on a pending list. If the streamer has the resgistering mod already on their pending list, they will be automatically approved.
 - Added logic to settings page to show streamers their mod list and their pending list. While moderators will only see the streamers they are registered with.
 
-
-https://user-images.githubusercontent.com/92559518/171821572-237a9d48-f650-461b-b2ae-2d1924da838e.mov
+https://user-images.githubusercontent.com/92559518/171828822-44412eaf-ba82-4515-a573-982bbafa2c6f.mp4
 
 (Note: Moderators will be taken off the pending list and added as a verified mod automatically when they register and send a request to mod for the channel)
 
