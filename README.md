@@ -101,9 +101,7 @@ Added Features
 
 https://user-images.githubusercontent.com/92559518/171818108-a45dcd17-d62f-443e-a14c-403be8322f22.mp4
 
-(Note: 
- - Streamer can eliminate key color on OBS Studio to show only the font on their overlays
- - Moderators can hide streamer overlay so there is a clean overlay for text)
+(Note: Streamer can eliminate key color on OBS Studio to show only the font on their overlays and moderators can hide streamer overlay so there is a clean overlay for text)
 
 ## June 2, 2022
 
