@@ -16,6 +16,8 @@ const AddButtons = () => {
   const darkMode = useSelector((state) => state.darkMode.value);
   const socket = useSelector((state) => state.socket.value.socket);
 
+  console.log(mods);
+
   const addNewItem = async () => {
     const newButton = {
       buttonName: buttonNameInput,
@@ -29,7 +31,7 @@ const AddButtons = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "add-button",
-        mods: [...mods, modFor],
+        mods: [...mods],
         button: newButton,
       }),
     });

@@ -36,6 +36,8 @@ import Giveaway from "../../components/giveaway/Giveaway";
 import Settings from "../../components/dashboard/Settings";
 import Dashboard from "../../components/dashboard/Dashboard";
 import ModControls from "../../components/dashboard/ModControls";
+import Overlay from "../../components/Overlay/Overlay.tsx";
+import OverlayControls from "../../components/Overlay/OverlayControls.tsx";
 import { hideMenu, showMenu } from "../../redux/actions/hideMenuSlice";
 import { useEffect } from "react";
 
@@ -67,6 +69,8 @@ const Home = () => {
     screen = <Settings juiceBoxMenu={juiceBoxMenu} />;
   } else if (juiceBoxMenu === "mod-controls") {
     screen = <ModControls />;
+  } else if (juiceBoxMenu === "overlay") {
+    screen = <OverlayControls />;
   }
 
   if (session.status === "loading") {
@@ -95,6 +99,9 @@ const Home = () => {
           <div
             className={darkMode ? styles.darkBackground : styles.background}
           />
+          <div>
+            <Overlay />
+          </div>
           {screen}
         </Toolbar>
       </>

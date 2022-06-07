@@ -140,7 +140,27 @@ const Toolbar = ({ children, tween, setTween }) => {
               Raffle-tool
             </h4>
           </span>
+          <span
+            className={styles.selector}
+            style={{ cursor: "pointer" }}
+            onClick={() => dispatch(selectMenu("overlay"))}
+          >
+            <h4
+              className={styles.link}
+              onMouseEnter={() => {
+                mouseIn("overlay", "オーバレイ");
+              }}
+              onMouseLeave={() => {
+                mouseOut("overlay", "Overlay");
+              }}
+              ref={ref}
+              id="overlay"
+            >
+              Overlay
+            </h4>
+          </span>
         </div>
+
         <div className={styles.modToolsContainer}>
           <h3 style={{ textAlign: "center" }}>Mod tools</h3>
           <span
