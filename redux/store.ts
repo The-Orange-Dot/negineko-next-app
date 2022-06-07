@@ -10,6 +10,7 @@ import socketReducer from "./actions/socketSlice";
 import storage from "redux-persist/lib/storage";
 import hideMenuReducer from "./actions/hideMenuSlice";
 import modReducer from "./actions/modSlice";
+import textOverlayReducer from "./actions/textOverlaySlice";
 
 import {
   persistReducer,
@@ -26,7 +27,7 @@ const persistConfig = {
   version: 1,
   storage,
   whitelist: ["giveaway", "user", "darkMode"],
-  blacklist: ["socket", "hideMenu", "token", "mods"],
+  blacklist: ["socket", "hideMenu", "token", "mods", "textOverlay"],
 };
 
 const rootReducer = combineReducers({
@@ -40,6 +41,7 @@ const rootReducer = combineReducers({
   socket: socketReducer,
   hideMenu: hideMenuReducer,
   mods: modReducer,
+  textOverlay: textOverlayReducer,
 });
 
 //Makes sure useSelector receives only rootReducer's items
