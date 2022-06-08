@@ -69,9 +69,10 @@ const Home = () => {
     screen = <Settings juiceBoxMenu={juiceBoxMenu} />;
   } else if (juiceBoxMenu === "mod-controls") {
     screen = <ModControls />;
-  } else if (juiceBoxMenu === "overlay") {
-    screen = <OverlayControls />;
   }
+  // else if (juiceBoxMenu === "overlay") {
+  //   screen = <OverlayControls />;
+  // }
 
   if (session.status === "loading") {
     return (

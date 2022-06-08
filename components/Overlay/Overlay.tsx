@@ -1,31 +1,17 @@
 import React, { useState } from "react";
 import styles from "../../styles/overlay.module.css";
-import Draggable from "react-draggable";
+import OverlayComponent from "./OverlayComponent";
 
 const TextOverlay = () => {
-  const [position, setPosition] = useState([0, 0]);
+  const [texts, setTexts] = useState([{ src: <OverlayComponent />, id: 1 }]);
 
-  const overlayTextItems = (
-    <Draggable
-      bounds="parent"
-      position={{ x: position[0], y: position[1] }}
-      onStop={(e) => {
-        positionHandler(e);
-      }}
-    >
-      <p className={styles.test}>textOverlay</p>
-    </Draggable>
-  );
-
-  const positionHandler = (position: any) => {
-    const x = position.x - 20;
-    const y = position.y - 95;
-    setPosition([x, y]);
-  };
+  const textsOverlay = texts.map((text) => {
+    return <div key={text.id}>{text.src}</div>;
+  });
 
   return (
     <div className={styles.overlayPageContainer}>
-      <div className={styles.overlayPageContent}>{overlayTextItems}</div>
+      <div className={styles.overlayPageContent}>{textsOverlay}</div>
     </div>
   );
 };

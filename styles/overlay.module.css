@@ -30,6 +30,31 @@
   margin-left: 5%;
 }
 
-.test {
-  position: absolute;
+.editTextContainer {
+  margin: 0;
+  width: 0;
+}
+
+.textInput {
+  background-color: transparent;
+  border: 1px solid #dfdfdf;
+  border-radius: 0.3rem;
+}
+
+.fontSize {
+  width: 50px;
+}
+
+.editContainer {
+  width: 150px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  transform: scale(80%);
+}
+
+.editContainer span {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
