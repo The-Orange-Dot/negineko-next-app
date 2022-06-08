@@ -14,6 +14,19 @@
   z-index: -1;
 }
 
+.noTextOverlayPageContent {
+  position: absolute;
+  left: 0;
+  top: 7%;
+  width: 100%;
+  height: 90vh;
+  background-color: aliceblue;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* ============OVERLAY CONTROLS============= */
 .overlayControlsContainer {
   width: 100%;
@@ -27,7 +40,11 @@
 }
 
 .addTextButton {
-  margin-left: 5%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  width: 100px;
 }
 
 .editTextContainer {
@@ -57,4 +74,14 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.button {
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 2rem;
+  margin: 2px 5px;
+  cursor: pointer;
 }
