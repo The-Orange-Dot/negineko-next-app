@@ -10,8 +10,6 @@ const Switch = ({ isOn, onColor }) => {
   const darkMode = useSelector((state: RootState) => state.darkMode.value);
   const [toggle, setToggle] = useState(darkMode);
 
-  console.log(darkMode);
-
   useEffect(
     () => {
       if (toggle === true) {

@@ -1,26 +1,49 @@
 import React, { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import styles from "../../styles/overlay.module.css";
-import { addButton, deleteButton } from "../../redux/actions/giveawaySlice";
+import {
+  addText,
+  savePosition,
+  subtractText,
+  updateText,
+} from "../../redux/actions/textOverlaySlice";
+import { useDispatch, useSelector } from "react-redux";
 
-const OverlayComponent = ({ id, dispatch, texts }) => {
+const OverlayComponent = ({
+  id,
+  fontSize,
+  color,
+  fontWeight,
+  textInput,
+  position,
+}) => {
+  const dispatch = useDispatch();
+  const textOverlay = useSelector((state: any) => state.textOverlay.value);
   const [overlayItem, setOverlayItem] = useState(null);
-  const [position, setPosition] = useState([0, 0]);
   const [edit, setEdit] = useState(false);
-  const [text, setText] = useState("Input Text");
-  const [bold, setBold] = useState("normal");
-  const [checked, setChecked] = useState(false);
+  const [text, setText] = useState(textInput);
   const [style, setStyle] = useState({
-    fontSize: 18,
-    color: "#00000",
-    fontWeight: "normal",
+    fontSize: fontSize,
+    color: color,
+    fontWeight: fontWeight,
+    input: textInput,
   });
+
+  useEffect(() => {
+    setStyle({
+      fontSize: fontSize,
+      color: color,
+      fontWeight: fontWeight,
+      input: text,
+    });
+  }, [fontSize, color, fontWeight, textInput]);
 
   useEffect(() => {
     const overlayTextItems = (
       <Draggable
-        bounds={{ left: 0, top: 5, bottom: 850, right: 1500 }}
+        bounds="parent"
         positionOffset={{ x: "0%", y: "50%" }}
+        defaultPosition={{ x: position[0], y: position[1] }}
         onStop={(e) => {
           positionHandler(e);
         }}
@@ -39,7 +62,7 @@ const OverlayComponent = ({ id, dispatch, texts }) => {
               onChange={(e) => {
                 setText(e.target.value);
               }}
-              placeholder={text}
+              placeholder={textInput}
               className={styles.textInput}
               id="handle"
               autoComplete="off"
@@ -56,12 +79,7 @@ const OverlayComponent = ({ id, dispatch, texts }) => {
               </span>
               <span>
                 <label htmlFor="color">Color:</label>
-                <input
-                  type="color"
-                  name="color"
-                  defaultValue={style.color}
-                  onChange={(e) => console.log(e.target.value)}
-                />
+                <input type="color" name="color" defaultValue={style.color} />
               </span>
               <span>
                 <label htmlFor="bold">Bold: </label>
@@ -76,36 +94,48 @@ const OverlayComponent = ({ id, dispatch, texts }) => {
               >
                 Delete
               </button>
+              <button
+                className={styles.button}
+                onClick={() => {
+                  setEdit(false);
+                }}
+              >
+                Cancel
+              </button>
             </span>
           </form>
         ) : (
           <p
-            className={styles.test}
+            className={styles.textBox}
             id="handle"
             onDoubleClick={() => {
               setEdit(true);
             }}
             style={style}
           >
-            {text}
+            {textInput}
           </p>
         )}
       </Draggable>
     );
 
     setOverlayItem(overlayTextItems);
-  }, [style, position, edit, text]);
+  }, [style, position, edit, text, fontSize]);
 
   const deleteHandler = () => {
-    const updatedTexts = texts.filter((text: any) => {
-      return text.id !== id;
+    const updatedTextList = textOverlay.filter((text: string) => {
+      const parsed = JSON.parse(text);
+
+      if (id !== parsed.id) {
+        return JSON.stringify(parsed);
+      }
     });
-    setText(updatedTexts);
+
+    dispatch(subtractText(updatedTextList));
   };
 
   const submitHandler = (e: any) => {
     e.preventDefault();
-    console.log(e.target[3].checked);
 
     let weight: string;
     if (e.target[3].checked) {
@@ -114,18 +144,24 @@ const OverlayComponent = ({ id, dispatch, texts }) => {
       weight = "normal";
     }
 
-    setStyle({
-      fontSize: parseInt(e.target[1].value),
-      color: e.target[2].value,
-      fontWeight: weight,
+    const updatedText = textOverlay.map((data: string) => {
+      const parsed = JSON.parse(data);
+
+      if (id === parsed.id) {
+        parsed.fontSize = parseInt(e.target[1].value);
+        parsed.color = e.target[2].value;
+        parsed.fontWeight = weight;
+        parsed.input = text;
+      }
+      return JSON.stringify(parsed);
     });
+
+    dispatch(updateText(updatedText));
 
     setEdit(false);
   };
 
   const positionHandler = (position: any) => {
-    console.log(position.clientX);
-
     let x = position.x;
     let y = position.y;
     if (position.x >= 1500) {
@@ -143,8 +179,12 @@ const OverlayComponent = ({ id, dispatch, texts }) => {
     } else {
       y = position.clientY - 95;
     }
-    setPosition([x, y]);
+
+    dispatch(
+      savePosition({ position: [x, y], id: id, textOverlay: textOverlay })
+    );
   };
+  // console.log(textOverlay);
   return overlayItem;
 };
 

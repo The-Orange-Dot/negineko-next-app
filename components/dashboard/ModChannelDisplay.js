@@ -53,8 +53,6 @@ const ModChannelDisplay = ({ user }) => {
     if (socket) return () => socket.disconnect();
   }, []);
 
-  console.log(session.data.modFor);
-
   useEffect(
     () => {
       // log socket connection
