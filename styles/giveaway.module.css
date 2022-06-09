@@ -16,25 +16,19 @@
   background-color: rgb(47, 79, 79);
 }
 
-.main {
-  min-height: 80vh;
-  max-width: 1500px;
-  width: 100%;
-  padding: 4rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
 .controlsContainer {
-  height: 180px;
+  height: 200px;
   width: 100%;
+  max-width: 1500px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .submitButton {
@@ -195,12 +189,8 @@
 }
 
 .giveawayStyles {
-  width: 150%;
-  height: 60vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: inline-block;
+  height: max-content;
 }
 
 .colorKey {

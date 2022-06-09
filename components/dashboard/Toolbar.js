@@ -124,25 +124,6 @@ const Toolbar = ({ children, tween, setTween }) => {
           <span
             className={styles.selector}
             style={{ cursor: "pointer" }}
-            onClick={() => dispatch(selectMenu("giveaway"))}
-          >
-            <h4
-              className={styles.link}
-              onMouseEnter={() => {
-                mouseIn("giveaway", "抽選機能");
-              }}
-              onMouseLeave={() => {
-                mouseOut("giveaway", "Raffle-tool");
-              }}
-              ref={ref}
-              id="giveaway"
-            >
-              Raffle-tool
-            </h4>
-          </span>
-          <span
-            className={styles.selector}
-            style={{ cursor: "pointer" }}
             onClick={() => dispatch(selectMenu("overlay"))}
           >
             <h4
@@ -157,6 +138,25 @@ const Toolbar = ({ children, tween, setTween }) => {
               id="overlay"
             >
               Overlay
+            </h4>
+          </span>
+          <span
+            className={styles.selector}
+            style={{ cursor: "pointer" }}
+            onClick={() => dispatch(selectMenu("giveaway"))}
+          >
+            <h4
+              className={styles.link}
+              onMouseEnter={() => {
+                mouseIn("giveaway", "抽選機能");
+              }}
+              onMouseLeave={() => {
+                mouseOut("giveaway", "Raffle-tool");
+              }}
+              ref={ref}
+              id="giveaway"
+            >
+              Raffle-tool
             </h4>
           </span>
         </div>

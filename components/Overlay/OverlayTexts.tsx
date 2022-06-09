@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/overlay.module.css";
 import OverlayComponent from "./OverlayComponent";
-import { addText, updateText } from "../../redux/actions/textOverlaySlice";
 import { useDispatch, useSelector } from "react-redux";
+import OverlayControls from "./OverlayControls";
 
 const TextOverlay = () => {
   const textOverlay = useSelector((state: any) => state.textOverlay.value);
@@ -27,39 +27,16 @@ const TextOverlay = () => {
     setTexts(textsOverlay);
   }, [textOverlay, dispatch]);
 
-  const addTextHandler = () => {
-    dispatch(
-      addText(
-        JSON.stringify({
-          id: Date.now().toString(),
-          fontSize: 18,
-          color: "#00000",
-          fontWeight: "normal",
-          input: "Text Input",
-          position: [0, 0],
-        })
-      )
-    );
-  };
-
   return (
-    <div className={styles.overlayPageContainer}>
+    <>
       {texts.length > 0 ? (
-        <div className={styles.overlayPageContent}>{texts}</div>
+        texts
       ) : (
         <div className={styles.noTextOverlayPageContent}>
           <p>Double click the screen to add text</p>
         </div>
       )}
-      <button
-        onClick={() => {
-          addTextHandler();
-        }}
-        className={styles.addTextButton}
-      >
-        Add text
-      </button>
-    </div>
+    </>
   );
 };
 

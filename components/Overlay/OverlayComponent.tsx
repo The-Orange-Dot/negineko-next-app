@@ -29,98 +29,104 @@ const OverlayComponent = ({
     input: textInput,
   });
 
-  useEffect(() => {
-    setStyle({
-      fontSize: fontSize,
-      color: color,
-      fontWeight: fontWeight,
-      input: text,
-    });
-  }, [fontSize, color, fontWeight, textInput]);
+  useEffect(
+    () => {
+      setStyle({
+        fontSize: fontSize,
+        color: color,
+        fontWeight: fontWeight,
+        input: text,
+      });
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fontSize, color, fontWeight, textInput]
+  );
 
-  useEffect(() => {
-    const overlayTextItems = (
-      <Draggable
-        bounds="parent"
-        positionOffset={{ x: "0%", y: "50%" }}
-        defaultPosition={{ x: position[0], y: position[1] }}
-        onStop={(e) => {
-          positionHandler(e);
-        }}
-        handle="#handle"
-      >
-        {edit ? (
-          <form
-            onSubmit={(e) => {
-              submitHandler(e);
-            }}
-            className={styles.editTextContainer}
-          >
-            <input
-              type="text"
-              name="text"
-              onChange={(e) => {
-                setText(e.target.value);
+  useEffect(
+    () => {
+      const overlayTextItems = (
+        <Draggable
+          bounds="parent"
+          positionOffset={{ x: "0%", y: "0%" }}
+          defaultPosition={{ x: position[0], y: position[1] }}
+          onStop={(e) => {
+            positionHandler(e);
+          }}
+          handle="#handle"
+        >
+          {edit ? (
+            <form
+              onSubmit={(e) => {
+                submitHandler(e);
               }}
-              placeholder={textInput}
-              className={styles.textInput}
+              className={styles.editTextContainer}
+            >
+              <input
+                type="text"
+                name="text"
+                onChange={(e) => {
+                  setText(e.target.value);
+                }}
+                placeholder={textInput}
+                className={styles.textInput}
+                id="handle"
+                autoComplete="off"
+              />
+              <span className={styles.editContainer}>
+                <span>
+                  <label htmlFor="font-size">Font size:</label>
+                  <input
+                    type="number"
+                    name="font-size"
+                    defaultValue={style.fontSize}
+                    className={styles.fontSize}
+                  />
+                </span>
+                <span>
+                  <label htmlFor="color">Color:</label>
+                  <input type="color" name="color" defaultValue={style.color} />
+                </span>
+                <span>
+                  <label htmlFor="bold">Bold: </label>
+                  <input type="checkbox" name="bold" />
+                </span>
+                <input type="submit" className={styles.button} />
+                <button
+                  className={styles.button}
+                  onClick={() => {
+                    deleteHandler();
+                  }}
+                >
+                  Delete
+                </button>
+                <button
+                  className={styles.button}
+                  onClick={() => {
+                    setEdit(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </span>
+            </form>
+          ) : (
+            <p
+              className={styles.textBox}
               id="handle"
-              autoComplete="off"
-            />
-            <span className={styles.editContainer}>
-              <span>
-                <label htmlFor="font-size">Font size:</label>
-                <input
-                  type="number"
-                  name="font-size"
-                  defaultValue={style.fontSize}
-                  className={styles.fontSize}
-                />
-              </span>
-              <span>
-                <label htmlFor="color">Color:</label>
-                <input type="color" name="color" defaultValue={style.color} />
-              </span>
-              <span>
-                <label htmlFor="bold">Bold: </label>
-                <input type="checkbox" name="bold" />
-              </span>
-              <input type="submit" className={styles.button} />
-              <button
-                className={styles.button}
-                onClick={() => {
-                  deleteHandler();
-                }}
-              >
-                Delete
-              </button>
-              <button
-                className={styles.button}
-                onClick={() => {
-                  setEdit(false);
-                }}
-              >
-                Cancel
-              </button>
-            </span>
-          </form>
-        ) : (
-          <p
-            className={styles.textBox}
-            id="handle"
-            onDoubleClick={() => {
-              setEdit(true);
-            }}
-            style={style}
-          >
-            {textInput}
-          </p>
-        )}
-      </Draggable>
-    );
+              onDoubleClick={() => {
+                setEdit(true);
+              }}
+              style={style}
+            >
+              {textInput}
+            </p>
+          )}
+        </Draggable>
+      );
 
-    setOverlayItem(overlayTextItems);
-  }, [style, position, edit, text, fontSize]);
+      setOverlayItem(overlayTextItems);
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [style, position, edit, text, fontSize]
+  );
 
   const deleteHandler = () => {
     const updatedTextList = textOverlay.filter((text: string) => {
@@ -174,7 +180,7 @@ const OverlayComponent = ({
 
     if (position.y < 85) {
       y = 5;
-    } else if (position.clientY >= 900) {
+    } else if (position.clientY >= 700) {
       y = 850;
     } else {
       y = position.clientY - 95;
@@ -184,7 +190,7 @@ const OverlayComponent = ({
       savePosition({ position: [x, y], id: id, textOverlay: textOverlay })
     );
   };
-  // console.log(textOverlay);
+
   return overlayItem;
 };
 
