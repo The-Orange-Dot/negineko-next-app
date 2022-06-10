@@ -127,7 +127,7 @@ https://user-images.githubusercontent.com/92559518/171828822-44412eaf-ba82-4515-
 
 ## June 10, 2022
 
--Couldn't get aws amplify's lambda functions to work properly for fetch data with prisma and nextauth. Need to get that working
+- Couldn't get aws amplify's lambda functions to work properly for fetch data with prisma and nextauth. Need to get that working
 
 Added feature
 
