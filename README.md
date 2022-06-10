@@ -122,10 +122,14 @@ https://user-images.githubusercontent.com/92559518/171828822-44412eaf-ba82-4515-
 
 ## June 3, 2022
 
+Update
+
 - Seems like Netlify doesn't do websockets and aws amplify needs quite a lot of configuration with nextauth and prisma. Not sure about Heroku. No updates until that's fixed
 
 
 ## June 10, 2022
+
+Update
 
 - Couldn't get aws amplify's lambda functions to work properly for fetch data with prisma and nextauth. Need to get that working
 
