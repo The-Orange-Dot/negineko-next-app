@@ -123,3 +123,16 @@ https://user-images.githubusercontent.com/92559518/171828822-44412eaf-ba82-4515-
 ## June 3, 2022
 
 - Seems like Netlify doesn't do websockets and aws amplify needs quite a lot of configuration with nextauth and prisma. Not sure about Heroku. No updates until that's fixed
+
+
+## June 10, 2022
+
+-Couldn't get aws amplify's lambda functions to work properly for fetch data with prisma and nextauth. Need to get that working
+
+Added feature
+
+- Text overlay where you could add and edit text (basically for now: font size, color, and bold). 
+- The raffle screen and controls have been split into seperate independant components where the screens for the text overlay, raffle screen, and key coloring sit together and can both be used at the same time along.
+
+https://user-images.githubusercontent.com/92559518/172972896-e8e92f6b-d3ab-4a83-b96e-ec2211b3c279.mp4
+
