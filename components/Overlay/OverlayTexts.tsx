@@ -33,7 +33,7 @@ const TextOverlay = () => {
         texts
       ) : (
         <div className={styles.noTextOverlayPageContent}>
-          <p>Double click the screen to add text</p>
+          <p>Click on &rdquo;Add text&rdquo; below to start</p>
         </div>
       )}
     </>
