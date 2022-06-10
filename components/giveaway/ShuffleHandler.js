@@ -29,7 +29,8 @@ const ShuffleHandler = () => {
         method: "POST",
         body: JSON.stringify({
           emit: "req-shuffle",
-          mods: [...mods, session.data.modFor],
+          streamer: session.data.name,
+          modFor: session.data.modFor,
           body: JSON.stringify({
             timer: timer,
             selectedButton: userArray,
@@ -51,7 +52,8 @@ const ShuffleHandler = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "delete-button",
-        mods: [...mods, session.data.modFor],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
         button: updatedButtons,
       }),
     });
@@ -67,7 +69,8 @@ const ShuffleHandler = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-reset",
-        mods: [...mods, session.data.modFor],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
       }),
     });
   };

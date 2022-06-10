@@ -18,6 +18,9 @@ export default function Giveaway() {
   const session = useSession();
   const connection = useSelector((state) => state.socket.connected);
   const [timer, setTimer] = useState([400, 120, 60, 20]);
+  const mods = useSelector((state) => state);
+
+  console.log(mods);
 
   //Tracks which key you've pressed
   const selectorHandler = (e) => {
@@ -26,7 +29,8 @@ export default function Giveaway() {
       method: "POST",
       body: JSON.stringify({
         emit: "selector-req",
-        mods: [...mods, session.data.modFor],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
         button: e,
       }),
     });
@@ -57,7 +61,8 @@ export default function Giveaway() {
     fetch("/api/raffleSocket", {
       method: "POST",
       body: JSON.stringify({
-        mods: [...mods, session.data.modFor],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
         emit: "sync-buttons-req",
         requester: requester,
       }),

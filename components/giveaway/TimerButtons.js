@@ -19,7 +19,8 @@ const TimerButtons = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-timer-selection",
-        mods: [...mods, session.data.modFor],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
         body: { timer: timerArray, timerSelected: timerSelected },
       }),
     });

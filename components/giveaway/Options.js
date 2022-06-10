@@ -26,7 +26,8 @@ const Options = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-text-color",
-        mods: [...mods, session.data.modFor],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
         textColor: textColor,
       }),
     });
@@ -46,7 +47,8 @@ const Options = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-screen-color",
-        mods: [...mods, session.data.modFor],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
         color: color,
       }),
     });

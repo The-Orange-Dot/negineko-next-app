@@ -1,12 +1,31 @@
+import prisma from "../../lib/prisma";
+
 import { NextApiRequest } from "next";
 import { io } from "socket.io-client";
 import { NextApiResponseServerIO } from "../../source/types/next";
 
-const raffleSocket = (req: NextApiRequest, res: NextApiResponseServerIO) => {
+const raffleSocket = async (
+  req: NextApiRequest,
+  res: NextApiResponseServerIO
+) => {
   if (req.method === "POST") {
     const socket = res?.socket?.server?.io;
     const body = JSON.parse(req.body);
-    const mods = body.mods.map((mod: string) => mod.toLowerCase());
+    const streamer = body.streamer;
+
+    const modsData = await prisma.mod.findMany({
+      where: { streamer: streamer },
+      select: { name: true },
+    });
+
+    const mods = modsData.map((mod: { name: string }) =>
+      mod.name.toLowerCase()
+    );
+
+    if (body.modFor) {
+      mods.push(body.modFor.toLowerCase());
+    }
+
     const emit = body.emit;
 
     if (emit === "add-button") {

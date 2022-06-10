@@ -35,7 +35,8 @@ const RaffleControlPanel = () => {
         method: "POST",
         body: JSON.stringify({
           emit: "req-shuffle",
-          mods: [...mods, session.data.modFor],
+          streamer: session.data.name,
+          modFor: session.data.modFor,
           body: JSON.stringify({
             timer: timer,
             selectedButton: selectedButton.users,
@@ -56,7 +57,8 @@ const RaffleControlPanel = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-reset",
-        mods: [...mods, session.data.modFor],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
       }),
     });
   };
@@ -68,7 +70,8 @@ const RaffleControlPanel = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "selector-req",
-        mods: [...mods, session.data.modFor],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
         button: e,
       }),
     });
@@ -102,7 +105,8 @@ const RaffleControlPanel = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "req-hide-menu",
-        mods: [...mods, session.data.modFor],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
         hideOverlay: hideOverlay,
       }),
     });
