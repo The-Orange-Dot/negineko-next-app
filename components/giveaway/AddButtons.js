@@ -37,6 +37,9 @@ const AddButtons = () => {
       }),
     });
 
+    setButtonNameInput("");
+    setDescriptionInput("");
+    setUserInput("");
     // await socket?.emit("req-add-button", newButton, [...mods, modFor]);
   };
 
@@ -66,6 +69,7 @@ const AddButtons = () => {
               onChange={(e) => {
                 setButtonNameInput(e.target.value);
               }}
+              value={buttonNameInput}
               maxLength="10"
               required
             />
@@ -81,14 +85,15 @@ const AddButtons = () => {
                 setDescriptionInput(e.target.value);
               }}
               maxLength="100"
+              value={descriptionInput}
               required
             />
             <TextField
               hiddenLabel
               variant="filled"
               size="small"
-              multiline={true}
-              row="1"
+              multiline
+              rows={4}
               className={darkMode ? styles.darkTextBox : styles.textBox}
               type="text"
               name="users"
@@ -99,6 +104,7 @@ const AddButtons = () => {
               cols="50"
               required
               style={{ resize: "none" }}
+              value={userInput}
             />
           </div>
         </ThemeProvider>

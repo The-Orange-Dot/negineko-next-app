@@ -105,17 +105,16 @@ export default function Giveaway() {
                   orientation="vertical"
                   fullWidth={true}
                   variant="contained"
-                  disableElevation
                 >
                   {keyButtons}
                 </ButtonGroup>
               </ThemeProvider>
             </div>
           ) : (
-            <div className={styles.emptyKeyButtons}>
+            <Paper className={styles.emptyKeyButtons} variant="none">
               <p>Add a giveaway item on the left.</p>
               <p>(9 buttons max)</p>
-            </div>
+            </Paper>
           )}
           {connection ? (
             <div
