@@ -9,13 +9,12 @@ import {
   winnerSelected,
 } from "../../redux/actions/giveawaySlice";
 import { ShufflePress } from "./ShufflePress";
-import { Button, ThemeProvider } from "@mui/material";
-import { colorTheme } from "../MuiColorThemes";
+import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import ShuffleIcon from "@mui/icons-material/Shuffle";
 
-const ShuffleHandler = () => {
+const ShuffleHandler = ({ menuHidden }) => {
   const dispatch = useDispatch();
   const raffleButtons = useSelector((state) => state.giveaway.buttons);
   const selectedButton = useSelector((state) => state.giveaway.selected);
@@ -66,6 +65,30 @@ const ShuffleHandler = () => {
     });
   };
 
+  let deleteValidation;
+  if (selectedButton.buttonName) {
+    deleteValidation = (
+      <Button
+        fullWidth
+        color="delete"
+        size="large"
+        variant="contained"
+        onClick={() => {
+          deleteHandler();
+        }}
+      >
+        <DeleteIcon />
+        Delete
+      </Button>
+    );
+  } else {
+    deleteValidation = (
+      <Button color="delete" size="large" variant="contained" disabled>
+        <DeleteIcon /> Delete
+      </Button>
+    );
+  }
+
   //Unmounts the button selected and hides on screen
   const resetHandler = () => {
     dispatch(selectButton({}));
@@ -83,53 +106,38 @@ const ShuffleHandler = () => {
   };
 
   return (
-    <div className={styles.shuffleContainer}>
-      <ThemeProvider theme={colorTheme}>
-        <Button
-          fullWidth
-          color="primary"
-          size="large"
-          variant="contained"
-          onClick={() => {
-            shuffle();
-          }}
-        >
-          <ShuffleIcon />
-          Shuffle
-        </Button>
+    <div
+      className={
+        menuHidden ? styles.hiddenShuffleContainer : styles.shuffleContainer
+      }
+    >
+      <Button
+        fullWidth
+        color="primary"
+        size="large"
+        variant="contained"
+        onClick={() => {
+          shuffle();
+        }}
+      >
+        <ShuffleIcon />
+        START!
+      </Button>
 
-        <Button
-          fullWidth
-          color="primary"
-          size="large"
-          variant="contained"
-          onClick={() => {
-            resetHandler();
-          }}
-        >
-          <RestartAltIcon />
-          Reset
-        </Button>
+      <Button
+        fullWidth
+        color="primary"
+        size="large"
+        variant="contained"
+        onClick={() => {
+          resetHandler();
+        }}
+      >
+        <RestartAltIcon />
+        Reset
+      </Button>
 
-        {!selectedButton.buttonName ? (
-          <Button color="delete" size="large" variant="contained" disabled>
-            <DeleteIcon /> Delete
-          </Button>
-        ) : (
-          <Button
-            fullWidth
-            color="delete"
-            size="large"
-            variant="contained"
-            onClick={() => {
-              deleteHandler();
-            }}
-          >
-            <DeleteIcon />
-            Delete
-          </Button>
-        )}
-      </ThemeProvider>
+      {menuHidden ? null : deleteValidation}
     </div>
   );
 };

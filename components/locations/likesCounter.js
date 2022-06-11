@@ -4,6 +4,9 @@ import styles from "../../styles/travel.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Button, IconButton } from "@mui/material";
 
 //empty heart => "\u2661"
 //filled heart => "\u2665"
@@ -77,20 +80,23 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
   };
 
   return (
-    <div className={styles.likesContainer}>
+    <span className={styles.likesContainer}>
       {!likedBool ? (
-        <button
+        <IconButton
+          color="primary"
+          fontSize="small"
           onClick={async () => {
             if (session.status === "authenticated") {
               addLike("add");
             }
           }}
         >
-          {"\u2661"}
-          {liked} likes
-        </button>
+          <p style={{ margin: 0, fontSize: "1rem" }}>{liked}</p>{" "}
+          <FavoriteBorderIcon fontSize="small" />
+        </IconButton>
       ) : (
-        <button
+        <IconButton
+          fontSize="small"
           onClick={async () => {
             if (session.status === "authenticated") {
               await addLike("subtract");
@@ -99,11 +105,11 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
             }
           }}
         >
-          {"\u2665"}
-          {liked} unlike
-        </button>
+          <p style={{ margin: 0, fontSize: "1rem" }}>{liked}</p>
+          <FavoriteIcon fontSize="small" />
+        </IconButton>
       )}
-    </div>
+    </span>
   );
 };
 

@@ -11,6 +11,7 @@ import { ShufflePress } from "../giveaway/ShufflePress";
 import TimerButtons from "../giveaway/TimerButtons";
 import TextColor from "../giveaway/TextColor";
 import ColorKey from "../giveaway/ColorKey";
+import { Button, ButtonGroup } from "@mui/material";
 
 const RaffleControlPanel = () => {
   const dispatch = useDispatch();
@@ -79,7 +80,9 @@ const RaffleControlPanel = () => {
   //Maps all the buttons in the buttons panel
   const keyButtons = buttons?.map((button) => {
     return (
-      <button
+      <Button
+        variant="contained"
+        color="primary"
         key={`${button.title} ${button.buttonName}`}
         onClick={() => {
           selectorHandler(button);
@@ -91,14 +94,12 @@ const RaffleControlPanel = () => {
         }
       >
         {button.buttonName}
-      </button>
+      </Button>
     );
   });
 
   const hideOverlayHandler = () => {
     setHideOverlay(!hideOverlay);
-
-    console.log(hideOverlay);
 
     fetch("api/raffleSocket", {
       method: "POST",
@@ -113,23 +114,40 @@ const RaffleControlPanel = () => {
 
   return (
     <div className={styles.rafflePanelContainer}>
-      <div className={styles.raffleButtonsContainer}>{keyButtons}</div>
+      <div className={styles.raffleButtonsContainer}>
+        <ButtonGroup
+          orientation="vertical"
+          fullWidth={true}
+          variant="contained"
+        >
+          {keyButtons}
+        </ButtonGroup>
+      </div>
       <div className={styles.raffleShuffleContainer}>
-        <button
+        <Button
+          fullWidth
+          color="primary"
+          size="large"
+          variant="contained"
           onClick={() => {
             shuffle();
           }}
         >
           Shuffle
-        </button>
-        <button
+        </Button>
+        <Button
+          fullWidth
+          color="primary"
+          size="large"
+          variant="contained"
           onClick={() => {
             resetHandler();
           }}
         >
           Reset
-        </button>
+        </Button>
       </div>
+
       <div className={styles.raffleTimersContainer}>
         <TimerButtons />
       </div>
@@ -137,13 +155,13 @@ const RaffleControlPanel = () => {
         <TextColor />
         <ColorKey />
         <div>
-          <button
+          <Button
             onClick={() => {
               hideOverlayHandler();
             }}
           >
             Toggle Menu Opacity
-          </button>
+          </Button>
         </div>
       </div>
     </div>

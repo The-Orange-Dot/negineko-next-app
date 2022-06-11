@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { SessionProvider } from "next-auth/react";
 import { PersistGate } from "redux-persist/integration/react";
 import { AppProps } from "next/dist/shared/lib/router/router";
+import { ThemeProvider } from "@mui/material";
+import { colorTheme } from "../components/MuiColorThemes";
 
 let persistor = persistStore(store);
 
@@ -15,8 +17,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     <SessionProvider session={session}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Navbar />
-          <Component {...pageProps} />
+          <ThemeProvider theme={colorTheme}>
+            <Navbar />
+            <Component {...pageProps} />
+          </ThemeProvider>
         </PersistGate>
       </Provider>
     </SessionProvider>

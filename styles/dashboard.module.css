@@ -55,7 +55,7 @@
   width: 250px;
   height: 92.5%;
   left: -250px;
-  background-color: #b2deef;
+  background-color: #72cff8;
   padding-left: 10px;
   padding-right: 10px;
   box-shadow: 3px 5px 8px 5px rgba(0, 0, 0, 0.1);
@@ -71,7 +71,7 @@
   border-radius: 100%;
   left: 210px;
   top: 40%;
-  background-color: #b2deef;
+  background-color: #72cff8;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -213,7 +213,7 @@
   height: 50px;
   width: 100px;
   position: absolute;
-  background-color: #b2deef;
+  background-color: #72cff8;
   bottom: 2%;
   left: -175px;
   z-index: 4;

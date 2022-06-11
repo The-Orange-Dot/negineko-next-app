@@ -15,6 +15,10 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import LikesCounter from "../../components/locations/likesCounter";
 import { useRouter } from "next/router";
+import LanguageIcon from "@mui/icons-material/Language";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import { Button, IconButton } from "@mui/material";
 
 const Travel = () => {
   const router = useRouter();
@@ -144,13 +148,6 @@ const Travel = () => {
                       </span>
                     </Link>
                   </div>
-                  <LikesCounter
-                    setLoading={setLoading}
-                    username={username}
-                    location={location}
-                    id={location.item ? location.item.id : location.id}
-                    likes={location.item ? location.item.likes : location.likes}
-                  />
                 </>
               )}
               <p>{location.item ? location.item.caption : location.caption}</p>
@@ -163,17 +160,28 @@ const Travel = () => {
                 </p>
               </span>
               {pageLoaded ? (
-                <div>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <LikesCounter
+                    setLoading={setLoading}
+                    username={username}
+                    location={location}
+                    id={location.item ? location.item.id : location.id}
+                    likes={location.item ? location.item.likes : location.likes}
+                  />
                   {/*Website Check*/}
                   {location.item ? (
                     location.item.website ? (
                       <Link href={location.item.website} passHref={true}>
-                        <button>Homepage</button>
+                        <IconButton color="primary">
+                          <LanguageIcon />
+                        </IconButton>
                       </Link>
                     ) : null
                   ) : location.website ? (
                     <Link href={location.website} passHref={true}>
-                      <button>Homepage</button>
+                      <IconButton color="primary">
+                        <LanguageIcon />
+                      </IconButton>
                     </Link>
                   ) : null}
 
@@ -184,7 +192,9 @@ const Travel = () => {
                         href={`https://twitter.com/${location.item.twitter}`}
                         passHref={true}
                       >
-                        <button>Twitter</button>
+                        <IconButton color="primary">
+                          <TwitterIcon />
+                        </IconButton>
                       </Link>
                     ) : null
                   ) : location.twitter ? (
@@ -192,7 +202,9 @@ const Travel = () => {
                       href={`https://twitter.com/${location.twitter}`}
                       passHref={true}
                     >
-                      <button>Twitter</button>
+                      <IconButton color="primary">
+                        <TwitterIcon />
+                      </IconButton>
                     </Link>
                   ) : null}
 
@@ -203,7 +215,9 @@ const Travel = () => {
                         href={`https://www.instagram.com/${location.item.instagram}/`}
                         passHref={true}
                       >
-                        <button>Instagram</button>
+                        <IconButton color="primary">
+                          <InstagramIcon />
+                        </IconButton>
                       </Link>
                     ) : null
                   ) : location.instagram ? (
@@ -211,7 +225,9 @@ const Travel = () => {
                       href={`https://www.instagram.com/${location.instagram}/`}
                       passHref={true}
                     >
-                      <button>Instagram</button>
+                      <IconButton color="primary">
+                        <InstagramIcon />
+                      </IconButton>
                     </Link>
                   ) : null}
                 </div>

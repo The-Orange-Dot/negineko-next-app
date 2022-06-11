@@ -214,3 +214,32 @@
   z-index: -1;
   transition: 0.5s;
 }
+
+/* ===========MINI MENU============== */
+
+.miniControlsContainer {
+  height: 50px;
+  width: 96%;
+  max-width: 1500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+}
+
+.hiddenShuffleContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.openMenuButton {
+  width: 20%;
+}

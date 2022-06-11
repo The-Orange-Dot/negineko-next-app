@@ -8,8 +8,7 @@ import { useSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { selectButton } from "../../redux/actions/giveawaySlice";
-import { ButtonGroup, Button, ThemeProvider, Paper } from "@mui/material";
-import { colorTheme } from "../MuiColorThemes";
+import { ButtonGroup, Button, Paper } from "@mui/material";
 import ColorKey from "./ColorKey";
 
 export default function Giveaway() {
@@ -22,6 +21,7 @@ export default function Giveaway() {
   const connection = useSelector((state) => state.socket.connected);
   const [timer, setTimer] = useState([400, 120, 60, 20]);
   const mods = useSelector((state) => state);
+  const [menuHidden, setMenuHidden] = useState(false);
 
   //Tracks which key you've pressed
   const selectorHandler = (e) => {
@@ -79,7 +79,7 @@ export default function Giveaway() {
       </div>
     );
   } else if (session.status === "authenticated") {
-    return (
+    return !menuHidden ? (
       <Paper
         className={styles.controlsContainer}
         elevation={2}
@@ -100,15 +100,13 @@ export default function Giveaway() {
         >
           {keyButtons?.length > 0 ? (
             <div className={styles.keyButtons}>
-              <ThemeProvider theme={colorTheme}>
-                <ButtonGroup
-                  orientation="vertical"
-                  fullWidth={true}
-                  variant="contained"
-                >
-                  {keyButtons}
-                </ButtonGroup>
-              </ThemeProvider>
+              <ButtonGroup
+                orientation="vertical"
+                fullWidth={true}
+                variant="contained"
+              >
+                {keyButtons}
+              </ButtonGroup>
             </div>
           ) : (
             <Paper className={styles.emptyKeyButtons} variant="none">
@@ -155,6 +153,31 @@ export default function Giveaway() {
         >
           <TextColor />
           <ColorKey />
+          <Button
+            onClick={() => {
+              setMenuHidden(true);
+            }}
+          >
+            Condense Menu
+          </Button>
+        </div>
+      </Paper>
+    ) : (
+      <Paper className={styles.miniControlsContainer}>
+        <div style={{ width: "60%" }}>
+          <ButtonGroup variant="contained">{keyButtons}</ButtonGroup>
+        </div>
+        <div style={{ width: "40%", display: "flex" }}>
+          <ShuffleHandler menuHidden={menuHidden} />
+          <Button
+            className={styles.openMenuButton}
+            size="small"
+            onClick={() => {
+              setMenuHidden(false);
+            }}
+          >
+            Open Menu
+          </Button>
         </div>
       </Paper>
     );
