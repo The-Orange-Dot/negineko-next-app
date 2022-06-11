@@ -9,7 +9,8 @@ import {
 import { useSession } from "next-auth/react";
 import { ShufflePress } from "../giveaway/ShufflePress";
 import TimerButtons from "../giveaway/TimerButtons";
-import Options from "../giveaway/Options";
+import TextColor from "../giveaway/TextColor";
+import ColorKey from "../giveaway/ColorKey";
 
 const RaffleControlPanel = () => {
   const dispatch = useDispatch();
@@ -19,8 +20,6 @@ const RaffleControlPanel = () => {
   const selectedButton = useSelector((state) => state.giveaway.selected);
   const mods = useSelector((state) => state.mods.mods);
   const [hideOverlay, setHideOverlay] = useState(false);
-
-  console.log(mods);
 
   //Shuffles and sends shuffle command to websocket
   const shuffle = () => {
@@ -135,7 +134,8 @@ const RaffleControlPanel = () => {
         <TimerButtons />
       </div>
       <div className={styles.raffleOptionsContainer}>
-        <Options />
+        <TextColor />
+        <ColorKey />
         <div>
           <button
             onClick={() => {

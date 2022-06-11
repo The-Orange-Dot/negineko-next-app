@@ -4,6 +4,9 @@ import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { addButton } from "../../redux/actions/giveawaySlice";
+import { TextField, Button, ThemeProvider } from "@mui/material";
+import { colorTheme } from "../MuiColorThemes";
+import AddIcon from "@mui/icons-material/Add";
 
 const AddButtons = () => {
   const session = useSession();
@@ -15,8 +18,6 @@ const AddButtons = () => {
   const modFor = session.data.modFor;
   const darkMode = useSelector((state) => state.darkMode.value);
   const socket = useSelector((state) => state.socket.value.socket);
-
-  console.log(mods);
 
   const addNewItem = async () => {
     const newButton = {
@@ -40,54 +41,69 @@ const AddButtons = () => {
   };
 
   return (
-    <>
-      <div className={styles.inputContainer}>
-        <input
-          className={darkMode ? styles.darkTextBox : styles.textBox}
-          type="text"
-          name="name"
-          placeholder="Button Name"
-          onChange={(e) => {
-            setButtonNameInput(e.target.value);
-          }}
-          maxLength="10"
-          required
-        />
-        <input
-          className={darkMode ? styles.darkTextBox : styles.textBox}
-          type="text"
-          name="description"
-          placeholder='Title (ex: "Gaming mouse Giveaway")'
-          onChange={(e) => {
-            setDescriptionInput(e.target.value);
-          }}
-          maxLength="100"
-          required
-        />
-        <textarea
-          className={darkMode ? styles.darkTextBox : styles.textBox}
-          type="text"
-          name="users"
-          placeholder='Users - Seperate users with a space (ex: "mocchan nacchan debuneko draculabot")'
-          onChange={(e) => {
-            setUserInput(e.target.value);
-          }}
-          rows="8"
-          cols="50"
-          required
-          style={{ resize: "none" }}
-        />
-      </div>
+    <span className={styles.formInputContainer}>
       <div className={styles.submitButton}>
-        <button
-          onClick={() => {
-            addNewItem();
-          }}
-        >
-          Submit
-        </button>
+        <ThemeProvider theme={colorTheme}>
+          <Button
+            color={colorTheme.primary}
+            variant="contained"
+            onClick={() => {
+              addNewItem();
+            }}
+            style={{ marginRight: 5 }}
+          >
+            <AddIcon />
+          </Button>
+          <div className={styles.inputContainer}>
+            <TextField
+              hiddenLabel
+              variant="filled"
+              size="small"
+              className={darkMode ? styles.darkTextBox : styles.textBox}
+              type="text"
+              name="name"
+              placeholder="Button Name"
+              onChange={(e) => {
+                setButtonNameInput(e.target.value);
+              }}
+              maxLength="10"
+              required
+            />
+            <TextField
+              hiddenLabel
+              variant="filled"
+              size="small"
+              className={darkMode ? styles.darkTextBox : styles.textBox}
+              type="text"
+              name="description"
+              placeholder='Title (ex: "Gaming mouse Giveaway")'
+              onChange={(e) => {
+                setDescriptionInput(e.target.value);
+              }}
+              maxLength="100"
+              required
+            />
+            <TextField
+              hiddenLabel
+              variant="filled"
+              size="small"
+              multiline={true}
+              row="1"
+              className={darkMode ? styles.darkTextBox : styles.textBox}
+              type="text"
+              name="users"
+              placeholder='Users - Seperate users with a space (ex: "mocchan nacchan debuneko draculabot")'
+              onChange={(e) => {
+                setUserInput(e.target.value);
+              }}
+              cols="50"
+              required
+              style={{ resize: "none" }}
+            />
+          </div>
+        </ThemeProvider>
       </div>
-    </>
+    </span>
   );
 };
 

@@ -48,6 +48,7 @@
 
 .editTextContainer {
   margin: 0;
+  position: fixed;
   width: fit-content;
   max-width: fit-content;
   display: inline-block;

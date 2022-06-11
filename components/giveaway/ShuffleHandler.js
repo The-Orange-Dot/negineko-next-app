@@ -9,6 +9,11 @@ import {
   winnerSelected,
 } from "../../redux/actions/giveawaySlice";
 import { ShufflePress } from "./ShufflePress";
+import { Button, ThemeProvider } from "@mui/material";
+import { colorTheme } from "../MuiColorThemes";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import ShuffleIcon from "@mui/icons-material/Shuffle";
 
 const ShuffleHandler = () => {
   const dispatch = useDispatch();
@@ -18,6 +23,8 @@ const ShuffleHandler = () => {
   const mods = useSelector((state) => state.mods.mods);
   const timer = useSelector((state) => state.giveaway.timer);
   const userArray = selectedButton?.users;
+
+  console.log(!selectedButton.buttonName);
 
   //Shuffles and sends shuffle command to websocket
   const shuffle = () => {
@@ -77,33 +84,52 @@ const ShuffleHandler = () => {
 
   return (
     <div className={styles.shuffleContainer}>
-      <span>
-        <button
+      <ThemeProvider theme={colorTheme}>
+        <Button
+          fullWidth
+          color="primary"
+          size="large"
+          variant="contained"
           onClick={() => {
             shuffle();
           }}
         >
+          <ShuffleIcon />
           Shuffle
-        </button>
-      </span>
-      <span>
-        <button
+        </Button>
+
+        <Button
+          fullWidth
+          color="primary"
+          size="large"
+          variant="contained"
           onClick={() => {
             resetHandler();
           }}
         >
+          <RestartAltIcon />
           Reset
-        </button>
-      </span>
-      <span>
-        <button
-          onClick={() => {
-            deleteHandler();
-          }}
-        >
-          Delete Selected
-        </button>
-      </span>
+        </Button>
+
+        {!selectedButton.buttonName ? (
+          <Button color="delete" size="large" variant="contained" disabled>
+            <DeleteIcon /> Delete
+          </Button>
+        ) : (
+          <Button
+            fullWidth
+            color="delete"
+            size="large"
+            variant="contained"
+            onClick={() => {
+              deleteHandler();
+            }}
+          >
+            <DeleteIcon />
+            Delete
+          </Button>
+        )}
+      </ThemeProvider>
     </div>
   );
 };

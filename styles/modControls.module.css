@@ -100,9 +100,7 @@
 }
 
 .raffleTimersContainer {
-  height: 100%;
   width: 20%;
-
   display: flex;
   justify-items: center;
   align-items: center;

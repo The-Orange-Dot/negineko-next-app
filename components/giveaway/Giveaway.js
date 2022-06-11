@@ -3,11 +3,14 @@ import { useState } from "react";
 import ShuffleHandler from "./ShuffleHandler";
 import AddButtons from "./AddButtons";
 import TimerButtons from "./TimerButtons";
-import Options from "./Options";
+import TextColor from "./TextColor";
 import { useSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { selectButton } from "../../redux/actions/giveawaySlice";
+import { ButtonGroup, Button, ThemeProvider, Paper } from "@mui/material";
+import { colorTheme } from "../MuiColorThemes";
+import ColorKey from "./ColorKey";
 
 export default function Giveaway() {
   const dispatch = useDispatch();
@@ -19,8 +22,6 @@ export default function Giveaway() {
   const connection = useSelector((state) => state.socket.connected);
   const [timer, setTimer] = useState([400, 120, 60, 20]);
   const mods = useSelector((state) => state);
-
-  console.log(mods);
 
   //Tracks which key you've pressed
   const selectorHandler = (e) => {
@@ -39,7 +40,9 @@ export default function Giveaway() {
   //List of all created Buttons
   const keyButtons = raffleButtons?.map((button) => {
     return (
-      <button
+      <Button
+        variant="contained"
+        color="primary"
         key={`${button.title} ${button.buttonName}`}
         onClick={() => {
           selectorHandler(button);
@@ -51,7 +54,7 @@ export default function Giveaway() {
         }
       >
         {button.buttonName}
-      </button>
+      </Button>
     );
   });
 
@@ -77,7 +80,11 @@ export default function Giveaway() {
     );
   } else if (session.status === "authenticated") {
     return (
-      <div className={styles.controlsContainer}>
+      <Paper
+        className={styles.controlsContainer}
+        elevation={2}
+        variant="elevation"
+      >
         {/* ADD USERNAMES CONTAINER */}
         <div
           className={styles.formContainer}
@@ -92,7 +99,18 @@ export default function Giveaway() {
           style={hide ? { opacity: 0 } : { opacity: 1 }}
         >
           {keyButtons?.length > 0 ? (
-            <div className={styles.keyButtons}>{keyButtons}</div>
+            <div className={styles.keyButtons}>
+              <ThemeProvider theme={colorTheme}>
+                <ButtonGroup
+                  orientation="vertical"
+                  fullWidth={true}
+                  variant="contained"
+                  disableElevation
+                >
+                  {keyButtons}
+                </ButtonGroup>
+              </ThemeProvider>
+            </div>
           ) : (
             <div className={styles.emptyKeyButtons}>
               <p>Add a giveaway item on the left.</p>
@@ -120,9 +138,7 @@ export default function Giveaway() {
           className={styles.controls}
           style={hide ? { opacity: 0 } : { opacity: 1 }}
         >
-          <div style={{ margin: "10%" }}>
-            <ShuffleHandler timer={timer} />
-          </div>
+          <ShuffleHandler timer={timer} />
         </div>
 
         {/* TIMER BUTTONS */}
@@ -138,9 +154,10 @@ export default function Giveaway() {
           className={styles.optionsContainer}
           style={hide ? { opacity: 0 } : { opacity: 1 }}
         >
-          <Options />
+          <TextColor />
+          <ColorKey />
         </div>
-      </div>
+      </Paper>
     );
   } else if (session.status === "unauthenticated") {
     console.log("Unauthorized");
