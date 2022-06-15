@@ -916,14 +916,14 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     accounts: number
-    sessions: number
     mods: number
+    sessions: number
   }
 
   export type UserCountOutputTypeSelect = {
     accounts?: boolean
-    sessions?: boolean
     mods?: boolean
+    sessions?: boolean
   }
 
   export type UserCountOutputTypeGetPayload<
@@ -3933,23 +3933,23 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
-    accounts?: boolean | AccountFindManyArgs
-    sessions?: boolean | SessionFindManyArgs
     location_likes?: boolean
     streamer?: boolean
-    mods?: boolean | ModFindManyArgs
     mod?: boolean
     modRequestSent?: boolean
     modRequestReceived?: boolean
     modsPending?: boolean
     modFor?: boolean
+    accounts?: boolean | AccountFindManyArgs
+    mods?: boolean | ModFindManyArgs
+    sessions?: boolean | SessionFindManyArgs
     _count?: boolean | UserCountOutputTypeArgs
   }
 
   export type UserInclude = {
     accounts?: boolean | AccountFindManyArgs
-    sessions?: boolean | SessionFindManyArgs
     mods?: boolean | ModFindManyArgs
+    sessions?: boolean | SessionFindManyArgs
     _count?: boolean | UserCountOutputTypeArgs
   }
 
@@ -3965,16 +3965,16 @@ export namespace Prisma {
     ? User  & {
     [P in TrueKeys<S['include']>]:
         P extends 'accounts' ? Array < AccountGetPayload<S['include'][P]>>  :
-        P extends 'sessions' ? Array < SessionGetPayload<S['include'][P]>>  :
         P extends 'mods' ? Array < ModGetPayload<S['include'][P]>>  :
+        P extends 'sessions' ? Array < SessionGetPayload<S['include'][P]>>  :
         P extends '_count' ? UserCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : 'select' extends U
     ? {
     [P in TrueKeys<S['select']>]:
         P extends 'accounts' ? Array < AccountGetPayload<S['select'][P]>>  :
-        P extends 'sessions' ? Array < SessionGetPayload<S['select'][P]>>  :
         P extends 'mods' ? Array < ModGetPayload<S['select'][P]>>  :
+        P extends 'sessions' ? Array < SessionGetPayload<S['select'][P]>>  :
         P extends '_count' ? UserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof User ? User[P] : never
   } 
     : User
@@ -4317,9 +4317,9 @@ export namespace Prisma {
 
     accounts<T extends AccountFindManyArgs = {}>(args?: Subset<T, AccountFindManyArgs>): CheckSelect<T, PrismaPromise<Array<Account>>, PrismaPromise<Array<AccountGetPayload<T>>>>;
 
-    sessions<T extends SessionFindManyArgs = {}>(args?: Subset<T, SessionFindManyArgs>): CheckSelect<T, PrismaPromise<Array<Session>>, PrismaPromise<Array<SessionGetPayload<T>>>>;
-
     mods<T extends ModFindManyArgs = {}>(args?: Subset<T, ModFindManyArgs>): CheckSelect<T, PrismaPromise<Array<Mod>>, PrismaPromise<Array<ModGetPayload<T>>>>;
+
+    sessions<T extends SessionFindManyArgs = {}>(args?: Subset<T, SessionFindManyArgs>): CheckSelect<T, PrismaPromise<Array<Session>>, PrismaPromise<Array<SessionGetPayload<T>>>>;
 
     private get _document();
     /**
@@ -7512,16 +7512,16 @@ export namespace Prisma {
     email?: StringNullableFilter | string | null
     emailVerified?: DateTimeNullableFilter | Date | string | null
     image?: StringNullableFilter | string | null
-    accounts?: AccountListRelationFilter
-    sessions?: SessionListRelationFilter
     location_likes?: StringNullableListFilter
     streamer?: BoolFilter | boolean
-    mods?: ModListRelationFilter
     mod?: BoolFilter | boolean
     modRequestSent?: StringNullableListFilter
     modRequestReceived?: StringNullableListFilter
     modsPending?: StringNullableListFilter
     modFor?: StringNullableFilter | string | null
+    accounts?: AccountListRelationFilter
+    mods?: ModListRelationFilter
+    sessions?: SessionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7530,16 +7530,16 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
-    accounts?: AccountOrderByRelationAggregateInput
-    sessions?: SessionOrderByRelationAggregateInput
     location_likes?: SortOrder
     streamer?: SortOrder
-    mods?: ModOrderByRelationAggregateInput
     mod?: SortOrder
     modRequestSent?: SortOrder
     modRequestReceived?: SortOrder
     modsPending?: SortOrder
     modFor?: SortOrder
+    accounts?: AccountOrderByRelationAggregateInput
+    mods?: ModOrderByRelationAggregateInput
+    sessions?: SessionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = {
@@ -8029,16 +8029,16 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
     location_likes?: UserCreatelocation_likesInput | Enumerable<string>
     streamer?: boolean
-    mods?: ModCreateNestedManyWithoutUserInput
     mod?: boolean
     modRequestSent?: UserCreatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserCreatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserCreatemodsPendingInput | Enumerable<string>
     modFor?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    mods?: ModCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8047,16 +8047,16 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     location_likes?: UserCreatelocation_likesInput | Enumerable<string>
     streamer?: boolean
-    mods?: ModUncheckedCreateNestedManyWithoutUserInput
     mod?: boolean
     modRequestSent?: UserCreatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserCreatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserCreatemodsPendingInput | Enumerable<string>
     modFor?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    mods?: ModUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -8065,16 +8065,16 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUpdateManyWithoutUserInput
-    sessions?: SessionUpdateManyWithoutUserInput
     location_likes?: UserUpdatelocation_likesInput | Enumerable<string>
     streamer?: BoolFieldUpdateOperationsInput | boolean
-    mods?: ModUpdateManyWithoutUserInput
     mod?: BoolFieldUpdateOperationsInput | boolean
     modRequestSent?: UserUpdatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserUpdatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserUpdatemodsPendingInput | Enumerable<string>
     modFor?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserInput
+    mods?: ModUpdateManyWithoutUserInput
+    sessions?: SessionUpdateManyWithoutUserInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8083,16 +8083,16 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUncheckedUpdateManyWithoutUserInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserInput
     location_likes?: UserUpdatelocation_likesInput | Enumerable<string>
     streamer?: BoolFieldUpdateOperationsInput | boolean
-    mods?: ModUncheckedUpdateManyWithoutUserInput
     mod?: BoolFieldUpdateOperationsInput | boolean
     modRequestSent?: UserUpdatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserUpdatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserUpdatemodsPendingInput | Enumerable<string>
     modFor?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserInput
+    mods?: ModUncheckedUpdateManyWithoutUserInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserInput
   }
 
   export type UserCreateManyInput = {
@@ -8633,21 +8633,15 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter | Date | string | null
   }
 
+  export type BoolFilter = {
+    equals?: boolean
+    not?: NestedBoolFilter | boolean
+  }
+
   export type AccountListRelationFilter = {
     every?: AccountWhereInput
     some?: AccountWhereInput
     none?: AccountWhereInput
-  }
-
-  export type SessionListRelationFilter = {
-    every?: SessionWhereInput
-    some?: SessionWhereInput
-    none?: SessionWhereInput
-  }
-
-  export type BoolFilter = {
-    equals?: boolean
-    not?: NestedBoolFilter | boolean
   }
 
   export type ModListRelationFilter = {
@@ -8656,15 +8650,21 @@ export namespace Prisma {
     none?: ModWhereInput
   }
 
+  export type SessionListRelationFilter = {
+    every?: SessionWhereInput
+    some?: SessionWhereInput
+    none?: SessionWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type SessionOrderByRelationAggregateInput = {
+  export type ModOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type ModOrderByRelationAggregateInput = {
+  export type SessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8870,29 +8870,8 @@ export namespace Prisma {
     update?: XOR<UserUpdateWithoutSessionsInput, UserUncheckedUpdateWithoutSessionsInput>
   }
 
-  export type AccountCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<AccountCreateWithoutUserInput>, Enumerable<AccountUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<AccountCreateOrConnectWithoutUserInput>
-    createMany?: AccountCreateManyUserInputEnvelope
-    connect?: Enumerable<AccountWhereUniqueInput>
-  }
-
-  export type SessionCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<SessionCreateWithoutUserInput>, Enumerable<SessionUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<SessionCreateOrConnectWithoutUserInput>
-    createMany?: SessionCreateManyUserInputEnvelope
-    connect?: Enumerable<SessionWhereUniqueInput>
-  }
-
   export type UserCreatelocation_likesInput = {
     set: Enumerable<string>
-  }
-
-  export type ModCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<ModCreateWithoutUserInput>, Enumerable<ModUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<ModCreateOrConnectWithoutUserInput>
-    createMany?: ModCreateManyUserInputEnvelope
-    connect?: Enumerable<ModWhereUniqueInput>
   }
 
   export type UserCreatemodRequestSentInput = {
@@ -8907,18 +8886,32 @@ export namespace Prisma {
     set: Enumerable<string>
   }
 
-  export type AccountUncheckedCreateNestedManyWithoutUserInput = {
+  export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<Enumerable<AccountCreateWithoutUserInput>, Enumerable<AccountUncheckedCreateWithoutUserInput>>
     connectOrCreate?: Enumerable<AccountCreateOrConnectWithoutUserInput>
     createMany?: AccountCreateManyUserInputEnvelope
     connect?: Enumerable<AccountWhereUniqueInput>
   }
 
-  export type SessionUncheckedCreateNestedManyWithoutUserInput = {
+  export type ModCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<ModCreateWithoutUserInput>, Enumerable<ModUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<ModCreateOrConnectWithoutUserInput>
+    createMany?: ModCreateManyUserInputEnvelope
+    connect?: Enumerable<ModWhereUniqueInput>
+  }
+
+  export type SessionCreateNestedManyWithoutUserInput = {
     create?: XOR<Enumerable<SessionCreateWithoutUserInput>, Enumerable<SessionUncheckedCreateWithoutUserInput>>
     connectOrCreate?: Enumerable<SessionCreateOrConnectWithoutUserInput>
     createMany?: SessionCreateManyUserInputEnvelope
     connect?: Enumerable<SessionWhereUniqueInput>
+  }
+
+  export type AccountUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<AccountCreateWithoutUserInput>, Enumerable<AccountUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<AccountCreateOrConnectWithoutUserInput>
+    createMany?: AccountCreateManyUserInputEnvelope
+    connect?: Enumerable<AccountWhereUniqueInput>
   }
 
   export type ModUncheckedCreateNestedManyWithoutUserInput = {
@@ -8928,36 +8921,15 @@ export namespace Prisma {
     connect?: Enumerable<ModWhereUniqueInput>
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
-  export type AccountUpdateManyWithoutUserInput = {
-    create?: XOR<Enumerable<AccountCreateWithoutUserInput>, Enumerable<AccountUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<AccountCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<AccountUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: AccountCreateManyUserInputEnvelope
-    set?: Enumerable<AccountWhereUniqueInput>
-    disconnect?: Enumerable<AccountWhereUniqueInput>
-    delete?: Enumerable<AccountWhereUniqueInput>
-    connect?: Enumerable<AccountWhereUniqueInput>
-    update?: Enumerable<AccountUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<AccountUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<AccountScalarWhereInput>
-  }
-
-  export type SessionUpdateManyWithoutUserInput = {
+  export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<Enumerable<SessionCreateWithoutUserInput>, Enumerable<SessionUncheckedCreateWithoutUserInput>>
     connectOrCreate?: Enumerable<SessionCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<SessionUpsertWithWhereUniqueWithoutUserInput>
     createMany?: SessionCreateManyUserInputEnvelope
-    set?: Enumerable<SessionWhereUniqueInput>
-    disconnect?: Enumerable<SessionWhereUniqueInput>
-    delete?: Enumerable<SessionWhereUniqueInput>
     connect?: Enumerable<SessionWhereUniqueInput>
-    update?: Enumerable<SessionUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<SessionUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<SessionScalarWhereInput>
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type UserUpdatelocation_likesInput = {
@@ -8967,20 +8939,6 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
-  }
-
-  export type ModUpdateManyWithoutUserInput = {
-    create?: XOR<Enumerable<ModCreateWithoutUserInput>, Enumerable<ModUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<ModCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<ModUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: ModCreateManyUserInputEnvelope
-    set?: Enumerable<ModWhereUniqueInput>
-    disconnect?: Enumerable<ModWhereUniqueInput>
-    delete?: Enumerable<ModWhereUniqueInput>
-    connect?: Enumerable<ModWhereUniqueInput>
-    update?: Enumerable<ModUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<ModUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<ModScalarWhereInput>
   }
 
   export type UserUpdatemodRequestSentInput = {
@@ -8998,6 +8956,48 @@ export namespace Prisma {
     push?: string | Enumerable<string>
   }
 
+  export type AccountUpdateManyWithoutUserInput = {
+    create?: XOR<Enumerable<AccountCreateWithoutUserInput>, Enumerable<AccountUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<AccountCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<AccountUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: AccountCreateManyUserInputEnvelope
+    set?: Enumerable<AccountWhereUniqueInput>
+    disconnect?: Enumerable<AccountWhereUniqueInput>
+    delete?: Enumerable<AccountWhereUniqueInput>
+    connect?: Enumerable<AccountWhereUniqueInput>
+    update?: Enumerable<AccountUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<AccountUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<AccountScalarWhereInput>
+  }
+
+  export type ModUpdateManyWithoutUserInput = {
+    create?: XOR<Enumerable<ModCreateWithoutUserInput>, Enumerable<ModUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<ModCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<ModUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: ModCreateManyUserInputEnvelope
+    set?: Enumerable<ModWhereUniqueInput>
+    disconnect?: Enumerable<ModWhereUniqueInput>
+    delete?: Enumerable<ModWhereUniqueInput>
+    connect?: Enumerable<ModWhereUniqueInput>
+    update?: Enumerable<ModUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<ModUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<ModScalarWhereInput>
+  }
+
+  export type SessionUpdateManyWithoutUserInput = {
+    create?: XOR<Enumerable<SessionCreateWithoutUserInput>, Enumerable<SessionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<SessionCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<SessionUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: SessionCreateManyUserInputEnvelope
+    set?: Enumerable<SessionWhereUniqueInput>
+    disconnect?: Enumerable<SessionWhereUniqueInput>
+    delete?: Enumerable<SessionWhereUniqueInput>
+    connect?: Enumerable<SessionWhereUniqueInput>
+    update?: Enumerable<SessionUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<SessionUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<SessionScalarWhereInput>
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserInput = {
     create?: XOR<Enumerable<AccountCreateWithoutUserInput>, Enumerable<AccountUncheckedCreateWithoutUserInput>>
     connectOrCreate?: Enumerable<AccountCreateOrConnectWithoutUserInput>
@@ -9012,20 +9012,6 @@ export namespace Prisma {
     deleteMany?: Enumerable<AccountScalarWhereInput>
   }
 
-  export type SessionUncheckedUpdateManyWithoutUserInput = {
-    create?: XOR<Enumerable<SessionCreateWithoutUserInput>, Enumerable<SessionUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<SessionCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<SessionUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: SessionCreateManyUserInputEnvelope
-    set?: Enumerable<SessionWhereUniqueInput>
-    disconnect?: Enumerable<SessionWhereUniqueInput>
-    delete?: Enumerable<SessionWhereUniqueInput>
-    connect?: Enumerable<SessionWhereUniqueInput>
-    update?: Enumerable<SessionUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<SessionUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<SessionScalarWhereInput>
-  }
-
   export type ModUncheckedUpdateManyWithoutUserInput = {
     create?: XOR<Enumerable<ModCreateWithoutUserInput>, Enumerable<ModUncheckedCreateWithoutUserInput>>
     connectOrCreate?: Enumerable<ModCreateOrConnectWithoutUserInput>
@@ -9038,6 +9024,20 @@ export namespace Prisma {
     update?: Enumerable<ModUpdateWithWhereUniqueWithoutUserInput>
     updateMany?: Enumerable<ModUpdateManyWithWhereWithoutUserInput>
     deleteMany?: Enumerable<ModScalarWhereInput>
+  }
+
+  export type SessionUncheckedUpdateManyWithoutUserInput = {
+    create?: XOR<Enumerable<SessionCreateWithoutUserInput>, Enumerable<SessionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<SessionCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<SessionUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: SessionCreateManyUserInputEnvelope
+    set?: Enumerable<SessionWhereUniqueInput>
+    disconnect?: Enumerable<SessionWhereUniqueInput>
+    delete?: Enumerable<SessionWhereUniqueInput>
+    connect?: Enumerable<SessionWhereUniqueInput>
+    update?: Enumerable<SessionUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<SessionUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<SessionScalarWhereInput>
   }
 
   export type UserCreateNestedOneWithoutModsInput = {
@@ -9270,15 +9270,15 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    sessions?: SessionCreateNestedManyWithoutUserInput
     location_likes?: UserCreatelocation_likesInput | Enumerable<string>
     streamer?: boolean
-    mods?: ModCreateNestedManyWithoutUserInput
     mod?: boolean
     modRequestSent?: UserCreatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserCreatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserCreatemodsPendingInput | Enumerable<string>
     modFor?: string | null
+    mods?: ModCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -9287,15 +9287,15 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     location_likes?: UserCreatelocation_likesInput | Enumerable<string>
     streamer?: boolean
-    mods?: ModUncheckedCreateNestedManyWithoutUserInput
     mod?: boolean
     modRequestSent?: UserCreatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserCreatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserCreatemodsPendingInput | Enumerable<string>
     modFor?: string | null
+    mods?: ModUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -9314,15 +9314,15 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    sessions?: SessionUpdateManyWithoutUserInput
     location_likes?: UserUpdatelocation_likesInput | Enumerable<string>
     streamer?: BoolFieldUpdateOperationsInput | boolean
-    mods?: ModUpdateManyWithoutUserInput
     mod?: BoolFieldUpdateOperationsInput | boolean
     modRequestSent?: UserUpdatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserUpdatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserUpdatemodsPendingInput | Enumerable<string>
     modFor?: NullableStringFieldUpdateOperationsInput | string | null
+    mods?: ModUpdateManyWithoutUserInput
+    sessions?: SessionUpdateManyWithoutUserInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -9331,15 +9331,15 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    sessions?: SessionUncheckedUpdateManyWithoutUserInput
     location_likes?: UserUpdatelocation_likesInput | Enumerable<string>
     streamer?: BoolFieldUpdateOperationsInput | boolean
-    mods?: ModUncheckedUpdateManyWithoutUserInput
     mod?: BoolFieldUpdateOperationsInput | boolean
     modRequestSent?: UserUpdatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserUpdatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserUpdatemodsPendingInput | Enumerable<string>
     modFor?: NullableStringFieldUpdateOperationsInput | string | null
+    mods?: ModUncheckedUpdateManyWithoutUserInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -9348,15 +9348,15 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    accounts?: AccountCreateNestedManyWithoutUserInput
     location_likes?: UserCreatelocation_likesInput | Enumerable<string>
     streamer?: boolean
-    mods?: ModCreateNestedManyWithoutUserInput
     mod?: boolean
     modRequestSent?: UserCreatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserCreatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserCreatemodsPendingInput | Enumerable<string>
     modFor?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    mods?: ModCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -9365,15 +9365,15 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     location_likes?: UserCreatelocation_likesInput | Enumerable<string>
     streamer?: boolean
-    mods?: ModUncheckedCreateNestedManyWithoutUserInput
     mod?: boolean
     modRequestSent?: UserCreatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserCreatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserCreatemodsPendingInput | Enumerable<string>
     modFor?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    mods?: ModUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -9392,15 +9392,15 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUpdateManyWithoutUserInput
     location_likes?: UserUpdatelocation_likesInput | Enumerable<string>
     streamer?: BoolFieldUpdateOperationsInput | boolean
-    mods?: ModUpdateManyWithoutUserInput
     mod?: BoolFieldUpdateOperationsInput | boolean
     modRequestSent?: UserUpdatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserUpdatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserUpdatemodsPendingInput | Enumerable<string>
     modFor?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserInput
+    mods?: ModUpdateManyWithoutUserInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -9409,15 +9409,15 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUncheckedUpdateManyWithoutUserInput
     location_likes?: UserUpdatelocation_likesInput | Enumerable<string>
     streamer?: BoolFieldUpdateOperationsInput | boolean
-    mods?: ModUncheckedUpdateManyWithoutUserInput
     mod?: BoolFieldUpdateOperationsInput | boolean
     modRequestSent?: UserUpdatemodRequestSentInput | Enumerable<string>
     modRequestReceived?: UserUpdatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserUpdatemodsPendingInput | Enumerable<string>
     modFor?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserInput
+    mods?: ModUncheckedUpdateManyWithoutUserInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -9458,28 +9458,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type SessionCreateWithoutUserInput = {
-    id?: string
-    sessionToken: string
-    expires: Date | string
-  }
-
-  export type SessionUncheckedCreateWithoutUserInput = {
-    id?: string
-    sessionToken: string
-    expires: Date | string
-  }
-
-  export type SessionCreateOrConnectWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
-  }
-
-  export type SessionCreateManyUserInputEnvelope = {
-    data: Enumerable<SessionCreateManyUserInput>
-    skipDuplicates?: boolean
-  }
-
   export type ModCreateWithoutUserInput = {
     id?: string
     name?: string
@@ -9501,6 +9479,28 @@ export namespace Prisma {
 
   export type ModCreateManyUserInputEnvelope = {
     data: Enumerable<ModCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type SessionCreateWithoutUserInput = {
+    id?: string
+    sessionToken: string
+    expires: Date | string
+  }
+
+  export type SessionUncheckedCreateWithoutUserInput = {
+    id?: string
+    sessionToken: string
+    expires: Date | string
+  }
+
+  export type SessionCreateOrConnectWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SessionCreateManyUserInputEnvelope = {
+    data: Enumerable<SessionCreateManyUserInput>
     skipDuplicates?: boolean
   }
 
@@ -9538,32 +9538,6 @@ export namespace Prisma {
     session_state?: StringNullableFilter | string | null
   }
 
-  export type SessionUpsertWithWhereUniqueWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
-    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
-  }
-
-  export type SessionUpdateWithWhereUniqueWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    data: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
-  }
-
-  export type SessionUpdateManyWithWhereWithoutUserInput = {
-    where: SessionScalarWhereInput
-    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutSessionsInput>
-  }
-
-  export type SessionScalarWhereInput = {
-    AND?: Enumerable<SessionScalarWhereInput>
-    OR?: Enumerable<SessionScalarWhereInput>
-    NOT?: Enumerable<SessionScalarWhereInput>
-    id?: StringFilter | string
-    sessionToken?: StringFilter | string
-    userId?: StringFilter | string
-    expires?: DateTimeFilter | Date | string
-  }
-
   export type ModUpsertWithWhereUniqueWithoutUserInput = {
     where: ModWhereUniqueInput
     update: XOR<ModUpdateWithoutUserInput, ModUncheckedUpdateWithoutUserInput>
@@ -9591,14 +9565,38 @@ export namespace Prisma {
     image?: StringFilter | string
   }
 
+  export type SessionUpsertWithWhereUniqueWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SessionUpdateWithWhereUniqueWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    data: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SessionUpdateManyWithWhereWithoutUserInput = {
+    where: SessionScalarWhereInput
+    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutSessionsInput>
+  }
+
+  export type SessionScalarWhereInput = {
+    AND?: Enumerable<SessionScalarWhereInput>
+    OR?: Enumerable<SessionScalarWhereInput>
+    NOT?: Enumerable<SessionScalarWhereInput>
+    id?: StringFilter | string
+    sessionToken?: StringFilter | string
+    userId?: StringFilter | string
+    expires?: DateTimeFilter | Date | string
+  }
+
   export type UserCreateWithoutModsInput = {
     id?: string
     name?: string | null
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
     location_likes?: UserCreatelocation_likesInput | Enumerable<string>
     streamer?: boolean
     mod?: boolean
@@ -9606,6 +9604,8 @@ export namespace Prisma {
     modRequestReceived?: UserCreatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserCreatemodsPendingInput | Enumerable<string>
     modFor?: string | null
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutModsInput = {
@@ -9614,8 +9614,6 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     location_likes?: UserCreatelocation_likesInput | Enumerable<string>
     streamer?: boolean
     mod?: boolean
@@ -9623,6 +9621,8 @@ export namespace Prisma {
     modRequestReceived?: UserCreatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserCreatemodsPendingInput | Enumerable<string>
     modFor?: string | null
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutModsInput = {
@@ -9641,8 +9641,6 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUpdateManyWithoutUserInput
-    sessions?: SessionUpdateManyWithoutUserInput
     location_likes?: UserUpdatelocation_likesInput | Enumerable<string>
     streamer?: BoolFieldUpdateOperationsInput | boolean
     mod?: BoolFieldUpdateOperationsInput | boolean
@@ -9650,6 +9648,8 @@ export namespace Prisma {
     modRequestReceived?: UserUpdatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserUpdatemodsPendingInput | Enumerable<string>
     modFor?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUpdateManyWithoutUserInput
+    sessions?: SessionUpdateManyWithoutUserInput
   }
 
   export type UserUncheckedUpdateWithoutModsInput = {
@@ -9658,8 +9658,6 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUncheckedUpdateManyWithoutUserInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserInput
     location_likes?: UserUpdatelocation_likesInput | Enumerable<string>
     streamer?: BoolFieldUpdateOperationsInput | boolean
     mod?: BoolFieldUpdateOperationsInput | boolean
@@ -9667,6 +9665,8 @@ export namespace Prisma {
     modRequestReceived?: UserUpdatemodRequestReceivedInput | Enumerable<string>
     modsPending?: UserUpdatemodsPendingInput | Enumerable<string>
     modFor?: NullableStringFieldUpdateOperationsInput | string | null
+    accounts?: AccountUncheckedUpdateManyWithoutUserInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -9683,17 +9683,17 @@ export namespace Prisma {
     session_state?: string | null
   }
 
-  export type SessionCreateManyUserInput = {
-    id?: string
-    sessionToken: string
-    expires: Date | string
-  }
-
   export type ModCreateManyUserInput = {
     id?: string
     name?: string
     pending?: boolean
     image?: string
+  }
+
+  export type SessionCreateManyUserInput = {
+    id?: string
+    sessionToken: string
+    expires: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -9738,24 +9738,6 @@ export namespace Prisma {
     session_state?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type SessionUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionToken?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SessionUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionToken?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SessionUncheckedUpdateManyWithoutSessionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    sessionToken?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type ModUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -9775,6 +9757,24 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     pending?: BoolFieldUpdateOperationsInput | boolean
     image?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SessionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateManyWithoutSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

@@ -1,14 +1,13 @@
 generator client {
   provider      = "prisma-client-js"
+  output        = "./generated/prisma-client-js"
   binaryTargets = ["native", "linux-musl"]
-  output   = "./generated/prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      =  "postgres://espmmtgwoesfgi:76d3974d9e396f577c6b4139f258c75d5a8cda346397ebb35687be6d607684c8@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d682h0q44a3rij?schema=public&connection_limit=1"
+  provider          = "postgresql"
+  url               = "postgres://espmmtgwoesfgi:76d3974d9e396f577c6b4139f258c75d5a8cda346397ebb35687be6d607684c8@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d682h0q44a3rij?schema=public&connection_limit=1"
   shadowDatabaseUrl = "postgres://odjgzujwvrrzin:d62b560d695ad30424b33c1c43f3d4a52bd1b0a3546e8aa73f3ab938615295e6@ec2-23-23-182-238.compute-1.amazonaws.com:5432/d8uo0va0k09846"
-
 }
 
 model Location {
@@ -59,33 +58,31 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?   @unique
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  location_likes String[]
-  streamer      Boolean   @default(false)
-  mods          Mod[]  
-  mod           Boolean   @default(false)
-  modRequestSent String[]
+  id                 String    @id @default(cuid())
+  name               String?   @unique
+  email              String?   @unique
+  emailVerified      DateTime?
+  image              String?
+  location_likes     String[]
+  streamer           Boolean   @default(false)
+  mod                Boolean   @default(false)
+  modRequestSent     String[]
   modRequestReceived String[]
-  modsPending   String[]
-  modFor        String?   @default("")
+  modsPending        String[]
+  modFor             String?   @default("")
+  accounts           Account[]
+  mods               Mod[]
+  sessions           Session[]
 }
 
 model Mod {
-  id            String    @id @default(cuid())
-  streamer      String
-  name          String    @default("")
-  pending       Boolean   @default(true)
-  image         String    @default("/images/placeholder.png")           
-  user          User      @relation(fields: [streamer], references: [name], onDelete: Cascade)
+  id       String  @id @default(cuid())
+  streamer String
+  name     String  @default("")
+  pending  Boolean @default(true)
+  image    String  @default("/images/placeholder.png")
+  user     User    @relation(fields: [streamer], references: [name], onDelete: Cascade)
 }
-
-
 
 model VerificationToken {
   identifier String
@@ -96,12 +93,12 @@ model VerificationToken {
 }
 
 model Product {
-  id          String    @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
-  price_id    String    @unique
-  images      String[]  
+  price_id    String   @unique
+  images      String[]
   description String
-  price       String    
-  sold        Boolean   @default(false)
-  buyer       String    @default("")
+  price       String
+  sold        Boolean  @default(false)
+  buyer       String   @default("")
 }
