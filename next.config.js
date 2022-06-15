@@ -14,7 +14,6 @@ const nextConfig = {
       "res.cloudinary.com",
     ],
   },
-  webpack5: false,
 
   async headers() {
     return [
