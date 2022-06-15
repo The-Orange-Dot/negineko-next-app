@@ -1,11 +1,14 @@
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "rhe1-openssl-1.0.x"]
+  binaryTargets = ["native", "linux-musl"]
+  output   = "./generated/prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      =  "postgres://espmmtgwoesfgi:76d3974d9e396f577c6b4139f258c75d5a8cda346397ebb35687be6d607684c8@ec2-3-234-85-177.compute-1.amazonaws.com:5432/d682h0q44a3rij?schema=public&connection_limit=1"
+  shadowDatabaseUrl = "postgres://odjgzujwvrrzin:d62b560d695ad30424b33c1c43f3d4a52bd1b0a3546e8aa73f3ab938615295e6@ec2-23-23-182-238.compute-1.amazonaws.com:5432/d8uo0va0k09846"
+
 }
 
 model Location {
