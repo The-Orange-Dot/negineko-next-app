@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/overlay.module.css";
 import OverlayTexts from "../Overlay/OverlayTexts";
 import GiveawayOverlay from "../giveaway/GiveawayOverlay";

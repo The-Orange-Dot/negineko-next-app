@@ -90,4 +90,14 @@
 
 .textBox {
   display: inline-block;
+  border-radius: 1rem;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.selectedTextBox {
+  display: inline-block;
+  border: 1px solid #dfdfdf;
+  border-radius: 1rem;
+  padding: 10px;
 }

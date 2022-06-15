@@ -8,6 +8,7 @@ import {
   updateText,
 } from "../../redux/actions/textOverlaySlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@mui/material";
 
 const OverlayComponent = ({
   id,

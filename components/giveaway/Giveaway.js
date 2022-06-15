@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { selectButton } from "../../redux/actions/giveawaySlice";
-import { ButtonGroup, Button, Paper } from "@mui/material";
+import { ButtonGroup, Button, Paper, Box } from "@mui/material";
 import ColorKey from "./ColorKey";
 
 export default function Giveaway() {
@@ -80,7 +80,7 @@ export default function Giveaway() {
     );
   } else if (session.status === "authenticated") {
     return !menuHidden ? (
-      <Paper
+      <Box
         className={styles.controlsContainer}
         elevation={2}
         variant="elevation"
@@ -161,9 +161,9 @@ export default function Giveaway() {
             Condense Menu
           </Button>
         </div>
-      </Paper>
+      </Box>
     ) : (
-      <Paper className={styles.miniControlsContainer}>
+      <Box className={styles.miniControlsContainer}>
         <div style={{ width: "60%" }}>
           <ButtonGroup variant="contained">{keyButtons}</ButtonGroup>
         </div>
@@ -179,7 +179,7 @@ export default function Giveaway() {
             Open Menu
           </Button>
         </div>
-      </Paper>
+      </Box>
     );
   } else if (session.status === "unauthenticated") {
     console.log("Unauthorized");
