@@ -34,7 +34,7 @@ const New = () => {
       });
     } else {
       const streamerInfo = await fetch(
-        `${server}/api/users/streamers/${streamerInput}`,
+        `/api/users/streamers/${streamerInput}`,
         {
           method: "PATCH",
           headers: {
@@ -61,7 +61,7 @@ const New = () => {
 
   //Submit Handler for Registering new STREAMERS
   const submitNewStreamer = async () => {
-    const modsDataArray = await fetch(`${server}/api/users/mods`, {
+    const modsDataArray = await fetch(`/api/users/mods`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", key: "orange_is_orange" },
       body: JSON.stringify({
@@ -135,12 +135,9 @@ const New = () => {
   const streamerHandler = async () => {
     setModerator(false);
     setStreamer(true);
-    const modList = await fetch(
-      `${server}/api/users/mods/${session.data.name}`,
-      {
-        headers: { key: "orange_is_orange" },
-      }
-    );
+    const modList = await fetch(`/api/users/mods/${session.data.name}`, {
+      headers: { key: "orange_is_orange" },
+    });
 
     const modNames = await modList.json();
     const mods = await modNames.map((mod) => {
@@ -160,7 +157,7 @@ const New = () => {
     e.preventDefault();
     setError(false);
 
-    await fetch(`${server}/api/users/streamers/${streamerInput}`, {
+    await fetch(`/api/users/streamers/${streamerInput}`, {
       headers: { key: "orange_is_orange" },
     })
       .then((res) => res.json())
