@@ -23,11 +23,11 @@ exports.Prisma = Prisma
 
 /**
  * Prisma Client JS version: 3.12.0
- * Query Engine version: efdf9b1183dddfd4258cd181a72125755215ab7b
+ * Query Engine version: 461d6a05159055555eb7dfb337c9fb271cbd4d7e
  */
 Prisma.prismaVersion = {
   client: "3.12.0",
-  engine: "efdf9b1183dddfd4258cd181a72125755215ab7b"
+  engine: "461d6a05159055555eb7dfb337c9fb271cbd4d7e"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -212,6 +212,10 @@ const config = {
       {
         "fromEnvVar": null,
         "value": "linux-musl"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-1.0.x"
       }
     ],
     "previewFeatures": [],
@@ -222,7 +226,7 @@ const config = {
   },
   "relativePath": "../..",
   "clientVersion": "3.12.0",
-  "engineVersion": "efdf9b1183dddfd4258cd181a72125755215ab7b",
+  "engineVersion": "461d6a05159055555eb7dfb337c9fb271cbd4d7e",
   "datasourceNames": [
     "db"
   ],
@@ -249,5 +253,8 @@ path.join(process.cwd(), "prisma/generated/prisma-client-js/libquery_engine-darw
 
 path.join(__dirname, "libquery_engine-linux-musl.so.node");
 path.join(process.cwd(), "prisma/generated/prisma-client-js/libquery_engine-linux-musl.so.node")
+
+path.join(__dirname, "libquery_engine-rhel-openssl-1.0.x.so.node");
+path.join(process.cwd(), "prisma/generated/prisma-client-js/libquery_engine-rhel-openssl-1.0.x.so.node")
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/generated/prisma-client-js/schema.prisma")
