@@ -89,8 +89,10 @@
 
 .buttonsContainer {
   width: 15%;
+  height: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .keyButtons {

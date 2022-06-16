@@ -119,13 +119,13 @@ export default function Giveaway() {
               className={styles.connectedButtons}
               style={hide ? { opacity: 0 } : { opacity: 1 }}
             >
-              <button
+              <Button
                 onClick={() => {
                   syncButtonsHandler();
                 }}
               >
                 Sync buttons
-              </button>
+              </Button>
             </div>
           ) : null}
         </div>

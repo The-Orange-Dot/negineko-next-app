@@ -31,7 +31,8 @@ const AddButtons = () => {
       method: "POST",
       body: JSON.stringify({
         emit: "add-button",
-        mods: [...mods],
+        streamer: session.data.name,
+        modFor: session.data.modFor,
         button: newButton,
       }),
     });

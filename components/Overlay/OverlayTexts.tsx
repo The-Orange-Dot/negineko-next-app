@@ -27,17 +27,7 @@ const TextOverlay = () => {
     setTexts(textsOverlay);
   }, [textOverlay, dispatch]);
 
-  return (
-    <>
-      {texts.length > 0 ? (
-        texts
-      ) : (
-        <div className={styles.noTextOverlayPageContent}>
-          <p>Click on &rdquo;Add text&rdquo; below to start</p>
-        </div>
-      )}
-    </>
-  );
+  return texts;
 };
 
 export default TextOverlay;
