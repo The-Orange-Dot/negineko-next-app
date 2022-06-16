@@ -39,8 +39,6 @@ import ModControls from "../../components/dashboard/ModControls";
 import Overlay from "../../components/dashboard/Overlay";
 import OverlayControls from "../../components/Overlay/OverlayControls.tsx";
 import { hideMenu, showMenu } from "../../redux/actions/hideMenuSlice";
-import { useEffect } from "react";
-import OverlayTexts from "../../components/Overlay/OverlayTexts.tsx";
 
 const Home = () => {
   const darkMode = useSelector((state) => state?.darkMode?.value);
