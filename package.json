@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "npx prisma generate"
+    "prepare": "npx prisma generate"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^2.18.3",
