@@ -18,6 +18,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { Button, IconButton } from "@mui/material";
+import { server } from "../../config";
 
 const Travel = () => {
   const router = useRouter();
@@ -39,7 +40,7 @@ const Travel = () => {
 
   useEffect(() => {
     const fetchLocations = async () => {
-      const data = await fetch(`/api/locations`, {
+      const data = await fetch(`${server}/api/locations`, {
         headers: { key: "orange_is_orange" },
       });
       const locations: LocationType[] = await data.json();
