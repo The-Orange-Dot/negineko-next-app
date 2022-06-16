@@ -25,21 +25,21 @@ async function handler(req, res) {
   } else if (req.method === "PATCH") {
     const mods = req.body.pendingMods;
 
-    console.log(mods);
+    // console.log(mods);
     const streamer = await prisma.user.findFirst({
       where: { name: req.body.username },
     });
 
-    // await Promise.all(
-    //   mods.map(async (mod) => {
-    //     await prisma.mod.create({
-    //       data: {
-    //         userId: streamer.id,
-    //         username: mod,
-    //       },
-    //     });
-    //   })
-    // );
+    await Promise.all(
+      mods.map(async (mod) => {
+        await prisma.mod.create({
+          data: {
+            userId: streamer.id,
+            username: mod,
+          },
+        });
+      })
+    );
 
     // let user = await prisma.user.update({
     //   where: { name: req.body.user },

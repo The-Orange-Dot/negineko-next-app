@@ -11,11 +11,11 @@ const Prisma = {}
 exports.Prisma = Prisma
 
 /**
- * Prisma Client JS version: 3.12.0
+ * Prisma Client JS version: 3.15.2
  * Query Engine version: 461d6a05159055555eb7dfb337c9fb271cbd4d7e
  */
 Prisma.prismaVersion = {
-  client: "3.12.0",
+  client: "3.15.2",
   engine: "461d6a05159055555eb7dfb337c9fb271cbd4d7e"
 }
 
