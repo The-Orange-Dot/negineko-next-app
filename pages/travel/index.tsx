@@ -1,5 +1,4 @@
 //This will pre-render the locations server-side from the API fetch for faster loading
-import { server } from "../../config/index";
 import { loginUser } from "../../redux/actions/userLoginSlice";
 import { useSelector } from "react-redux";
 import { LocationType } from "../../source/types/next";

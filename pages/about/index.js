@@ -24,10 +24,8 @@ export const getStaticProps = async () => {
   };
 };
 
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/about.module.css";
-
 import { useMediaQuery } from "react-responsive";
 import Negi from "../../components/about/info/Negi";
 import Mocchan from "../../components/about/info/Mocchan";
@@ -48,8 +46,6 @@ const About = ({ user }) => {
     setPageLoaded(true);
     console.log("Page Loaded");
   }, [isMobile]);
-
-  console.log(user);
 
   const teamSelectorHandler = (member) => {
     switch (member) {

@@ -20,7 +20,6 @@ const StorePage = () => {
   const [mobile, setMobile] = useState(false);
   const session = useSession();
   const username = session?.data?.name;
-  console.log(username);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -36,31 +35,32 @@ const StorePage = () => {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    isMobile ? setMobile(true) : setMobile(false);
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get("success")) {
-      fetch(`${server}/api/store`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ priceId: priceId, username: username }),
-      })
-        .then((res) => res.json())
-        .then((data) => console.log(data));
+  useEffect(
+    () => {
+      isMobile ? setMobile(true) : setMobile(false);
+      // Check to see if this is a redirect back from Checkout
+      const query = new URLSearchParams(window.location.search);
+      if (query.get("success")) {
+        fetch(`${server}/api/store`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ priceId: priceId, username: username }),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
 
-      console.log(data);
-      console.log("Order placed! You will receive an email confirmation.");
-    }
+        console.log("Order placed! You will receive an email confirmation.");
+      }
 
-    if (query.get("canceled")) {
-      console.log(
-        "Order canceled -- continue to shop around and checkout when you’re ready."
-      );
-    }
-    setProducts(data);
-    console.log(priceId);
-  }, [priceId, data, isMobile, username]);
+      if (query.get("canceled")) {
+        console.log(
+          "Order canceled -- continue to shop around and checkout when you’re ready."
+        );
+      }
+      setProducts(data);
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [priceId, data, isMobile]
+  );
 
   const productsMap = products?.map((product) => {
     return (

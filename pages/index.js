@@ -6,23 +6,24 @@ export const getStaticProps = async () => {
       method: "POST",
     }
   );
+
   const tokenParsed = await token.json();
 
-  //Fetches Negi's stream to see if she's online
-  const fetchStream = await fetch(
-    "https://api.twitch.tv/helix/streams?user_login=negineko_tokyo",
-    {
-      headers: {
-        Authorization: `Bearer ${tokenParsed.access_token}`,
-        "Client-Id": process.env.TWITCH_CLIENT_ID,
-      },
-    }
-  );
+  // //Fetches Negi's stream to see if she's online
+  // const fetchStream = await fetch(
+  //   "https://api.twitch.tv/helix/streams?user_login=negineko_tokyo",
+  //   {
+  //     headers: {
+  //       Authorization: `Bearer ${tokenParsed.access_token}`,
+  //       "Client-Id": process.env.TWITCH_CLIENT_ID,
+  //     },
+  //   }
+  // );
 
-  const stream = await fetchStream.json();
+  // const stream = await fetchStream.json();
 
   return {
-    props: { stream: stream, accessToken: tokenParsed },
+    props: { accessToken: tokenParsed },
   };
 };
 
@@ -37,10 +38,9 @@ import { useSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToken } from "../redux/actions/tokenSlice";
 
-const Home = ({ stream, accessToken }) => {
+const Home = ({ accessToken }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
-  const fetchStream = stream.data;
   const [subtitleTween, setSubtitleTween] = useState("");
   const [JP, setJP] = useState(true);
   gsap.registerPlugin(TextPlugin);
@@ -50,56 +50,60 @@ const Home = ({ stream, accessToken }) => {
   const dispatch = useDispatch();
   const [tween, setTween] = useState("");
 
-  useEffect(() => {
-    dispatch(addToken(accessToken));
+  useEffect(
+    () => {
+      dispatch(addToken(accessToken));
 
-    isMobile ? setMobile(true) : setMobile(false);
+      isMobile ? setMobile(true) : setMobile(false);
 
-    //Starting animation
-    const tl = gsap
-      .timeline({ paused: true })
-      .to(".page-container", { opacity: 1 })
-      .fromTo(
-        "#title",
-        { opacity: 0, y: -50 },
-        { opacity: 1, y: 0, ease: "Power1.easeOut", duration: 0.7 },
-        0.5
-      )
-      .fromTo("#subtitle", { opacity: 0 }, { opacity: 1 })
-      .fromTo("#twitchLink", { opacity: 0 }, { opacity: 1 }, 1.5)
-      .to("#circle", { opacity: 1 }, 2)
-      .fromTo(
-        "#circle",
-        { y: -1000, ease: "Power4.easeOut", duration: 1.5 },
-        { y: 0 },
-        2
-      )
-      .fromTo(
-        "#nacchan",
-        { bottom: -850 },
-        { bottom: 0, ease: "Power4.easeOut", duration: 1 },
-        2.5
-      )
-      .fromTo(
-        "#negi",
-        { left: -1550 },
-        { left: 0, ease: "Power4.easeOut", duration: 1 },
-        2.8
-      )
-      .fromTo("#live-text", { opacity: 0, y: 110 }, { opacity: 1, y: 80 })
-      .fromTo(".user-display", { opacity: 0, y: -30 }, { opacity: 1, y: 0 });
+      //Starting animation
+      const tl = gsap
+        .timeline({ paused: true })
+        .to(".page-container", { opacity: 1 })
+        .fromTo(
+          "#title",
+          { opacity: 0, y: -50 },
+          { opacity: 1, y: 0, ease: "Power1.easeOut", duration: 0.7 },
+          0.5
+        )
+        .fromTo("#subtitle", { opacity: 0 }, { opacity: 1 })
+        .fromTo("#twitchLink", { opacity: 0 }, { opacity: 1 }, 1.5)
+        .to("#circle", { opacity: 1 }, 2)
+        .fromTo(
+          "#circle",
+          { y: -1000, ease: "Power4.easeOut", duration: 1.5 },
+          { y: 0 },
+          2
+        )
+        .fromTo(
+          "#nacchan",
+          { bottom: -850 },
+          { bottom: 0, ease: "Power4.easeOut", duration: 1 },
+          2.5
+        )
+        .fromTo(
+          "#negi",
+          { left: -1550 },
+          { left: 0, ease: "Power4.easeOut", duration: 1 },
+          2.8
+        )
+        .fromTo("#live-text", { opacity: 0, y: 110 }, { opacity: 1, y: 80 })
+        .fromTo(".user-display", { opacity: 0, y: -30 }, { opacity: 1, y: 0 });
 
-    //Subtitle text animation Timeline and tween
-    const subtitleTween = gsap.timeline({ paused: "true" });
-    subtitleTween.to("#subtitle", {
-      text: { value: "Let’s go on a journey together!" },
-      ease: "Power2.easeInOut",
-    });
-    setSubtitleTween(subtitleTween);
-    setPageLoaded(true);
-    setTween(tl);
-    console.log("Page Loaded");
-  }, [isMobile, mobile, pageLoaded, accessToken, dispatch]);
+      //Subtitle text animation Timeline and tween
+      const subtitleTween = gsap.timeline({ paused: "true" });
+      subtitleTween.to("#subtitle", {
+        text: { value: "Let’s go on a journey together!" },
+        ease: "Power2.easeInOut",
+      });
+      setSubtitleTween(subtitleTween);
+      setPageLoaded(true);
+      setTween(tl);
+      console.log("Page Loaded");
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isMobile, mobile]
+  );
 
   const mobileLoadHandler = () => {
     tween.play(0);
