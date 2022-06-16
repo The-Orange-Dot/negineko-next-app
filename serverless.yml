@@ -1,2 +1,0 @@
-myNextApplication:
-  component: "@sls-next/serverless-component@v3.8.0-alpha.0" #specify latest stable version
