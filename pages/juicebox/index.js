@@ -37,14 +37,14 @@ import Settings from "../../components/dashboard/Settings";
 import Dashboard from "../../components/dashboard/Dashboard";
 import ModControls from "../../components/dashboard/ModControls";
 import Overlay from "../../components/dashboard/Overlay";
-import OverlayControls from "../../components/Overlay/OverlayControls.tsx";
+import OverlaySpeedDial from "../../components/Overlay/OverlaySpeedDial.tsx";
+import OverlayTextControlPanel from "../../components/Overlay/OverlayTextControlPanel";
 import { hideMenu, showMenu } from "../../redux/actions/hideMenuSlice";
 
 const Home = () => {
   const darkMode = useSelector((state) => state?.darkMode?.value);
   const juiceBoxMenu = useSelector((state) => state?.juicebox?.menu);
   const hide = useSelector((state) => state.hideMenu.value);
-  const [pendingMods, setPendingMods] = useState([]);
   const session = useSession();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -69,7 +69,12 @@ const Home = () => {
   } else if (juiceBoxMenu === "mod-controls") {
     screen = <ModControls />;
   } else if (juiceBoxMenu === "overlay") {
-    screen = <OverlayControls />;
+    screen = (
+      <>
+        <OverlaySpeedDial />
+        <OverlayTextControlPanel />
+      </>
+    );
   }
 
   if (session.status === "loading") {

@@ -3,6 +3,7 @@ import styles from "../styles/giveaway.module.css";
 import { useSelector, useDispatch } from "react-redux";
 
 const ColorKey = () => {
+  const dispatch = useDispatch();
   const screenColor = useSelector((state: any) => state.giveaway.screenColor);
 
   // SCREEN-AREA-OPTIONS

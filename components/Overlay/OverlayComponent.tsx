@@ -8,7 +8,7 @@ import {
   updateText,
 } from "../../redux/actions/textOverlaySlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@mui/material";
+import { setSelectedText } from "../../redux/actions/textOverlaySlice";
 
 const OverlayComponent = ({
   id,
@@ -20,6 +20,8 @@ const OverlayComponent = ({
 }) => {
   const dispatch = useDispatch();
   const textOverlay = useSelector((state: any) => state.textOverlay.value);
+  const [selected, setSelected] = useState("");
+  const [selectedText, setSelectedText] = useState("");
   const [overlayItem, setOverlayItem] = useState(null);
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState(textInput);
@@ -28,18 +30,23 @@ const OverlayComponent = ({
     color: color,
     fontWeight: fontWeight,
     input: textInput,
+    border: selected,
   });
 
   useEffect(
     () => {
+      let border: string;
+      selectedText === id ? (border = "1px solid #dfdfdf") : (border = "");
+
       setStyle({
         fontSize: fontSize,
         color: color,
         fontWeight: fontWeight,
         input: text,
+        border: border,
       });
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [fontSize, color, fontWeight, textInput]
+    [fontSize, color, fontWeight, textInput, selectedText]
   );
 
   useEffect(
@@ -113,6 +120,12 @@ const OverlayComponent = ({
             <p
               className={styles.textBox}
               id="handle"
+              onMouseEnter={() => {
+                setSelectedText(id);
+              }}
+              onMouseLeave={() => {
+                setSelectedText("");
+              }}
               onDoubleClick={() => {
                 setEdit(true);
               }}

@@ -4,6 +4,7 @@ export const textOverlaySlice = createSlice({
   name: "textOverlay",
   initialState: {
     value: [],
+    selected: "",
   },
   reducers: {
     addText: (state, action) => {
@@ -31,9 +32,17 @@ export const textOverlaySlice = createSlice({
 
       state.value = updated;
     },
+    setSelectedText: (state, action) => {
+      state.selected = action.payload;
+    },
   },
 });
 
-export const { addText, subtractText, updateText, savePosition } =
-  textOverlaySlice.actions;
+export const {
+  addText,
+  subtractText,
+  updateText,
+  savePosition,
+  setSelectedText,
+} = textOverlaySlice.actions;
 export default textOverlaySlice.reducer;

@@ -96,7 +96,6 @@ const TimerButtons = () => {
             variant="contained"
             ref={anchorRef}
             aria-label="split button"
-            disableElevation="true"
           >
             <Button
               fullWidth={true}
