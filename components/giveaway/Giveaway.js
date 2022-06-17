@@ -100,11 +100,7 @@ export default function Giveaway() {
         >
           {keyButtons?.length > 0 ? (
             <div className={styles.keyButtons}>
-              <ButtonGroup
-                orientation="vertical"
-                fullWidth={true}
-                variant="contained"
-              >
+              <ButtonGroup orientation="vertical" fullWidth variant="contained">
                 {keyButtons}
               </ButtonGroup>
             </div>

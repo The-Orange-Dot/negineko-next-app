@@ -89,7 +89,8 @@
 }
 
 .textBox {
-  display: inline-block;
+  position: fixed;
+  width: max-content;
   border-radius: 1rem;
   padding: 10px;
   cursor: pointer;
@@ -115,6 +116,59 @@
   margin-right: auto;
   max-width: 1500px;
   width: 80%;
-  height: 10%;
+  height: 15%;
   background-color: #dfdfdf;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.textControlsTextField {
+  height: 100%;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textControlFontSize {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.textControlsSubmitButton {
+  height: 100%;
+}
+
+.colorPicker {
+  background-color: white;
+  border: 0;
+  width: 100px;
+  height: 80px;
+}
+.buttonsContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========Directional Pad=========== */
+
+.directionalPadContainer {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.directionalPadContainer div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

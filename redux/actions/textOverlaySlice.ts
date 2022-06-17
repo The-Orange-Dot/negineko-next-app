@@ -14,8 +14,17 @@ export const textOverlaySlice = createSlice({
       state.value = action.payload;
     },
     updateText: (state, action) => {
-      console.log(action.payload);
-      state.value = action.payload;
+      const parsedText = JSON.parse(action.payload);
+
+      const filtered = state.value.filter((text) => {
+        const parsed = JSON.parse(text);
+
+        if (parsed.id !== parsedText.id) {
+          return text;
+        }
+      });
+
+      state.value = [...filtered, action.payload];
     },
     savePosition: (state, action) => {
       const parsed = action.payload.textOverlay.map((text: any) => {
@@ -33,7 +42,14 @@ export const textOverlaySlice = createSlice({
       state.value = updated;
     },
     setSelectedText: (state, action) => {
-      state.selected = action.payload;
+      const parsed = state.value.filter((text) => {
+        const parsedText = JSON.parse(text);
+
+        if (parsedText.id === action.payload) {
+          return JSON.stringify(parsedText);
+        }
+      });
+      state.selected = parsed[0];
     },
   },
 });
