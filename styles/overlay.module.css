@@ -1,27 +1,12 @@
 .overlayPageContainer {
   width: 100%;
-  max-width: 1500px;
-  display: flex;
+  min-width: 1500px;
+  height: 90vh;
 }
 
 .overlayPageContent {
-  position: absolute;
-  left: 0;
-  top: 5%;
   width: 100%;
-  height: 95vh;
-}
-
-.noTextOverlayPageContent {
-  position: absolute;
-  left: 0;
-  top: 7%;
-  width: 100%;
-  height: 69vh;
-  z-index: -1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
 }
 
 /* ============OVERLAY CONTROLS============= */
@@ -91,7 +76,7 @@
 .textBox {
   position: fixed;
   width: max-content;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   padding: 10px;
   cursor: pointer;
   border: 1px solid transparent;

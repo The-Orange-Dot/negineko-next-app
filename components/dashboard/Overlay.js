@@ -7,7 +7,7 @@ import ColorKey from "../ColorKey";
 const Overlay = ({ children }) => {
   return (
     <div className={styles.overlayPageContainer}>
-      <div className={styles.overlayPageContent}>
+      <div className={styles.overlayPageContent} id="boundries">
         <OverlayTexts />
         <GiveawayOverlay />
         {children}

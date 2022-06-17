@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import styles from "../../styles/overlay.module.css";
-import {
-  savePosition,
-  subtractText,
-  updateText,
-} from "../../redux/actions/textOverlaySlice";
+import { savePosition } from "../../redux/actions/textOverlaySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedText } from "../../redux/actions/textOverlaySlice";
 
@@ -47,14 +43,11 @@ const OverlayComponent = ({
     () => {
       const overlayTextItems = (
         <Draggable
-          bounds="parent"
-          position={{
-            x: position[0],
-            y: position[1],
-          }}
+          bounds={{ left: 0, top: 0, bottom: 680, right: 1200 }}
           onStop={(e) => {
             positionHandler(e);
           }}
+          defaultPosition={{ x: position[0] - 550, y: position[1] - 114 }}
           handle="#handle"
         >
           <p
@@ -82,23 +75,24 @@ const OverlayComponent = ({
   );
 
   const positionHandler = (position: any) => {
-    let x = position.x;
-    let y = position.y;
-    if (position.x >= 1500) {
-      x = 1500;
-    } else if (position.x < 0) {
-      x = 0;
-    } else {
-      x = position.x - 150;
-    }
+    let x: number = position.clientX;
+    let y: number = position.clientY;
 
-    if (position.y < 85) {
-      y = 5;
-    } else if (position.clientY >= 700) {
-      y = 850;
-    } else {
-      y = position.y - 110;
-    }
+    // if (position.layerX >= 1500) {
+    //   x = 1500;
+    // } else if (position.layerX < 0) {
+    //   x = 0;
+    // } else {
+    //   x = position.layerX;
+    // }
+
+    // if (position.layerY < 85) {
+    //   y = 5;
+    // } else if (position.layerY >= 700) {
+    //   y = 850;
+    // } else {
+    //   y = position.layerY;
+    // }
 
     dispatch(
       savePosition({ position: [x, y], id: id, textOverlay: textOverlay })

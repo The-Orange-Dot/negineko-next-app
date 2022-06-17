@@ -103,13 +103,12 @@ const Home = () => {
           <div
             className={darkMode ? styles.darkBackground : styles.background}
           />
-
-          {juiceBoxMenu === "giveaway" || juiceBoxMenu === "overlay" ? (
-            <Overlay>{screen}</Overlay>
-          ) : (
-            screen
-          )}
         </Toolbar>
+        {juiceBoxMenu === "giveaway" || juiceBoxMenu === "overlay" ? (
+          <Overlay>{screen}</Overlay>
+        ) : (
+          screen
+        )}
       </>
     );
   } else if (session.status === "unauthenticated") {

@@ -54,7 +54,7 @@ const GiveawayOverlay = () => {
 
   return (
     <Draggable
-      bounds="parent"
+      bounds={{ left: 0, top: 0, bottom: 680, right: 1200 }}
       positionOffset={{ x: "0%", y: "0%" }}
       defaultPosition={
         position ? { x: position[0], y: position[1] } : { x: 0, y: 0 }
