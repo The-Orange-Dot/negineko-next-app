@@ -39,6 +39,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 5px;
 }
 
 .selectedTab {
@@ -51,6 +52,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 5px;
 }
 
 .selectorTab > p {
