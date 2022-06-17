@@ -140,3 +140,24 @@ Added feature
 
 https://user-images.githubusercontent.com/92559518/172972896-e8e92f6b-d3ab-4a83-b96e-ec2211b3c279.mp4
 
+## June 16, 2022
+
+Update
+
+- Finally got the websockets working and online!! It is now on Heroku rather than AWS
+
+## June 17, 2022
+
+Added feature
+
+- Added control panel and color selector for text overlays. Control panel has replaced the double click method of editing text and will make it easier to attach websocket functions.
+- Added control panel for text overlays in the mod control panel. Functionality on this page will affect the text overlays. 
+
+![new_control_panel](https://user-images.githubusercontent.com/92559518/174315687-2a8e36c0-91d0-43dd-be51-cd6085cc17c7.png)
+![mod_control_panel_text_overlay](https://user-images.githubusercontent.com/92559518/174315698-c554f410-e1ae-4bdf-a002-29fc9c365f17.png)
+
+To do:
+
+- Add websockets for text overlay editing
+- Set up functionality for directional controls
+- Add all the db info back in for travel-log
