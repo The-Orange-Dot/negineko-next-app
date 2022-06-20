@@ -39,8 +39,6 @@ const raffleSocket = async (
       socket?.to(streamer.toLowerCase()).emit("res-fetch-texts");
     } else if (emit === "req-send-texts") {
       const texts = body.texts;
-      console.log(texts);
-
       mods.map((mod: string) => {
         socket?.to(mod).emit("res-send-texts", texts);
       });
@@ -50,9 +48,9 @@ const raffleSocket = async (
         socket?.to(mod).emit("res-add-text", text);
       });
     } else if (emit === "req-delete-text") {
-      mods.map((mod: string) => {
-        const selectedText = body.selectedText;
-        socket?.to(mod).emit("res-delete-text", selectedText);
+      [...mods, streamer.toLowerCase()].map((mod: string) => {
+        const filteredTexts = body.filteredTexts;
+        socket?.to(mod).emit("res-delete-text", filteredTexts);
       });
     }
   }

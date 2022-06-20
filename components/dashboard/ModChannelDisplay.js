@@ -28,6 +28,7 @@ import {
   addText,
   updateText,
   purgeTexts,
+  subtractText,
 } from "../../redux/actions/textOverlaySlice";
 
 const ModChannelDisplay = ({ user }) => {
@@ -184,6 +185,10 @@ const ModChannelDisplay = ({ user }) => {
 
       socket?.on("res-add-text", (text) => {
         dispatch(addText(text));
+      });
+
+      socket?.on("res-delete-text", (filteredTexts) => {
+        dispatch(subtractText(filteredTexts));
       });
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [socket]

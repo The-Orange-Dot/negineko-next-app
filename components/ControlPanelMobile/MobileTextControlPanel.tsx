@@ -108,6 +108,16 @@ const TextControlPanel = () => {
     });
 
     dispatch(subtractText(filteredTexts));
+
+    const modStreamer = streamer;
+    fetch("/api/textOverlaySocket", {
+      method: "POST",
+      body: JSON.stringify({
+        emit: "req-delete-text",
+        streamer: modStreamer,
+        filteredTexts: filteredTexts,
+      }),
+    });
   };
 
   return (
