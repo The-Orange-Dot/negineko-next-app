@@ -19,7 +19,7 @@ const OverlayTextControlPanel = () => {
   const [colorSelected, setColorSelected] = useState("#000000");
   const [fontSize, setFontSize] = useState(12);
   const [fontWeight, setFontWeight] = useState("normal");
-  const hide = useSelector((state) => state.hideMenu.value);
+  const hide = useSelector((state: any) => state.hideMenu.value);
 
   useEffect(
     () => {
