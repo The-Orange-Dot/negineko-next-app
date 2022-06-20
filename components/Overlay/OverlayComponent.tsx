@@ -12,6 +12,7 @@ const OverlayComponent = ({
   fontWeight,
   textInput,
   position,
+  parentRef,
 }) => {
   const dispatch = useDispatch();
   const textOverlay = useSelector((state: any) => state.textOverlay.value);
@@ -47,7 +48,7 @@ const OverlayComponent = ({
           onStop={(e) => {
             positionHandler(e);
           }}
-          defaultPosition={{ x: position[0] - 550, y: position[1] - 114 }}
+          position={{ x: position[0], y: position[1] }}
           handle="#handle"
         >
           <p
@@ -75,8 +76,14 @@ const OverlayComponent = ({
   );
 
   const positionHandler = (position: any) => {
-    let x: number = position.clientX;
-    let y: number = position.clientY;
+    const parent = parentRef.current.getBoundingClientRect();
+    const rect = position.target.getBoundingClientRect();
+
+    console.log(rect);
+    console.log(parent);
+
+    let x: number = rect.left - parent.left;
+    let y: number = rect.top - parent.top - fontSize;
 
     dispatch(
       savePosition({ position: [x, y], id: id, textOverlay: textOverlay })

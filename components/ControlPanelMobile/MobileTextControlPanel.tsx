@@ -22,6 +22,7 @@ const TextControlPanel = () => {
   const [fontWeight, setFontWeight] = useState("normal");
   const [colorSelected, setColorSelected] = useState("#000000");
   let streamer: any;
+  const [selectedButton, setSelectedButton] = useState("");
 
   console.log(connected);
 
@@ -58,7 +59,11 @@ const TextControlPanel = () => {
         fullWidth
         variant="contained"
         onClick={() => dispatch(setSelectedText(parsed.id))}
-        sx={{ width: "90%" }}
+        sx={
+          selectedButton === parsed.input
+            ? { width: "90%", opacity: "60%" }
+            : { width: "90%", opacity: 1 }
+        }
       >
         {textButton}
       </Button>

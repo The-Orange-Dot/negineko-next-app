@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import OverlayComponent from "./OverlayComponent";
 import { useDispatch, useSelector } from "react-redux";
 
-const TextOverlay = () => {
+const TextOverlay = ({ parentRef }) => {
   const textOverlay = useSelector((state: any) => state.textOverlay.value);
   const [texts, setTexts] = useState([]);
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const TextOverlay = () => {
             fontWeight={text.fontWeight}
             textInput={text.input}
             position={text.position}
+            parentRef={parentRef}
           />
         );
       });

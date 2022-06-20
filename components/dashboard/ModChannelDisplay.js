@@ -168,13 +168,13 @@ const ModChannelDisplay = ({ user }) => {
       });
 
       socket?.on("res-fetch-texts", async () => {
-        console.log(updatedTexts);
+        const texts = updatedTexts;
         await fetch("/api/textOverlaySocket", {
           method: "POST",
           body: JSON.stringify({
             emit: "req-send-texts",
             streamer: streamer,
-            texts: updatedTexts,
+            texts: texts,
           }),
         });
       });
