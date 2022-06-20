@@ -19,6 +19,7 @@ const OverlayTextControlPanel = () => {
   const [colorSelected, setColorSelected] = useState("#000000");
   const [fontSize, setFontSize] = useState(12);
   const [fontWeight, setFontWeight] = useState("normal");
+  const hide = useSelector((state) => state.hideMenu.value);
 
   useEffect(
     () => {
@@ -66,7 +67,10 @@ const OverlayTextControlPanel = () => {
   };
 
   return (
-    <Paper className={styles.textControlsContainer}>
+    <Paper
+      className={styles.textControlsContainer}
+      style={hide ? { opacity: 0 } : { opacity: 1 }}
+    >
       <div className={styles.buttonsContainer}>
         <Button
           onClick={updateFontHandler}
