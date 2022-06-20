@@ -5,6 +5,8 @@ import { useSession } from "next-auth/react";
 import { TwitchEmbed } from "react-twitch-embed";
 import { useEffect, useState } from "react";
 import ModControlPanel from "./ModControlPanel";
+import { useMediaQuery } from "react-responsive";
+import MobileControlPanel from "../ControlPanelMobile/MobileControlPanel";
 
 const ModControls = () => {
   const [streamer, setStreamer] = useState(streamerName);
@@ -14,9 +16,13 @@ const ModControls = () => {
   const isMod = session.data.mod;
   const streamerName = session.data.name;
   const isStreamer = session.data.streamer;
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
+  const [mobile, setMobile] = useState(false);
 
   useEffect(
     () => {
+      isMobile ? setMobile(true) : setMobile(false);
+
       if (isStreamer) {
         setStreamer(streamerName);
       } else if (isMod) {
@@ -25,17 +31,30 @@ const ModControls = () => {
 
       setPageLoaded(true);
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [isMobile]
   );
 
   return (
-    <div className={styles.modControlsPageContainer}>
-      <div className={styles.videoPlayerContainer}>
+    <div
+      className={
+        mobile
+          ? styles.mobileModControlsPageContainer
+          : styles.modControlsPageContainer
+      }
+    >
+      <div
+        className={
+          mobile
+            ? styles.mobileVideoPlayerContainer
+            : styles.videoPlayerContainer
+        }
+      >
         {streamer ? (
           <TwitchEmbed
             channel={streamer}
             id={streamer}
             theme="dark"
+            withChat={isMobile ? false : true}
             muted
             width="100%"
             height="100%"
@@ -43,7 +62,7 @@ const ModControls = () => {
           />
         ) : null}
       </div>
-      <ModControlPanel />
+      {isMobile ? <MobileControlPanel /> : <ModControlPanel />}
     </div>
   );
 };

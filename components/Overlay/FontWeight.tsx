@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 const FontWeight = ({ fontWeight, setFontWeight }) => {
   const selectedText = useSelector((state: any) => state.textOverlay.selected);
-  const parsedSelectedText = JSON.parse(selectedText);
+  const parsedSelectedText = selectedText ? JSON.parse(selectedText) : "";
 
   const handleChange = (event: any) => {
     setFontWeight(event.target.value);

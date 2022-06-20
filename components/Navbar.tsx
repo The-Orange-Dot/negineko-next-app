@@ -233,6 +233,13 @@ const Navbar = () => {
               >
                 <Link href="/store"> Store </Link>
               </p>
+              <p
+                onClick={() => {
+                  navBarHandler("close");
+                }}
+              >
+                <Link href="/juicebox"> JuiceBox </Link>
+              </p>
             </div>
           </div>
         </div>

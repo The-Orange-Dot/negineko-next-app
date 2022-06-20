@@ -24,6 +24,11 @@ import { ShufflePress } from "../giveaway/ShufflePress";
 import { toggleMenu } from "../../redux/actions/hideMenuSlice";
 import { fetchModNames } from "../FetchMods";
 import { storeMods } from "../../redux/actions/modSlice";
+import {
+  addText,
+  updateText,
+  purgeTexts,
+} from "../../redux/actions/textOverlaySlice";
 
 const ModChannelDisplay = ({ user }) => {
   const [socket, setSocket] = useState(null);
@@ -36,6 +41,9 @@ const ModChannelDisplay = ({ user }) => {
   // const connection = useSelector((state) => state.socket.connected);
   const buttons = useSelector((state) => state.giveaway.buttons);
   const raffleButtons = useSelector((state) => state.giveaway.buttons);
+  const textOverlays = useSelector((state) => state.textOverlay.value);
+  const [updateTexts, setUpdateTexts] = useState(textOverlays);
+  const streamer = session.data.mod ? session.data.modFor : session.data.name;
 
   useEffect(() => {
     const socket = SocketIOClient.connect(server, {
@@ -148,6 +156,34 @@ const ModChannelDisplay = ({ user }) => {
 
       socket?.on("res-screen-color", (color) => {
         dispatch(setScreenColor(color));
+      });
+
+      socket?.on("res-update-text", (updatedText) => {
+        dispatch(updateText(updatedText));
+      });
+
+      socket?.on("res-fetch-texts", () => {
+        const updated = textOverlays;
+
+        fetch("/api/textOverlaySocket", {
+          method: "POST",
+          body: JSON.stringify({
+            emit: "req-send-texts",
+            streamer: streamer,
+            texts: updated,
+          }),
+        });
+      });
+
+      socket?.on("res-send-texts", (texts) => {
+        dispatch(purgeTexts());
+        texts.map((text) => {
+          dispatch(addText(text));
+        });
+      });
+
+      socket?.on("res-add-text", (text) => {
+        dispatch(addText(text));
       });
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [socket]

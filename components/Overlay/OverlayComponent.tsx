@@ -78,22 +78,6 @@ const OverlayComponent = ({
     let x: number = position.clientX;
     let y: number = position.clientY;
 
-    // if (position.layerX >= 1500) {
-    //   x = 1500;
-    // } else if (position.layerX < 0) {
-    //   x = 0;
-    // } else {
-    //   x = position.layerX;
-    // }
-
-    // if (position.layerY < 85) {
-    //   y = 5;
-    // } else if (position.layerY >= 700) {
-    //   y = 850;
-    // } else {
-    //   y = position.layerY;
-    // }
-
     dispatch(
       savePosition({ position: [x, y], id: id, textOverlay: textOverlay })
     );

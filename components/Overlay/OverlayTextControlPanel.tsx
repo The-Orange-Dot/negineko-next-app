@@ -7,12 +7,14 @@ import FontWeight from "./FontWeight";
 import { CompactPicker } from "react-color";
 import { TextDiractionalPad } from "./TextDiractionalPad";
 import { updateText, subtractText } from "../../redux/actions/textOverlaySlice";
+import { useSession } from "next-auth/react";
 
 const OverlayTextControlPanel = () => {
+  const session = useSession();
   const dispatch = useDispatch();
   const allTexts = useSelector((state: any) => state.textOverlay.value);
   const selectedText = useSelector((state: any) => state.textOverlay.selected);
-  const parsedSelectedText = JSON.parse(selectedText);
+  const parsedSelectedText = selectedText ? JSON.parse(selectedText) : "";
   const [textInput, setTextInput] = useState("");
   const [colorSelected, setColorSelected] = useState("#000000");
   const [fontSize, setFontSize] = useState(12);
@@ -41,6 +43,15 @@ const OverlayTextControlPanel = () => {
     const stringifyText = JSON.stringify(updatedText);
 
     dispatch(updateText(stringifyText));
+
+    fetch("/api/textOverlaySocket", {
+      method: "POST",
+      body: JSON.stringify({
+        emit: "req-update-text",
+        streamer: session.data.mod ? session.data.modFor : session.data.name,
+        updatedText: stringifyText,
+      }),
+    });
   };
 
   const deleteHandler = () => {

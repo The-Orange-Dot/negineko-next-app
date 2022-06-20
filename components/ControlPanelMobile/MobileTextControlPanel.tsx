@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, ButtonGroup } from "@mui/material";
 import styles from "../../styles/modControls.module.css";
 import { setSelectedText } from "../../redux/actions/textOverlaySlice";
 import FontWeight from "../Overlay/FontWeight";
@@ -43,9 +43,10 @@ const TextControlPanel = () => {
     return (
       <Button
         key={parsed.id}
+        fullWidth
         variant="contained"
         onClick={() => dispatch(setSelectedText(parsed.id))}
-        sx={{ m: 0.5, width: 240 }}
+        sx={{ width: "90%" }}
       >
         {parsed.input.length > 20
           ? `${parsed.input.slice(0, 18)}...`
@@ -103,32 +104,8 @@ const TextControlPanel = () => {
 
   return (
     <div className={styles.textOverlayContainer}>
-      <div className={styles.buttonContainer}>{parsedTexts}</div>
-      <div className={styles.textInputContainer}>
-        {connected && session.data.mod ? (
-          <Button
-            variant="contained"
-            onClick={syncHandler}
-            sx={{ width: 80, height: 90, m: 1 }}
-          >
-            Fetch Texts
-          </Button>
-        ) : null}
-        <Button
-          variant="contained"
-          onClick={updateFontHandler}
-          sx={{ width: 80, height: 90, m: 1 }}
-        >
-          Submit
-        </Button>
-        <Button
-          color="error"
-          variant="contained"
-          size="small"
-          onClick={deleteHandler}
-        >
-          Delete
-        </Button>
+      <div className={styles.mobileButtonContainer}>{parsedTexts}</div>
+      <div className={styles.mobileTextInputContainer}>
         <TextField
           sx={{ m: 0.5, width: 250 }}
           placeholder="Select a text to edit"
@@ -138,16 +115,40 @@ const TextControlPanel = () => {
           value={textInput}
           onChange={(e) => setTextInput(e.target.value)}
         />
-        <div>
+        <div className={styles.mobileTextOverlayOptions}>
           <FontSizeSelector fontSize={fontSize} setFontSize={setFontSize} />
           <FontWeight fontWeight={fontWeight} setFontWeight={setFontWeight} />
         </div>
         <div>
           <CompactPicker onChange={setColorSelected} color={colorSelected} />
         </div>
-        <div className={styles.directionalPadContainer}>
-          <TextDiractionalPad />
+
+        <div className={styles.mobileTextOverlayButtons}>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={deleteHandler}
+            sx={{ width: "40%" }}
+          >
+            Delete
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ width: "40%" }}
+            onClick={updateFontHandler}
+          >
+            Submit
+          </Button>
         </div>
+        {connected && session.data.mod ? (
+          <Button
+            variant="contained"
+            onClick={syncHandler}
+            sx={{ width: 80, height: 90, m: 1 }}
+          >
+            Fetch Texts
+          </Button>
+        ) : null}
       </div>
     </div>
   );

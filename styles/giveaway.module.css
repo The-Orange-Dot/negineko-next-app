@@ -174,6 +174,13 @@
   justify-content: space-evenly;
 }
 
+.mobileTimers {
+  max-width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
 .timerContainer {
   width: 15%;
   height: 30%;

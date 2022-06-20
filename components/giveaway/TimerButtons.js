@@ -3,6 +3,7 @@ import styles from "../../styles/giveaway.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useSession } from "next-auth/react";
 import { selectTimer } from "../../redux/actions/giveawaySlice";
+import { useMediaQuery } from "react-responsive";
 import {
   ButtonGroup,
   Button,
@@ -18,6 +19,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { colorTheme } from "../MuiColorThemes";
 
 const TimerButtons = () => {
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
+  const [mobile, setMobile] = useState(false);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const options = [
@@ -35,6 +38,10 @@ const TimerButtons = () => {
   const timerArray = useSelector((state) => state.giveaway.timer);
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = useState(1);
+
+  useEffect(() => {
+    isMobile ? setMobile(true) : setMobile(false);
+  }, [isMobile]);
 
   const timeSelectionHandler = (timerSelected, timer) => {
     dispatch(selectTimer({ timerSelected: timerSelected, timer: timer }));
@@ -90,7 +97,7 @@ const TimerButtons = () => {
   return (
     <>
       <p style={{ lineHeight: 0 }}>Timer</p>
-      <div className={styles.timers}>
+      <div className={isMobile ? styles.mobileTimer : styles.timers}>
         <ThemeProvider theme={colorTheme}>
           <ButtonGroup
             variant="contained"

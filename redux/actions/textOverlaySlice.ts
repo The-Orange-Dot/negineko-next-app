@@ -51,6 +51,9 @@ export const textOverlaySlice = createSlice({
       });
       state.selected = parsed[0];
     },
+    purgeTexts: (state) => {
+      state.value = [];
+    },
   },
 });
 
@@ -60,5 +63,6 @@ export const {
   updateText,
   savePosition,
   setSelectedText,
+  purgeTexts,
 } = textOverlaySlice.actions;
 export default textOverlaySlice.reducer;

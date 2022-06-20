@@ -6,6 +6,7 @@ import Switch from "../Switch";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMenu } from "../../redux/actions/juiceboxMenuSlice";
 import ModChannelDisplay from "./ModChannelDisplay";
+import { useMediaQuery } from "react-responsive";
 
 const Toolbar = ({ children, tween, setTween }) => {
   const dispatch = useDispatch();
@@ -14,6 +15,12 @@ const Toolbar = ({ children, tween, setTween }) => {
   const darkMode = useSelector((state) => state?.darkMode?.value);
   const user = useSelector((state) => state?.user?.value);
   const hide = useSelector((state) => state.hideMenu.value);
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    isMobile ? setMobile(true) : setMobile(false);
+  }, [isMobile]);
 
   useEffect(
     () => {
@@ -119,47 +126,49 @@ const Toolbar = ({ children, tween, setTween }) => {
           </span>
         </div>
 
-        <div className={styles.streamerToolsContainer}>
-          <h3 style={{ textAlign: "center" }}>Streamer Tools</h3>
-          <span
-            className={styles.selector}
-            style={{ cursor: "pointer" }}
-            onClick={() => dispatch(selectMenu("overlay"))}
-          >
-            <h4
-              className={styles.link}
-              onMouseEnter={() => {
-                mouseIn("overlay", "オーバレイ");
-              }}
-              onMouseLeave={() => {
-                mouseOut("overlay", "Overlay");
-              }}
-              ref={ref}
-              id="overlay"
+        {mobile ? null : (
+          <div className={styles.streamerToolsContainer}>
+            <h3 style={{ textAlign: "center" }}>Streamer Tools</h3>
+            <span
+              className={styles.selector}
+              style={{ cursor: "pointer" }}
+              onClick={() => dispatch(selectMenu("overlay"))}
             >
-              Overlay
-            </h4>
-          </span>
-          <span
-            className={styles.selector}
-            style={{ cursor: "pointer" }}
-            onClick={() => dispatch(selectMenu("giveaway"))}
-          >
-            <h4
-              className={styles.link}
-              onMouseEnter={() => {
-                mouseIn("giveaway", "抽選機能");
-              }}
-              onMouseLeave={() => {
-                mouseOut("giveaway", "Raffle-tool");
-              }}
-              ref={ref}
-              id="giveaway"
+              <h4
+                className={styles.link}
+                onMouseEnter={() => {
+                  mouseIn("overlay", "オーバレイ");
+                }}
+                onMouseLeave={() => {
+                  mouseOut("overlay", "Overlay");
+                }}
+                ref={ref}
+                id="overlay"
+              >
+                Overlay
+              </h4>
+            </span>
+            <span
+              className={styles.selector}
+              style={{ cursor: "pointer" }}
+              onClick={() => dispatch(selectMenu("giveaway"))}
             >
-              Raffle-tool
-            </h4>
-          </span>
-        </div>
+              <h4
+                className={styles.link}
+                onMouseEnter={() => {
+                  mouseIn("giveaway", "抽選機能");
+                }}
+                onMouseLeave={() => {
+                  mouseOut("giveaway", "Raffle-tool");
+                }}
+                ref={ref}
+                id="giveaway"
+              >
+                Raffle-tool
+              </h4>
+            </span>
+          </div>
+        )}
 
         <div className={styles.modToolsContainer}>
           <h3 style={{ textAlign: "center" }}>Mod tools</h3>
@@ -184,10 +193,12 @@ const Toolbar = ({ children, tween, setTween }) => {
           </span>
         </div>
         <ModChannelDisplay streamerChannels={streamerChannels} user={user} />
-        <div className={styles.darkMode}>
-          <h5>Dark Mode</h5>
-          <Switch isOn={darkMode} onColor={"#06D6A0"} />
-        </div>
+        {mobile ? null : (
+          <div className={styles.darkMode}>
+            <h5>Dark Mode</h5>
+            <Switch isOn={darkMode} onColor={"#06D6A0"} />
+          </div>
+        )}
       </div>
 
       <>{children}</>

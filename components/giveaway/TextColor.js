@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { setTextColor } from "../../redux/actions/giveawaySlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
@@ -32,23 +32,20 @@ const TextColor = () => {
   };
 
   return (
-    <>
-      <p>options</p>
-      <span>
-        <label htmlFor="white-text">White-Text</label>
-        <ThemeProvider theme={colorTheme}>
-          <Switch
-            color="secondary"
-            type="checkbox"
-            name="white-text"
-            id="white-text"
-            onChange={(e) => {
-              textColorHandler(e);
-            }}
-          />
-        </ThemeProvider>
-      </span>
-    </>
+    <span>
+      <label htmlFor="white-text">White-Text</label>
+      <ThemeProvider theme={colorTheme}>
+        <Switch
+          color="secondary"
+          type="checkbox"
+          name="white-text"
+          id="white-text"
+          onChange={(e) => {
+            textColorHandler(e);
+          }}
+        />
+      </ThemeProvider>
+    </span>
   );
 };
 

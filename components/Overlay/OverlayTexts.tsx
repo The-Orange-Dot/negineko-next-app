@@ -11,6 +11,8 @@ const TextOverlay = () => {
     () => {
       const textsOverlay = textOverlay.map((data: string) => {
         const text = JSON.parse(data);
+
+        console.log(data);
         return (
           <OverlayComponent
             key={text.id}
