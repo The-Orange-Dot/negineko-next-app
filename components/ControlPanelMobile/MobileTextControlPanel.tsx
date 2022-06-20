@@ -40,6 +40,16 @@ const TextControlPanel = () => {
   const parsedTexts = texts.map((text: string) => {
     const parsed = JSON.parse(text);
 
+    let textButton: string;
+
+    if (parsed.input.length > 20) {
+      textButton = `${parsed.input.slice(0, 18)}...`;
+    } else if (parsed.input.trim().length < 1) {
+      textButton = "(Empty button)";
+    } else {
+      textButton = parsed.input;
+    }
+
     return (
       <Button
         key={parsed.id}
@@ -48,9 +58,7 @@ const TextControlPanel = () => {
         onClick={() => dispatch(setSelectedText(parsed.id))}
         sx={{ width: "90%" }}
       >
-        {parsed.input.length > 20
-          ? `${parsed.input.slice(0, 18)}...`
-          : parsed.input}
+        {textButton}
       </Button>
     );
   });
