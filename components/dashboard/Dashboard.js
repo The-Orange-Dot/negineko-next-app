@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "../../styles/dashboard.module.css";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Dashboard = () => {
@@ -16,6 +16,9 @@ const Dashboard = () => {
 
   return (
     <div className={styles.dashboardContainer}>
+      <button className={styles.button} onClick={() => signOut()}>
+        Sign Out
+      </button>
       {session?.data?.user?.name}&apos;s Dashboard
     </div>
   );
