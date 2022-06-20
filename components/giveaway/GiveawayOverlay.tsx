@@ -30,23 +30,27 @@ const GiveawayOverlay = ({ parentRef }) => {
     color: textColor,
   };
 
-  const positionHandler = (position: any) => {
+  const positionHandler = (position: any, text: string) => {
     const parent = parentRef.current.getBoundingClientRect();
     const rect = position.target.getBoundingClientRect();
-
-    let x: number = rect.left - parent.left;
-    let y: number = rect.top - parent.top;
-
+    let x: number;
+    let y: number;
+    if (text === "text") {
+      x = rect.left - parent.left - 258;
+      y = rect.top - parent.top - 44;
+    } else {
+      x = rect.left - parent.left - 1;
+      y = rect.top - parent.top - 1;
+    }
     dispatch(setPosition([x, y]));
   };
 
   return (
     <Draggable
       bounds={{ left: 0, top: 0, bottom: 680, right: 1200 }}
-      positionOffset={{ x: "0%", y: "0%" }}
       position={position ? { x: position[0], y: position[1] } : { x: 0, y: 0 }}
       onStop={(e) => {
-        positionHandler(e);
+        positionHandler(e, "");
       }}
     >
       <div
@@ -60,7 +64,14 @@ const GiveawayOverlay = ({ parentRef }) => {
         }}
       >
         <span className={styles.screenDisplay}>
-          <h1 style={textStyles}>{selectedButton.title}</h1>
+          <h1
+            style={textStyles}
+            onMouseUp={(e) => {
+              positionHandler(e, "text");
+            }}
+          >
+            {selectedButton.title}
+          </h1>
           <div>
             {selectedWinner ? <h1 style={textStyles}>WINNER!</h1> : null}
             <h1 style={textStyles}>{winner}</h1>

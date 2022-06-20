@@ -8,8 +8,8 @@ const Overlay = ({ children }) => {
   const parentRef = useRef(null);
 
   return (
-    <div className={styles.overlayPageContainer} ref={parentRef}>
-      <div className={styles.overlayPageContent} id="boundries">
+    <div className={styles.overlayPageContainer}>
+      <div className={styles.overlayPageContent} id="boundries" ref={parentRef}>
         <OverlayTexts parentRef={parentRef} />
         <GiveawayOverlay parentRef={parentRef} />
         {children}
