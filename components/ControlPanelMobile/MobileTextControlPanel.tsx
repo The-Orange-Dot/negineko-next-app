@@ -16,7 +16,7 @@ const TextControlPanel = () => {
   const connected = useSelector((state: any) => state.socket.connected);
   const texts = useSelector((state: any) => state.textOverlay.value);
   const selected = useSelector((state: any) => state.textOverlay.selected);
-  const parsedSelected = JSON.parse(selected);
+  const parsedSelected = selected ? JSON.parse(selected) : "";
   const [textInput, setTextInput] = useState(parsedSelected.input);
   const [fontSize, setFontSize] = useState(12);
   const [fontWeight, setFontWeight] = useState("normal");
