@@ -79,9 +79,6 @@ const OverlayComponent = ({
     const parent = parentRef.current.getBoundingClientRect();
     const rect = position.target.getBoundingClientRect();
 
-    console.log(rect);
-    console.log(parent);
-
     let x: number = rect.left - parent.left;
     let y: number = rect.top - parent.top - fontSize;
 

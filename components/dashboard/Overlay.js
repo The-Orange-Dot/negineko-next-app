@@ -11,7 +11,7 @@ const Overlay = ({ children }) => {
     <div className={styles.overlayPageContainer} ref={parentRef}>
       <div className={styles.overlayPageContent} id="boundries">
         <OverlayTexts parentRef={parentRef} />
-        <GiveawayOverlay />
+        <GiveawayOverlay parentRef={parentRef} />
         {children}
       </div>
       <ColorKey />

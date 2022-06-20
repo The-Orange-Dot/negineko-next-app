@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Draggable from "react-draggable";
 import { setPosition } from "../../redux/actions/giveawaySlice";
 
-const GiveawayOverlay = () => {
+const GiveawayOverlay = ({ parentRef }) => {
   const dispatch = useDispatch();
   const textColor = useSelector((state: any) => state.giveaway.textColor);
   const selectedButton = useSelector((state: any) => state.giveaway.selected);
@@ -31,23 +31,11 @@ const GiveawayOverlay = () => {
   };
 
   const positionHandler = (position: any) => {
-    let x = position.x;
-    let y = position.y;
-    if (position.x >= 1500) {
-      x = 1500;
-    } else if (position.x < 0) {
-      x = 0;
-    } else {
-      x = position.clientX - 250;
-    }
+    const parent = parentRef.current.getBoundingClientRect();
+    const rect = position.target.getBoundingClientRect();
 
-    if (position.y < 85) {
-      y = 5;
-    } else if (position.clientY >= 700) {
-      y = 850;
-    } else {
-      y = position.clientY - 95;
-    }
+    let x: number = rect.left - parent.left;
+    let y: number = rect.top - parent.top;
 
     dispatch(setPosition([x, y]));
   };
@@ -56,9 +44,7 @@ const GiveawayOverlay = () => {
     <Draggable
       bounds={{ left: 0, top: 0, bottom: 680, right: 1200 }}
       positionOffset={{ x: "0%", y: "0%" }}
-      defaultPosition={
-        position ? { x: position[0], y: position[1] } : { x: 0, y: 0 }
-      }
+      position={position ? { x: position[0], y: position[1] } : { x: 0, y: 0 }}
       onStop={(e) => {
         positionHandler(e);
       }}
