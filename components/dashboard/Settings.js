@@ -96,8 +96,6 @@ const Settings = ({ juiceBoxMenu }) => {
     );
   });
 
-  console.log(session.data);
-
   return (
     <div className={styles.settingsPageContainer}>
       <h1>Settings</h1>

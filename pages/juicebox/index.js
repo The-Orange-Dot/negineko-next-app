@@ -25,7 +25,7 @@
 //   };
 // };
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -40,6 +40,7 @@ import Overlay from "../../components/dashboard/Overlay";
 import OverlaySpeedDial from "../../components/Overlay/OverlaySpeedDial.tsx";
 import OverlayTextControlPanel from "../../components/Overlay/OverlayTextControlPanel";
 import { hideMenu, showMenu } from "../../redux/actions/hideMenuSlice";
+import { useMediaQuery } from "react-responsive";
 
 const Home = () => {
   const darkMode = useSelector((state) => state?.darkMode?.value);
@@ -49,6 +50,12 @@ const Home = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [tween, setTween] = useState();
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    isMobile ? setMobile(true) : setMobile(false);
+  }, [isMobile]);
 
   const hideMenuHandler = () => {
     if (hide) {
@@ -88,18 +95,20 @@ const Home = () => {
     return (
       <>
         <Toolbar tween={tween} setTween={setTween}>
-          <div
-            className={
-              darkMode ? styles.darkHideMenuButton : styles.hideMenuButton
-            }
-            onClick={() => {
-              hideMenuHandler();
-              tween.resume(0);
-            }}
-            id="hide-menu"
-          >
-            {hide ? "Show menu" : "Hide menu"}
-          </div>
+          {mobile ? null : (
+            <div
+              className={
+                darkMode ? styles.darkHideMenuButton : styles.hideMenuButton
+              }
+              onClick={() => {
+                hideMenuHandler();
+                tween.resume(0);
+              }}
+              id="hide-menu"
+            >
+              {hide ? "Show menu" : "Hide menu"}
+            </div>
+          )}
           <div
             className={darkMode ? styles.darkBackground : styles.background}
           />
