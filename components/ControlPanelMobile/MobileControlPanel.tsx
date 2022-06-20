@@ -44,7 +44,7 @@ const MobileControlPanel = () => {
           <p>Text Overlay</p>
         </span>
       </div>
-      <div className={styles.controls}>{tools}</div>
+      <div className={styles.mobileControls}>{tools}</div>
     </div>
   );
 };

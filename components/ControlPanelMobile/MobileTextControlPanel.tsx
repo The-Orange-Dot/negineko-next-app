@@ -152,7 +152,7 @@ const TextControlPanel = () => {
           <Button
             variant="contained"
             onClick={syncHandler}
-            sx={{ width: 80, height: 90, m: 1 }}
+            sx={{ height: 90, m: 1 }}
           >
             Fetch Texts
           </Button>

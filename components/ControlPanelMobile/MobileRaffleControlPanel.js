@@ -5,6 +5,7 @@ import {
   selectButton,
   winnerSelected,
   winner,
+  deleteButton,
 } from "../../redux/actions/giveawaySlice";
 import { useSession } from "next-auth/react";
 import { ShufflePress } from "../giveaway/ShufflePress";
@@ -12,6 +13,7 @@ import TimerButtons from "../giveaway/TimerButtons";
 import TextColor from "../giveaway/TextColor";
 import ColorKey from "../giveaway/ColorKey";
 import { Button, ButtonGroup } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const RaffleControlPanel = () => {
   const dispatch = useDispatch();
@@ -21,6 +23,7 @@ const RaffleControlPanel = () => {
   const selectedButton = useSelector((state) => state.giveaway.selected);
   const mods = useSelector((state) => state.mods.mods);
   const [hideOverlay, setHideOverlay] = useState(false);
+  const raffleButtons = useSelector((state) => state.giveaway.buttons);
 
   //Shuffles and sends shuffle command to websocket
   const shuffle = () => {
@@ -112,6 +115,24 @@ const RaffleControlPanel = () => {
     });
   };
 
+  //Deletes Selected button and clears selection state
+  const deleteHandler = () => {
+    const updatedButtons = raffleButtons.filter((button) => {
+      return button.buttonName !== selectedButton.buttonName;
+    });
+    dispatch(selectButton({}));
+    dispatch(deleteButton(updatedButtons));
+    fetch("/api/raffleSocket", {
+      method: "POST",
+      body: JSON.stringify({
+        emit: "delete-button",
+        streamer: session.data.name,
+        modFor: session.data.modFor,
+        button: updatedButtons,
+      }),
+    });
+  };
+
   return (
     <div className={styles.mobileRafflePanelContainer}>
       <div className={styles.mobileRaffleButtonsContainer}>
@@ -146,6 +167,18 @@ const RaffleControlPanel = () => {
           }}
         >
           Reset
+        </Button>
+        <Button
+          fullWidth
+          color="delete"
+          size="large"
+          variant="contained"
+          onClick={() => {
+            deleteHandler();
+          }}
+        >
+          <DeleteIcon />
+          Delete
         </Button>
       </div>
 
