@@ -68,14 +68,16 @@ const TextControlPanel = () => {
 
     dispatch(updateText(stringifyText));
 
-    fetch("/api/textOverlaySocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-update-text",
-        streamer: streamer,
-        updatedText: stringifyText,
-      }),
-    });
+    if (connected) {
+      fetch("/api/textOverlaySocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-update-text",
+          streamer: streamer,
+          updatedText: stringifyText,
+        }),
+      });
+    }
   };
 
   const syncHandler = async () => {
@@ -99,6 +101,18 @@ const TextControlPanel = () => {
     });
 
     dispatch(subtractText(filteredTexts));
+
+    const modStreamer = streamer;
+    if (connected) {
+      fetch("/api/textOverlaySocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-delete-text",
+          streamer: modStreamer,
+          filteredTexts: filteredTexts,
+        }),
+      });
+    }
   };
 
   return (

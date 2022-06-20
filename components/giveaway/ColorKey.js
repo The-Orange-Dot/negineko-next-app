@@ -8,6 +8,7 @@ import { colorTheme } from "../MuiColorThemes";
 const ColorKey = () => {
   const session = useSession();
   const dispatch = useDispatch();
+  const connected = useSelector((state) => state.socket.connected);
 
   //Adds key color of #00b140
   const screenColorHandler = (e) => {
@@ -19,15 +20,17 @@ const ColorKey = () => {
       dispatch(setScreenColor("none"));
       color = "none";
     }
-    fetch("/api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-screen-color",
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-        color: color,
-      }),
-    });
+    if (connected) {
+      fetch("/api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-screen-color",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+          color: color,
+        }),
+      });
+    }
   };
 
   return (

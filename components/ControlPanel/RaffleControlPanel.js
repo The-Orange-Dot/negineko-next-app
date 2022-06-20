@@ -21,6 +21,7 @@ const RaffleControlPanel = () => {
   const selectedButton = useSelector((state) => state.giveaway.selected);
   const mods = useSelector((state) => state.mods.mods);
   const [hideOverlay, setHideOverlay] = useState(false);
+  const connected = useSelector((state) => state.socket.connected);
 
   //Shuffles and sends shuffle command to websocket
   const shuffle = () => {
@@ -31,19 +32,21 @@ const RaffleControlPanel = () => {
         ];
 
       ShufflePress(buttons, selectedButton.users, timer, dispatch, result);
-      fetch("api/raffleSocket", {
-        method: "POST",
-        body: JSON.stringify({
-          emit: "req-shuffle",
-          streamer: session.data.name,
-          modFor: session.data.modFor,
+      if (connected) {
+        fetch("api/raffleSocket", {
+          method: "POST",
           body: JSON.stringify({
-            timer: timer,
-            selectedButton: selectedButton.users,
-            winnerName: result,
+            emit: "req-shuffle",
+            streamer: session.data.name,
+            modFor: session.data.modFor,
+            body: JSON.stringify({
+              timer: timer,
+              selectedButton: selectedButton.users,
+              winnerName: result,
+            }),
           }),
-        }),
-      });
+        });
+      }
     }
   };
 
@@ -53,28 +56,32 @@ const RaffleControlPanel = () => {
     dispatch(winnerSelected(false));
     dispatch(winner(""));
 
-    fetch("/api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-reset",
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-      }),
-    });
+    if (connected) {
+      fetch("/api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-reset",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+        }),
+      });
+    }
   };
 
   //Tracks which key you've pressed
   const selectorHandler = (e) => {
     dispatch(selectButton(e));
-    fetch("/api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "selector-req",
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-        button: e,
-      }),
-    });
+    if (connected) {
+      fetch("/api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "selector-req",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+          button: e,
+        }),
+      });
+    }
   };
 
   //Maps all the buttons in the buttons panel
@@ -101,15 +108,17 @@ const RaffleControlPanel = () => {
   const hideOverlayHandler = () => {
     setHideOverlay(!hideOverlay);
 
-    fetch("api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-hide-menu",
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-        hideOverlay: hideOverlay,
-      }),
-    });
+    if (connected) {
+      fetch("api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-hide-menu",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+          hideOverlay: hideOverlay,
+        }),
+      });
+    }
   };
 
   return (

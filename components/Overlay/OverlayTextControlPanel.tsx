@@ -20,6 +20,7 @@ const OverlayTextControlPanel = () => {
   const [fontSize, setFontSize] = useState(12);
   const [fontWeight, setFontWeight] = useState("normal");
   const hide = useSelector((state: any) => state.hideMenu.value);
+  const connected = useSelector((state: any) => state.socket.connected);
 
   useEffect(
     () => {
@@ -44,15 +45,16 @@ const OverlayTextControlPanel = () => {
     const stringifyText = JSON.stringify(updatedText);
 
     dispatch(updateText(stringifyText));
-
-    fetch("/api/textOverlaySocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-update-text",
-        streamer: session.data.mod ? session.data.modFor : session.data.name,
-        updatedText: stringifyText,
-      }),
-    });
+    if (connected) {
+      fetch("/api/textOverlaySocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-update-text",
+          streamer: session.data.mod ? session.data.modFor : session.data.name,
+          updatedText: stringifyText,
+        }),
+      });
+    }
   };
 
   const deleteHandler = () => {
@@ -64,15 +66,16 @@ const OverlayTextControlPanel = () => {
     });
 
     dispatch(subtractText(filteredTexts));
-
-    fetch("/api/textOverlaySocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-delete-text",
-        streamer: session.data.mod ? session.data.modFor : session.data.name,
-        filteredTexts: filteredTexts,
-      }),
-    });
+    if (connected) {
+      fetch("/api/textOverlaySocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-delete-text",
+          streamer: session.data.mod ? session.data.modFor : session.data.name,
+          filteredTexts: filteredTexts,
+        }),
+      });
+    }
   };
 
   return (

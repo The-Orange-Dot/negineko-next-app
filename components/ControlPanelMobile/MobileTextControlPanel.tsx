@@ -23,6 +23,8 @@ const TextControlPanel = () => {
   const [colorSelected, setColorSelected] = useState("#000000");
   let streamer: any;
 
+  console.log(connected);
+
   if (session.data.mod) {
     streamer = session.data.modFor;
   } else {
@@ -76,15 +78,16 @@ const TextControlPanel = () => {
     const stringifyText = JSON.stringify(updatedText);
 
     dispatch(updateText(stringifyText));
-
-    fetch("/api/textOverlaySocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-update-text",
-        streamer: streamer,
-        updatedText: stringifyText,
-      }),
-    });
+    if (connected) {
+      fetch("/api/textOverlaySocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-update-text",
+          streamer: streamer,
+          updatedText: stringifyText,
+        }),
+      });
+    }
   };
 
   const syncHandler = async () => {
@@ -110,14 +113,16 @@ const TextControlPanel = () => {
     dispatch(subtractText(filteredTexts));
 
     const modStreamer = streamer;
-    fetch("/api/textOverlaySocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-delete-text",
-        streamer: modStreamer,
-        filteredTexts: filteredTexts,
-      }),
-    });
+    if (connected) {
+      fetch("/api/textOverlaySocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-delete-text",
+          streamer: modStreamer,
+          filteredTexts: filteredTexts,
+        }),
+      });
+    }
   };
 
   return (

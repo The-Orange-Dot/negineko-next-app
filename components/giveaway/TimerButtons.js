@@ -19,6 +19,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { colorTheme } from "../MuiColorThemes";
 
 const TimerButtons = () => {
+  const connected = useSelector((state) => state.socket.connected);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
   const dispatch = useDispatch();
@@ -46,15 +47,17 @@ const TimerButtons = () => {
   const timeSelectionHandler = (timerSelected, timer) => {
     dispatch(selectTimer({ timerSelected: timerSelected, timer: timer }));
 
-    fetch("api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-timer-selection",
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-        body: { timer: timerArray, timerSelected: timerSelected },
-      }),
-    });
+    if (connected) {
+      fetch("api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-timer-selection",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+          body: { timer: timerArray, timerSelected: timerSelected },
+        }),
+      });
+    }
   };
 
   const handleMenuItemClick = (event, index) => {

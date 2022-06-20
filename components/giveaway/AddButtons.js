@@ -17,6 +17,7 @@ const AddButtons = () => {
   const modFor = session.data.modFor;
   const darkMode = useSelector((state) => state.darkMode.value);
   const socket = useSelector((state) => state.socket.value.socket);
+  const connected = useSelector((state) => state.socket.connected);
 
   const addNewItem = async () => {
     const newButton = {
@@ -26,16 +27,17 @@ const AddButtons = () => {
     };
 
     dispatch(addButton(newButton));
-
-    fetch("/api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "add-button",
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-        button: newButton,
-      }),
-    });
+    if (connected) {
+      fetch("/api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "add-button",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+          button: newButton,
+        }),
+      });
+    }
 
     setButtonNameInput("");
     setDescriptionInput("");

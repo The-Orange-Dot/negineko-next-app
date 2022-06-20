@@ -43,8 +43,8 @@ const ModChannelDisplay = ({ user }) => {
   const buttons = useSelector((state) => state.giveaway.buttons);
   const raffleButtons = useSelector((state) => state.giveaway.buttons);
   const textOverlays = useSelector((state) => state.textOverlay.value);
-  const [updateTexts, setUpdateTexts] = useState(textOverlays);
   const streamer = session.data.mod ? session.data.modFor : session.data.name;
+  const [updatedTexts, setUpdatedTexts] = useState(textOverlays);
 
   useEffect(() => {
     const socket = SocketIOClient.connect(server, {
@@ -61,6 +61,10 @@ const ModChannelDisplay = ({ user }) => {
     // socket disconnet onUnmount if exists
     if (socket) return () => socket.disconnect();
   }, []);
+
+  useEffect(() => {
+    setUpdatedTexts(textOverlays);
+  }, [textOverlays]);
 
   useEffect(
     () => {
@@ -163,20 +167,21 @@ const ModChannelDisplay = ({ user }) => {
         dispatch(updateText(updatedText));
       });
 
-      socket?.on("res-fetch-texts", () => {
-        const updated = textOverlays;
-
-        fetch("/api/textOverlaySocket", {
+      socket?.on("res-fetch-texts", async () => {
+        console.log(updatedTexts);
+        await fetch("/api/textOverlaySocket", {
           method: "POST",
           body: JSON.stringify({
             emit: "req-send-texts",
             streamer: streamer,
-            texts: updated,
+            texts: updatedTexts,
           }),
         });
       });
 
       socket?.on("res-send-texts", (texts) => {
+        console.log("test");
+
         dispatch(purgeTexts());
         texts.map((text) => {
           dispatch(addText(text));

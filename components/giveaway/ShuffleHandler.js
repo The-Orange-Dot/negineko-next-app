@@ -22,8 +22,7 @@ const ShuffleHandler = ({ menuHidden }) => {
   const mods = useSelector((state) => state.mods.mods);
   const timer = useSelector((state) => state.giveaway.timer);
   const userArray = selectedButton?.users;
-
-  console.log(!selectedButton.buttonName);
+  const connected = useSelector((state) => state.socket.connected);
 
   //Shuffles and sends shuffle command to websocket
   const shuffle = () => {
@@ -31,19 +30,21 @@ const ShuffleHandler = ({ menuHidden }) => {
       const result = userArray[Math.floor(Math.random() * userArray.length)];
 
       ShufflePress(raffleButtons, userArray, timer, dispatch, result);
-      fetch("api/raffleSocket", {
-        method: "POST",
-        body: JSON.stringify({
-          emit: "req-shuffle",
-          streamer: session.data.name,
-          modFor: session.data.modFor,
+      if (connected) {
+        fetch("api/raffleSocket", {
+          method: "POST",
           body: JSON.stringify({
-            timer: timer,
-            selectedButton: userArray,
-            winnerName: result,
+            emit: "req-shuffle",
+            streamer: session.data.name,
+            modFor: session.data.modFor,
+            body: JSON.stringify({
+              timer: timer,
+              selectedButton: userArray,
+              winnerName: result,
+            }),
           }),
-        }),
-      });
+        });
+      }
     }
   };
 
@@ -54,15 +55,17 @@ const ShuffleHandler = ({ menuHidden }) => {
     });
     dispatch(selectButton({}));
     dispatch(deleteButton(updatedButtons));
-    fetch("/api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "delete-button",
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-        button: updatedButtons,
-      }),
-    });
+    if (connected) {
+      fetch("/api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "delete-button",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+          button: updatedButtons,
+        }),
+      });
+    }
   };
 
   let deleteValidation;
@@ -95,14 +98,16 @@ const ShuffleHandler = ({ menuHidden }) => {
     dispatch(winnerSelected(false));
     dispatch(winner(""));
 
-    fetch("/api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-reset",
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-      }),
-    });
+    if (connected) {
+      fetch("/api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-reset",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+        }),
+      });
+    }
   };
 
   return (

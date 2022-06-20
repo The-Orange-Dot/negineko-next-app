@@ -8,6 +8,7 @@ import { colorTheme } from "../MuiColorThemes";
 const TextColor = () => {
   const session = useSession();
   const dispatch = useDispatch();
+  const connected = useSelector((state) => state.socket.connected);
 
   //Sets text color from black to white
   const textColorHandler = (e) => {
@@ -19,16 +20,17 @@ const TextColor = () => {
       textColor = "black";
       dispatch(setTextColor("black"));
     }
-
-    fetch("/api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "req-text-color",
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-        textColor: textColor,
-      }),
-    });
+    if (connected) {
+      fetch("/api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-text-color",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+          textColor: textColor,
+        }),
+      });
+    }
   };
 
   return (

@@ -22,19 +22,22 @@ export default function Giveaway() {
   const [timer, setTimer] = useState([400, 120, 60, 20]);
   const mods = useSelector((state) => state);
   const [menuHidden, setMenuHidden] = useState(false);
+  const connected = useSelector((state) => state.socket.connected);
 
   //Tracks which key you've pressed
   const selectorHandler = (e) => {
     dispatch(selectButton(e));
-    fetch("/api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        emit: "selector-req",
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-        button: e,
-      }),
-    });
+    if (connected) {
+      fetch("/api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "selector-req",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+          button: e,
+        }),
+      });
+    }
   };
 
   //List of all created Buttons
@@ -61,15 +64,17 @@ export default function Giveaway() {
   //Fetches buttons from all other connected users
   const syncButtonsHandler = () => {
     const requester = session.data.name;
-    fetch("/api/raffleSocket", {
-      method: "POST",
-      body: JSON.stringify({
-        streamer: session.data.name,
-        modFor: session.data.modFor,
-        emit: "sync-buttons-req",
-        requester: requester,
-      }),
-    });
+    if (connected) {
+      fetch("/api/raffleSocket", {
+        method: "POST",
+        body: JSON.stringify({
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+          emit: "sync-buttons-req",
+          requester: requester,
+        }),
+      });
+    }
   };
 
   if (session.status === "loading") {
