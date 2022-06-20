@@ -111,7 +111,7 @@ const TextControlPanel = () => {
   };
 
   return (
-    <div className={styles.textOverlayContainer}>
+    <div className={styles.mobileTextOverlayContainer}>
       <div className={styles.mobileButtonContainer}>{parsedTexts}</div>
       <div className={styles.mobileTextInputContainer}>
         <TextField
