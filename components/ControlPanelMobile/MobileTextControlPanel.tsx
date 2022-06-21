@@ -5,7 +5,11 @@ import styles from "../../styles/modControls.module.css";
 import { setSelectedText } from "../../redux/actions/textOverlaySlice";
 import FontWeight from "../Overlay/FontWeight";
 import FontSizeSelector from "../Overlay/FontSizeSelector";
-import { updateText, subtractText } from "../../redux/actions/textOverlaySlice";
+import {
+  updateText,
+  subtractText,
+  addText,
+} from "../../redux/actions/textOverlaySlice";
 import { CompactPicker } from "react-color";
 import { TextDiractionalPad } from "../Overlay/TextDiractionalPad";
 import { useSession } from "next-auth/react";
@@ -24,7 +28,30 @@ const TextControlPanel = () => {
   let streamer: any;
   const [selectedButton, setSelectedButton] = useState("");
 
-  console.log(connected);
+  const addTextHandler = () => {
+    const newText = JSON.stringify({
+      id: Date.now().toString(),
+      fontSize: 18,
+      color: "#000000",
+      fontWeight: "normal",
+      input: "Text Input",
+      position: [1000, 200],
+    });
+
+    dispatch(addText(newText));
+
+    if (connected) {
+      fetch("api/textOverlaySocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-add-text",
+          streamer: session.data.name,
+          modFor: session.data.modFor,
+          text: newText,
+        }),
+      });
+    }
+  };
 
   if (session.data.mod) {
     streamer = session.data.modFor;
@@ -159,6 +186,13 @@ const TextControlPanel = () => {
             sx={{ width: "40%" }}
           >
             Delete
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ width: "40%" }}
+            onClick={addTextHandler}
+          >
+            Add Text
           </Button>
           <Button
             variant="contained"
