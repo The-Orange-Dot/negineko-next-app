@@ -52,6 +52,11 @@ const raffleSocket = async (
         const filteredTexts = body.filteredTexts;
         socket?.to(mod).emit("res-delete-text", filteredTexts);
       });
+    } else if (emit === "req-update-text-position") {
+      [...mods, streamer.toLowerCase()].map((mod: string) => {
+        const text = body.updatedText;
+        socket?.to(mod).emit("res-update-text-position", text);
+      });
     }
   }
 

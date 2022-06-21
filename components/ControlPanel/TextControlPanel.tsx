@@ -47,7 +47,7 @@ const TextControlPanel = () => {
         onClick={() => dispatch(setSelectedText(parsed.id))}
         sx={{ m: 0.5, width: 240 }}
       >
-        {parsed.input.length > 20
+        {parsed?.input?.length > 20
           ? `${parsed.input.slice(0, 18)}...`
           : parsed.input}
       </Button>

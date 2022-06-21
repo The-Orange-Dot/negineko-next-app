@@ -27,16 +27,16 @@ export const textOverlaySlice = createSlice({
       state.value = [...filtered, action.payload];
     },
     savePosition: (state, action) => {
-      const parsed = action.payload.textOverlay.map((text: any) => {
-        return JSON.parse(text);
-      });
+      const parsed = JSON.parse(action.payload);
 
-      const updated = parsed.map((text: any) => {
-        if (text.id === action.payload.id) {
-          text.position = action.payload.position;
+      const updated = state.value.map((text: string) => {
+        const parsedText = JSON.parse(text);
+
+        if (parsed.id === parsedText.id) {
+          parsedText.position = parsed.position;
         }
 
-        return JSON.stringify(text);
+        return JSON.stringify(parsedText);
       });
 
       state.value = updated;

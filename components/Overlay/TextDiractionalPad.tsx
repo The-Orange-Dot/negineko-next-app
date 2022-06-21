@@ -10,12 +10,21 @@ import {
   savePosition,
   setSelectedText,
 } from "../../redux/actions/textOverlaySlice";
+import { useSession } from "next-auth/react";
 
 export const TextDiractionalPad = () => {
   const dispatch = useDispatch();
+  const session = useSession();
   const selectedText = useSelector((state: any) => state.textOverlay.selected);
   const parsedSelected = selectedText ? JSON.parse(selectedText) : "";
   const [positionMovement, setPositionMovement] = useState(10);
+  const connected = useSelector((state: any) => state.socket.connected);
+  let streamer;
+  if (session.data.mod) {
+    streamer = session.data.modFor;
+  } else {
+    streamer = session.data.name;
+  }
 
   const positionHandler = (direction: string) => {
     let updatedSelected = parsedSelected;
@@ -49,15 +58,26 @@ export const TextDiractionalPad = () => {
 
     updatedSelected.position = position;
     const stringified = JSON.stringify(updatedSelected);
-    dispatch(savePosition({ textOverlay: [stringified] }));
+    dispatch(savePosition(stringified));
     dispatch(setSelectedText(updatedSelected.id));
+
+    if (connected) {
+      fetch("/api/textOverlaySocket", {
+        method: "POST",
+        body: JSON.stringify({
+          emit: "req-update-text-position",
+          streamer: streamer,
+          updatedText: stringified,
+        }),
+      });
+    }
   };
 
   return (
     <>
       <Button
         variant="contained"
-        disabled={parsedSelected.position[0] <= 0 ? true : false}
+        // disabled={parsedSelected.position[0] <= 0 ? true : false}
         onClick={() => {
           positionHandler("left");
         }}
@@ -77,7 +97,7 @@ export const TextDiractionalPad = () => {
           onClick={() => {
             positionHandler("up");
           }}
-          disabled={parsedSelected.position[1] <= 0 ? true : false}
+          // disabled={parsedSelected.position[1] <= 0 ? true : false}
         >
           <ArrowDropUpIcon />
         </Button>
@@ -90,7 +110,7 @@ export const TextDiractionalPad = () => {
           onClick={() => {
             positionHandler("down");
           }}
-          disabled={parsedSelected.position[1] >= 675 ? true : false}
+          // disabled={parsedSelected.position[1] >= 675 ? true : false}
         >
           <ArrowDropDownIcon />
         </Button>
@@ -103,7 +123,7 @@ export const TextDiractionalPad = () => {
         }}
         className={styles.right}
         disableElevation
-        disabled={parsedSelected.position[0] >= 1200 ? true : false}
+        // disabled={parsedSelected.position[0] >= 1200 ? true : false}
       >
         <ArrowRightIcon />
       </Button>

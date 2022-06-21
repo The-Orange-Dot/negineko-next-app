@@ -36,7 +36,7 @@ const GiveawayOverlay = ({ parentRef }) => {
     let x: number;
     let y: number;
     if (text === "text") {
-      x = rect.left - parent.left - 258;
+      x = rect.left - parent.left * 8;
       y = rect.top - parent.top - 44;
     } else {
       x = rect.left - parent.left - 1;

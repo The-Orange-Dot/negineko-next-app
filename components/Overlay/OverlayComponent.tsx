@@ -15,6 +15,7 @@ const OverlayComponent = ({
   parentRef,
 }) => {
   const dispatch = useDispatch();
+  const selectedText = useSelector((state: any) => state.textOverlay.selected);
   const textOverlay = useSelector((state: any) => state.textOverlay.value);
   const [textHighlighted, setTextHighlighted] = useState("");
   const [overlayItem, setOverlayItem] = useState(null);
@@ -48,7 +49,9 @@ const OverlayComponent = ({
           onStop={(e) => {
             positionHandler(e);
           }}
-          position={{ x: position[0], y: position[1] }}
+          position={
+            position ? { x: position[0], y: position[1] } : { x: 600, y: 300 }
+          }
           handle="#handle"
         >
           <p
@@ -76,15 +79,16 @@ const OverlayComponent = ({
   );
 
   const positionHandler = (position: any) => {
+    let updateText = JSON.parse(selectedText);
     const parent = parentRef.current.getBoundingClientRect();
     const rect = position.target.getBoundingClientRect();
 
     let x: number = rect.left - parent.left;
     let y: number = rect.top - parent.top - fontSize;
 
-    dispatch(
-      savePosition({ position: [x, y], id: id, textOverlay: textOverlay })
-    );
+    updateText.position = [x, y];
+    const updatedStringified = JSON.stringify(updateText);
+    dispatch(savePosition(updatedStringified));
   };
 
   return overlayItem;
