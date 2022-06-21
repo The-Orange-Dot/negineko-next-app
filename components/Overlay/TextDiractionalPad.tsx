@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, ButtonGroup } from "@mui/material";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -6,7 +6,10 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import styles from "../../styles/overlay.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { savePosition } from "../../redux/actions/textOverlaySlice";
+import {
+  savePosition,
+  setSelectedText,
+} from "../../redux/actions/textOverlaySlice";
 
 export const TextDiractionalPad = () => {
   const dispatch = useDispatch();
@@ -19,38 +22,53 @@ export const TextDiractionalPad = () => {
     let position = parsedSelected.position;
 
     if (direction === "up") {
-      position[1] += positionMovement;
+      if (position[1] <= 0) {
+        position[1] = 0;
+      } else {
+        position[1] -= positionMovement;
+      }
     } else if (direction === "down") {
-      position[1] -= positionMovement;
+      if (position[1] >= 675) {
+        position[1] = 675;
+      } else {
+        position[1] += positionMovement;
+      }
     } else if (direction === "right") {
-      position[0] += positionMovement;
+      if (position[0] >= 1200) {
+        position[0] = 1200;
+      } else {
+        position[0] += positionMovement;
+      }
     } else if (direction === "left") {
-      position[0] -= positionMovement;
+      if (position[0] <= 0) {
+        position[0] = 0;
+      } else {
+        position[0] -= positionMovement;
+      }
     }
 
     updatedSelected.position = position;
     const stringified = JSON.stringify(updatedSelected);
-    console.log(stringified);
     dispatch(savePosition({ textOverlay: [stringified] }));
+    dispatch(setSelectedText(updatedSelected.id));
   };
 
   return (
     <>
       <Button
         variant="contained"
+        disabled={parsedSelected.position[0] <= 0 ? true : false}
         onClick={() => {
           positionHandler("left");
         }}
         className={styles.left}
         disableElevation
-        disabled
       >
         <ArrowLeftIcon />
       </Button>
 
       <div className={styles.upDown}>
         <Button
-          disabled
           variant="contained"
           fullWidth
           sx={{ height: "49%" }}
@@ -59,11 +77,11 @@ export const TextDiractionalPad = () => {
           onClick={() => {
             positionHandler("up");
           }}
+          disabled={parsedSelected.position[1] <= 0 ? true : false}
         >
           <ArrowDropUpIcon />
         </Button>
         <Button
-          disabled
           variant="contained"
           fullWidth
           sx={{ height: "49%" }}
@@ -72,19 +90,20 @@ export const TextDiractionalPad = () => {
           onClick={() => {
             positionHandler("down");
           }}
+          disabled={parsedSelected.position[1] >= 675 ? true : false}
         >
           <ArrowDropDownIcon />
         </Button>
       </div>
 
       <Button
-        disabled
         variant="contained"
         onClick={() => {
           positionHandler("right");
         }}
         className={styles.right}
         disableElevation
+        disabled={parsedSelected.position[0] >= 1200 ? true : false}
       >
         <ArrowRightIcon />
       </Button>

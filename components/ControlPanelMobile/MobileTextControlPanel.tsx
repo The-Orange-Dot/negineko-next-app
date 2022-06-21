@@ -168,15 +168,18 @@ const TextControlPanel = () => {
             Submit
           </Button>
         </div>
-        {connected && session.data.mod ? (
-          <Button
-            variant="contained"
-            onClick={syncHandler}
-            sx={{ height: 90, m: 1 }}
-          >
-            Fetch Texts
-          </Button>
-        ) : null}
+
+        <div className={styles.mobileDirectionalPadContainer}>
+          <TextDiractionalPad />
+        </div>
+        <Button
+          variant="contained"
+          onClick={syncHandler}
+          sx={{ height: 90, m: 1 }}
+          disabled={connected ? false : true}
+        >
+          Fetch Texts
+        </Button>
       </div>
     </div>
   );
