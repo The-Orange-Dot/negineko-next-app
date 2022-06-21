@@ -19,7 +19,7 @@ export const TextDiractionalPad = () => {
   const parsedSelected = selectedText ? JSON.parse(selectedText) : "";
   const [positionMovement, setPositionMovement] = useState(10);
   const connected = useSelector((state: any) => state.socket.connected);
-  let streamer;
+  let streamer: any;
   if (session.data.mod) {
     streamer = session.data.modFor;
   } else {
