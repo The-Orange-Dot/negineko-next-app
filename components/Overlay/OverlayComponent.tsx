@@ -17,7 +17,6 @@ const OverlayComponent = ({
   text,
 }) => {
   const dispatch = useDispatch();
-  const selectedText = useSelector((state: any) => state.textOverlay.selected);
   const [textHighlighted, setTextHighlighted] = useState("");
   const [overlayItem, setOverlayItem] = useState(null);
   const [style, setStyle] = useState({
@@ -86,8 +85,28 @@ const OverlayComponent = ({
     const parent = parentRef.current.getBoundingClientRect();
     const rect = position.target.getBoundingClientRect();
 
-    let x: number = rect.left - parent.left;
-    let y: number = rect.top - parent.top - fontSize;
+    let x: number;
+    let y: number;
+
+    if (x > 1200) {
+      x = 1200;
+    } else if (x < 0) {
+      x = 0;
+    } else {
+      x = rect.left - parent.left;
+    }
+
+    if (y > 680) {
+      y = 680;
+    } else if (y < 0) {
+      y = 0;
+    } else {
+      y = rect.top - parent.top - fontSize;
+    }
+
+    console.log(parent);
+    console.log(rect);
+    console.log(x, y);
 
     updatedText.position = [x, y];
     const updatedStringified = JSON.stringify(updatedText);

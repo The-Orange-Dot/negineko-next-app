@@ -3,7 +3,7 @@ import styles from "../../styles/settings.module.css";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
+import { numberWithCommas } from "../NumberWithCommas.ts";
 
 const Settings = ({ juiceBoxMenu }) => {
   const session = useSession();
@@ -13,6 +13,8 @@ const Settings = ({ juiceBoxMenu }) => {
   const [pendingMods, setPendingMods] = useState(pendingModsArray);
   const username = session.data.name;
   const [pageLoaded, setPageLoaded] = useState(false);
+  const userData = useSelector((state) => state.user.userData);
+  const parsedUserData = JSON.parse(userData);
 
   //Fetches mods from DB
   useEffect(
@@ -78,23 +80,38 @@ const Settings = ({ juiceBoxMenu }) => {
         <p>{mod.name}</p>
       </span>
     ) : (
-      <span key={mod.name} className={styles.streamerCard}>
+      <span key={parsedUserData.name} className={styles.streamerCard}>
         <span className={styles.streamerName}>
           <Image
-            src={mod.image}
+            src={parsedUserData.image}
             width={200}
             height={200}
             alt="img"
             className={styles.modImage}
           />
-          <p>{mod.name}</p>
+          <p>{parsedUserData.name}</p>
         </span>
-        <span>
-          <p>Streamer stats will go here!</p>
-        </span>
+        {/* <span>
+          <div>
+            <h5>Streamer Info</h5>
+            <p>Viewer Count: {numberWithCommas(parsedUserData.viewCount)}</p>
+            <p>Followers: {numberWithCommas(parsedUserData.followers)}</p>
+            <p>
+              Partnered:
+              {parsedUserData.broadcasterType === "partner" ? "Yes" : "Not yet"}
+            </p>
+            <p>Language: {parsedUserData.language.toUpperCase()}</p>
+          </div>
+          <div>
+            <h5>Last Streamed</h5>
+            <p>Category: {parsedUserData.lastStreamed}</p>
+          </div>
+        </span> */}
       </span>
     );
   });
+
+  console.log(parsedUserData);
 
   return (
     <div className={styles.settingsPageContainer}>

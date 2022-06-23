@@ -13,6 +13,7 @@ import {
 import { CompactPicker } from "react-color";
 import { TextDiractionalPad } from "../Overlay/TextDiractionalPad";
 import { useSession } from "next-auth/react";
+import FontFamilySelector from "../Overlay/FontFamilySelector";
 
 const TextControlPanel = () => {
   const session = useSession();
@@ -25,8 +26,9 @@ const TextControlPanel = () => {
   const [fontSize, setFontSize] = useState(12);
   const [fontWeight, setFontWeight] = useState("normal");
   const [colorSelected, setColorSelected] = useState("#000000");
-  let streamer: any;
   const [selectedButton, setSelectedButton] = useState("");
+  const [fontFamily, setFontFamily] = useState("Arial");
+  let streamer: any;
 
   const addTextHandler = () => {
     const newText = JSON.stringify({
@@ -174,6 +176,10 @@ const TextControlPanel = () => {
           <FontSizeSelector fontSize={fontSize} setFontSize={setFontSize} />
           <FontWeight fontWeight={fontWeight} setFontWeight={setFontWeight} />
         </div>
+        <FontFamilySelector
+          fontFamily={fontFamily}
+          setFontFamily={setFontFamily}
+        />
         <div>
           <CompactPicker onChange={setColorSelected} color={colorSelected} />
         </div>
@@ -183,20 +189,20 @@ const TextControlPanel = () => {
             color="error"
             variant="contained"
             onClick={deleteHandler}
-            sx={{ width: "40%" }}
+            sx={{ width: "40%", m: 0.2 }}
           >
             Delete
           </Button>
           <Button
             variant="contained"
-            sx={{ width: "40%" }}
+            sx={{ width: "40%", m: 0.2 }}
             onClick={addTextHandler}
           >
             Add Text
           </Button>
           <Button
             variant="contained"
-            sx={{ width: "40%" }}
+            sx={{ width: "40%", m: 0.2 }}
             onClick={updateFontHandler}
           >
             Submit

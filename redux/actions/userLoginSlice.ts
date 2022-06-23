@@ -5,6 +5,7 @@ export const loginSlice = createSlice({
   initialState: {
     value: {},
     like: [],
+    userData: "",
   },
   reducers: {
     loginUser: (state, action) => {
@@ -13,8 +14,11 @@ export const loginSlice = createSlice({
     likeLocation: (state, action) => {
       state.like.push(action.payload);
     },
+    setUserData: (state, action) => {
+      state.userData = action.payload;
+    },
   },
 });
 
-export const { loginUser, likeLocation } = loginSlice.actions;
+export const { loginUser, likeLocation, setUserData } = loginSlice.actions;
 export default loginSlice.reducer;

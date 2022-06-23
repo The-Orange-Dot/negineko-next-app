@@ -5,7 +5,7 @@ import GiveawayOverlay from "../giveaway/GiveawayOverlay";
 import ColorKey from "../ColorKey";
 
 const Overlay = ({ children }) => {
-  const parentRef = useRef(null);
+  const parentRef = useRef();
 
   return (
     <div className={styles.overlayPageContainer}>

@@ -41,6 +41,7 @@ import OverlaySpeedDial from "../../components/Overlay/OverlaySpeedDial.tsx";
 import OverlayTextControlPanel from "../../components/Overlay/OverlayTextControlPanel";
 import { hideMenu, showMenu } from "../../redux/actions/hideMenuSlice";
 import { useMediaQuery } from "react-responsive";
+import { setUserData } from "../../redux/actions/userLoginSlice";
 
 const Home = () => {
   const darkMode = useSelector((state) => state?.darkMode?.value);
@@ -56,6 +57,32 @@ const Home = () => {
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
   }, [isMobile]);
+
+  useEffect(
+    () => {
+      let streamer;
+
+      if (session.data) {
+        if (session.data.mod) {
+          streamer = session.data.modFor;
+        } else if (session.data.streamer) {
+          streamer = session.data.name;
+        } else {
+          streamer = "";
+        }
+      }
+
+      fetch(`api/users/${streamer}`, {
+        method: "POST",
+        headers: { key: "orange_is_orange" },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          dispatch(setUserData(data));
+        });
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [session]
+  );
 
   const hideMenuHandler = () => {
     if (hide) {
