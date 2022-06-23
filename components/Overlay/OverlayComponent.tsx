@@ -41,7 +41,7 @@ const OverlayComponent = ({
         fontFamily: fontFamily,
       });
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [fontSize, color, fontWeight, textInput, textHighlighted]
+    [fontSize, color, fontWeight, textInput, textHighlighted, fontFamily]
   );
 
   useEffect(
@@ -60,6 +60,9 @@ const OverlayComponent = ({
           <p
             className={styles.textBox}
             id="handle"
+            onClick={() => {
+              dispatch(setSelectedText(id));
+            }}
             onMouseEnter={() => {
               setTextHighlighted(id);
             }}

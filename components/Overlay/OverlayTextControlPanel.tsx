@@ -122,10 +122,10 @@ const OverlayTextControlPanel = () => {
           <FontSizeSelector fontSize={fontSize} setFontSize={setFontSize} />
           <FontWeight fontWeight={fontWeight} setFontWeight={setFontWeight} />
         </div>
-        {/* <FontFamilySelector
+        <FontFamilySelector
           fontFamily={fontFamily}
           setFontFamily={setFontFamily}
-        /> */}
+        />
       </div>
       <div>
         <CompactPicker onChange={setColorSelected} color={colorSelected} />

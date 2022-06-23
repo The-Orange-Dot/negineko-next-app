@@ -10,6 +10,17 @@ const FontFamilySelector = ({ fontFamily, setFontFamily }) => {
   const selectedText = useSelector((state: any) => state.textOverlay.selected);
   const parsedSelectedText = selectedText ? JSON.parse(selectedText) : "";
 
+  const selectorHeight = 40;
+  const paddingTop = 10;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: selectorHeight * 4 + paddingTop,
+        width: 250,
+      },
+    },
+  };
+
   const handleChange = (event: any) => {
     setFontFamily(event.target.value);
   };
@@ -32,9 +43,25 @@ const FontFamilySelector = ({ fontFamily, setFontFamily }) => {
           value={fontFamily}
           label="Font Family"
           onChange={handleChange}
+          MenuProps={MenuProps}
         >
-          <MenuItem value={"arial"}>Arial</MenuItem>
-          <MenuItem value={"helvetica"}>Helvetica</MenuItem>
+          <MenuItem value={"American Typewriter"}>American Typewriter</MenuItem>
+          <MenuItem value={"Arial"}>Arial</MenuItem>
+          <MenuItem value={"Avenir"}>Avenir</MenuItem>
+          <MenuItem value={"Baskerville"}>Baskerville</MenuItem>
+          <MenuItem value={"Courier"}>Courier</MenuItem>
+          <MenuItem value={"Futura"}>Futura</MenuItem>
+          <MenuItem value={"Georgia"}>Georgia</MenuItem>
+          <MenuItem value={"Helvetica"}>Helvetica</MenuItem>
+          <MenuItem value={"Menlo"}>Menlo</MenuItem>
+          <MenuItem value={"Noteworthy"}>Noteworthy</MenuItem>
+          <MenuItem value={"Optima"}>Optima</MenuItem>
+          <MenuItem value={"Papyrus"}>Papyrus</MenuItem>
+          <MenuItem value={"Party LET"}>Party LET</MenuItem>
+          <MenuItem value={"Sigmar One"}>Sigmar One</MenuItem>
+          <MenuItem value={"Times New Roman"}>Times New Roman</MenuItem>
+          <MenuItem value={"Verdana"}>Verdana</MenuItem>
+          <MenuItem value={"Zapfino"}>Zapfino</MenuItem>
         </Select>
       </FormControl>
     </div>
