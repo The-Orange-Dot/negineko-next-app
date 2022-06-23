@@ -128,7 +128,7 @@ async function handler(req, res) {
     const channelParsed = await channelData.json();
     const streamsParsed = await streamsData.json();
 
-    const streamsHistory = streamsParsed.data.map((streamData) => {
+    const streamsHistory = await streamsParsed.data.map((streamData) => {
       const thumbnail = streamData.thumbnail_url;
 
       const widthReplaced = thumbnail.replace("%{width}", "250");
@@ -157,8 +157,7 @@ async function handler(req, res) {
       streamHistory: streamsHistory,
     };
 
-    const stringifiedData = JSON.stringify(streamerInfo);
-    res.status(200).json(stringifiedData);
+    res.status(200).json(streamerInfo);
   }
 }
 

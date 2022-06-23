@@ -9,6 +9,7 @@ import { mouseIn, mouseOut } from "./NavBarAnimation";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/actions/userLoginSlice";
+import { sign } from "crypto";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -233,13 +234,25 @@ const Navbar = () => {
               >
                 <Link href="/store"> Store </Link>
               </p>
-              <p
-                onClick={() => {
-                  navBarHandler("close");
-                }}
-              >
-                <Link href="/juicebox"> JuiceBox </Link>
-              </p>
+
+              {session ? (
+                <p
+                  onClick={() => {
+                    navBarHandler("close");
+                  }}
+                >
+                  <Link href={"/juicebox"}> JuiceBox </Link>
+                </p>
+              ) : (
+                <p
+                  onClick={() => {
+                    signIn();
+                    navBarHandler("close");
+                  }}
+                >
+                  JuiceBox
+                </p>
+              )}
             </div>
           </div>
         </div>

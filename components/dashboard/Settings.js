@@ -14,7 +14,6 @@ const Settings = ({ juiceBoxMenu }) => {
   const username = session.data.name;
   const [pageLoaded, setPageLoaded] = useState(false);
   const userData = useSelector((state) => state.user.userData);
-  const parsedUserData = JSON.parse(userData);
 
   //Fetches mods from DB
   useEffect(
@@ -80,38 +79,38 @@ const Settings = ({ juiceBoxMenu }) => {
         <p>{mod.name}</p>
       </span>
     ) : (
-      <span key={parsedUserData.name} className={styles.streamerCard}>
+      <span key={userData.name} className={styles.streamerCard}>
         <span className={styles.streamerName}>
           <Image
-            src={parsedUserData.image}
+            src={userData.image}
             width={200}
             height={200}
             alt="img"
             className={styles.modImage}
           />
-          <p>{parsedUserData.name}</p>
+          <p>{userData.name}</p>
         </span>
         {/* <span>
           <div>
             <h5>Streamer Info</h5>
-            <p>Viewer Count: {numberWithCommas(parsedUserData.viewCount)}</p>
-            <p>Followers: {numberWithCommas(parsedUserData.followers)}</p>
+            <p>Viewer Count: {numberWithCommas(userData.viewCount)}</p>
+            <p>Followers: {numberWithCommas(userData.followers)}</p>
             <p>
               Partnered:
-              {parsedUserData.broadcasterType === "partner" ? "Yes" : "Not yet"}
+              {userData.broadcasterType === "partner" ? "Yes" : "Not yet"}
             </p>
-            <p>Language: {parsedUserData.language.toUpperCase()}</p>
+            <p>Language: {userData.language.toUpperCase()}</p>
           </div>
           <div>
             <h5>Last Streamed</h5>
-            <p>Category: {parsedUserData.lastStreamed}</p>
+            <p>Category: {userData.lastStreamed}</p>
           </div>
         </span> */}
       </span>
     );
   });
 
-  console.log(parsedUserData);
+  console.log(userData);
 
   return (
     <div className={styles.settingsPageContainer}>

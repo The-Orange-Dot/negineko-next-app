@@ -147,7 +147,7 @@ const Home = () => {
         )}
       </>
     );
-  } else if (session.status === "unauthenticated") {
+  } else {
     console.log("Unauthorized");
     router.push("/auth/signin");
   }

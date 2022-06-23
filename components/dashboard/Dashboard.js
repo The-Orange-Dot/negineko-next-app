@@ -28,12 +28,10 @@ const Dashboard = () => {
 
   useEffect(
     () => {
-      setParsedUserData(JSON.parse(userData));
+      setParsedUserData(userData);
 
-      const parsed = JSON.parse(userData);
-
-      if (parsed.name && parsed.name !== "Undefined") {
-        const streamHistory = parsed?.streamHistory.map((stream) => {
+      if (userData.name && userData.name !== "Undefined") {
+        const streamHistory = userData?.streamHistory.map((stream) => {
           return (
             <Paper
               variant="outlined"
@@ -76,7 +74,7 @@ const Dashboard = () => {
           );
         });
         setStreamHistory(streamHistory);
-        setLastStreamDate(parsed.streamHistory[0].date.slice(0, 10));
+        setLastStreamDate(userData.streamHistory[0].date.slice(0, 10));
       }
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [userData, parsedUserData.name]
@@ -143,7 +141,11 @@ const Dashboard = () => {
       router.push("/auth/signin");
     }
   } else {
-    return <div></div>;
+    return (
+      <div>
+        <h1>Fetching Data...</h1>
+      </div>
+    );
   }
 };
 
