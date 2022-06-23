@@ -14,7 +14,7 @@ const Dashboard = () => {
   const userData = useSelector((state) => state.user.userData);
   const [lastStreamTitle, setLastStreamTitle] = useState("");
   const [lastStreamDate, setLastStreamDate] = useState("");
-  const [parsedUserData, setParsedUserData] = useState(JSON.parse(userData));
+  const [parsedUserData, setParsedUserData] = useState({});
   const [streamHistory, setStreamHistory] = useState([]);
 
   useEffect(
@@ -24,12 +24,9 @@ const Dashboard = () => {
     [connection]
   );
 
-  console.log(parsedUserData);
-
   useEffect(() => {
-    if (parsedUserData.name === "Undefined") {
-      setParsedUserData(JSON.parse(userData));
-    }
+    setParsedUserData(JSON.parse(userData));
+
     const parsed = JSON.parse(userData);
 
     if (parsed.name && parsed.name !== "Undefined") {
