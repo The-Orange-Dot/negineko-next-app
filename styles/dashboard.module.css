@@ -247,6 +247,8 @@
 
 .streamerImage {
   border-radius: 100%;
+  width: 200px;
+  height: 200px;
 }
 
 .dashboardContainer h1 {
@@ -272,6 +274,15 @@
 .historyCard {
   width: 99%;
   display: flex;
+  margin: 4px 0;
+  padding: 2%;
+}
+
+.mobileHistoryCard {
+  width: 99%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 4px 0;
   padding: 2%;
 }
@@ -305,8 +316,33 @@
   margin: 0;
 }
 
+.mobileStreamHistoryContent {
+  width: 100%;
+  padding: 5%;
+  margin: 1%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.mobileStreamHistoryContent > h4 {
+  margin: 0.2rem;
+}
+
+.mobileStreamHistoryContent p {
+  margin: 0.2rem;
+}
+
 .streamHistoryInfo {
   width: 50%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1%;
+}
+
+.mobileStreamHistoryInfo {
+  width: 100%;
   display: flex;
   justify-content: space-around;
   margin-top: 1%;

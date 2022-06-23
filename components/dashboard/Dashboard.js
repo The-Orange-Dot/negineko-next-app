@@ -6,60 +6,80 @@ import { numberWithCommas } from "../NumberWithCommas.ts";
 import { Paper } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { stream } from "xlsx";
+import { useMediaQuery } from "react-responsive";
 
 const Dashboard = () => {
   const connection = useSelector((state) => state.socket.connected);
   const session = useSession();
   const userData = useSelector((state) => state.user.userData);
-  const [lastStreamTitle, setLastStreamTitle] = useState("");
   const [lastStreamDate, setLastStreamDate] = useState("");
   const [parsedUserData, setParsedUserData] = useState({});
   const [streamHistory, setStreamHistory] = useState([]);
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
+  const [mobile, setMobile] = useState(false);
 
   useEffect(
     () => {
+      isMobile ? setMobile(true) : setMobile(false);
       console.log(`Server connection: ${connection}`);
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [connection]
+    [connection, isMobile]
   );
 
-  useEffect(() => {
-    setParsedUserData(JSON.parse(userData));
+  useEffect(
+    () => {
+      setParsedUserData(JSON.parse(userData));
 
-    const parsed = JSON.parse(userData);
+      const parsed = JSON.parse(userData);
 
-    if (parsed.name && parsed.name !== "Undefined") {
-      const streamHistory = parsed?.streamHistory.map((stream) => {
-        return (
-          <Paper key={stream.id} className={styles.historyCard}>
-            <Link href={stream.url} passHref={true}>
-              <span className={styles.streamHistoryThumbnail}>
-                <Image
-                  src={stream?.thumbnail}
-                  width={250}
-                  height={141}
-                  alt="img"
-                  blurDataURL={stream?.thumbnail}
-                />
+      if (parsed.name && parsed.name !== "Undefined") {
+        const streamHistory = parsed?.streamHistory.map((stream) => {
+          return (
+            <Paper
+              key={stream.id}
+              className={mobile ? styles.mobileHistoryCard : styles.historyCard}
+            >
+              <Link href={stream.url} passHref={true}>
+                <span className={styles.streamHistoryThumbnail}>
+                  <Image
+                    src={stream?.thumbnail}
+                    width={250}
+                    height={141}
+                    alt="img"
+                    blurDataURL={stream?.thumbnail}
+                  />
+                </span>
+              </Link>
+
+              <span
+                className={
+                  mobile
+                    ? styles.mobileStreamHistoryContent
+                    : styles.streamHistoryContent
+                }
+              >
+                <h4>{stream.title}</h4>
+                <p>Date: {stream.date.slice(0, 10)}</p>
+                <div
+                  className={
+                    mobile
+                      ? styles.mobileStreamHistoryInfo
+                      : styles.streamHistoryInfo
+                  }
+                >
+                  <p>Views: {numberWithCommas(stream.viewCount)}</p>
+                  <p>Duration: {stream.duration}</p>
+                </div>
               </span>
-            </Link>
-
-            <span className={styles.streamHistoryContent}>
-              <h4>{stream.title}</h4>
-              <p>Date: {stream.date.slice(0, 10)}</p>
-              <div className={styles.streamHistoryInfo}>
-                <p>Views: {numberWithCommas(stream.viewCount)}</p>
-                <p>Duration: {stream.duration}</p>
-              </div>
-            </span>
-          </Paper>
-        );
-      });
-      setStreamHistory(streamHistory);
-      setLastStreamDate(parsed.streamHistory[0].date.slice(0, 10));
-    }
-  }, [userData, parsedUserData.name]);
+            </Paper>
+          );
+        });
+        setStreamHistory(streamHistory);
+        setLastStreamDate(parsed.streamHistory[0].date.slice(0, 10));
+      }
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [userData, parsedUserData.name]
+  );
 
   if (parsedUserData.name !== "Undefined") {
     if (session.status === "loading") {
@@ -72,13 +92,15 @@ const Dashboard = () => {
       return (
         <div className={styles.dashboardContainer}>
           {parsedUserData?.image ? (
-            <Image
-              src={parsedUserData?.image}
-              width={200}
-              height={200}
-              alt="img"
-              className={styles.streamerImage}
-            />
+            <span>
+              <Image
+                src={parsedUserData?.image}
+                width={200}
+                height={200}
+                alt="img"
+                className={styles.streamerImage}
+              />
+            </span>
           ) : null}
           <h1>{parsedUserData?.name}</h1>
 

@@ -57,8 +57,8 @@ const ModControls = () => {
             withChat={isMobile ? false : true}
             muted
             width="100%"
-            height="100%"
-            className={styles.multiEmbed}
+            height={mobile ? 250 : "100%"}
+            className={styles.videoPlayerContainer}
           />
         ) : null}
       </div>
