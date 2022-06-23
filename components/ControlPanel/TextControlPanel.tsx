@@ -9,6 +9,7 @@ import { updateText, subtractText } from "../../redux/actions/textOverlaySlice";
 import { CompactPicker } from "react-color";
 import { TextDiractionalPad } from "../Overlay/TextDiractionalPad";
 import { useSession } from "next-auth/react";
+import FontFamilySelector from "../Overlay/FontFamilySelector";
 
 const TextControlPanel = () => {
   const session = useSession();
@@ -21,6 +22,7 @@ const TextControlPanel = () => {
   const [fontSize, setFontSize] = useState(12);
   const [fontWeight, setFontWeight] = useState("normal");
   const [colorSelected, setColorSelected] = useState("#000000");
+  const [fontFamily, setFontFamily] = useState("arial");
   let streamer: any;
 
   if (session.data.mod) {
@@ -62,6 +64,7 @@ const TextControlPanel = () => {
       fontWeight: fontWeight,
       input: textInput,
       position: parsedSelected.position,
+      fontFamily: fontFamily,
     };
 
     const stringifyText = JSON.stringify(updatedText);
@@ -119,30 +122,38 @@ const TextControlPanel = () => {
     <div className={styles.textOverlayContainer}>
       <div className={styles.buttonContainer}>{parsedTexts}</div>
       <div className={styles.textInputContainer}>
-        {connected && session.data.mod ? (
+        <div style={{ display: "flex" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", marginRight: 5 }}
+          >
+            <Button
+              disableElevation
+              variant="contained"
+              onClick={syncHandler}
+              sx={{ width: 80, height: 60 }}
+              disabled={connected ? false : true}
+            >
+              Fetch
+            </Button>
+            <Button
+              disableElevation
+              color="error"
+              variant="contained"
+              size="small"
+              onClick={deleteHandler}
+            >
+              Delete
+            </Button>
+          </div>
           <Button
             variant="contained"
-            onClick={syncHandler}
-            sx={{ width: 80, height: 90, m: 1 }}
+            onClick={updateFontHandler}
+            sx={{ width: 80, height: 90 }}
+            disableElevation
           >
-            Fetch Texts
+            Submit
           </Button>
-        ) : null}
-        <Button
-          variant="contained"
-          onClick={updateFontHandler}
-          sx={{ width: 80, height: 90, m: 1 }}
-        >
-          Submit
-        </Button>
-        <Button
-          color="error"
-          variant="contained"
-          size="small"
-          onClick={deleteHandler}
-        >
-          Delete
-        </Button>
+        </div>
         <TextField
           sx={{ m: 0.5, width: 250 }}
           placeholder="Select a text to edit"
@@ -153,8 +164,14 @@ const TextControlPanel = () => {
           onChange={(e) => setTextInput(e.target.value)}
         />
         <div>
-          <FontSizeSelector fontSize={fontSize} setFontSize={setFontSize} />
-          <FontWeight fontWeight={fontWeight} setFontWeight={setFontWeight} />
+          <div style={{ display: "flex" }}>
+            <FontSizeSelector fontSize={fontSize} setFontSize={setFontSize} />
+            <FontWeight fontWeight={fontWeight} setFontWeight={setFontWeight} />
+          </div>
+          <FontFamilySelector
+            fontFamily={fontFamily}
+            setFontFamily={setFontFamily}
+          />
         </div>
         <div>
           <CompactPicker onChange={setColorSelected} color={colorSelected} />

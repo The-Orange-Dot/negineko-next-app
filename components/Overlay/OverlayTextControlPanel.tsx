@@ -8,6 +8,7 @@ import { CompactPicker } from "react-color";
 import { TextDiractionalPad } from "./TextDiractionalPad";
 import { updateText, subtractText } from "../../redux/actions/textOverlaySlice";
 import { useSession } from "next-auth/react";
+import FontFamilySelector from "./FontFamilySelector";
 
 const OverlayTextControlPanel = () => {
   const session = useSession();
@@ -21,6 +22,7 @@ const OverlayTextControlPanel = () => {
   const [fontWeight, setFontWeight] = useState("normal");
   const hide = useSelector((state: any) => state.hideMenu.value);
   const connected = useSelector((state: any) => state.socket.connected);
+  const [fontFamily, setFontFamily] = useState("arial");
 
   useEffect(
     () => {
@@ -40,6 +42,7 @@ const OverlayTextControlPanel = () => {
       fontWeight: fontWeight,
       input: textInput,
       position: parsedSelectedText.position,
+      fontFamily: fontFamily,
     };
 
     const stringifyText = JSON.stringify(updatedText);
@@ -115,8 +118,14 @@ const OverlayTextControlPanel = () => {
         />
       </div>
       <div className={styles.textControlFontSize}>
-        <FontSizeSelector fontSize={fontSize} setFontSize={setFontSize} />
-        <FontWeight fontWeight={fontWeight} setFontWeight={setFontWeight} />
+        <div style={{ display: "flex" }}>
+          <FontSizeSelector fontSize={fontSize} setFontSize={setFontSize} />
+          <FontWeight fontWeight={fontWeight} setFontWeight={setFontWeight} />
+        </div>
+        {/* <FontFamilySelector
+          fontFamily={fontFamily}
+          setFontFamily={setFontFamily}
+        /> */}
       </div>
       <div>
         <CompactPicker onChange={setColorSelected} color={colorSelected} />

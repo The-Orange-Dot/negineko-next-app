@@ -21,7 +21,9 @@ const TextOverlay = ({ parentRef }) => {
             fontWeight={text.fontWeight}
             textInput={text.input}
             position={text.position}
+            fontFamily={text.fontFamily}
             parentRef={parentRef}
+            text={text}
           />
         );
       });

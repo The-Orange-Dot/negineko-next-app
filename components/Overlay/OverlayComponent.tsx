@@ -13,10 +13,11 @@ const OverlayComponent = ({
   textInput,
   position,
   parentRef,
+  fontFamily,
+  text,
 }) => {
   const dispatch = useDispatch();
   const selectedText = useSelector((state: any) => state.textOverlay.selected);
-  const textOverlay = useSelector((state: any) => state.textOverlay.value);
   const [textHighlighted, setTextHighlighted] = useState("");
   const [overlayItem, setOverlayItem] = useState(null);
   const [style, setStyle] = useState({
@@ -24,6 +25,7 @@ const OverlayComponent = ({
     color: color?.hex,
     fontWeight: fontWeight,
     border: "",
+    fontFamily: fontFamily,
   });
 
   useEffect(
@@ -36,6 +38,7 @@ const OverlayComponent = ({
         color: color?.hex,
         fontWeight: fontWeight,
         border: border,
+        fontFamily: fontFamily,
       });
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
     [fontSize, color, fontWeight, textInput, textHighlighted]
@@ -47,7 +50,7 @@ const OverlayComponent = ({
         <Draggable
           bounds={{ left: 0, top: 0, bottom: 680, right: 1200 }}
           onStop={(e) => {
-            positionHandler(e);
+            positionHandler(e, id);
           }}
           position={
             position ? { x: position[0], y: position[1] } : { x: 600, y: 300 }
@@ -57,9 +60,6 @@ const OverlayComponent = ({
           <p
             className={styles.textBox}
             id="handle"
-            onClick={() => {
-              dispatch(setSelectedText(id));
-            }}
             onMouseEnter={() => {
               setTextHighlighted(id);
             }}
@@ -78,16 +78,16 @@ const OverlayComponent = ({
     [style, position, fontSize]
   );
 
-  const positionHandler = (position: any) => {
-    let updateText = JSON.parse(selectedText);
+  const positionHandler = async (position: any, id: string) => {
+    const updatedText = text;
     const parent = parentRef.current.getBoundingClientRect();
     const rect = position.target.getBoundingClientRect();
 
     let x: number = rect.left - parent.left;
     let y: number = rect.top - parent.top - fontSize;
 
-    updateText.position = [x, y];
-    const updatedStringified = JSON.stringify(updateText);
+    updatedText.position = [x, y];
+    const updatedStringified = JSON.stringify(updatedText);
     dispatch(savePosition(updatedStringified));
   };
 
