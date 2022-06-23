@@ -255,17 +255,25 @@
 
 .dashboardStreamerContainer {
   width: 80%;
+  padding: 1% 0;
 }
 
 .streamHistoryContainer {
   width: 80%;
   max-height: 400px;
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2% 0;
 }
 
 .historyCard {
-  width: 100%;
+  width: 99%;
   display: flex;
+  margin: 4px 0;
+  padding: 2%;
 }
 
 .streamHistoryThumbnail {
@@ -274,13 +282,18 @@
   min-height: 100px;
 }
 
+.streamHistoryThumbnail:hover {
+  opacity: 60%;
+  cursor: pointer;
+}
+
 .streamHistoryContent {
   width: 70%;
   padding: 1%;
   margin: 1%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 

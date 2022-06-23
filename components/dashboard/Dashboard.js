@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { numberWithCommas } from "../NumberWithCommas.ts";
 import { Paper } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 import { stream } from "xlsx";
 
 const Dashboard = () => {
@@ -30,19 +31,23 @@ const Dashboard = () => {
       setParsedUserData(JSON.parse(userData));
     }
     const parsed = JSON.parse(userData);
+
     if (parsed.name && parsed.name !== "Undefined") {
       const streamHistory = parsed?.streamHistory.map((stream) => {
         return (
-          <div key={stream.id} className={styles.historyCard}>
-            <span className={styles.streamHistoryThumbnail}>
-              <Image
-                src={stream?.thumbnail}
-                width={250}
-                height={141}
-                alt="img"
-                blurDataURL={stream?.thumbnail}
-              />
-            </span>
+          <Paper key={stream.id} className={styles.historyCard}>
+            <Link href={stream.url} passHref={true}>
+              <span className={styles.streamHistoryThumbnail}>
+                <Image
+                  src={stream?.thumbnail}
+                  width={250}
+                  height={141}
+                  alt="img"
+                  blurDataURL={stream?.thumbnail}
+                />
+              </span>
+            </Link>
+
             <span className={styles.streamHistoryContent}>
               <h4>{stream.title}</h4>
               <p>Date: {stream.date.slice(0, 10)}</p>
@@ -51,10 +56,11 @@ const Dashboard = () => {
                 <p>Duration: {stream.duration}</p>
               </div>
             </span>
-          </div>
+          </Paper>
         );
       });
       setStreamHistory(streamHistory);
+      setLastStreamDate(parsed.streamHistory[0].date.slice(0, 10));
     }
   }, [userData, parsedUserData.name]);
 
@@ -79,16 +85,16 @@ const Dashboard = () => {
           ) : null}
           <h1>{parsedUserData?.name}</h1>
 
+          <h3 style={{ marginBottom: 0 }}>Streamer Info</h3>
           <Paper className={styles.dashboardStreamerContainer} sx={{ m: 1 }}>
             <div>
               <div>
-                <h5>Streamer Info</h5>
                 <p>
                   Viewer Count: {numberWithCommas(parsedUserData?.viewCount)}
                 </p>
                 <p>Followers: {numberWithCommas(parsedUserData?.followers)}</p>
                 <p>
-                  Partnered:
+                  Partnered:{" "}
                   {parsedUserData?.broadcasterType === "partner"
                     ? "Yes"
                     : "Not yet"}
@@ -96,15 +102,16 @@ const Dashboard = () => {
                 <p>Language: {parsedUserData?.language?.toUpperCase()}</p>
               </div>
               <div>
-                <h5>Last Streamed</h5>
-                <p>Title: {lastStreamTitle}</p>
-                <p>Category: {parsedUserData?.lastStreamed}</p>
+                <p>
+                  Last Streamed: {lastStreamDate} in{" "}
+                  {parsedUserData?.lastStreamed}
+                </p>
               </div>
             </div>
           </Paper>
-          <h5>Stream history</h5>
+          <h3 style={{ marginBottom: 0 }}>Past Streams</h3>
           <Paper sx={{ m: 1 }} className={styles.streamHistoryContainer}>
-            <div>{streamHistory}</div>
+            {streamHistory}
           </Paper>
           <button className={styles.button} onClick={() => signOut()}>
             Sign Out
