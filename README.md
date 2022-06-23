@@ -161,3 +161,22 @@ To do:
 - Add websockets for text overlay editing
 - Set up functionality for directional controls
 - Add all the db info back in for travel-log
+
+
+## June 22, 2022
+
+Added feature
+
+- Directional pad has been implemented and works with websocket. Moderators are now able to move selected text on streamers client browser. There is still a problem with syncing the fetch text button though. 
+
+## June 23, 2022
+
+Added feature
+
+- Added a font family selector for text overlays. Moderators and streamers are now able to change the text input, font size, font weight, font family, color and position remotely!
+
+[Screen Shot 2022-06-23 at 23 22 03](https://user-images.githubusercontent.com/92559518/175323041-0961183b-f00a-45a8-82d1-7b06726cd6a7.png)
+
+- Dashboard will fetch streamer's public info and channel info through Twitch API to display for both streamer and moderators. They can also see the last 5 streams and by clicking on it, they can watch the VOD too. (Styling needs to be updated...but I'll do that whenever lol)
+
+![Screen Shot 2022-06-23 at 23 27 44](https://user-images.githubusercontent.com/92559518/175323623-666bf14c-5ffb-4ec1-aa8c-6dda69944508.png)
