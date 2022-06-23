@@ -36,6 +36,7 @@ const Dashboard = () => {
         const streamHistory = parsed?.streamHistory.map((stream) => {
           return (
             <Paper
+              variant="outlined"
               key={stream.id}
               className={mobile ? styles.mobileHistoryCard : styles.historyCard}
             >

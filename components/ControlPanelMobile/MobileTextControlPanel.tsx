@@ -36,6 +36,7 @@ const TextControlPanel = () => {
       fontSize: 18,
       color: "#000000",
       fontWeight: "normal",
+      fontFamily: fontFamily,
       input: "Text Input",
       position: [1000, 200],
     });
@@ -106,6 +107,7 @@ const TextControlPanel = () => {
       color: colorSelected,
       fontWeight: fontWeight,
       input: textInput,
+      fontFamily: fontFamily,
       position: parsedSelected.position,
     };
 
