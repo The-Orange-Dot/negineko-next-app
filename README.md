@@ -163,13 +163,13 @@ To do:
 - Add all the db info back in for travel-log
 
 
-## June 22, 2022
+## June 21, 2022
 
 Added feature
 
 - Directional pad has been implemented and works with websocket. Moderators are now able to move selected text on streamers client browser. There is still a problem with syncing the fetch text button though. 
 
-## June 23, 2022
+## June 22, 2022
 
 Added feature
 
@@ -180,3 +180,13 @@ Added feature
 - Dashboard will fetch streamer's public info and channel info through Twitch API to display for both streamer and moderators. They can also see the last 5 streams and by clicking on it, they can watch the VOD too. (Styling needs to be updated...but I'll do that whenever lol)
 
 ![Screen Shot 2022-06-23 at 23 27 44](https://user-images.githubusercontent.com/92559518/175323623-666bf14c-5ffb-4ec1-aa8c-6dda69944508.png)
+
+##June 23, 2022
+
+Added feature
+
+- Added dashboard view support for mobile browser and updated the mod control for mobile browsers to support websocket
+
+![Screen Shot 2022-06-23 at 23 29 41](https://user-images.githubusercontent.com/92559518/175324317-bd7c08fc-cc31-4d93-b247-2bd2bbbfaaa0.png)
+![Screen Shot 2022-06-23 at 23 29 58](https://user-images.githubusercontent.com/92559518/175324333-217f64d5-d752-4879-ab36-c4f162d8892f.png)
+
