@@ -118,13 +118,6 @@ const Travel = () => {
                     </span>
                   </Link>
                 </div>
-                <LikesCounter
-                  setLoading={setLoading}
-                  username={username}
-                  location={location}
-                  id={location.item ? location.item.id : location.id}
-                  likes={location.item ? location.item.likes : location.likes}
-                />
               </>
             )}
             <div
@@ -160,8 +153,15 @@ const Travel = () => {
                 </p>
               </span>
               {pageLoaded ? (
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <LikesCounter
+                    mobile={mobile}
                     setLoading={setLoading}
                     username={username}
                     location={location}

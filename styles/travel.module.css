@@ -313,3 +313,15 @@
 .likesContainer > button {
   margin: 0px 0px 0px 0px;
 }
+
+.mobilesLikesContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  margin: 5px 0px 5px 0px;
+}
+
+.mobilesLikesContainer > button {
+  margin: 0px 0px 0px 0px;
+}

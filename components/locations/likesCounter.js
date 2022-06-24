@@ -11,7 +11,14 @@ import { Button, IconButton } from "@mui/material";
 //empty heart => "\u2661"
 //filled heart => "\u2665"
 
-const LikesCounter = ({ likes, id, location, username, setLoading }) => {
+const LikesCounter = ({
+  likes,
+  id,
+  location,
+  username,
+  setLoading,
+  mobile,
+}) => {
   const user = useSelector((state) => state.user.value);
   const locationName = location.name;
   const [liked, setLiked] = useState(likes);
@@ -80,7 +87,9 @@ const LikesCounter = ({ likes, id, location, username, setLoading }) => {
   };
 
   return (
-    <span className={styles.likesContainer}>
+    <span
+      className={mobile ? styles.mobilesLikesContainer : styles.likesContainer}
+    >
       {!likedBool ? (
         <IconButton
           color="primary"
