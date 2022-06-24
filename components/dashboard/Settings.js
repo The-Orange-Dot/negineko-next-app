@@ -3,7 +3,7 @@ import styles from "../../styles/settings.module.css";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { numberWithCommas } from "../NumberWithCommas.ts";
+import { useMediaQuery } from "react-responsive";
 
 const Settings = ({ juiceBoxMenu }) => {
   const session = useSession();
@@ -14,8 +14,13 @@ const Settings = ({ juiceBoxMenu }) => {
   const username = session.data.name;
   const [pageLoaded, setPageLoaded] = useState(false);
   const userData = useSelector((state) => state.user.userData);
+  const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
+  const [mobile, setMobile] = useState(false);
 
-  //Fetches mods from DB
+  useEffect(() => {
+    isMobile ? setMobile(true) : setMobile(false);
+  }, [isMobile]);
+
   useEffect(
     () => {
       const fetchModData = async (username) => {
@@ -45,7 +50,12 @@ const Settings = ({ juiceBoxMenu }) => {
       //Array of pending mods waiting for approval
       const pendingModsList = pending.map((mod) => {
         return (
-          <span key={mod.name} className={styles.pendingModCards}>
+          <span
+            key={mod.name}
+            className={
+              mobile ? styles.mobilePendingModCards : styles.pendingModCards
+            }
+          >
             <Image
               src="/images/placeholder.png"
               width={50}
@@ -68,7 +78,10 @@ const Settings = ({ juiceBoxMenu }) => {
   //Array of approved mods
   const modList = mods.map((mod) => {
     return session.data.streamer ? (
-      <span key={mod.name} className={styles.modCards}>
+      <span
+        key={mod.name}
+        className={mobile ? styles.mobileModCards : styles.modCards}
+      >
         <Image
           src={mod.image}
           width={50}
@@ -116,12 +129,24 @@ const Settings = ({ juiceBoxMenu }) => {
     <div className={styles.settingsPageContainer}>
       <h1>Settings</h1>
       {session.data.streamer ? (
-        <div className={styles.currentModsContainer}>
+        <div
+          className={
+            mobile
+              ? styles.mobileCurrentModsContainer
+              : styles.currentModsContainer
+          }
+        >
           <h2>Your moderators</h2>
           <div className={styles.modContainer}>
             {pageLoaded ? (
               <>
-                <span className={styles.modCardsContainer}>
+                <span
+                  className={
+                    mobile
+                      ? styles.mobileModCardsContainer
+                      : styles.modCardsContainer
+                  }
+                >
                   {modList}
                   {pendingMods}
                 </span>

@@ -12,9 +12,6 @@ const Dashboard = () => {
   const connection = useSelector((state) => state.socket.connected);
   const session = useSession();
   const userData = useSelector((state) => state.user.userData);
-  const [lastStreamDate, setLastStreamDate] = useState("");
-  const [parsedUserData, setParsedUserData] = useState({});
-  const [streamHistory, setStreamHistory] = useState([]);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
 
@@ -26,61 +23,48 @@ const Dashboard = () => {
     [connection, isMobile]
   );
 
-  useEffect(
-    () => {
-      setParsedUserData(userData);
+  const streamHistory = userData?.streamHistory.map((stream) => {
+    return (
+      <Paper
+        variant="outlined"
+        key={stream.id}
+        className={mobile ? styles.mobileHistoryCard : styles.historyCard}
+      >
+        <Link href={stream.url} passHref={true}>
+          <span className={styles.streamHistoryThumbnail}>
+            <Image
+              src={stream?.thumbnail}
+              width={250}
+              height={141}
+              alt="img"
+              blurDataURL={stream?.thumbnail}
+            />
+          </span>
+        </Link>
 
-      if (userData.name && userData.name !== "Undefined") {
-        const streamHistory = userData?.streamHistory.map((stream) => {
-          return (
-            <Paper
-              variant="outlined"
-              key={stream.id}
-              className={mobile ? styles.mobileHistoryCard : styles.historyCard}
-            >
-              <Link href={stream.url} passHref={true}>
-                <span className={styles.streamHistoryThumbnail}>
-                  <Image
-                    src={stream?.thumbnail}
-                    width={250}
-                    height={141}
-                    alt="img"
-                    blurDataURL={stream?.thumbnail}
-                  />
-                </span>
-              </Link>
+        <span
+          className={
+            mobile
+              ? styles.mobileStreamHistoryContent
+              : styles.streamHistoryContent
+          }
+        >
+          <h4>{stream.title}</h4>
+          <p>Date: {stream.date.slice(0, 10)}</p>
+          <div
+            className={
+              mobile ? styles.mobileStreamHistoryInfo : styles.streamHistoryInfo
+            }
+          >
+            <p>Views: {numberWithCommas(stream.viewCount)}</p>
+            <p>Duration: {stream.duration}</p>
+          </div>
+        </span>
+      </Paper>
+    );
+  });
 
-              <span
-                className={
-                  mobile
-                    ? styles.mobileStreamHistoryContent
-                    : styles.streamHistoryContent
-                }
-              >
-                <h4>{stream.title}</h4>
-                <p>Date: {stream.date.slice(0, 10)}</p>
-                <div
-                  className={
-                    mobile
-                      ? styles.mobileStreamHistoryInfo
-                      : styles.streamHistoryInfo
-                  }
-                >
-                  <p>Views: {numberWithCommas(stream.viewCount)}</p>
-                  <p>Duration: {stream.duration}</p>
-                </div>
-              </span>
-            </Paper>
-          );
-        });
-        setStreamHistory(streamHistory);
-        setLastStreamDate(userData.streamHistory[0].date.slice(0, 10));
-      }
-    }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [userData, parsedUserData.name]
-  );
-
-  if (parsedUserData.name !== "Undefined") {
+  if (userData.name !== "Undefined") {
     if (session.status === "loading") {
       return (
         <div>
@@ -90,10 +74,10 @@ const Dashboard = () => {
     } else if (session.status === "authenticated") {
       return (
         <div className={styles.dashboardContainer}>
-          {parsedUserData?.image ? (
+          {userData?.image ? (
             <span>
               <Image
-                src={parsedUserData?.image}
+                src={userData?.image}
                 width={200}
                 height={200}
                 alt="img"
@@ -101,29 +85,27 @@ const Dashboard = () => {
               />
             </span>
           ) : null}
-          <h1>{parsedUserData?.name}</h1>
+          <h1>{userData?.name}</h1>
 
           <h3 style={{ marginBottom: 0 }}>Streamer Info</h3>
           <Paper className={styles.dashboardStreamerContainer} sx={{ m: 1 }}>
             <div>
               <div>
-                <p>
-                  Viewer Count: {numberWithCommas(parsedUserData?.viewCount)}
-                </p>
-                <p>Followers: {numberWithCommas(parsedUserData?.followers)}</p>
+                <p>Viewer Count: {numberWithCommas(userData?.viewCount)}</p>
+                <p>Followers: {numberWithCommas(userData?.followers)}</p>
                 <p>
                   Partnered:{" "}
-                  {parsedUserData?.broadcasterType === "partner"
-                    ? "Yes"
-                    : "Not yet"}
+                  {userData?.broadcasterType === "partner" ? "Yes" : "Not yet"}
                 </p>
-                <p>Language: {parsedUserData?.language?.toUpperCase()}</p>
+                <p>Language: {userData?.language?.toUpperCase()}</p>
               </div>
               <div>
-                <p>
-                  Last Streamed: {lastStreamDate} in{" "}
-                  {parsedUserData?.lastStreamed}
-                </p>
+                {streamHistory ? (
+                  <p>
+                    {/* Last Streamed: {streamHistory[0].date.slice(0, 10)} in{" "} */}
+                    {userData?.lastStreamed}
+                  </p>
+                ) : null}
               </div>
             </div>
           </Paper>

@@ -41,7 +41,7 @@ const Events = () => {
         scrollTrigger: {
           trigger: el,
           start: "top bottom", // when the top of the trigger hits the top of the viewport
-          end: "+=200",
+          end: "+=190",
           toggleActions: "play none none reverse",
           scrub: 1, // smooth scrubbing, takes 1 second to "catch up" to the scrollbar
         },
