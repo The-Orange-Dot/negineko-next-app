@@ -57,10 +57,9 @@ const Toolbar = ({ children, tween, setTween }) => {
       .timeline({
         scrollTrigger: {
           trigger: "#toolbar",
-          start: "top 2%",
+          start: "top 1%",
           end: "+=1",
           scrub: 0,
-          markers: true,
         },
       })
       .fromTo(
@@ -76,7 +75,6 @@ const Toolbar = ({ children, tween, setTween }) => {
           start: "top 2%",
           end: "+=1",
           scrub: 0,
-          markers: true,
         },
       })
       .fromTo(
