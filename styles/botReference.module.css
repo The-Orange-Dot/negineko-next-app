@@ -1,0 +1,142 @@
+.botSelectorTabsContainer {
+  min-width: 100%;
+  height: 8vh;
+  overflow-x: scroll;
+  display: flex;
+}
+
+.botSelectorTab {
+  margin: 0 5px;
+  height: 80%;
+  min-width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: black;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.botSelectorTab p {
+  color: white;
+}
+
+.botSelectorTabSelected {
+  margin: 0 5px;
+  height: 80%;
+  min-width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: black;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  opacity: 60%;
+}
+
+.botSelectorTabSelected p {
+  color: white;
+}
+
+/* =========PANELS============== */
+
+.botRefencePanelContainer {
+  width: 100%;
+  min-height: 50vh;
+  border: 1px solid black;
+}
+
+.homeInfoContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+}
+
+.botCommandsContainer {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1%;
+  overflow: scroll;
+}
+
+.botCommandCard {
+  width: 100%;
+  padding: 0 5%;
+  height: 12vh;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1%;
+}
+
+.botCommandFolders {
+  width: 100%;
+  padding: 0 5%;
+  height: 10vh;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1%;
+}
+
+.botCommands {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+}
+
+.command {
+  width: 100%;
+  height: 100%;
+}
+
+.description {
+  width: 100%;
+  height: 100%;
+}
+
+.testOpened {
+  width: 95%;
+  min-height: fit-content;
+  margin: 5px 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5%;
+  transform: translateY(-25px);
+  transition: 2s;
+}
+
+.testclosed {
+  width: 95%;
+  height: 0vh;
+  margin: 5px 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 5%;
+  transform: translateY(-20%);
+  transition: 0.5s;
+  display: none;
+}
+
+.cardContainer {
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
