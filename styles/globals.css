@@ -1,6 +1,7 @@
 html,
 body {
   overflow-x: hidden;
+  font-size: 16px;
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -12,20 +13,8 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-@media screen and (max-width: 767px) {
-  input,
-  select,
-  textarea {
-    font-size: 16px;
-  }
-}
-
-/* MOBILE KEYBOARD IS OPEN */
-@media only screen and (max-width: 430px) and (max-height: 400px) {
-  input:focus {
-    position: fixed;
-    top: 50px;
-  }
+input[type="text"] {
+  font-size: inherit;
 }
 
 a {
