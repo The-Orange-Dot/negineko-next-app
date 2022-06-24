@@ -17,13 +17,18 @@ const TextControlPanel = () => {
   const connected = useSelector((state: any) => state.socket.connected);
   const texts = useSelector((state: any) => state.textOverlay.value);
   const selected = useSelector((state: any) => state.textOverlay.selected);
-  const [textInput, setTextInput] = useState(parsedSelected.input);
+  const [textInput, setTextInput] = useState("");
   const [fontSize, setFontSize] = useState(12);
   const [fontWeight, setFontWeight] = useState("normal");
   const [colorSelected, setColorSelected] = useState("#000000");
   const [fontFamily, setFontFamily] = useState("arial");
   let streamer: any;
-  let parsedSelected = [];
+  let parsedSelected = {
+    input: textInput,
+    color: colorSelected,
+    id: 0,
+    position: [0, 0],
+  };
 
   if (selected) {
     parsedSelected = JSON.parse(selected);

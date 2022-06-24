@@ -17,25 +17,28 @@ const MobileChatPanel = () => {
   const [streamer, setStreamer] = useState(streamerName);
   const [botSelected, setBotSelected] = useState("home");
   const [botReference, setBotReference] = useState(<HomeReferencePage />);
-  useEffect(() => {
-    if (isStreamer) {
-      setStreamer(streamerName);
-    } else if (isMod) {
-      setStreamer(modFor);
-    }
+  useEffect(
+    () => {
+      if (isStreamer) {
+        setStreamer(streamerName);
+      } else if (isMod) {
+        setStreamer(modFor);
+      }
 
-    if (botSelected === "stream-elements") {
-      setBotReference(<StreamElementsReferences />);
-    } else if (botSelected === "nightbot") {
-      setBotReference(<NightbotReferencePage />);
-    } else if (botSelected === "twitch") {
-      setBotReference(<TwitchReferences />);
-    } else if (botSelected === "streamlabs") {
-      setBotReference(<StreamlabsReferencePage />);
-    } else {
-      setBotReference(<HomeReferencePage />);
-    }
-  }, [isStreamer, botSelected]);
+      if (botSelected === "stream-elements") {
+        setBotReference(<StreamElementsReferences />);
+      } else if (botSelected === "nightbot") {
+        setBotReference(<NightbotReferencePage />);
+      } else if (botSelected === "twitch") {
+        setBotReference(<TwitchReferences />);
+      } else if (botSelected === "streamlabs") {
+        setBotReference(<StreamlabsReferencePage />);
+      } else {
+        setBotReference(<HomeReferencePage />);
+      }
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isStreamer, botSelected]
+  );
 
   return (
     <div>
