@@ -45,11 +45,8 @@ const MobileChatPanel = () => {
       <TwitchChat
         channel={streamer}
         width="100%"
-        theme="dark"
+        theme="light"
         height="450px"
-        onClick={() => {
-          console.log("clicked");
-        }}
       />
       <h3> Command Reference for Bots</h3>
       <div className={styles.botSelectorTabsContainer}>
