@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../styles/overlay.module.css";
 import { addText, updateText } from "../../redux/actions/textOverlaySlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,10 +8,16 @@ import TextFieldsIcon from "@mui/icons-material/TextFields";
 import { useSession } from "next-auth/react";
 
 const OverlaySpeedDial = () => {
+  const hide = useSelector((state: any) => state.hideMenu.value);
   const connected = useSelector((state: any) => state.socket.connected);
   const session = useSession();
   const dispatch = useDispatch();
   const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    setHidden(hide);
+  }, [hide]);
+
   const addTextHandler = () => {
     const newText = JSON.stringify({
       id: Date.now().toString(),
@@ -42,24 +48,22 @@ const OverlaySpeedDial = () => {
   ];
 
   return (
-    <>
-      <SpeedDial
-        color="secondary"
-        sx={{ position: "absolute", bottom: 16, right: 16 }}
-        hidden={hidden}
-        ariaLabel="SpeedDial"
-        icon={<SpeedDialIcon />}
-        direction="up"
-      >
-        {actions.map((action) => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            tooltipTitle={action.name}
-          />
-        ))}
-      </SpeedDial>
-    </>
+    <SpeedDial
+      color="secondary"
+      sx={{ position: "absolute", bottom: 16, right: 16 }}
+      hidden={hidden}
+      ariaLabel="SpeedDial"
+      icon={<SpeedDialIcon />}
+      direction="up"
+    >
+      {actions.map((action) => (
+        <SpeedDialAction
+          key={action.name}
+          icon={action.icon}
+          tooltipTitle={action.name}
+        />
+      ))}
+    </SpeedDial>
   );
 };
 
