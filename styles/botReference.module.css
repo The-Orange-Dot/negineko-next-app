@@ -68,7 +68,7 @@
 }
 
 .botCommandCard {
-  width: 100%;
+  width: 96%;
   padding: 0 5%;
   height: 12vh;
   z-index: 1;
@@ -77,6 +77,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 1%;
+  margin-left: 2%;
 }
 
 .botCommandFolders {

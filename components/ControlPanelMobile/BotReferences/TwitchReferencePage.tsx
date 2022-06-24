@@ -146,12 +146,6 @@ const TwitchReferences = () => {
       description: "Prevent users from sending duplicate messages in Chat",
     },
     {
-      title: "Unique chat only",
-      text: "/uniquechat",
-      value: "/uniquechat",
-      description: "Prevent users from sending duplicate messages in Chat",
-    },
-    {
       title: "Turn off unique chat",
       text: "/uniquechatoff",
       value: "/uniquechatoff",

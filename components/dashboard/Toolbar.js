@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import styles from "../../styles/dashboard.module.css";
 import { mouseIn, mouseOut } from "../NavBarAnimation";
 import gsap from "gsap";
+import ScrollTriggerPlugin from "gsap/dist/ScrollTrigger";
 import Switch from "../Switch";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMenu } from "../../redux/actions/juiceboxMenuSlice";
@@ -9,6 +10,7 @@ import ModChannelDisplay from "./ModChannelDisplay";
 import { useMediaQuery } from "react-responsive";
 
 const Toolbar = ({ children, tween, setTween }) => {
+  gsap.registerPlugin(ScrollTriggerPlugin);
   const dispatch = useDispatch();
   const ref = useRef();
   const [animState, setAnimState] = useState(true);
@@ -17,6 +19,7 @@ const Toolbar = ({ children, tween, setTween }) => {
   const hide = useSelector((state) => state.hideMenu.value);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [mobile, setMobile] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
@@ -49,6 +52,40 @@ const Toolbar = ({ children, tween, setTween }) => {
     []
   );
 
+  if (hidden) {
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: "#toolbar",
+          start: "top 2%",
+          end: "+=1",
+          scrub: 0,
+          markers: true,
+        },
+      })
+      .fromTo(
+        "#toolbar-button",
+        { x: 0, duration: 0.2 },
+        { x: -50, duration: 0.2 }
+      );
+  } else {
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: "#toolbar",
+          start: "top 2%",
+          end: "+=1",
+          scrub: 0,
+          markers: true,
+        },
+      })
+      .fromTo(
+        "#toolbar-button",
+        { x: 0, duration: 0.2 },
+        { x: 0, duration: 0.2 }
+      );
+  }
+
   const streamerChannels = async (option) => {
     if (option === "open") {
     } else {
@@ -58,8 +95,10 @@ const Toolbar = ({ children, tween, setTween }) => {
   const tweenAnim = () => {
     if (animState === false) {
       tween.play(0);
+      setHidden(false);
     } else {
       tween.reverse(0);
+      setHidden(true);
     }
     setAnimState(!animState);
   };
@@ -75,6 +114,7 @@ const Toolbar = ({ children, tween, setTween }) => {
       >
         <div
           className={darkMode ? styles.darkToolBarButton : styles.toolBarButton}
+          id="toolbar-button"
           onClick={() => {
             tweenAnim();
           }}
