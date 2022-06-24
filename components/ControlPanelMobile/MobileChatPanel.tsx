@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { TwitchChat, TwitchEmbed } from "react-twitch-embed";
 import { useSession } from "next-auth/react";
 import styles from "../../styles/botReference.module.css";
@@ -9,6 +9,7 @@ import TwitchReferences from "./BotReferences/TwitchReferencePage";
 import StreamlabsReferencePage from "./BotReferences/StreamLabsReferencePage";
 
 const MobileChatPanel = () => {
+  const ref = useRef();
   const session = useSession();
   const isMod = session.data.mod;
   const modFor = session.data.modFor;
@@ -40,9 +41,12 @@ const MobileChatPanel = () => {
     [isStreamer, botSelected]
   );
 
+  console.log(ref);
+
   return (
     <div>
       <TwitchChat
+        ref={ref}
         channel={streamer}
         theme="light"
         width="100%"
