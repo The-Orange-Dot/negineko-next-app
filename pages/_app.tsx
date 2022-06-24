@@ -15,6 +15,7 @@ let persistor = persistStore(store);
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
+      <meta name="viewport" content="width=device-width, user-scalable=no" />
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ThemeProvider theme={colorTheme}>
