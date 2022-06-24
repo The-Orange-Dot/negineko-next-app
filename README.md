@@ -181,7 +181,7 @@ Added feature
 
 ![Screen Shot 2022-06-23 at 23 27 44](https://user-images.githubusercontent.com/92559518/175323623-666bf14c-5ffb-4ec1-aa8c-6dda69944508.png)
 
-##June 23, 2022
+## June 23, 2022
 
 Added feature
 
@@ -190,3 +190,13 @@ Added feature
 ![Screen Shot 2022-06-23 at 23 29 41](https://user-images.githubusercontent.com/92559518/175324317-bd7c08fc-cc31-4d93-b247-2bd2bbbfaaa0.png)
 ![Screen Shot 2022-06-23 at 23 29 58](https://user-images.githubusercontent.com/92559518/175324333-217f64d5-d752-4879-ab36-c4f162d8892f.png)
 
+## June 24. 2022
+
+Added feature
+
+- Added "Chat" tab in mobile mod control panel. This allows mods and streamers to watch the stream and read chat. Below the chat is a reference panel that has references for chat/bot commands (such as Twitch, streamlabs, stream elements, and nightbot). Commands are put into folders based on category of commands, and when folders are open, users can see what the commands do and the command syntax on individual cards. Users can tap the card to copy the commands onto their clipboards to paste into chat.
+![Screen Shot 2022-06-24 at 22 27 49](https://user-images.githubusercontent.com/92559518/175546571-b0951b30-ef02-426a-9b48-26f9e368de1f.png)
+
+![Screen Shot 2022-06-24 at 22 28 13](https://user-images.githubusercontent.com/92559518/175546586-2bf95c6e-d1dc-40ec-860d-2390be335354.png)
+
+![Screen Shot 2022-06-24 at 22 28 01](https://user-images.githubusercontent.com/92559518/175546593-168db73c-89f7-4909-9c20-68ae6655fbdc.png)
