@@ -133,6 +133,41 @@ const NightbotReferencePage = () => {
       value: "!permit ",
       description: "Permits a user to post links with a duration of 60 seconds",
     },
+    {
+      title: "Enable caps protection",
+      text: "!filter caps enable",
+      value: "!filter caps enable",
+      description:
+        "Turn on caps protection, filtering chat messages with all caps and times out user",
+    },
+    {
+      title: "Disable caps protection",
+      text: "!filter caps disable",
+      value: "!filter caps disable",
+      description:
+        "Turn off caps protection, filtering chat messages with all caps",
+    },
+    {
+      title: "Set caps protection limit",
+      text: "!filter caps limit [number]",
+      value: "!filter caps limit ",
+      description:
+        "Sets a threshold for cap letters before nightbot filters out the message and times out user",
+    },
+    {
+      title: "Sets caps protection timeout length",
+      text: "!filter caps time [number_of_seconds]",
+      value: "!filter caps limit ",
+      description:
+        "Sets a length of time that nightbot times out user for spamming chat with caps. (Defaults at 600s)",
+    },
+    {
+      title: "Sets caps protection exempt",
+      text: "!filter caps userlevel [user_level]",
+      value: "!filter caps userlevel ",
+      description:
+        "Sets[user_level] to be exempt from caps protection ([user_level] = owner/moderator/regular/subscriber/everyone)",
+    },
   ];
   const spamProtection = spamProtectionArray.map((command) => (
     <CardActionArea key={command.text}>

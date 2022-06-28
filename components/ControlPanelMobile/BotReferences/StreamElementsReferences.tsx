@@ -16,10 +16,16 @@ const StreamElementsReferencePage = () => {
   //Folder and buttons user commands
   const userCommandsArray = [
     {
-      title: "Timeout user",
-      text: "/timeout [username][duration]",
-      value: "/timeout ",
-      description: "Temporarily bans a user from chat for a set duration",
+      title: "Ban user",
+      text: "/ban [username]",
+      value: "/ban ",
+      description: "Permanently ban a user from Chat",
+    },
+    {
+      title: "Unban user",
+      text: "/unban [username]",
+      value: "/unban ",
+      description: "Remove a timeout or a permanent ban on a user",
     },
   ];
 
@@ -57,7 +63,7 @@ const StreamElementsReferencePage = () => {
   return (
     <Paper className={styles.botCommandsContainer}>
       {/** COMMANDS FOR USERS */}
-      {/* <CardActionArea className={styles.cardContainer}>
+      <CardActionArea className={styles.cardContainer}>
         <Card
           className={styles.botCommandFolders}
           onClick={() => {
@@ -83,7 +89,7 @@ const StreamElementsReferencePage = () => {
         }
       >
         {openFolder === "users" ? userCommands : null}
-      </Paper> */}
+      </Paper>
       <div> StreamElements commands to be added</div>
     </Paper>
   );
