@@ -17,13 +17,17 @@ const LikesCounter = ({ likes, tl, id, mobile, setCloseAlert }) => {
   const [likedBool, setLikeBool] = useState(false);
   const session = useSession();
 
+  console.log(session);
+
   useEffect(
     () => {
-      if (user.likes.includes(id)) {
+      if (session.data && user.likes.includes(id)) {
         setLikeBool(true);
+      } else {
+        setLikeBool(false);
       }
     }, // eslint-disable-next-line react-hooks/exhaustive-deps
-    [likes, user]
+    []
   );
 
   const addLike = async (e) => {
