@@ -24,7 +24,11 @@ import {
   Paper,
   Card,
   CardActionArea,
+  Alert,
+  Collapse,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import gsap from "gsap";
 
 const Travel = () => {
   const router = useRouter();
@@ -32,7 +36,6 @@ const Travel = () => {
   const [data, setData] = useState([]);
   const [locations, setLocations] = useState([]);
   const [filteredLocations, setFilteredLocations] = useState(locations);
-  const [pageLoaded, setPageLoaded] = useState(false);
   const [mobile, setMobile] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 900px)" });
   const [categorySelected, setCategorySelected] = useState({
@@ -40,6 +43,7 @@ const Travel = () => {
   });
   const session = useSession();
   const user = useSelector(loginUser);
+  const [closeAlert, setCloseAlert] = useState(false);
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -52,6 +56,14 @@ const Travel = () => {
 
     fetchLocations();
   }, [router]);
+
+  const tl = gsap
+    .timeline({ paused: true })
+    .fromTo(
+      "#alert",
+      { y: 20, opacity: 0, ease: "power2.in" },
+      { y: 0, opacity: 1, ease: "power2.out" }
+    );
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
@@ -219,9 +231,10 @@ const Travel = () => {
                 ) : (
                   <LikesCounter
                     mobile={mobile}
-                    location={location}
                     id={location.item ? location.item.id : location.id}
                     likes={location.item ? location.item.likes : location.likes}
+                    setCloseAlert={setCloseAlert}
+                    tl={tl}
                   />
                 )}
                 {/*Website Check*/}
@@ -395,6 +408,12 @@ const Travel = () => {
           </div>
         </>
       )}
+
+      <Collapse in={closeAlert}>
+        <Alert className={styles.loginAlert} severity="error" id="alert">
+          Please log in to like
+        </Alert>
+      </Collapse>
     </>
   );
 };

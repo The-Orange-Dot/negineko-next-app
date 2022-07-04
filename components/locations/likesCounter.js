@@ -11,12 +11,10 @@ import { Button, IconButton } from "@mui/material";
 //empty heart => "\u2661"
 //filled heart => "\u2665"
 
-const LikesCounter = ({ likes, id, location, mobile }) => {
+const LikesCounter = ({ likes, tl, id, mobile, setCloseAlert }) => {
   const user = useSelector((state) => state.user.value);
-  const locationName = location.name;
   const [liked, setLiked] = useState(likes);
   const [likedBool, setLikeBool] = useState(false);
-  const [likeState, setLikeState] = useState(user.likes);
   const session = useSession();
 
   useEffect(
@@ -55,6 +53,11 @@ const LikesCounter = ({ likes, id, location, mobile }) => {
     });
   };
 
+  const closeAlert = async () => {
+    await tl.reverse(0);
+    setCloseAlert(false);
+  };
+
   return (
     <span
       className={mobile ? styles.mobilesLikesContainer : styles.likesContainer}
@@ -63,11 +66,15 @@ const LikesCounter = ({ likes, id, location, mobile }) => {
         <IconButton
           color="primary"
           fontSize="small"
-          onClick={() => {
+          onClick={async () => {
             if (session.status === "authenticated") {
               addLike("add");
               addLocationToUserLikes("add");
               setLikeBool(true);
+            } else {
+              await setCloseAlert(true);
+              await tl.play(0);
+              setTimeout(closeAlert, 2000);
             }
           }}
         >

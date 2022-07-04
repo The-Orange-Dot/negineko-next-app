@@ -108,7 +108,7 @@ const Navbar = () => {
                 </h4>
               </Link>
 
-              <Link href="/store" passHref={true}>
+              {/* <Link href="/store" passHref={true}>
                 <h4
                   className={styles.link}
                   onMouseEnter={() => {
@@ -122,7 +122,7 @@ const Navbar = () => {
                 >
                   Shop
                 </h4>
-              </Link>
+              </Link> */}
 
               <Link href="/multiView" passHref={true}>
                 <h4
@@ -227,13 +227,13 @@ const Navbar = () => {
               >
                 <Link href="/travel"> Travel </Link>
               </p>
-              <p
+              {/* <p
                 onClick={() => {
                   navBarHandler("close");
                 }}
               >
                 <Link href="/store"> Store </Link>
-              </p>
+              </p> */}
 
               {session ? (
                 <p
