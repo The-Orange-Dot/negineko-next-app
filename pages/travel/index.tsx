@@ -17,8 +17,14 @@ import { useRouter } from "next/router";
 import LanguageIcon from "@mui/icons-material/Language";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { Button, IconButton } from "@mui/material";
-import { server } from "../../config";
+import {
+  IconButton,
+  Skeleton,
+  Typography,
+  Paper,
+  Card,
+  CardActionArea,
+} from "@mui/material";
 
 const Travel = () => {
   const router = useRouter();
@@ -32,11 +38,8 @@ const Travel = () => {
   const [categorySelected, setCategorySelected] = useState({
     category: "",
   });
-  const { data: session } = useSession();
-  const [loading, setLoading] = useState(true);
-
+  const session = useSession();
   const user = useSelector(loginUser);
-  const username = user?.payload?.user?.value.name;
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -52,7 +55,6 @@ const Travel = () => {
 
   useEffect(() => {
     isMobile ? setMobile(true) : setMobile(false);
-    setPageLoaded(true);
     let filtered;
     if (categorySelected) {
       filtered = locations.filter((location) => {
@@ -65,26 +67,24 @@ const Travel = () => {
     } else {
       setFilteredLocations(locations);
     }
-    session
-      ? setLoading(false)
-      : pageLoaded
-      ? setLoading(false)
-      : setLoading(true);
+
     mobile ? setLocations(data) : null;
-  }, [
-    isMobile,
-    locations,
-    categorySelected,
-    session,
-    pageLoaded,
-    mobile,
-    data,
-  ]);
+  }, [isMobile, locations, categorySelected, session, mobile, data]);
 
   const travelLocations =
     locations?.length === 0 ? (
       <div style={{ width: "100%", textAlign: "center" }}>
-        {mobile ? <h1>Loading...</h1> : <h1>No matches found</h1>}
+        {session.status === "loading" ? (
+          <div
+            className={mobile ? styles.mobileLoadingText : styles.loadingText}
+          >
+            <h1>Loading...</h1>
+          </div>
+        ) : (
+          <div>
+            <h1>No matches found</h1>
+          </div>
+        )}
       </div>
     ) : (
       filteredLocations.map((location) => {
@@ -94,7 +94,8 @@ const Travel = () => {
         const locationNameSplit = locationName.split("(");
 
         return (
-          <div
+          <Card
+            variant="outlined"
             key={location.item ? location.item.id : location.id}
             className={
               mobile
@@ -102,9 +103,12 @@ const Travel = () => {
                 : styles.locationCardContainer
             }
           >
-            {/* Mobile view */}
-            {!mobile ? null : (
-              <>
+            <div
+              className={
+                mobile ? styles.mobileLocationContent : styles.locationContent
+              }
+            >
+              {mobile ? (
                 <div className={styles.mobileViewTitle}>
                   <Link
                     href={`/travel/${
@@ -113,20 +117,16 @@ const Travel = () => {
                     passHref={true}
                   >
                     <span>
-                      <h3>{locationNameSplit[0]}</h3>
-                      <h3>{locationNameSplit[1]?.slice(0, -1)}</h3>
+                      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                        {locationNameSplit[0]}
+                      </Typography>
+                      <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                        {locationNameSplit[1]?.slice(0, -1)}
+                      </Typography>
                     </span>
                   </Link>
                 </div>
-              </>
-            )}
-            <div
-              className={
-                mobile ? styles.mobileLocationContent : styles.locationContent
-              }
-            >
-              {/* Monitor view */}
-              {mobile ? null : (
+              ) : (
                 <>
                   <div className={styles.monitorViewTitle}>
                     <Link
@@ -135,105 +135,179 @@ const Travel = () => {
                       }`}
                       passHref={true}
                     >
-                      <span>
-                        <h3>{locationNameSplit[0]}</h3>
-                        <h3>{locationNameSplit[1]?.slice(0, -1)}</h3>
-                      </span>
+                      {
+                        <span>
+                          <Typography
+                            variant="h6"
+                            className={styles.locationName}
+                            sx={{ fontSize: "1.1rem", fontWeight: "bold" }}
+                          >
+                            {session.status === "loading" ? (
+                              <Skeleton />
+                            ) : (
+                              locationNameSplit[0]
+                            )}
+                          </Typography>
+                          <Typography
+                            variant="h6"
+                            className={styles.locationName}
+                            sx={{ fontSize: "1.1rem", fontWeight: "bold" }}
+                          >
+                            {session.status === "loading" ? (
+                              <Skeleton />
+                            ) : (
+                              locationNameSplit[1]?.slice(0, -1)
+                            )}
+                          </Typography>
+                        </span>
+                      }
                     </Link>
                   </div>
                 </>
               )}
-              <p>{location.item ? location.item.caption : location.caption}</p>
-              <span>
-                <p>
-                  {location.item
-                    ? location.item.prefecture
-                    : location.prefecture}
-                  , {location.item ? location.item.city : location.city}
-                </p>
+              <div
+                className={
+                  mobile
+                    ? styles.mobileCaptionContainer
+                    : styles.captionContainer
+                }
+              >
+                <Typography variant="subtitle2" className={styles.caption}>
+                  {session.status === "loading" ? (
+                    <>
+                      <Skeleton sx={{ width: 260 }} />
+                      <Skeleton sx={{ width: 260 }} />
+                    </>
+                  ) : location.item ? (
+                    location.item.caption
+                  ) : (
+                    location.caption
+                  )}
+                </Typography>
+              </div>
+
+              <span
+                className={
+                  mobile ? styles.mobileCityContainer : styles.cityContainer
+                }
+              >
+                <Typography variant="subtitle2" className={styles.locationCity}>
+                  {session.status === "loading" ? (
+                    <Skeleton />
+                  ) : location.item ? (
+                    `${location.item.prefecture}, ${location.item.city}`
+                  ) : (
+                    `${location.prefecture}, ${location.city}`
+                  )}
+                </Typography>
               </span>
-              {pageLoaded ? (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {session.status === "loading" ? (
+                  <Skeleton
+                    variant="circular"
+                    width={25}
+                    height={25}
+                    sx={{ m: 1 }}
+                  />
+                ) : (
                   <LikesCounter
                     mobile={mobile}
-                    setLoading={setLoading}
-                    username={username}
                     location={location}
                     id={location.item ? location.item.id : location.id}
                     likes={location.item ? location.item.likes : location.likes}
                   />
-                  {/*Website Check*/}
-                  {location.item ? (
-                    location.item.website ? (
-                      <Link href={location.item.website} passHref={true}>
-                        <IconButton color="primary">
-                          <LanguageIcon />
-                        </IconButton>
-                      </Link>
-                    ) : null
-                  ) : location.website ? (
-                    <Link href={location.website} passHref={true}>
+                )}
+                {/*Website Check*/}
+                {session.status === "loading" ? (
+                  <Skeleton
+                    variant="circular"
+                    width={25}
+                    height={25}
+                    sx={{ m: 1 }}
+                  />
+                ) : location.item ? (
+                  location.item.website ? (
+                    <Link href={location.item.website} passHref={true}>
                       <IconButton color="primary">
                         <LanguageIcon />
                       </IconButton>
                     </Link>
-                  ) : null}
+                  ) : null
+                ) : location.website ? (
+                  <Link href={location.website} passHref={true}>
+                    <IconButton color="primary">
+                      <LanguageIcon />
+                    </IconButton>
+                  </Link>
+                ) : null}
 
-                  {/*Twitter Check*/}
-                  {location.item ? (
-                    location.item.twitter ? (
-                      <Link
-                        href={`https://twitter.com/${location.item.twitter}`}
-                        passHref={true}
-                      >
-                        <IconButton color="primary">
-                          <TwitterIcon />
-                        </IconButton>
-                      </Link>
-                    ) : null
-                  ) : location.twitter ? (
+                {/*Twitter Check*/}
+                {session.status === "loading" ? (
+                  <Skeleton
+                    variant="circular"
+                    width={25}
+                    height={25}
+                    sx={{ m: 1 }}
+                  />
+                ) : location.item ? (
+                  location.item.twitter ? (
                     <Link
-                      href={`https://twitter.com/${location.twitter}`}
+                      href={`https://twitter.com/${location.item.twitter}`}
                       passHref={true}
                     >
                       <IconButton color="primary">
                         <TwitterIcon />
                       </IconButton>
                     </Link>
-                  ) : null}
+                  ) : null
+                ) : location.twitter ? (
+                  <Link
+                    href={`https://twitter.com/${location.twitter}`}
+                    passHref={true}
+                  >
+                    <IconButton color="primary">
+                      <TwitterIcon />
+                    </IconButton>
+                  </Link>
+                ) : null}
 
-                  {/*Instagram Check*/}
-                  {location.item ? (
-                    location.item.instagram ? (
-                      <Link
-                        href={`https://www.instagram.com/${location.item.instagram}/`}
-                        passHref={true}
-                      >
-                        <IconButton color="primary">
-                          <InstagramIcon />
-                        </IconButton>
-                      </Link>
-                    ) : null
-                  ) : location.instagram ? (
+                {/*Instagram Check*/}
+                {session.status === "loading" ? (
+                  <Skeleton
+                    variant="circular"
+                    width={25}
+                    height={25}
+                    sx={{ m: 1 }}
+                  />
+                ) : location.item ? (
+                  location.item.instagram ? (
                     <Link
-                      href={`https://www.instagram.com/${location.instagram}/`}
+                      href={`https://www.instagram.com/${location.item.instagram}/`}
                       passHref={true}
                     >
                       <IconButton color="primary">
                         <InstagramIcon />
                       </IconButton>
                     </Link>
-                  ) : null}
-                </div>
-              ) : (
-                <div>Loading...</div>
-              )}
+                  ) : null
+                ) : location.instagram ? (
+                  <Link
+                    href={`https://www.instagram.com/${location.instagram}/`}
+                    passHref={true}
+                  >
+                    <IconButton color="primary">
+                      <InstagramIcon />
+                    </IconButton>
+                  </Link>
+                ) : null}
+              </div>
             </div>
 
             <Link
@@ -247,25 +321,31 @@ const Travel = () => {
                     : styles.thumbnailContainer
                 }
               >
-                <Image
-                  className={styles.thumbnails}
-                  src={
-                    location.item
-                      ? `https://res.cloudinary.com/demo/image/fetch/${location.item.thumbnail}`
-                      : `https://res.cloudinary.com/demo/image/fetch/${location.thumbnail}`
-                  }
-                  alt={location.item ? location.item.name : location.name}
-                  width={300}
-                  height={300}
-                  placeholder="blur"
-                  blurDataURL={
-                    location.item ? location.item.thumbnail : location.thumbnail
-                  }
-                  priority={true}
-                />
+                {session.status === "loading" ? (
+                  <Skeleton variant="rectangular" width={300} height={300} />
+                ) : (
+                  <Image
+                    className={styles.thumbnails}
+                    src={
+                      location.item
+                        ? `https://res.cloudinary.com/demo/image/fetch/${location.item.thumbnail}`
+                        : `https://res.cloudinary.com/demo/image/fetch/${location.thumbnail}`
+                    }
+                    alt={location.item ? location.item.name : location.name}
+                    width={300}
+                    height={300}
+                    placeholder="blur"
+                    blurDataURL={
+                      location.item
+                        ? location.item.thumbnail
+                        : location.thumbnail
+                    }
+                    priority={true}
+                  />
+                )}
               </div>
             </Link>
-          </div>
+          </Card>
         );
       })
     );
@@ -295,13 +375,13 @@ const Travel = () => {
               mobile ? styles.mobileTravelContainer : styles.travelPageContainer
             }
           >
-            <div className={styles.filterContainer}>
+            <Paper className={styles.filterContainer} variant="outlined">
               <SearchBar data={data} setLocations={setLocations} />
               <CategoryFilter
                 categorySelected={categorySelected}
                 setCategorySelected={setCategorySelected}
               />
-            </div>
+            </Paper>
 
             <div
               className={

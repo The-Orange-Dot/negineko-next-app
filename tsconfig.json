@@ -28,6 +28,6 @@
     "redux/actions/darkModeSlice.ts",
     "pages/api/users/streamers/[streamersId].js",
     "redux/actions/locationSlice.js"
-  ],
+, "components/dashboard/Overlay.js"  ],
   "exclude": ["node_modules"]
 }

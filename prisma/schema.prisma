@@ -62,7 +62,7 @@ model User {
   email              String?   @unique
   emailVerified      DateTime?
   image              String?
-  location_likes     String[]
+  location_likes     Int[]
   streamer           Boolean   @default(false)
   mod                Boolean   @default(false)
   modRequestSent     String[]

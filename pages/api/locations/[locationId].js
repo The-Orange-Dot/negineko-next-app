@@ -24,11 +24,22 @@ async function handler(req, res) {
     });
     res.status(200).json(location);
   } else if (req.method === "PATCH") {
-    const location = await prisma.location.update({
+    const location = await prisma.location.findFirst({
       where: { id: parseInt(locationId) },
-      data: { likes: req.body.updatedLiked },
     });
-    res.status(201).json(location);
+
+    let updatedLikes = location.likes;
+    if (req.body === "liked") {
+      updatedLikes++;
+    } else {
+      updatedLikes--;
+    }
+
+    const updatedLocation = await prisma.location.update({
+      where: { id: parseInt(locationId) },
+      data: { likes: updatedLikes },
+    });
+    res.status(201).json(updatedLocation);
   }
 }
 

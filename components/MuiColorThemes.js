@@ -20,5 +20,11 @@ export const colorTheme = createTheme({
       light: "#a73a38",
       contrastText: "#ffffff",
     },
+    black: {
+      main: "#000",
+      dark: "#000",
+      light: "#000",
+      contrastText: "#fff",
+    },
   },
 });

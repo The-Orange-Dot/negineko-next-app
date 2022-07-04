@@ -11,14 +11,7 @@ import { Button, IconButton } from "@mui/material";
 //empty heart => "\u2661"
 //filled heart => "\u2665"
 
-const LikesCounter = ({
-  likes,
-  id,
-  location,
-  username,
-  setLoading,
-  mobile,
-}) => {
+const LikesCounter = ({ likes, id, location, mobile }) => {
   const user = useSelector((state) => state.user.value);
   const locationName = location.name;
   const [liked, setLiked] = useState(likes);
@@ -26,64 +19,40 @@ const LikesCounter = ({
   const [likeState, setLikeState] = useState(user.likes);
   const session = useSession();
 
-  useEffect(() => {
-    if (session.data) {
-      setLikeState(session.data.likes);
-
-      if (likeState?.includes(locationName)) {
+  useEffect(
+    () => {
+      if (user.likes.includes(id)) {
         setLikeBool(true);
       }
-    }
-  }, [
-    user.likes,
-    locationName,
-    likedBool,
-    likeState,
-    setLoading,
-    session.data,
-  ]);
-
-  const updateLocationLike = () => {
-    const updatedArray = user.likes.filter((location) => {
-      return location !== locationName;
-    });
-
-    setLikeState(updatedArray);
-  };
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [likes, user]
+  );
 
   const addLike = async (e) => {
     let updatedLiked;
     if (e === "add") {
-      updatedLiked = liked + 1;
+      updatedLiked = "liked";
       setLiked(liked + 1);
     } else {
-      updatedLiked = liked - 1;
+      updatedLiked = "unlike";
       setLiked(liked - 1);
     }
 
-    const locationName = location.item ? location.item.name : location.name;
+    fetch(`${server}/api/locations/${id}`, {
+      method: "PATCH",
+      headers: { key: "orange_is_orange" },
+      body: updatedLiked,
+    });
+  };
+
+  const addLocationToUserLikes = async (e) => {
     const username = session?.data?.user?.name;
 
-    if (session) {
-      setLikeBool(!likedBool);
-      await axios({
-        method: "PATCH",
-        url: `${server}/api/locations/${id}`,
-        headers: { key: "orange_is_orange" },
-        data: {
-          updatedLiked,
-        },
-      }); //.then((res) => console.log(res));
-      await axios({
-        method: "PATCH",
-        url: `${server}/api/users/${username}`,
-        headers: { key: "orange_is_orange" },
-        data: {
-          locationName,
-          username,
-        },
-      }); //.then((res) => console.log(res));
-    }
+    fetch(`${server}/api/users/${username}`, {
+      method: "PATCH",
+      headers: { key: "orange_is_orange" },
+      body: JSON.stringify({ id: id, event: e }),
+    });
   };
 
   return (
@@ -94,9 +63,11 @@ const LikesCounter = ({
         <IconButton
           color="primary"
           fontSize="small"
-          onClick={async () => {
+          onClick={() => {
             if (session.status === "authenticated") {
               addLike("add");
+              addLocationToUserLikes("add");
+              setLikeBool(true);
             }
           }}
         >
@@ -106,11 +77,11 @@ const LikesCounter = ({
       ) : (
         <IconButton
           fontSize="small"
-          onClick={async () => {
+          onClick={() => {
             if (session.status === "authenticated") {
-              await addLike("subtract");
+              addLike("subtract");
+              addLocationToUserLikes("subtract");
               setLikeBool(false);
-              updateLocationLike();
             }
           }}
         >

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import styles from "../../styles/travel.module.css";
 import Fuse from "fuse.js";
+import { Button, TextField, Paper, Box, Typography } from "@mui/material";
 
 const SearchBar = ({ data, setLocations }) => {
   const [searchInput, setSearchInput] = useState("");
@@ -54,8 +55,7 @@ const SearchBar = ({ data, setLocations }) => {
     searchHandler(results);
   };
 
-  const searchOptionsHandler = (e, data) => {
-    e.preventDefault();
+  const searchOptionsHandler = (data) => {
     let fuse = new Fuse(data, keyWordOptions);
     let results;
     if (searchInput) {
@@ -77,44 +77,59 @@ const SearchBar = ({ data, setLocations }) => {
   }, [setLocations, data]);
 
   return (
-    <div className={styles.searchBarContainer}>
-      <form
-        action=""
-        onSubmit={(e) => {
-          searchOptionsHandler(e, data);
+    <Paper className={styles.searchBarContainer} variant="outlined">
+      <Typography>Search: </Typography>
+      <TextField
+        type="text"
+        name="search"
+        label="Keywords (e.g. Gundam Base)"
+        value={searchInput}
+        onChange={(e) => {
+          setSearchInput(e.target.value);
         }}
+        variant="standard"
+        size="small"
+        sx={{ m: 1 }}
+      />
+      <TextField
+        type="text"
+        name="location"
+        label="Place (e.g. Tokyo)"
+        value={locationSearch}
+        onChange={(e) => {
+          setLocationSearch(e.target.value);
+        }}
+        variant="standard"
+        size="small"
+        sx={{ m: 1 }}
+      />
+      <Button
+        className={styles.searchButton}
+        onClick={() => {
+          searchOptionsHandler(data);
+        }}
+        variant="contained"
+        color="black"
+        disableElevation
+        sx={{ m: 0.5 }}
       >
-        <input
-          type="text"
-          name="search"
-          placeholder="Keywords (e.g. Gundam Base)"
-          value={searchInput}
-          onChange={(e) => {
-            setSearchInput(e.target.value);
-          }}
-        />
-        <input
-          type="text"
-          name="location"
-          placeholder="Place (e.g. Tokyo)"
-          value={locationSearch}
-          onChange={(e) => {
-            setLocationSearch(e.target.value);
-          }}
-        />
-        <input type="submit" className={styles.searchButton} />
-      </form>
-      <button
+        Submit
+      </Button>
+      <Button
         className={styles.searchButton}
         onClick={() => {
           setSearchInput("");
           setLocationSearch("");
           setLocations(data);
         }}
+        variant="contained"
+        color="black"
+        disableElevation
+        sx={{ m: 0.5 }}
       >
         Clear
-      </button>
-    </div>
+      </Button>
+    </Paper>
   );
 };
 

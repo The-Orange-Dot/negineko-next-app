@@ -54,22 +54,27 @@ async function handler(req, res) {
 
     res.status(200).json(parsedMods);
   } else if (req.method === "PATCH") {
-    let updatedLocationLikes = user.location_likes;
+    const data = await JSON.parse(req.body);
+    const username = await req.query.userId;
 
-    if (!user.location_likes.includes(req.body.locationName)) {
-      updatedLocationLikes.push(req.body.locationName);
+    const user = await prisma.user.findFirst({
+      where: { name: username },
+    });
+
+    let updatedLikesList;
+    if (data.event === "add") {
+      updatedLikesList = [...user.location_likes, data.id];
     } else {
-      updatedLocationLikes = user.location_likes.filter(
-        (location) => location !== req.body.locationName
-      );
+      updatedLikesList = user.location_likes.filter((locationId) => {
+        return locationId !== data.id;
+      });
     }
 
     const updatedUser = await prisma.user.update({
-      where: { name: req.body.username },
-      data: {
-        location_likes: updatedLocationLikes,
-      },
+      where: { name: username },
+      data: { location_likes: updatedLikesList },
     });
+
     res.status(201).json(updatedUser);
   } else if (req.method === "POST") {
     const streamer = req.query.userId;
