@@ -17,8 +17,6 @@ const LikesCounter = ({ likes, tl, id, mobile, setCloseAlert }) => {
   const [likedBool, setLikeBool] = useState(false);
   const session = useSession();
 
-  console.log(session);
-
   useEffect(
     () => {
       if (session.data && user.likes.includes(id)) {
