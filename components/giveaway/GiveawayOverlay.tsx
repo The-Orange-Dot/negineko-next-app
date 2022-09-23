@@ -63,7 +63,9 @@ const GiveawayOverlay = ({ parentRef }) => {
         <span className={styles.screenDisplay}>
           <h1 style={textStyles}>{selectedButton.title}</h1>
           <div>
-            {selectedWinner ? <h1 style={textStyles}>WINNER!</h1> : null}
+            {
+              // {selectedWinner ? <h1 style={textStyles}>WINNER!</h1> : null}
+            }
             <h1 style={textStyles}>{winner}</h1>
           </div>
         </span>
